@@ -355,12 +355,14 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Pure, RNG passed in: `cardKeys(section, templates, letters?)`, `buildSession(section, progress, rng, { size: 10, maxNew: 3, letters })` using weights `{0:4,1:16,2:8,3:4,4:2,5:1}`, `fieldValue(entry, field)` for `he|heCursive|translit|meaning|emoji|related.he|forms.*`, `distractors(entry, field, section, progress, rng)` → 3, in priority order: personal `confusedWith` → `confusables` group → same tab → section, with no duplicates or equal display values.
 
 **Acceptance criteria:**
-- [ ] Seeded-RNG tests: weights are respected statistically, ≤ 3 new cards, 10 questions (fewer only if the section is smaller)
-- [ ] Distractor tests: priority order, no duplicates, the correct answer is always among the 4, and it works when a section has < 4 entries
-- [ ] Alphabet with weeks present limits cards to `latestLetters`
+- [x] Seeded-RNG tests: weights are respected statistically, ≤ 3 new cards, 10 questions (cards repeat when the pool is small)
+- [x] Distractor tests: priority order, no duplicates, the correct answer is always among the 4, and it works when a section has < 4 entries
+- [x] Alphabet with weeks present limits cards to `latestLetters`
 
 **Verification:**
-- [ ] `node --test tests/unit/blitz.test.mjs`, `npm run check:task`
+- [x] `node --test tests/unit/blitz.test.mjs`, `npm run check:task`
+
+**Notes:** SPEC says 10 questions and ≤ 3 new cards per session, which together would make a first session only 3 questions long. Decision: the session is always 10 questions, drawn *with repetition* from the pool (all seen cards + ≤ 3 new), by box weight, never the same card twice in a row. `cardKeys(section, letters)` filters by base letter (dagesh and dots ignored). `distractors` dedupes by the displayed answer text. `fieldValue(…, 'related.he')` joins the related words.
 
 **Dependencies:** T14, T15
 **Files:** `assets/js/core/blitz.js`, `tests/unit/blitz.test.mjs`

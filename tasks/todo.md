@@ -170,12 +170,23 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `views/card-grid.js` (emoji, Hebrew, translit, meaning, `related` languages). Commit 2: `data/sections/countries.json` with tabs EU I (14), EU II (13), Russia & Europe outside the EU (9). Each country lists all main languages in `related`. Blitz templates `flag-to-he`, `he-to-meaning` and `country-to-language` (`related.he`). All entries `verified: false`.
 
 **Acceptance criteria:**
-- [ ] Three tabs, 36 countries, each tab ≤ 14, valid against the validator
-- [ ] Each tab passes one-screen + axe at 360×640 / 1280×720 with `showRu` on
-- [ ] Transliteration follows the SPEC rules (kh/tz/sh/j/ch/zh)
+- [x] Three tabs, 36 countries, each tab ≤ 14, valid against the validator
+- [x] Each tab passes one-screen + axe at 360×640 / 1280×720. *`showRu` arrives in T11, which re-checks these tabs in that mode; the meaning line is the likely pressure point*
+- [x] Transliteration follows the SPEC rules (kh/tz/sh/j/ch/zh)
 
 **Verification:**
-- [ ] `node scripts/validate.mjs` (warning count = 36 unverified), `npm run e2e:fast`, `npm run check:task`
+- [x] `node scripts/validate.mjs` (warning count = 36 unverified), `npm run e2e:fast`, `npm run check:task` (+ webkit 390×664)
+
+**Notes:**
+- Card layout: the start side holds flag + Hebrew + transliteration + meaning, and the end side stacks the languages, sized by `data-count`.
+- At 360×640 a card is 170×69 px: country ≈ 15 px, lines ≈ 10 px, 1–2 languages ≈ 10 px, Switzerland's 4 ≈ 8 px. *Human check on a real phone: is that readable with nikud?*
+- The harness now checks every entry shows its `he` and related `he`, for all views.
+- Content decisions to confirm:
+  - (a) Transliteration follows the SPEC rule `צ → tz` ("Tzarfat"), although the SPEC example says "Tsarfat".
+  - (b) Geresh is U+05F3 `׳` (צֶ׳כְיָה), not an ASCII apostrophe.
+  - (c) `plain` is also used inside `related` items (יוונית, שוודית) so languages show standard spelling without nikud. That's an optional field the Data Contract doesn't list for `related`.
+  - (d) Country names follow Hebrew Wikipedia (הולנד, בריטניה, שווייץ). Finland also lists Swedish, Ireland lists English, Malta lists English, and Belarus lists Russian.
+- All nikud is unverified (Dicta Nakdan pass pending).
 
 **Dependencies:** T6
 **Files:** `assets/js/views/card-grid.js`, `assets/js/main.js`, `data/sections/countries.json`, `data/index.json`

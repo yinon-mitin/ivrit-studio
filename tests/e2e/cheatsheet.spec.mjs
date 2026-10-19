@@ -65,6 +65,14 @@ for (const route of sectionRoutes().filter((r) => r.view === 'letter-rows' && r.
   });
 }
 
+for (const route of sectionRoutes().filter((r) => r.view === 'table' && r.count > 0)) {
+  test(`${route.hash} groups consecutive entries with the same sound into one sound cell`, async ({ page }) => {
+    await open(page, route.hash);
+    const groups = route.items.filter((item, i) => i === 0 || route.items[i - 1].translit !== item.translit);
+    await expect(page.locator('#content .table-sound')).toHaveText(groups.map((item) => item.translit));
+  });
+}
+
 for (const route of sectionRoutes().filter((r) => r.tabs.length > 0 && r.tab === r.tabs[0])) {
   test(`#/${route.section} and an unknown tab show the first tab`, async ({ page }) => {
     for (const hash of [`#/${route.section}`, `#/${route.section}/no-such-tab`]) {

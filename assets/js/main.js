@@ -7,6 +7,7 @@ import { renderTabs } from './ui/tabs.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { el } from './views/dom.js';
 import { renderCardGrid } from './views/card-grid.js';
+import { renderTable } from './views/table.js';
 import { renderLetterGrid } from './views/letter-grid.js';
 import { renderLetterRows } from './views/letter-rows.js';
 
@@ -20,6 +21,7 @@ const VIEWS = {
   'letter-grid': renderLetterGrid,
   'letter-rows': renderLetterRows,
   'card-grid': renderCardGrid,
+  table: renderTable,
 };
 
 let settings = loadSettings();

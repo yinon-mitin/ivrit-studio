@@ -16,7 +16,7 @@ const readSections = () => readJson('data/index.json').sections.map((id) => read
  * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), including
  * week tabs, with what it should show.
  * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number,
- *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, en: string, ru: string, related: string[] }> }>}
+ *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
   const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`));
@@ -32,7 +32,8 @@ export function sectionRoutes() {
     }
     const tabIds = tabs.map((tab) => tab.id);
     const shown = (entries) => entries.map((item) => ({
-      id: item.id, he: item.he, plain: item.plain, en: item.en, ru: item.ru, related: (item.related ?? []).map((r) => r.he),
+      id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
+      related: (item.related ?? []).map((r) => r.he),
     }));
     if (tabs.length === 0) {
       list.push({

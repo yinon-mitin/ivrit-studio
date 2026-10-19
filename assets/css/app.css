@@ -425,3 +425,49 @@ a { color: var(--accent); }
 .card-grid[data-ru] .card-title { font-size: min(22cqh, 9cqw); }
 
 .card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }
+
+/* table: rows share the height (--rows set by the view); text sizes derive from one row's height,
+   capped by the width. Same-sound groups are separated by a stronger rule. */
+.table-wrap {
+  container-type: size;
+  flex: 1;
+  min-height: 0;
+  --row: calc(100cqh / var(--rows));
+}
+
+.entry-table {
+  width: min(100%, 36rem);
+  height: 100%;
+  margin-inline: auto;
+  border-collapse: collapse;
+  line-height: 1.5;
+}
+
+.entry-table td {
+  padding: 0 2cqw;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.entry-table tr:first-child td { border-top: 0; }
+
+.entry-table tr.group-start td { border-top: 2px solid var(--muted); }
+
+.table-he {
+  width: 1%;
+  /* The largest the row allows at line-height 1.5: the vowel marks are what this view is for. */
+  font-size: min(calc(var(--row) * 0.62), 12cqw);
+  text-align: center;
+}
+
+.table-sound {
+  width: 1%;
+  font-size: min(calc(var(--row) * 0.4), 5cqw);
+  font-weight: 600;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+}
+
+.table-name { font-size: min(calc(var(--row) * 0.36), 4.4cqw); }
+
+.table-ru { color: var(--muted); }

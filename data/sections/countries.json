@@ -1,0 +1,60 @@
+{
+  "id": "countries",
+  "title": {"en": "Countries & languages", "ru": "Страны и языки"},
+  "view": "card-grid",
+  "nikudToggle": true,
+  "tabs": [
+    {"id": "eu-1", "title": {"en": "EU I", "ru": "ЕС I"}},
+    {"id": "eu-2", "title": {"en": "EU II", "ru": "ЕС II"}},
+    {"id": "europe-other", "title": {"en": "Russia & Europe", "ru": "Россия и Европа"}}
+  ],
+  "blitz": [
+    {"id": "flag-to-he", "ask": "emoji", "answer": "he"},
+    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"},
+    {"id": "country-to-language", "ask": "he", "answer": "related.he"}
+  ],
+  "confusables": [
+    ["countries.slovakia", "countries.slovenia"],
+    ["countries.latvia", "countries.lithuania", "countries.estonia"],
+    ["countries.sweden", "countries.switzerland"],
+    ["countries.austria", "countries.hungary"]
+  ],
+  "items": [
+    {"id": "countries.austria", "he": "אוֹסְטְרִיָּה", "translit": "Ostriya", "en": "Austria", "ru": "Австрия", "tab": "eu-1", "emoji": "🇦🇹", "related": [{"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},
+    {"id": "countries.belgium", "he": "בֶּלְגְיָה", "translit": "Belgya", "en": "Belgium", "ru": "Бельгия", "tab": "eu-1", "emoji": "🇧🇪", "related": [{"he": "הוֹלַנְדִּית", "translit": "Holandit", "en": "Dutch", "ru": "нидерландский"}, {"he": "צָרְפָתִית", "translit": "Tzarfatit", "en": "French", "ru": "французский"}, {"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},
+    {"id": "countries.bulgaria", "he": "בּוּלְגַרְיָה", "translit": "Bulgarya", "en": "Bulgaria", "ru": "Болгария", "tab": "eu-1", "emoji": "🇧🇬", "related": [{"he": "בּוּלְגָרִית", "translit": "Bulgarit", "en": "Bulgarian", "ru": "болгарский"}], "verified": false},
+    {"id": "countries.croatia", "he": "קְרוֹאַטְיָה", "translit": "Kroatya", "en": "Croatia", "ru": "Хорватия", "tab": "eu-1", "emoji": "🇭🇷", "related": [{"he": "קְרוֹאָטִית", "translit": "Kroatit", "en": "Croatian", "ru": "хорватский"}], "verified": false},
+    {"id": "countries.cyprus", "he": "קַפְרִיסִין", "translit": "Kafrisin", "en": "Cyprus", "ru": "Кипр", "tab": "eu-1", "emoji": "🇨🇾", "related": [{"he": "יְוָנִית", "translit": "Yevanit", "en": "Greek", "ru": "греческий", "plain": "יוונית"}, {"he": "טוּרְקִית", "translit": "Turkit", "en": "Turkish", "ru": "турецкий"}], "verified": false},
+    {"id": "countries.czechia", "he": "צֶ׳כְיָה", "translit": "Chekhya", "en": "Czechia", "ru": "Чехия", "tab": "eu-1", "emoji": "🇨🇿", "related": [{"he": "צֶ׳כִית", "translit": "Chekhit", "en": "Czech", "ru": "чешский"}], "verified": false},
+    {"id": "countries.denmark", "he": "דֶּנְמַרְק", "translit": "Denmark", "en": "Denmark", "ru": "Дания", "tab": "eu-1", "emoji": "🇩🇰", "related": [{"he": "דָּנִית", "translit": "Danit", "en": "Danish", "ru": "датский"}], "verified": false},
+    {"id": "countries.estonia", "he": "אֶסְטוֹנְיָה", "translit": "Estonya", "en": "Estonia", "ru": "Эстония", "tab": "eu-1", "emoji": "🇪🇪", "related": [{"he": "אֶסְטוֹנִית", "translit": "Estonit", "en": "Estonian", "ru": "эстонский"}], "verified": false},
+    {"id": "countries.finland", "he": "פִינְלַנְד", "translit": "Finland", "en": "Finland", "ru": "Финляндия", "tab": "eu-1", "emoji": "🇫🇮", "related": [{"he": "פִינִית", "translit": "Finit", "en": "Finnish", "ru": "финский"}, {"he": "שְׁוֶדִית", "translit": "Shvedit", "en": "Swedish", "ru": "шведский", "plain": "שוודית"}], "verified": false},
+    {"id": "countries.france", "he": "צָרְפַת", "translit": "Tzarfat", "en": "France", "ru": "Франция", "tab": "eu-1", "emoji": "🇫🇷", "related": [{"he": "צָרְפָתִית", "translit": "Tzarfatit", "en": "French", "ru": "французский"}], "verified": false},
+    {"id": "countries.germany", "he": "גֶּרְמַנְיָה", "translit": "Germanya", "en": "Germany", "ru": "Германия", "tab": "eu-1", "emoji": "🇩🇪", "related": [{"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},
+    {"id": "countries.greece", "he": "יָוָן", "plain": "יוון", "translit": "Yavan", "en": "Greece", "ru": "Греция", "tab": "eu-1", "emoji": "🇬🇷", "related": [{"he": "יְוָנִית", "translit": "Yevanit", "en": "Greek", "ru": "греческий", "plain": "יוונית"}], "verified": false},
+    {"id": "countries.hungary", "he": "הוּנְגַרְיָה", "translit": "Hungarya", "en": "Hungary", "ru": "Венгрия", "tab": "eu-1", "emoji": "🇭🇺", "related": [{"he": "הוּנְגָרִית", "translit": "Hungarit", "en": "Hungarian", "ru": "венгерский"}], "verified": false},
+    {"id": "countries.ireland", "he": "אִירְלַנְד", "translit": "Irland", "en": "Ireland", "ru": "Ирландия", "tab": "eu-1", "emoji": "🇮🇪", "related": [{"he": "אִירִית", "translit": "Irit", "en": "Irish", "ru": "ирландский"}, {"he": "אַנְגְּלִית", "translit": "Anglit", "en": "English", "ru": "английский"}], "verified": false},
+    {"id": "countries.italy", "he": "אִיטַלְיָה", "translit": "Italya", "en": "Italy", "ru": "Италия", "tab": "eu-2", "emoji": "🇮🇹", "related": [{"he": "אִיטַלְקִית", "translit": "Italkit", "en": "Italian", "ru": "итальянский"}], "verified": false},
+    {"id": "countries.latvia", "he": "לַטְבִיָּה", "translit": "Latviya", "en": "Latvia", "ru": "Латвия", "tab": "eu-2", "emoji": "🇱🇻", "related": [{"he": "לַטְבִית", "translit": "Latvit", "en": "Latvian", "ru": "латышский"}], "verified": false},
+    {"id": "countries.lithuania", "he": "לִיטָא", "translit": "Lita", "en": "Lithuania", "ru": "Литва", "tab": "eu-2", "emoji": "🇱🇹", "related": [{"he": "לִיטָאִית", "translit": "Lita'it", "en": "Lithuanian", "ru": "литовский"}], "verified": false},
+    {"id": "countries.luxembourg", "he": "לוּקְסֶמְבּוּרְג", "translit": "Luksemburg", "en": "Luxembourg", "ru": "Люксембург", "tab": "eu-2", "emoji": "🇱🇺", "related": [{"he": "לוּקְסֶמְבּוּרְגִית", "translit": "Luksemburgit", "en": "Luxembourgish", "ru": "люксембургский"}, {"he": "צָרְפָתִית", "translit": "Tzarfatit", "en": "French", "ru": "французский"}, {"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},
+    {"id": "countries.malta", "he": "מַלְטָה", "translit": "Malta", "en": "Malta", "ru": "Мальта", "tab": "eu-2", "emoji": "🇲🇹", "related": [{"he": "מַלְטִית", "translit": "Maltit", "en": "Maltese", "ru": "мальтийский"}, {"he": "אַנְגְּלִית", "translit": "Anglit", "en": "English", "ru": "английский"}], "verified": false},
+    {"id": "countries.netherlands", "he": "הוֹלַנְד", "translit": "Holand", "en": "Netherlands", "ru": "Нидерланды", "tab": "eu-2", "emoji": "🇳🇱", "related": [{"he": "הוֹלַנְדִּית", "translit": "Holandit", "en": "Dutch", "ru": "нидерландский"}], "verified": false},
+    {"id": "countries.poland", "he": "פּוֹלִין", "translit": "Polin", "en": "Poland", "ru": "Польша", "tab": "eu-2", "emoji": "🇵🇱", "related": [{"he": "פּוֹלָנִית", "translit": "Polanit", "en": "Polish", "ru": "польский"}], "verified": false},
+    {"id": "countries.portugal", "he": "פּוֹרְטוּגָל", "translit": "Portugal", "en": "Portugal", "ru": "Португалия", "tab": "eu-2", "emoji": "🇵🇹", "related": [{"he": "פּוֹרְטוּגָזִית", "translit": "Portugezit", "en": "Portuguese", "ru": "португальский"}], "verified": false},
+    {"id": "countries.romania", "he": "רוֹמַנְיָה", "translit": "Romanya", "en": "Romania", "ru": "Румыния", "tab": "eu-2", "emoji": "🇷🇴", "related": [{"he": "רוֹמָנִית", "translit": "Romanit", "en": "Romanian", "ru": "румынский"}], "verified": false},
+    {"id": "countries.slovakia", "he": "סְלוֹבַקְיָה", "translit": "Slovakya", "en": "Slovakia", "ru": "Словакия", "tab": "eu-2", "emoji": "🇸🇰", "related": [{"he": "סְלוֹבָקִית", "translit": "Slovakit", "en": "Slovak", "ru": "словацкий"}], "verified": false},
+    {"id": "countries.slovenia", "he": "סְלוֹבֶנְיָה", "translit": "Slovenya", "en": "Slovenia", "ru": "Словения", "tab": "eu-2", "emoji": "🇸🇮", "related": [{"he": "סְלוֹבֶנִית", "translit": "Slovenit", "en": "Slovene", "ru": "словенский"}], "verified": false},
+    {"id": "countries.spain", "he": "סְפָרַד", "translit": "Sfarad", "en": "Spain", "ru": "Испания", "tab": "eu-2", "emoji": "🇪🇸", "related": [{"he": "סְפָרַדִּית", "translit": "Sfaradit", "en": "Spanish", "ru": "испанский"}], "verified": false},
+    {"id": "countries.sweden", "he": "שְׁוֶדְיָה", "plain": "שוודיה", "translit": "Shvedya", "en": "Sweden", "ru": "Швеция", "tab": "eu-2", "emoji": "🇸🇪", "related": [{"he": "שְׁוֶדִית", "translit": "Shvedit", "en": "Swedish", "ru": "шведский", "plain": "שוודית"}], "verified": false},
+    {"id": "countries.russia", "he": "רוּסְיָה", "translit": "Rusya", "en": "Russia", "ru": "Россия", "tab": "europe-other", "emoji": "🇷🇺", "related": [{"he": "רוּסִית", "translit": "Rusit", "en": "Russian", "ru": "русский"}], "verified": false},
+    {"id": "countries.ukraine", "he": "אוּקְרַאִינָה", "translit": "Ukraina", "en": "Ukraine", "ru": "Украина", "tab": "europe-other", "emoji": "🇺🇦", "related": [{"he": "אוּקְרָאִינִית", "translit": "Ukrainit", "en": "Ukrainian", "ru": "украинский"}], "verified": false},
+    {"id": "countries.belarus", "he": "בֵּלָרוּס", "translit": "Belarus", "en": "Belarus", "ru": "Беларусь", "tab": "europe-other", "emoji": "🇧🇾", "related": [{"he": "בֵּלָרוּסִית", "translit": "Belarusit", "en": "Belarusian", "ru": "белорусский"}, {"he": "רוּסִית", "translit": "Rusit", "en": "Russian", "ru": "русский"}], "verified": false},
+    {"id": "countries.moldova", "he": "מוֹלְדוֹבָה", "translit": "Moldova", "en": "Moldova", "ru": "Молдова", "tab": "europe-other", "emoji": "🇲🇩", "related": [{"he": "רוֹמָנִית", "translit": "Romanit", "en": "Romanian", "ru": "румынский"}], "verified": false},
+    {"id": "countries.georgia", "he": "גֵּאוֹרְגְיָה", "translit": "Ge'orgya", "en": "Georgia", "ru": "Грузия", "tab": "europe-other", "emoji": "🇬🇪", "related": [{"he": "גֵּאוֹרְגִית", "translit": "Ge'orgit", "en": "Georgian", "ru": "грузинский"}], "verified": false},
+    {"id": "countries.united-kingdom", "he": "בְּרִיטַנְיָה", "translit": "Britanya", "en": "United Kingdom", "ru": "Великобритания", "tab": "europe-other", "emoji": "🇬🇧", "related": [{"he": "אַנְגְּלִית", "translit": "Anglit", "en": "English", "ru": "английский"}], "verified": false},
+    {"id": "countries.switzerland", "he": "שְׁוַיְץ", "plain": "שווייץ", "translit": "Shvaitz", "en": "Switzerland", "ru": "Швейцария", "tab": "europe-other", "emoji": "🇨🇭", "related": [{"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}, {"he": "צָרְפָתִית", "translit": "Tzarfatit", "en": "French", "ru": "французский"}, {"he": "אִיטַלְקִית", "translit": "Italkit", "en": "Italian", "ru": "итальянский"}, {"he": "רוֹמַאנְשׁ", "translit": "Romansh", "en": "Romansh", "ru": "романшский"}], "verified": false},
+    {"id": "countries.norway", "he": "נוֹרְבֶגְיָה", "translit": "Norvegya", "en": "Norway", "ru": "Норвегия", "tab": "europe-other", "emoji": "🇳🇴", "related": [{"he": "נוֹרְבֶגִית", "translit": "Norvegit", "en": "Norwegian", "ru": "норвежский"}], "verified": false},
+    {"id": "countries.serbia", "he": "סֶרְבְּיָה", "translit": "Serbya", "en": "Serbia", "ru": "Сербия", "tab": "europe-other", "emoji": "🇷🇸", "related": [{"he": "סֶרְבִּית", "translit": "Serbit", "en": "Serbian", "ru": "сербский"}], "verified": false}
+  ]
+}

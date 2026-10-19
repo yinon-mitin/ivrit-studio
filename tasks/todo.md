@@ -233,11 +233,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `views/table.js` (rows × columns with Hebrew cells). Commit 2: `data/sections/nikud.json`: each vowel sign on an example (בַּ בֶּ בִּ בּוֹ בּוּ בְּ …) with translit, and same-sound pairs (kamatz/patach, segol/tsere) noted. `nikudToggle: false`. Blitz template `syllable-to-reading`.
 
 **Acceptance criteria:**
-- [ ] Nikud section on one screen (tabs if > 14), axe clean in both themes
-- [ ] Same-sound pairs are visibly grouped and listed as `confusables`
+- [x] Nikud section on one screen (tabs if > 14), axe clean in both themes
+- [x] Same-sound pairs are visibly grouped and listed as `confusables`
 
 **Verification:**
-- [ ] `node scripts/validate.mjs`, `npm run e2e:fast`, `npm run check:task`
+- [x] `node scripts/validate.mjs`, `npm run e2e:fast`, `npm run check:task` (+ webkit; 150 e2e across three projects)
+
+**Notes:**
+- **Content.** 14 signs on one screen without tabs, ordered by sound: a (patah, kamatz, hataf patah), e (segol, tzere, hataf segol), i (hirik, hirik male), o (holam, holam male, hataf kamatz), u (kubutz, shuruk), sheva.
+- **Grouping.** Consecutive equal `translit` values share one sound cell. That's generic, so no new data field is needed, and an e2e check covers it.
+- **Content choice to confirm.** Every sign is shown on בּ for a uniform chart, including the hataf vowels (בֲּ בֱּ בֳּ), which in real words sit under gutturals (אֲ, עֱ). The teacher may prefer א for those. Sheva reads "b’ / be".
+- **Sizing.** The Hebrew takes the largest size a row allows (≈25 px phone, ≈27 px laptop), which is height-limited with 14 rows. The table is capped at 36 rem wide.
+- **Fault check.** An oversized table fails the one-screen check (294 px overflow), so tables are covered.
 
 **Dependencies:** T6
 **Files:** `assets/js/views/table.js`, `assets/js/main.js`, `data/sections/nikud.json`, `data/index.json`

@@ -460,13 +460,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Run the full bar locally, finish the README (weekly-update workflow: give the agent the SPEC Data Contract + summary → `data/weeks/<date>.json` → `node scripts/validate.mjs` → `check:task` → commit), and confirm every SPEC Success Criterion except publishing. **Then ask** before `git push`, enabling Pages and any domain.
 
 **Acceptance criteria:**
-- [ ] `npm run check:full` green (webkit 390×664, Semgrep 0 ERROR, osv-scanner clean)
-- [ ] First load ≤ 200 KB and fonts ≤ 60 KB, as reported by the e2e
+- [x] `npm run check:full` green (webkit 390×664, Semgrep 0 ERROR, osv-scanner clean)
+- [x] First load ≤ 200 KB and fonts ≤ 60 KB, as reported by the e2e
 - [ ] After approved push: CI green, site live at `https://yinon-mitin.github.io/ivrit-studio/`, opened on iOS Safari and Android Chrome
 
 **Verification:**
-- [ ] `npm run check:full`
+- [x] `npm run check:full` (93 s: 142 unit, 240 chromium + 120 webkit e2e, Semgrep clean, osv-scanner no issues)
 - [ ] Manual: phone check post-deploy, Anki import
+
+**Notes:**
+- **Weight measurement changed.** The first-load test now counts text responses gzipped, as GitHub Pages serves them; woff2 counts as is. Home: 98.6 KB transferred (189 KB uncompressed). The old raw measurement would have failed CI after 2–3 weekly data updates, though phones download ~2 KB per week. The threshold (200 KB) and CONSTRAINTS.md are unchanged; this is the user's call to revert.
+- **README.** Covers use, adding a week (data only), checking nikud and publishing.
+- **Awaiting the user.** `git push` and enabling Pages (SPEC: ask first).
 
 **Dependencies:** T1–T20
 **Files:** `README.md`

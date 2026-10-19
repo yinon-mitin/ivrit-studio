@@ -2,6 +2,7 @@
 // requests, no page errors; plus first-load weight and font size budgets.
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { test, expect } from '@playwright/test';
 import {
   routes, open, expectOneScreen, expectNoSeriousAxe, recordRequests, externalRequests, fontFiles, FONTS_DIR, seedSettings,
@@ -33,14 +34,24 @@ for (const route of routes()) {
   });
 }
 
-test('first load transfers at most 200 KB', async ({ page }) => {
+// "Transferred" as the site is served: GitHub Pages gzips text, so text bodies count gzipped; woff2
+// is already compressed and counts as is. The local test server does not compress.
+const TEXT = /^(text\/|application\/(json|javascript))/;
+
+test('first load transfers at most 200 KB (text gzipped, as GitHub Pages serves it)', async ({ page }) => {
   const sizes = [];
   page.on('requestfinished', (request) => {
-    sizes.push(request.sizes().then((s) => s.responseHeadersSize + s.responseBodySize));
+    sizes.push((async () => {
+      const response = await request.response();
+      const body = await response.body();
+      const type = response.headers()['content-type'] ?? '';
+      return (await request.sizes()).responseHeadersSize + (TEXT.test(type) ? gzipSync(body).length : body.length);
+    })());
   });
   await open(page, '#/');
   const total = (await Promise.all(sizes)).reduce((sum, size) => sum + size, 0);
   expect(total).toBeGreaterThan(0);
+  console.log(`first load: ${(total / KB).toFixed(1)} KB transferred`);
   expect(total).toBeLessThanOrEqual(200 * KB);
 });
 

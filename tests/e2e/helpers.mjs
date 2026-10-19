@@ -16,7 +16,7 @@ const readSections = () => readJson('data/index.json').sections.map((id) => read
  * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), including
  * week tabs, with what it should show.
  * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number,
- *   items: Array<{ id: string, he: string, related: string[] }> }>}
+ *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, en: string, ru: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
   const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`));
@@ -31,16 +31,22 @@ export function sectionRoutes() {
       items.push(...own.map((item) => ({ tab: weekTab, ...item })));
     }
     const tabIds = tabs.map((tab) => tab.id);
-    const shown = (entries) => entries.map((item) => ({ id: item.id, he: item.he, related: (item.related ?? []).map((r) => r.he) }));
+    const shown = (entries) => entries.map((item) => ({
+      id: item.id, he: item.he, plain: item.plain, en: item.en, ru: item.ru, related: (item.related ?? []).map((r) => r.he),
+    }));
     if (tabs.length === 0) {
-      list.push({ hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length, items: shown(items) });
+      list.push({
+        hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length,
+        nikudToggle: section.nikudToggle !== false, items: shown(items),
+      });
     }
     for (const tab of tabs) {
       const own = items.filter((item) => item.tab === tab.id);
       // A letter-rows tab without entries of its own shows the whole section (SPEC decision, T7).
       const entries = own.length === 0 && tab.view === 'letter-rows' ? items : own;
       list.push({
-        hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count: entries.length, items: shown(entries),
+        hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count: entries.length,
+        nikudToggle: section.nikudToggle !== false, items: shown(entries),
       });
     }
   }
@@ -119,3 +125,23 @@ export const externalRequests = (urls, baseURL) => urls.filter((url) => {
   const { protocol, origin } = new URL(url);
   return protocol !== 'data:' && protocol !== 'blob:' && origin !== new URL(baseURL).origin;
 });
+
+export const SETTINGS_KEY = 'ivrit-studio:settings';
+
+/**
+ * Seeds settings before every load of the page (merged over the defaults by the app).
+ * @param {import('@playwright/test').Page} page
+ * @param {Record<string, unknown>} settings
+ */
+export async function seedSettings(page, settings) {
+  await page.addInitScript(([key, value]) => window.localStorage.setItem(key, value), [SETTINGS_KEY, JSON.stringify(settings)]);
+}
+
+/**
+ * Opens the ⚙ settings menu if it is closed.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function openMenu(page) {
+  const menu = page.locator('[data-setting="menu"]');
+  if (!(await menu.evaluate((details) => details.open))) await menu.locator('summary').click();
+}

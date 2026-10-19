@@ -380,3 +380,48 @@ a { color: var(--accent); }
 .card-related[data-count='3'] { font-size: min(15cqh, 6.5cqw); }
 
 .card-related[data-count='4'] { font-size: min(13cqh, 6cqw); }
+
+/* Settings menu: a <details> whose panel floats under the header, aligned to the end edge. */
+.menu { position: relative; }
+
+.menu > summary {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+}
+
+.menu > summary::-webkit-details-marker { display: none; }
+
+.menu-panel {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 6px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 13rem;
+  padding: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
+}
+
+.menu-panel .segmented { display: flex; }
+
+.menu-panel .segmented .control { flex: 1; }
+
+/* Densest mode (Russian shown): one more text line per cell/card, so the glyphs give up room. */
+.letter-ru { display: block; }
+
+.letter-grid[data-ru] .glyph-print { font-size: min(26cqh, 56cqw); }
+
+.letter-grid[data-ru] .glyph-cursive { font-size: min(20cqh, 46cqw); }
+
+.letter-grid[data-ru] .letter-label { font-size: min(10cqh, 15cqw); }
+
+.card-grid[data-ru] .card-title { font-size: min(22cqh, 9cqw); }
+
+.card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }

@@ -1,4 +1,5 @@
-// Settings: load/save through storage.js, apply to <html>, and the header controls.
+// Settings: load/save through storage.js, apply to <html>, and the header controls — the nikud toggle,
+// plus a ⚙ menu (a <details>) with theme, interface language and the Russian translation.
 import { parseSettings, nextTheme } from '../core/settings.js';
 import { LANGS, t } from '../core/i18n.js';
 import { readItem, writeItem } from '../storage.js';
@@ -27,38 +28,85 @@ export function applySettings(settings) {
 }
 
 /**
- * Header controls: a theme button that cycles Auto → Light → Dark, and EN/RU buttons.
- * Each control has a `data-focus-key` so focus can be restored after a re-render.
+ * @param {string} label
+ * @param {string} setting
+ * @param {string} focusKey
+ * @param {() => void} onClick
+ */
+function button(label, setting, focusKey, onClick) {
+  const node = el('button', 'control', label);
+  node.type = 'button';
+  if (setting) node.dataset.setting = setting;
+  node.dataset.focusKey = focusKey;
+  node.addEventListener('click', onClick);
+  return node;
+}
+
+/**
+ * Header controls. Each control has a `data-focus-key` so focus can be restored after a re-render,
+ * and the menu is rendered open again when it was open.
  * @param {Settings} settings
  * @param {(change: Partial<Settings>) => void} onChange
+ * @param {boolean} menuOpen
  * @returns {DocumentFragment}
  */
-export function renderSettings(settings, onChange) {
+export function renderSettings(settings, onChange, menuOpen) {
   const lang = settings.uiLang;
+
+  const nikud = button(t('nikud', lang), 'nikud', 'nikud', () => onChange({ nikud: !settings.nikud }));
+  nikud.setAttribute('aria-pressed', String(settings.nikud));
+
   const value = t(THEME_LABELS[settings.theme], lang);
-  const theme = el('button', 'control', value);
-  theme.type = 'button';
-  theme.dataset.setting = 'theme';
-  theme.dataset.focusKey = 'theme';
+  const theme = button(value, 'theme', 'theme', () => onChange({ theme: nextTheme(settings.theme) }));
   theme.setAttribute('aria-label', t('theme', lang, { value }));
-  theme.addEventListener('click', () => onChange({ theme: nextTheme(settings.theme) }));
 
   const languages = el('div', 'segmented');
   languages.setAttribute('role', 'group');
   languages.setAttribute('aria-label', t('language', lang));
   languages.dataset.setting = 'uiLang';
   for (const option of LANGS) {
-    const button = el('button', 'control', option.toUpperCase());
-    button.type = 'button';
-    button.lang = option;
-    button.dataset.value = option;
-    button.dataset.focusKey = `uiLang-${option}`;
-    button.setAttribute('aria-pressed', String(option === lang));
-    button.addEventListener('click', () => onChange({ uiLang: option }));
-    languages.append(button);
+    const choice = button(option.toUpperCase(), '', `uiLang-${option}`, () => onChange({ uiLang: option }));
+    choice.lang = option;
+    choice.dataset.value = option;
+    choice.setAttribute('aria-pressed', String(option === lang));
+    languages.append(choice);
   }
 
+  const showRu = button(t('showRu', lang), 'showRu', 'showRu', () => onChange({ showRu: !settings.showRu }));
+  showRu.setAttribute('aria-pressed', String(settings.showRu));
+
+  const menu = el('details', 'menu');
+  menu.dataset.setting = 'menu';
+  menu.open = menuOpen;
+  const summary = el('summary', 'control', '⚙');
+  summary.setAttribute('aria-label', t('settings', lang));
+  summary.dataset.focusKey = 'menu';
+  const panel = el('div', 'menu-panel');
+  panel.append(theme, languages, showRu);
+  menu.append(summary, panel);
+
   const fragment = document.createDocumentFragment();
-  fragment.append(theme, languages);
+  fragment.append(nikud, menu);
   return fragment;
+}
+
+/**
+ * Closes an open settings menu on Escape (focus back to its button) or on a click outside it.
+ * Bound once; the menu itself is re-rendered.
+ * @param {HTMLElement} root the header controls container
+ */
+export function bindMenuDismiss(root) {
+  document.addEventListener('click', (event) => {
+    const menu = root.querySelector('details[open]');
+    // The path, not menu.contains(target): a click on a menu control re-renders the menu before the
+    // event reaches the document, leaving the target detached; the path still holds the old menu.
+    const inMenu = event.composedPath().some((node) => node.dataset?.setting === 'menu');
+    if (menu && !inMenu) menu.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    const menu = root.querySelector('details[open]');
+    if (event.key !== 'Escape' || !menu) return;
+    menu.open = false;
+    menu.querySelector('summary').focus();
+  });
 }

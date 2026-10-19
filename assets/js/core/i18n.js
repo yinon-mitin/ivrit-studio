@@ -12,6 +12,8 @@ export const STRINGS = {
   themeLight: { en: 'Light', ru: 'Светлая' },
   themeDark: { en: 'Dark', ru: 'Тёмная' },
   language: { en: 'Interface language', ru: 'Язык интерфейса' },
+  nikud: { en: 'Nikud', ru: 'Огласовки' },
+  showRu: { en: 'Russian translation', ru: 'Перевод на русский' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
 };
 

@@ -212,12 +212,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Header toggles `nikud` (default on) and `showRu` (default off), persisted in settings. Views render via `displayHe`. Sections with `nikudToggle: false` ignore the nikud setting. Extend the harness to check both nikud states.
 
 **Acceptance criteria:**
-- [ ] On countries, toggling nikud changes the Hebrew text (`plain` wins when present). On alphabet it changes nothing (e2e)
-- [ ] `showRu` adds RU next to EN in every view, and one-screen still passes (densest mode)
-- [ ] Both toggles persist across reload
+- [x] On countries, toggling nikud changes the Hebrew text (`plain` wins when present). On alphabet it changes nothing (e2e)
+- [x] `showRu` adds RU next to EN in every view, and one-screen still passes (densest mode)
+- [x] Both toggles persist across reload
 
 **Verification:**
-- [ ] `npm run e2e:fast`, `npm run check:task`
+- [x] `npm run e2e:fast`, `npm run check:task` (14 s; webkit 390×664 also green, 138 e2e across three projects)
+
+**Notes:**
+- **Header redesign.** Five controls don't fit 360 px (≈390 needed). The header now holds the brand, the **Nikud** toggle (`aria-pressed`, used constantly) and a **⚙** `<details>` menu with theme, EN/RU and "Russian translation". The menu stays open across re-renders, so focus is restored. Escape closes it (focus returns to ⚙), and so does a click outside. That check uses `event.composedPath()`, because a click inside re-renders the menu before the event reaches `document`. Axe passes with the menu open in both themes.
+- **Nikud setting.** Views get `{ nikud, showRu }`. Nikud is `settings.nikud || section.nikudToggle === false`, and related words use `displayHe` too.
+- **Densest mode.** With RU on, letter cells and cards add a Russian line and shrink their glyphs (`[data-ru]` overrides).
+- **Harness.** Every route is now checked with `showRu: true` seeded, and one-screen is re-checked after turning nikud off.
 
 **Dependencies:** T8, T9
 **Files:** `assets/js/ui/settings.js`, `assets/js/views/*.js`, `tests/e2e/helpers.mjs`, `tests/e2e/settings.spec.mjs`

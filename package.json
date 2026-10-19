@@ -1,0 +1,32 @@
+{
+  "name": "ivrit-studio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Hebrew cheatsheet and trainer for Alef-level ulpan students",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "node --test 'tests/unit/**/*.test.mjs'",
+    "test:coverage": "mkdir -p coverage && node --test --experimental-test-coverage --test-coverage-include='assets/js/core/**' --test-coverage-include-all --test-coverage-lines=90 --test-coverage-branches=80 --test-coverage-functions=90 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info 'tests/unit/**/*.test.mjs'",
+    "coverage:diff": "node scripts/diff-coverage.mjs",
+    "e2e": "playwright test --pass-with-no-tests",
+    "e2e:fast": "playwright test --pass-with-no-tests --project=chromium-phone --project=chromium-laptop",
+    "e2e:webkit": "playwright test --pass-with-no-tests --project=webkit-iphone",
+    "floor": "node scripts/floor-guard.mjs",
+    "secrets": "gitleaks dir . --redact --no-banner --config .gitleaks.toml",
+    "sast": "pipx run semgrep scan --config p/javascript --config .semgrep.yml --error --metrics=off --quiet",
+    "deps": "osv-scanner scan source -L package-lock.json",
+    "check:fast": "npm run floor && npm run secrets",
+    "check:task": "npm run check:fast && npm run test:coverage && npm run coverage:diff && npm run e2e:fast",
+    "check:full": "npm run check:task && npm run e2e:webkit && npm run sast && npm run deps",
+    "check": "npm run check:task"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  }
+}

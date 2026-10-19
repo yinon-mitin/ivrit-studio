@@ -1,0 +1,19 @@
+rules:
+  - id: no-html-sinks
+    languages: [javascript]
+    severity: ERROR
+    message: >-
+      HTML sinks are banned (CONSTRAINTS.md, Security). Imported progress files are
+      user-supplied; build DOM with createElement/textContent instead.
+    paths:
+      include:
+        - "assets/js/**"
+    pattern-either:
+      - pattern: $X.innerHTML = $Y
+      - pattern: $X.outerHTML = $Y
+      - pattern: $X.insertAdjacentHTML(...)
+      - pattern: $X.setHTMLUnsafe(...)
+      - pattern: document.write(...)
+      - pattern: document.writeln(...)
+      - pattern: eval(...)
+      - pattern: new Function(...)

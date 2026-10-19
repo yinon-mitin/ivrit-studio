@@ -1,0 +1,11 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Installed and generated directories"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)coverage/''',
+  '''(^|/)test-results/''',
+  '''(^|/)playwright-report/''',
+]

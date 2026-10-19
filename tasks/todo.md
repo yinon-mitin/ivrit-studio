@@ -27,13 +27,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Pure helpers used by every view and by the validator: `stripNikud`, `isHebrew` (contains ≥ 1 Hebrew letter), `displayHe(entry, nikudOn)` → `he` or `plain ?? stripNikud(he)`.
 
 **Acceptance criteria:**
-- [ ] `stripNikud` removes exactly the SPEC ranges and keeps maqaf U+05BE, geresh U+05F3, gershayim U+05F4, apostrophe (tests: `שָׁלוֹם`, `בּ`, `צ'ילה`, `ז׳נבה`, maqaf phrase)
-- [ ] `displayHe` prefers `plain` when nikud is off, and returns `he` unchanged when on
-- [ ] `isHebrew` is false for Latin/Cyrillic/empty strings and for a string of only nikud marks
+- [x] `stripNikud` removes exactly the SPEC ranges and keeps maqaf U+05BE, geresh U+05F3, gershayim U+05F4, apostrophe (tests: `שָׁלוֹם`, `בּ`, `צ'ילה`, `ז׳נבה`, maqaf phrase)
+- [x] `displayHe` prefers `plain` when nikud is off, and returns `he` unchanged when on
+- [x] `isHebrew` is false for Latin/Cyrillic/empty strings and for a string of only nikud marks
 
 **Verification:**
-- [ ] `node --test tests/unit/hebrew.test.mjs` (written first, seen failing)
-- [ ] `npm run test:coverage`: core thresholds met
+- [x] `node --test tests/unit/hebrew.test.mjs` (written first, seen failing)
+- [x] `npm run test:coverage`: core thresholds met
 
 **Dependencies:** T1
 **Files:** `assets/js/core/hebrew.js`, `tests/unit/hebrew.test.mjs`

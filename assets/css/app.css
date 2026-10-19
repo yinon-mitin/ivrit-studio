@@ -367,6 +367,9 @@ a { color: var(--accent); }
   font-size: min(16cqh, 6.5cqw);
 }
 
+/* Cards without related words (vocabulary, loanwords) give the whole width to the Hebrew. */
+.card:not(:has(.card-related)) .card-title { font-size: min(26cqh, 14cqw); }
+
 .card-meaning { color: var(--muted); }
 
 .card-related {
@@ -424,10 +427,13 @@ a { color: var(--accent); }
 
 .card-grid[data-ru] .card-title { font-size: min(22cqh, 9cqw); }
 
+.card-grid[data-ru] .card:not(:has(.card-related)) .card-title { font-size: min(22cqh, 13cqw); }
+
 .card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }
 
 /* table: rows share the height (--rows set by the view); text sizes derive from one row's height,
-   capped by the width. Same-sound groups are separated by a stronger rule. */
+   capped by the width (cqw of the wrapper) and by a rem ceiling for short tables, whose rows are
+   tall. Names wrap; the one-screen check guards the height. Same-sound groups get a stronger rule. */
 .table-wrap {
   container-type: size;
   flex: 1;
@@ -456,18 +462,21 @@ a { color: var(--accent); }
 .table-he {
   width: 1%;
   /* The largest the row allows at line-height 1.5: the vowel marks are what this view is for. */
-  font-size: min(calc(var(--row) * 0.62), 12cqw);
+  font-size: min(calc(var(--row) * 0.62), 12cqw, 4rem);
   text-align: center;
 }
 
 .table-sound {
   width: 1%;
-  font-size: min(calc(var(--row) * 0.4), 5cqw);
+  font-size: min(calc(var(--row) * 0.4), 5cqw, 1.6rem);
   font-weight: 600;
   text-align: center;
   border-inline: 1px solid var(--border);
 }
 
-.table-name { font-size: min(calc(var(--row) * 0.36), 4.4cqw); }
+.entry-table .table-name {
+  font-size: min(calc(var(--row) * 0.36), 4.4cqw, 1.15rem);
+  white-space: normal;
+}
 
 .table-ru { color: var(--muted); }

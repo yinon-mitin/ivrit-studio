@@ -43,13 +43,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Enforce the SPEC Data Contract. `validateSection`, `validateWeek` and `validateAll({ index, sections, weeks })` return `{ errors, warnings }`. `scripts/validate.mjs` exports `loadData(dir)` and exits non-zero on errors. Seed `data/index.json` (`{ "sections": [], "weeks": [] }`). Activates the "Data valid" constraint row.
 
 **Acceptance criteria:**
-- [ ] One failing-then-passing unit test per validator rule: id unique + `<section>.<slug>`; required fields; `he` has a Hebrew letter; dangling `tab` / `confusables` / `blitz.ask|answer` / `week.items[].section` / index → missing file; > 14 per tab (24 for `letter-grid`/`letter-rows`); unknown `view`; an empty `letter-rows` tab is allowed (Open Question 1)
-- [ ] `verified: false` count is reported as a warning, not an error
-- [ ] `tests/unit/data.test.mjs` runs `validateAll(loadData('data'))` and fails on any error
+- [x] One failing-then-passing unit test per validator rule: id unique + `<section>.<slug>`; required fields; `he` has a Hebrew letter; dangling `tab` / `confusables` / `blitz.ask|answer` / `week.items[].section` / index → missing file; > 14 per tab (24 for `letter-grid`/`letter-rows`); unknown `view`; an empty `letter-rows` tab is allowed (Open Question 1)
+- [x] `verified: false` count is reported as a warning, not an error
+- [x] `tests/unit/data.test.mjs` runs `validateAll(loadData('data'))` and fails on any error
 
 **Verification:**
-- [ ] `node scripts/validate.mjs` → exit 0 on seed data. A temp copy of the data with a broken file → exit 1
-- [ ] `npm run check:task` green
+- [x] `node scripts/validate.mjs` → exit 0 on seed data. A temp copy of the data with a broken file → exit 1
+- [x] `npm run check:task` green
+
+**Notes:** Also enforced beyond SPEC: section/week shape (slug id, `title.en/ru`, `items` array, `YYYY-MM-DD`, `letters` = Hebrew letters), section/week id = file name, files ↔ `index.json` both ways, entries need a tab when the section has tabs, unique blitz template ids. Global id uniqueness follows from per-section uniqueness + the `<section>.` prefix + unique file names. Open for T14: a week adding untabbed entries to a section that has untabbed entries of its own (e.g. `geresh`) is currently an error ("needs a tab").
 
 **Dependencies:** T2
 **Files:** `assets/js/core/schema.js`, `scripts/validate.mjs`, `tests/unit/schema.test.mjs`, `tests/unit/data.test.mjs`, `data/index.json`

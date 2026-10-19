@@ -1,6 +1,7 @@
 {
   "id": "vocab",
   "title": {"en": "Words", "ru": "Слова"},
+  "icon": "מִלָּה",
   "view": "card-grid",
   "nikudToggle": true,
   "blitz": [

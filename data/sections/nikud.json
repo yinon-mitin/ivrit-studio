@@ -1,6 +1,7 @@
 {
   "id": "nikud",
   "title": {"en": "Vowels (nikud)", "ru": "Огласовки"},
+  "icon": "בָּ",
   "view": "table",
   "nikudToggle": false,
   "blitz": [

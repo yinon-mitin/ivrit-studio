@@ -1,6 +1,7 @@
 {
   "id": "gender-number",
   "title": {"en": "Gender & number", "ru": "Род и число"},
+  "icon": "זֹאת",
   "view": "card-grid",
   "nikudToggle": true,
   "blitz": [

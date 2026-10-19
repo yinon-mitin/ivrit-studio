@@ -1,6 +1,7 @@
 {
   "id": "greetings",
   "title": {"en": "Questions & small talk", "ru": "Вопросы и small talk"},
+  "icon": "שָׁלוֹם",
   "view": "card-grid",
   "nikudToggle": true,
   "blitz": [

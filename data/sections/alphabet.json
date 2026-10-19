@@ -1,6 +1,7 @@
 {
   "id": "alphabet",
   "title": { "en": "Alphabet", "ru": "Алфавит" },
+  "icon": "א",
   "view": "letter-grid",
   "nikudToggle": false,
   "tabs": [

@@ -1,6 +1,7 @@
 {
   "id": "countries",
   "title": {"en": "Countries & languages", "ru": "Страны и языки"},
+  "icon": "אֶרֶץ",
   "view": "card-grid",
   "nikudToggle": true,
   "tabs": [

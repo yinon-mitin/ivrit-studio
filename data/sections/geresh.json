@@ -1,6 +1,7 @@
 {
   "id": "geresh",
   "title": {"en": "Geresh & double vav", "ru": "Чупчик и двойной вав"},
+  "icon": "ג׳",
   "view": "card-grid",
   "nikudToggle": true,
   "tabs": [

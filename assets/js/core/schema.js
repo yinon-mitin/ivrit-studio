@@ -1,5 +1,6 @@
 // Data contract validator (SPEC.md, Data Contract). Pure: takes parsed JSON, returns messages.
 import { isHebrew } from './hebrew.js';
+import { weekTabId } from './content.js';
 
 export const VIEWS = ['letter-grid', 'letter-rows', 'card-grid', 'table'];
 export const BLITZ_FIELDS = [
@@ -19,12 +20,6 @@ const LETTER = /^[א-ת]$/;
 const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isText = (value) => typeof value === 'string' && value.trim() !== '';
 
-/**
- * The id of the tab that holds a week's entries.
- * @param {string} date YYYY-MM-DD
- * @returns {string}
- */
-export const weekTabId = (date) => `week-${date}`;
 
 /**
  * @param {unknown} item

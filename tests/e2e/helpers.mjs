@@ -19,7 +19,9 @@ const readSections = () => readJson('data/index.json').sections.map((id) => read
  *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
-  const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`));
+  // Newest first, as the app orders week tabs (core/content.withWeeks).
+  const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`))
+    .sort((x, y) => y.week.localeCompare(x.week));
   const list = [];
   for (const section of readSections()) {
     const items = [...section.items];

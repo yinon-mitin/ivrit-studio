@@ -1,5 +1,5 @@
 // Entry point: settings, hash router and screen assembly.
-import { loadIndex, loadSection } from './loader.js';
+import { loadIndex, loadSection, loadSectionWithWeeks } from './loader.js';
 import { resolveTab, itemsForTab, viewOf } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
@@ -49,7 +49,7 @@ const screens = {
     const lang = current.uiLang;
     const index = await loadIndex();
     if (!index.sections.includes(route.section)) return screens.home(route, current);
-    const section = await loadSection(route.section);
+    const section = await loadSectionWithWeeks(route.section);
     const tab = resolveTab(section, route.tab);
     const title = localized(section.title, lang);
     const screen = el('section', 'screen');

@@ -274,12 +274,21 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `content.js` `mergeWeeks(sections, weeks)` (pure) appends week items to their section under the auto tab `week-<date>`, and exposes `latestLetters(weeks)`. The loader fetches the weeks listed in `index.json`. The i18n title for week tabs is generated. Commit 2: `data/sections/vocab.json` (empty items) + `data/weeks/2026-10-11.json` derived from the teacher's summary. **Blocked on Open Question 2 for the data commit.**
 
 **Acceptance criteria:**
-- [ ] Unit tests: items land in the right section/tab, multiple weeks are ordered by date, `latestLetters` returns the latest week's letters
-- [ ] `#/vocab/week-2026-10-11` renders on one screen. Tabs over 14 fail the validator (split guidance in README)
-- [ ] The week file was produced using only the SPEC Data Contract + summary, and passes the validator with no code change (Success Criterion 9 dry run)
+- [x] Unit tests: items land in the right section/tab, multiple weeks are ordered by date, `latestLetters` returns the latest week's letters
+- [ ] `#/vocab/week-2026-10-11` renders on one screen. Tabs over 14 fail the validator (split guidance in README). *The code path is proven with fixture weeks (`weeks.spec.mjs`); the real route waits for the data. The validator's tab limit is already tested in T3*
+- [ ] The week file was produced using only the SPEC Data Contract + summary, and passes the validator with no code change (Success Criterion 9 dry run). **Blocked: teacher's summary (Open Question 2)**
 
 **Verification:**
-- [ ] `npm test`, `node scripts/validate.mjs`, `npm run e2e:fast`, `npm run check:task`
+- [x] `npm test`, `npm run e2e:fast`, `npm run check:task` for the code half (20 s; 216 e2e across three projects)
+- [ ] `node scripts/validate.mjs` with `data/weeks/2026-10-11.json` + `data/sections/vocab.json` (data half)
+
+**Status:** code half done (`feat(weeks)` commit). The data half (`vocab.json` + the week file + README split guidance) is blocked on the teacher's summary. `vocab.json` is deliberately not added yet: an empty section would show an empty screen on home.
+
+**Notes:**
+- `content.withWeeks(section, weeks)` is per section (the plan said `mergeWeeks(sections, weeks)`; one section is what a screen loads). Week tabs come after the section's own tabs, newest first, so `#/vocab` opens on the current week. Tab objects are `{ id: 'week-<date>', week }`, and the title comes from `i18n.weekTitle` via `Intl` with the date read as UTC ("Week of 11 Oct" / "Неделя 11 окт.").
+- `weekTabId` moved to `content.js`; `schema.js` imports it, so app and validator share one definition.
+- `loader.loadSectionWithWeeks` loads every week in `index.json`.
+- The harness orders week routes newest first, like the app.
 
 **Dependencies:** T3, T6
 **Files:** `assets/js/core/content.js`, `tests/unit/content.test.mjs`, `assets/js/loader.js`, `assets/js/core/i18n.js`, `data/sections/vocab.json`, `data/weeks/2026-10-11.json`, `data/index.json`

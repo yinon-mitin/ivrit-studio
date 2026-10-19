@@ -126,12 +126,14 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `views/letter-rows.js`: a row of print letters directly above the same letters in cursive, for practising cursive reading. Add the alphabet tab per the answer to Open Question 1.
 
 **Acceptance criteria:**
-- [ ] `#/alphabet/<rows-tab>` shows every letter print-over-cursive, aligned per column, RTL order
-- [ ] One-screen + axe pass on all three viewports (webkit in `check:full`)
+- [x] `#/alphabet/<rows-tab>` shows every letter print-over-cursive, aligned per column, RTL order
+- [x] One-screen + axe pass on all three viewports (webkit in `check:full`)
 
 **Verification:**
-- [ ] `npm run e2e:fast`, `npm run check:task`
-- [ ] Manual: compare with the teacher's handwriting (SPEC manual check)
+- [x] `npm run e2e:fast`, `npm run check:task` (+ webkit 390×664)
+- [ ] Manual: compare with the teacher's handwriting (SPEC manual check; needs the human with a photo of the board or a handout)
+
+**Notes:** Decided 2026-10-19 (Open Question 1): a `letter-rows` tab without entries of its own shows every entry of the section. The rule lives in `content.itemsForTab` (uses the effective view) and is mirrored by `helpers.sectionRoutes` counts. The tab is `#/alphabet/rows`, all 31 letters in data order. Columns: 8 in portrait (≈42×127 px at 360×640, print ≈33 px), 11 in landscape.
 
 **Dependencies:** T6
 **Files:** `assets/js/views/letter-rows.js`, `assets/js/main.js` (view registry), `data/sections/alphabet.json`

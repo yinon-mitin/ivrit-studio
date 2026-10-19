@@ -70,7 +70,7 @@ Checkpoints after each phase (see `tasks/todo.md`).
 | Emoji flags show as `IL`/`FR` on Windows | Low | Accepted in the idea doc |
 
 ## Open Questions
-1. **Alphabet "print over cursive" tab content.** An entry has one `tab`, so the `letter-rows` tab has no items of its own. **Recommendation:** a `letter-rows` tab with zero own items renders all letters of the section as a print row over a cursive row. This is a view behaviour; the validator allows empty `letter-rows` tabs and the data format doesn't change. Alternative: the tab gets its own reading-practice entries (short words).
+1. ~~**Alphabet "print over cursive" tab content.**~~ **Decided 2026-10-19:** a `letter-rows` tab with no entries of its own shows every letter of the section, print over cursive (implemented in T7). Own reading-practice words were the rejected alternative.
 2. **Week 2026-10-11 teacher summary** (`Week of October 11 summary and homework.docx`). Where is it? It should not be committed. Only the derived JSON goes in `data/weeks/`.
 3. **Font sources.** Heebo from `google/fonts` (OFL). Gveret Levin from AlefAlefAlef's OFL release. OK to download both once in T4?
 4. From SPEC: classmates' home countries missing from the list? Who verifies nikud, and how is it marked?

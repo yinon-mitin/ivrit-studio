@@ -128,6 +128,7 @@ SPEC.md  CONSTRAINTS.md  CLAUDE.md  README.md  LICENSE  package.json  playwright
 {
   "id": "countries",
   "title": { "en": "Countries & languages", "ru": "Страны и языки" },
+  "icon": "אֶרֶץ",                 // опционально: буква или короткое слово, рисуется прописью на плитке раздела на главной
   "view": "card-grid",             // letter-grid | letter-rows | card-grid | table (| forms-table после MVP)
   "nikudToggle": true,             // false для alphabet: дагеш и точки שׁ/שׂ не убираются
   "tabs": [{ "id": "eu-1", "title": { "en": "EU I", "ru": "ЕС I" }, "view": "card-grid" }],  // view вкладки переопределяет раздел

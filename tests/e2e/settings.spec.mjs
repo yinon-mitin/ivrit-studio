@@ -5,8 +5,9 @@ import { test, expect } from '@playwright/test';
 import { open, openMenu, sectionRoutes, expectNoSeriousAxe, SETTINGS_KEY } from './helpers.mjs';
 import { displayHe } from '../../assets/js/core/hebrew.js';
 
-const LIGHT_BG = 'rgb(255, 255, 255)';
-const DARK_BG = 'rgb(20, 22, 26)';
+// The --paper token of each theme (assets/css/app.css).
+const LIGHT_BG = 'rgb(246, 247, 251)';
+const DARK_BG = 'rgb(17, 21, 31)';
 const firstSection = (() => {
   const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
   return JSON.parse(readFileSync(new URL(`../../data/sections/${index.sections[0]}.json`, import.meta.url), 'utf8'));
@@ -76,7 +77,7 @@ test.describe('interface language', () => {
     test('defaults to Russian', async ({ page }) => {
       await open(page, '#/');
       await expect(page.locator('#home-title')).toHaveText('Разделы');
-      await expect(page.locator(`#content a[data-section="${firstSection.id}"]`)).toHaveText(firstSection.title.ru);
+      await expect(page.locator(`#content a[data-section="${firstSection.id}"]`)).toContainText(firstSection.title.ru);
       await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
     });
   });

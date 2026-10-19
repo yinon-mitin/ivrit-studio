@@ -51,6 +51,7 @@ export function validateSection(section) {
   if (!isText(section.id) || !SLUG.test(section.id)) errors.push(`${at}: id must be a lowercase slug`);
   if (!isText(section.title?.en) || !isText(section.title?.ru)) errors.push(`${at}: title needs en and ru`);
   if (!VIEWS.includes(section.view)) errors.push(`${at}: unknown view "${section.view}"`);
+  if (section.icon !== undefined && !isText(section.icon)) errors.push(`${at}: icon must be a non-empty string`);
   if (!Array.isArray(section.items)) return { errors: [...errors, `${at}: items must be an array`], warnings };
 
   const tabs = section.tabs ?? [];

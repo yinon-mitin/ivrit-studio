@@ -1,5 +1,5 @@
 // Entry point: settings, hash router and screen assembly.
-import { loadIndex, loadSection, loadSectionWithWeeks } from './loader.js';
+import { loadIndex, loadSectionWithWeeks } from './loader.js';
 import { resolveTab, itemsForTab, viewOf } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
@@ -43,7 +43,7 @@ const screens = {
   home: async (route, { uiLang: lang }) => {
     const index = await loadIndex();
     document.title = APP_NAME;
-    return renderHome(await Promise.all(index.sections.map(loadSection)), lang);
+    return renderHome(await Promise.all(index.sections.map(loadSectionWithWeeks)), lang);
   },
   section: async (route, current) => {
     const lang = current.uiLang;
@@ -55,7 +55,19 @@ const screens = {
     const screen = el('section', 'screen');
     screen.dataset.screen = 'section';
     const head = el('div', 'screen-head');
-    head.append(el('h2', 'screen-title', title));
+    const bar = el('div', 'screen-bar');
+    const home = el('a', 'back', '‹');
+    home.href = '#/';
+    home.dataset.action = 'home';
+    home.setAttribute('aria-label', t('home', lang));
+    bar.append(home, el('h2', 'screen-title', title));
+    if ((section.blitz ?? []).length > 0) {
+      const blitz = el('a', 'action', t('blitz', lang));
+      blitz.href = `#/${section.id}/blitz`;
+      blitz.dataset.action = 'blitz';
+      bar.append(blitz);
+    }
+    head.append(bar);
     if (tab !== null) head.append(renderTabs(section, tab, lang));
     // Sections with nikudToggle false (the alphabet) always keep their nikud.
     const options = { nikud: current.nikud || section.nikudToggle === false, showRu: current.showRu };

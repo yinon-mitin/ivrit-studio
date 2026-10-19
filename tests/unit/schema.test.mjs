@@ -154,6 +154,12 @@ describe('validateSection', () => {
   it('rejects items that are not an array', () => {
     assert.ok(hasError(validateSection(section({ items: {} })), /items must be an array/));
   });
+
+  it('accepts an optional icon and rejects an empty or non-string one', () => {
+    assert.deepEqual(validateSection(section({ icon: 'אֶרֶץ' })).errors, []);
+    assert.ok(hasError(validateSection(section({ icon: ' ' })), /section countries: icon must be a non-empty string/));
+    assert.ok(hasError(validateSection(section({ icon: 7 })), /icon must be a non-empty string/));
+  });
 });
 
 describe('validateWeek', () => {

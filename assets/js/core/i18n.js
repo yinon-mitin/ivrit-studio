@@ -16,6 +16,9 @@ export const STRINGS = {
   showRu: { en: 'Russian translation', ru: 'Перевод на русский' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
   weekTab: { en: 'Week of {date}', ru: 'Неделя {date}' },
+  home: { en: 'All sections', ru: 'Все разделы' },
+  blitz: { en: 'Blitz', ru: 'Блиц' },
+  blitzIn: { en: 'Blitz: {section}', ru: 'Блиц: {section}' },
 };
 
 /**
@@ -61,4 +64,21 @@ export function weekTitle(date, lang) {
   const [year, month, day] = date.split('-').map(Number);
   const format = new Intl.DateTimeFormat(lang === 'ru' ? 'ru-RU' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
   return t('weekTab', lang, { date: format.format(Date.UTC(year, month - 1, day)) });
+}
+
+/** Card-count nouns by plural category (Intl.PluralRules). */
+const CARDS = {
+  en: { one: 'card', other: 'cards' },
+  ru: { one: 'карточка', few: 'карточки', many: 'карточек', other: 'карточки' },
+};
+
+/**
+ * "31 cards" / "31 карточка", with the language's plural rules.
+ * @param {number} count
+ * @param {'en' | 'ru'} lang
+ * @returns {string}
+ */
+export function countCards(count, lang) {
+  const forms = CARDS[lang];
+  return `${count} ${forms[new Intl.PluralRules(lang).select(count)] ?? forms.other}`;
 }

@@ -1,4 +1,7 @@
-/* Ivrit Studio — theme tokens, layout and the one-screen rule (SPEC.md, Behaviour Contracts). */
+/* Ivrit Studio — design tokens, layout and the one-screen rule (SPEC.md, Behaviour Contracts).
+   Visual idea: a study notebook. Cool paper, white sheets, ruled lines, and blue ballpoint "ink" for
+   everything written by hand (cursive) and everything you can act on. A highlighter marks where you
+   are. Boldness is spent in one place: cursive Hebrew in ink. */
 
 @font-face {
   font-family: 'Heebo';
@@ -13,17 +16,25 @@
   font-display: swap;
 }
 
-/* Theme: light by default, dark from the system unless the user picked light, or when picked. */
+/* Tokens. Light: paper and ink. Dark: a night desk. Dark applies from the system unless the user
+   picked light, or when picked. Contrast: text ≥ 5.5:1 on paper and sheets, ink ≥ 6.8:1. */
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --fg: #1b1d21;
-  --muted: #545b66;
-  --surface: #f2f4f7;
-  --border: #cfd5dd;
-  --accent: #1f4fd1;
+  --paper: #f6f7fb;
+  --sheet: #ffffff;
+  --text: #172033;
+  --muted: #596377;
+  --line: #dce1eb;
+  --line-strong: #9aa3b5;
+  --ink: #2445c8;
+  --on-ink: #ffffff;
+  --ink-soft: #e7ecfc;
+  --marker: #ffe14d;
+
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
   --gap: clamp(6px, 1.6vmin, 14px);
-  --radius: 10px;
   --font-print: 'Heebo', system-ui, sans-serif;
   --font-cursive: 'Gveret Levin', 'Heebo', system-ui, sans-serif;
 }
@@ -31,23 +42,31 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --bg: #14161a;
-    --fg: #eceff3;
-    --muted: #a9b1bc;
-    --surface: #1f232a;
-    --border: #3a414c;
-    --accent: #8fb3ff;
+    --paper: #11151f;
+    --sheet: #1a2030;
+    --text: #e9edf5;
+    --muted: #a3adbf;
+    --line: #2d3547;
+    --line-strong: #5d687e;
+    --ink: #93aaff;
+    --on-ink: #0f1424;
+    --ink-soft: #242e4d;
+    --marker: #c9a623;
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #14161a;
-  --fg: #eceff3;
-  --muted: #a9b1bc;
-  --surface: #1f232a;
-  --border: #3a414c;
-  --accent: #8fb3ff;
+  --paper: #11151f;
+  --sheet: #1a2030;
+  --text: #e9edf5;
+  --muted: #a3adbf;
+  --line: #2d3547;
+  --line-strong: #5d687e;
+  --ink: #93aaff;
+  --on-ink: #0f1424;
+  --ink-soft: #242e4d;
+  --marker: #c9a623;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -58,21 +77,41 @@ html, body {
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--paper);
+  color: var(--text);
   font-family: var(--font-print);
   font-size: clamp(14px, 1.2vmin + 10px, 18px);
   line-height: 1.35;
+  -webkit-tap-highlight-color: transparent;
 }
 
-a { color: var(--accent); }
+a { color: var(--ink); }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--ink);
   outline-offset: 2px;
 }
 
 [hidden] { display: none !important; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Only movement is animated: colour transitions would also run on every theme switch. */
+  .control, .action, .back, .tile { transition: transform 120ms ease; }
+
+  .control:active, .action:active, .back:active, .tile:active { transform: scale(0.97); }
+}
 
 /* One screen: header + content fill the dynamic viewport; nothing may overflow it (checked by e2e). */
 .app {
@@ -82,25 +121,120 @@ a { color: var(--accent); }
   height: 100dvh;
 }
 
+/* Header: the brand (cursive mark + name, both lead home), then the nikud toggle and ⚙ menu. */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--gap);
-  padding: var(--gap) calc(var(--gap) * 1.5);
-  border-bottom: 1px solid var(--border);
+  padding: calc(var(--gap) * 0.75) calc(var(--gap) * 1.5);
+  border-bottom: 1px solid var(--line);
 }
 
 .brand {
-  margin: 0;
-  font-size: 1.15em;
-  font-weight: 700;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-s);
 }
 
-.brand a {
-  color: inherit;
-  text-decoration: none;
+.brand-mark {
+  font-family: var(--font-cursive);
+  font-size: 1.45em;
+  line-height: 1.35;
+  color: var(--ink);
 }
+
+.brand-name {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.header-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Buttons: quiet outlines on a sheet; pressed/on = filled with ink. */
+.control {
+  min-height: 34px;
+  padding: 2px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.control:hover { border-color: var(--line-strong); }
+
+.control[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-ink);
+}
+
+.segmented { display: inline-flex; }
+
+.segmented .control:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.segmented .control:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}
+
+/* Settings menu: a <details> whose panel floats under the header, aligned to the end edge. */
+.menu { position: relative; }
+
+.menu > summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 2px 8px;
+  list-style: none;
+}
+
+.menu > summary::-webkit-details-marker { display: none; }
+
+.menu[open] > summary {
+  background: var(--ink-soft);
+  border-color: var(--ink);
+}
+
+.menu-panel {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 14rem;
+  padding: 12px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: 0 12px 32px rgb(15 20 36 / 0.16);
+}
+
+.menu-panel .segmented { display: flex; }
+
+.menu-panel .segmented .control { flex: 1; }
 
 .content {
   flex: 1;
@@ -109,37 +243,98 @@ a { color: var(--accent); }
   padding: var(--gap);
 }
 
-.screen-title {
-  margin: 0 0 var(--gap);
-  font-size: 1em;
-  font-weight: 600;
-  color: var(--muted);
+/* Home: a grid of section tiles that fills the screen (2 columns on a phone, 4 on a laptop). Each tile
+   is a size container: the cursive icon scales with the tile. */
+.home {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Home */
 .home-grid {
+  --cols: 2;
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1;
+  min-height: 0;
   display: grid;
   gap: var(--gap);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
 }
 
-.home-grid a {
+@media (min-aspect-ratio: 1/1) {
+  .home-grid { --cols: 4; }
+}
+
+.tile {
+  container-type: size;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+}
+
+.tile:hover { border-color: var(--line-strong); }
+
+.tile-open {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 8cqmin 9cqmin;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: inherit;
+}
+
+/* The icon sits at the start (left), the Blitz link at the end (right); the width cap keeps even a
+   long word like שָׁלוֹם clear of the link. */
+.tile-icon {
+  align-self: flex-start;
+  margin-bottom: auto;
+  padding-inline: 0.12em; /* Gveret Levin glyphs overhang their box */
+  font-family: var(--font-cursive);
+  font-size: min(34cqh, 19cqw);
+  line-height: 1.35;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.tile-title {
+  font-size: min(13cqh, 9.5cqw);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tile-count {
+  font-size: min(10cqh, 7.5cqw);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.tile-blitz {
+  position: absolute;
+  top: 7cqmin;
+  inset-inline-end: 7cqmin;
+  display: inline-flex;
   align-items: center;
-  min-height: 3rem;
-  padding: var(--gap) calc(var(--gap) * 1.5);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--fg);
+  min-height: 30px;
+  padding: 2px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 0.85em;
   font-weight: 600;
   text-decoration: none;
 }
 
-/* Section screen: title + tabs on top, the view fills the rest. */
+.tile-blitz:hover { background: var(--ink-soft); }
+
+/* Section screen: a bar (back, title, Blitz), tabs underneath, then the view fills the rest. */
 .screen {
   height: 100%;
   display: flex;
@@ -149,35 +344,84 @@ a { color: var(--accent); }
 
 .screen-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--gap);
+  flex-direction: column;
+  gap: calc(var(--gap) * 0.75);
 }
 
-.screen-head .screen-title { margin: 0; }
+.screen-bar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--gap) * 0.75);
+}
 
+.screen-title {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.screen-bar .screen-title { flex: 1; }
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  padding-bottom: 3px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--sheet);
+  color: var(--text);
+  font-size: 1.4em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.back:hover { border-color: var(--line-strong); }
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: 34px;
+  padding: 2px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: 600;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+/* Tabs: text links on a ruled line; the current one is underlined with the highlighter. */
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  column-gap: 14px;
+  row-gap: 2px;
+  border-bottom: 1px solid var(--line);
 }
 
 .tabs a {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
-  padding: 2px 12px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--fg);
+  padding: 0 2px;
+  color: var(--muted);
   font-size: 0.9em;
+  font-weight: 500;
   text-decoration: none;
 }
 
+.tabs a:hover { color: var(--text); }
+
 .tabs a[aria-current='page'] {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--bg);
+  color: var(--text);
+  font-weight: 700;
+  background: linear-gradient(transparent 62%, var(--marker) 62%, var(--marker) 88%, transparent 88%);
 }
 
 /* letter-grid: 5 columns in portrait, 8 in landscape; rows share the height; cells size their text. */
@@ -206,9 +450,9 @@ a { color: var(--accent); }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
   text-align: center;
 }
 
@@ -225,6 +469,7 @@ a { color: var(--accent); }
   font-family: var(--font-cursive);
   font-size: min(24cqh, 46cqw);
   line-height: 1.35;
+  color: var(--ink);
 }
 
 .letter-label {
@@ -264,7 +509,7 @@ a { color: var(--accent); }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .letter-column > * { display: block; }
@@ -272,45 +517,6 @@ a { color: var(--accent); }
 .letter-column .glyph-print { font-size: min(36cqh, 80cqw); }
 
 .letter-column .glyph-cursive { font-size: min(30cqh, 66cqw); }
-
-/* Header controls: theme cycle button and the EN/RU switch. */
-.header-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-}
-
-.control {
-  min-height: 32px;
-  padding: 2px 12px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--fg);
-  font: inherit;
-  font-size: 0.9em;
-  cursor: pointer;
-}
-
-.control[aria-pressed='true'] {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--bg);
-}
-
-.segmented { display: inline-flex; }
-
-.segmented .control:not(:first-child) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.segmented .control:not(:last-child) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right-width: 0;
-}
 
 /* card-grid: 2 columns in portrait, 4 in landscape; rows share the height. Each card is a size
    container: main text on the start (right) side, related words stacked on the end side, sized by
@@ -340,10 +546,10 @@ a { color: var(--accent); }
   align-items: center;
   justify-content: space-between;
   gap: 3cqw;
-  padding: 0 3cqw;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  padding: 0 4cqw;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
   line-height: 1.5;
   white-space: nowrap;
 }
@@ -378,58 +584,12 @@ a { color: var(--accent); }
   padding: 0;
   align-items: flex-end;
   font-size: min(18cqh, 7cqw);
+  color: var(--ink);
 }
 
 .card-related[data-count='3'] { font-size: min(15cqh, 6.5cqw); }
 
 .card-related[data-count='4'] { font-size: min(13cqh, 6cqw); }
-
-/* Settings menu: a <details> whose panel floats under the header, aligned to the end edge. */
-.menu { position: relative; }
-
-.menu > summary {
-  display: inline-flex;
-  align-items: center;
-  list-style: none;
-}
-
-.menu > summary::-webkit-details-marker { display: none; }
-
-.menu-panel {
-  position: absolute;
-  inset-inline-end: 0;
-  top: calc(100% + 6px);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  min-width: 13rem;
-  padding: 10px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
-}
-
-.menu-panel .segmented { display: flex; }
-
-.menu-panel .segmented .control { flex: 1; }
-
-/* Densest mode (Russian shown): one more text line per cell/card, so the glyphs give up room. */
-.letter-ru { display: block; }
-
-.letter-grid[data-ru] .glyph-print { font-size: min(26cqh, 56cqw); }
-
-.letter-grid[data-ru] .glyph-cursive { font-size: min(20cqh, 46cqw); }
-
-.letter-grid[data-ru] .letter-label { font-size: min(10cqh, 15cqw); }
-
-.card-grid[data-ru] .card-title { font-size: min(22cqh, 9cqw); }
-
-.card-grid[data-ru] .card:not(:has(.card-related)) .card-title { font-size: min(22cqh, 13cqw); }
-
-.card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }
 
 /* table: rows share the height (--rows set by the view); text sizes derive from one row's height,
    capped by the width (cqw of the wrapper) and by a rem ceiling for short tables, whose rows are
@@ -447,17 +607,18 @@ a { color: var(--accent); }
   margin-inline: auto;
   border-collapse: collapse;
   line-height: 1.5;
+  background: var(--sheet);
 }
 
 .entry-table td {
   padding: 0 2cqw;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
   white-space: nowrap;
 }
 
 .entry-table tr:first-child td { border-top: 0; }
 
-.entry-table tr.group-start td { border-top: 2px solid var(--muted); }
+.entry-table tr.group-start td { border-top: 2px solid var(--line-strong); }
 
 .table-he {
   width: 1%;
@@ -469,9 +630,11 @@ a { color: var(--accent); }
 .table-sound {
   width: 1%;
   font-size: min(calc(var(--row) * 0.4), 5cqw, 1.6rem);
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  color: var(--ink);
+  background: var(--ink-soft);
+  border-inline: 1px solid var(--line);
 }
 
 .entry-table .table-name {
@@ -480,3 +643,18 @@ a { color: var(--accent); }
 }
 
 .table-ru { color: var(--muted); }
+
+/* Densest mode (Russian shown): one more text line per cell/card, so the glyphs give up room. */
+.letter-ru { display: block; }
+
+.letter-grid[data-ru] .glyph-print { font-size: min(26cqh, 56cqw); }
+
+.letter-grid[data-ru] .glyph-cursive { font-size: min(20cqh, 46cqw); }
+
+.letter-grid[data-ru] .letter-label { font-size: min(10cqh, 15cqw); }
+
+.card-grid[data-ru] .card-title { font-size: min(22cqh, 9cqw); }
+
+.card-grid[data-ru] .card:not(:has(.card-related)) .card-title { font-size: min(22cqh, 13cqw); }
+
+.card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }

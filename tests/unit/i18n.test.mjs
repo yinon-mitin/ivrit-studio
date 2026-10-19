@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { STRINGS, pickLang, t, localized, weekTitle } from '../../assets/js/core/i18n.js';
+import { STRINGS, pickLang, t, localized, weekTitle, countCards } from '../../assets/js/core/i18n.js';
 
 describe('pickLang', () => {
   it('picks Russian for any ru locale', () => {
@@ -51,5 +51,20 @@ describe('weekTitle', () => {
 
   it('does not shift the day across time zones', () => {
     assert.equal(weekTitle('2026-01-01', 'en'), 'Week of 1 Jan');
+  });
+});
+
+describe('countCards', () => {
+  it('uses English singular and plural', () => {
+    assert.equal(countCards(1, 'en'), '1 card');
+    assert.equal(countCards(31, 'en'), '31 cards');
+  });
+
+  it('uses the three Russian plural forms', () => {
+    assert.equal(countCards(1, 'ru'), '1 карточка');
+    assert.equal(countCards(21, 'ru'), '21 карточка');
+    assert.equal(countCards(3, 'ru'), '3 карточки');
+    assert.equal(countCards(14, 'ru'), '14 карточек');
+    assert.equal(countCards(73, 'ru'), '73 карточки');
   });
 });

@@ -4,7 +4,7 @@
 import { t } from '../core/i18n.js';
 import { merge, parse, serialize } from '../core/progress.js';
 import { loadProgress, saveProgress } from '../progress-store.js';
-import { el } from '../views/dom.js';
+import { downloadFile, el } from '../views/dom.js';
 
 /** @param {Date} date @returns {string} YYYY-MM-DD in local time */
 const localDate = (date) => [date.getFullYear(), date.getMonth() + 1, date.getDate()].map((n) => String(n).padStart(2, '0')).join('-');
@@ -53,12 +53,7 @@ export function renderProgress(lang) {
   download.type = 'button';
   download.dataset.action = 'download';
   download.addEventListener('click', () => {
-    const url = URL.createObjectURL(new Blob([exportText()], { type: 'application/json' }));
-    const link = el('a', '');
-    link.href = url;
-    link.download = `ivrit-progress-${localDate(new Date())}.json`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    downloadFile(`ivrit-progress-${localDate(new Date())}.json`, exportText(), 'application/json');
   });
   const copy = el('button', 'control', t('copy', lang));
   copy.type = 'button';

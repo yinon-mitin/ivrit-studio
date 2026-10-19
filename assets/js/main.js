@@ -7,7 +7,8 @@ import { renderTabs } from './ui/tabs.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { renderBlitz } from './blitz-view.js';
 import { renderProgress } from './ui/progress-screen.js';
-import { el } from './views/dom.js';
+import { toTsv, ankiFileName } from './core/anki.js';
+import { downloadFile, el } from './views/dom.js';
 import { renderCardGrid } from './views/card-grid.js';
 import { renderTable } from './views/table.js';
 import { renderLetterGrid } from './views/letter-grid.js';
@@ -68,6 +69,12 @@ const screens = {
       blitz.dataset.action = 'blitz';
       bar.append(blitz);
     }
+    const anki = el('button', 'control', t('anki', lang));
+    anki.type = 'button';
+    anki.dataset.action = 'anki';
+    anki.setAttribute('aria-label', t('ankiDownload', lang, { section: title }));
+    anki.addEventListener('click', () => downloadFile(ankiFileName(section), toTsv(section), 'text/tab-separated-values;charset=utf-8'));
+    bar.append(anki);
     head.append(bar);
     if (tab !== null) head.append(renderTabs(section, tab, lang));
     // Sections with nikudToggle false (the alphabet) always keep their nikud.

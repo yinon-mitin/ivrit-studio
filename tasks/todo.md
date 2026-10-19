@@ -443,12 +443,14 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Pure `anki.js` `toTsv(section, lang)` follows the SPEC format (headers `#separator:tab`, `#html:false`, `#tags column:3`; front `he`; back `translit — en / ru`; tags `ivrit::<section> ivrit::<tab>`; tabs/newlines → space). A download button in the cheatsheet header saves `ivrit-<section>.tsv`.
 
 **Acceptance criteria:**
-- [ ] Unit tests: headers, escaping, tags (incl. week tabs), and RU appended only when present
-- [ ] e2e: clicking the button downloads `ivrit-countries.tsv` whose first line is `#separator:tab`
+- [x] Unit tests: headers, escaping, tags (incl. week tabs). *RU is a required field, so the back is always `translit — en / ru`*
+- [x] e2e: clicking the button downloads `ivrit-<section>.tsv` (every section) whose first line is `#separator:tab`, one 3-column row per entry
 
 **Verification:**
-- [ ] `node --test tests/unit/anki.test.mjs`, `npm run e2e:fast`, `npm run check:task`
-- [ ] Manual (once): import into Anki with no edits (Success Criterion 6)
+- [x] `node --test tests/unit/anki.test.mjs`, `npm run e2e:fast`, `npm run check:task` (+ webkit; 360 e2e across three projects)
+- [ ] Manual (once): import into Anki with no edits (Success Criterion 6). **Needs the human with Anki installed**
+
+**Notes:** The "Anki" button sits in the section bar next to Blitz and exports the whole section, weeks included. `downloadFile` moved to `views/dom.js` and is shared with the progress export.
 
 **Dependencies:** T3, T6
 **Files:** `assets/js/core/anki.js`, `tests/unit/anki.test.mjs`, `assets/js/ui/tabs.js` or header module, `tests/e2e/anki.spec.mjs`

@@ -38,6 +38,8 @@ export const STRINGS = {
   again: { en: 'Again', ru: 'Ещё раз' },
   otherExercise: { en: 'Other exercise', ru: 'Другое упражнение' },
   noCards: { en: 'Nothing to practise here yet.', ru: 'Здесь пока нечего тренировать.' },
+  anki: { en: 'Anki', ru: 'Anki' },
+  ankiDownload: { en: 'Download {section} for Anki', ru: 'Скачать «{section}» для Anki' },
   progressTitle: { en: 'Progress & backup', ru: 'Прогресс и перенос' },
   practised: { en: 'cards practised', ru: 'карточек в работе' },
   learned: { en: 'learned (box 4–5)', ru: 'выучено (коробки 4–5)' },

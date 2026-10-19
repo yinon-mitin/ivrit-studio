@@ -26,3 +26,18 @@ export function hebrew(tag, className, text) {
   node.dir = 'rtl';
   return node;
 }
+
+/**
+ * Saves text as a file in the browser's downloads.
+ * @param {string} name
+ * @param {string} text
+ * @param {string} type MIME type
+ */
+export function downloadFile(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = name;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}

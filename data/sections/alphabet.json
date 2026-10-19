@@ -5,7 +5,8 @@
   "nikudToggle": false,
   "tabs": [
     { "id": "letters", "title": { "en": "Letters", "ru": "Буквы" } },
-    { "id": "variants", "title": { "en": "Finals & variants", "ru": "Софит и варианты" } }
+    { "id": "variants", "title": { "en": "Finals & variants", "ru": "Софит и варианты" } },
+    { "id": "rows", "title": { "en": "Print over cursive", "ru": "Печатные над прописными" }, "view": "letter-rows" }
   ],
   "blitz": [
     { "id": "print-to-name", "ask": "he", "answer": "meaning" },

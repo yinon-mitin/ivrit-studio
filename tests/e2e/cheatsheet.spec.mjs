@@ -39,6 +39,27 @@ for (const route of sectionRoutes()) {
   }
 }
 
+for (const route of sectionRoutes().filter((r) => r.view === 'letter-rows' && r.count > 0)) {
+  test(`${route.hash} puts each cursive letter under its print letter, right to left`, async ({ page }) => {
+    await open(page, route.hash);
+    const columns = await page.locator('#content [data-view="letter-rows"] [data-entry]').evaluateAll((entries) => entries.map((entry) => {
+      const box = (selector) => entry.querySelector(selector).getBoundingClientRect();
+      const print = box('.glyph-print');
+      const cursive = box('.glyph-cursive');
+      return {
+        sameText: entry.querySelector('.glyph-print').textContent === entry.querySelector('.glyph-cursive').textContent,
+        below: cursive.top >= print.bottom - 1,
+        centred: Math.abs((print.left + print.right) / 2 - (cursive.left + cursive.right) / 2) <= 2,
+        x: print.left,
+        y: print.top,
+      };
+    }));
+    for (const column of columns) expect(column).toMatchObject({ sameText: true, below: true, centred: true });
+    const [first, second] = columns;
+    expect(second.y === first.y && second.x < first.x).toBe(true);
+  });
+}
+
 for (const route of sectionRoutes().filter((r) => r.tabs.length > 0 && r.tab === r.tabs[0])) {
   test(`#/${route.section} and an unknown tab show the first tab`, async ({ page }) => {
     for (const hash of [`#/${route.section}`, `#/${route.section}/no-such-tab`]) {

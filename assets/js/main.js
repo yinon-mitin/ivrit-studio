@@ -5,6 +5,7 @@ import { renderHome } from './ui/home.js';
 import { renderTabs } from './ui/tabs.js';
 import { el } from './views/dom.js';
 import { renderLetterGrid } from './views/letter-grid.js';
+import { renderLetterRows } from './views/letter-rows.js';
 
 const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
@@ -13,6 +14,7 @@ const content = document.getElementById('content');
 /** Cheatsheet renderers by view name (SPEC: section/tab `view`). */
 const VIEWS = {
   'letter-grid': renderLetterGrid,
+  'letter-rows': renderLetterRows,
 };
 
 /**

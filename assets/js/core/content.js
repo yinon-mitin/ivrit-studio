@@ -12,12 +12,15 @@ export function resolveTab(section, tabId) {
 }
 
 /**
- * The entries shown in a tab, in data order; every entry when the section has no tabs.
- * @param {{ items: Array<{ tab?: string }> }} section
- * @param {{ id: string } | null} tab
+ * The entries shown in a tab, in data order. Every entry of the section when it has no tabs, or for a
+ * `letter-rows` tab without entries of its own (the alphabet's "print over cursive" tab).
+ * @param {{ view: string, items: Array<{ tab?: string }> }} section
+ * @param {{ id: string, view?: string } | null} tab
  */
 export function itemsForTab(section, tab) {
-  return tab === null ? section.items : section.items.filter((item) => item.tab === tab.id);
+  if (tab === null) return section.items;
+  const own = section.items.filter((item) => item.tab === tab.id);
+  return own.length === 0 && viewOf(section, tab) === 'letter-rows' ? section.items : own;
 }
 
 /**

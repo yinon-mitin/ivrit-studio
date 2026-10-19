@@ -34,7 +34,9 @@ export function sectionRoutes() {
       list.push({ hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length });
     }
     for (const tab of tabs) {
-      const count = items.filter((item) => item.tab === tab.id).length;
+      const own = items.filter((item) => item.tab === tab.id).length;
+      // A letter-rows tab without entries of its own shows the whole section (SPEC decision, T7).
+      const count = own === 0 && tab.view === 'letter-rows' ? items.length : own;
       list.push({ hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count });
     }
   }

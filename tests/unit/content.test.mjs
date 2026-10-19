@@ -36,6 +36,26 @@ describe('itemsForTab', () => {
   it('returns every entry for a section without tabs', () => {
     assert.deepEqual(itemsForTab(untabbed, null).map((i) => i.id), ['geresh.jeans', 'geresh.chile']);
   });
+
+  it('returns every entry of the section for a letter-rows tab without entries of its own', () => {
+    const section = { ...tabbed, tabs: [...tabbed.tabs, { id: 'print-cursive', view: 'letter-rows' }] };
+    const ids = itemsForTab(section, section.tabs[2]).map((i) => i.id);
+    assert.deepEqual(ids, ['alphabet.alef', 'alphabet.vet', 'alphabet.bet']);
+  });
+
+  it('treats a tab that inherits letter-rows from its section the same way', () => {
+    const section = { ...untabbed, view: 'letter-rows', tabs: [{ id: 'all' }] };
+    assert.deepEqual(itemsForTab(section, section.tabs[0]).map((i) => i.id), ['geresh.jeans', 'geresh.chile']);
+  });
+
+  it('returns only its own entries for a letter-rows tab that has some', () => {
+    assert.deepEqual(itemsForTab(tabbed, tabbed.tabs[1]).map((i) => i.id), ['alphabet.vet']);
+  });
+
+  it('returns nothing for an empty tab of another view', () => {
+    const section = { ...tabbed, tabs: [...tabbed.tabs, { id: 'empty' }] };
+    assert.deepEqual(itemsForTab(section, section.tabs[2]), []);
+  });
 });
 
 describe('viewOf', () => {

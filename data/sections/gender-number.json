@@ -1,0 +1,17 @@
+{
+  "id": "gender-number",
+  "title": {"en": "Gender & number", "ru": "Род и число"},
+  "view": "card-grid",
+  "nikudToggle": true,
+  "blitz": [
+    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"},
+    {"id": "meaning-to-he", "ask": "meaning", "answer": "he"},
+    {"id": "masculine-to-plural", "ask": "forms.ms", "answer": "forms.mp"}
+  ],
+  "confusables": [
+    ["gender-number.ze", "gender-number.zot", "gender-number.ele"],
+    ["gender-number.zakhar", "gender-number.nekeva"],
+    ["gender-number.yakhid", "gender-number.rabim"]
+  ],
+  "items": []
+}

@@ -1,0 +1,32 @@
+{
+  "id": "geresh",
+  "title": {"en": "Geresh & double vav", "ru": "Чупчик и двойной вав"},
+  "view": "card-grid",
+  "nikudToggle": true,
+  "tabs": [
+    {"id": "sounds", "title": {"en": "Sounds", "ru": "Звуки"}, "view": "table"},
+    {"id": "words", "title": {"en": "Words", "ru": "Слова"}}
+  ],
+  "blitz": [
+    {"id": "translit-to-he", "ask": "translit", "answer": "he"},
+    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"}
+  ],
+  "confusables": [
+    ["geresh.chile", "geresh.chili"],
+    ["geresh.gimel", "geresh.tzadi", "geresh.zayin"]
+  ],
+  "items": [
+    {"id": "geresh.gimel", "he": "ג׳", "translit": "j", "en": "Gimel with geresh", "ru": "Гимель с чупчиком", "tab": "sounds", "verified": false},
+    {"id": "geresh.tzadi", "he": "צ׳", "translit": "ch", "en": "Tzadi with geresh", "ru": "Цади с чупчиком", "tab": "sounds", "verified": false},
+    {"id": "geresh.zayin", "he": "ז׳", "translit": "zh", "en": "Zayin with geresh", "ru": "Заин с чупчиком", "tab": "sounds", "verified": false},
+    {"id": "geresh.double-vav", "he": "וו", "translit": "v / w", "en": "Double vav in loanwords", "ru": "Двойной вав в заимствованиях", "tab": "sounds", "verified": false},
+    {"id": "geresh.jeans", "he": "גִ׳ינְס", "translit": "Jins", "en": "jeans", "ru": "джинсы", "tab": "words", "emoji": "👖", "verified": false},
+    {"id": "geresh.sergio", "he": "סֶרְגִ׳יוֹ", "translit": "Serjio", "en": "Sergio", "ru": "Серджио", "tab": "words", "verified": false},
+    {"id": "geresh.chile", "he": "צִ׳ילֶה", "translit": "Chile", "en": "Chile (country)", "ru": "Чили (страна)", "tab": "words", "emoji": "🇨🇱", "verified": false},
+    {"id": "geresh.chili", "he": "צִ׳ילִי", "translit": "Chili", "en": "chili pepper", "ru": "перец чили", "tab": "words", "emoji": "🌶️", "verified": false},
+    {"id": "geresh.chips", "he": "צִ׳יפְּס", "translit": "Chips", "en": "French fries", "ru": "картошка фри", "tab": "words", "emoji": "🍟", "verified": false},
+    {"id": "geresh.geneva", "he": "זֶ׳נֶבָה", "translit": "Zheneva", "en": "Geneva", "ru": "Женева", "tab": "words", "emoji": "🇨🇭", "verified": false},
+    {"id": "geresh.vodka", "he": "ווֹדְקָה", "translit": "Vodka", "en": "vodka", "ru": "водка", "tab": "words", "emoji": "🥃", "verified": false},
+    {"id": "geresh.whatsapp", "he": "וואטסאפ", "translit": "Votsap", "en": "WhatsApp", "ru": "Ватсап", "tab": "words", "emoji": "💬", "note": {"en": "Also written ווטסאפ", "ru": "Также пишут ווטסאפ"}, "verified": false}
+  ]
+}

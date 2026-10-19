@@ -814,3 +814,27 @@ a { color: var(--ink); }
 }
 
 button.action { border: 0; font: inherit; font-weight: 600; cursor: pointer; }
+
+/* Flashcards: the answer appears under the prompt, set off by a ruled line; then self-grading. */
+.blitz-prompt:has(.blitz-answer-text) { flex-direction: column; gap: 4cqh; }
+
+.blitz-answer-text {
+  max-width: 92%;
+  padding-top: 4cqh;
+  border-top: 1px solid var(--line);
+  font-size: min(11cqh, 7cqw);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.blitz-answer-text[lang='he'] { font-size: min(18cqh, 11cqw); }
+
+.blitz-answer-text[data-field='heCursive'] { font-family: var(--font-cursive); line-height: 1.35; }
+
+.blitz-grade { justify-content: stretch; }
+
+.blitz-grade > *, .blitz-reveal { flex: 1; justify-content: center; min-height: 2.8rem; }
+
+.blitz-modes { display: flex; }
+
+.blitz-modes .control { flex: 1; }

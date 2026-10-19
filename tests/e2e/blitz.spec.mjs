@@ -114,3 +114,41 @@ test('works for the session when localStorage is unavailable', async ({ page }) 
   await expect(page.locator('#content [data-blitz="counter"]')).toHaveText('2 of 10');
   expect(errors).toEqual([]);
 });
+
+test.describe('flashcards', () => {
+  const flip = (page) => page.locator('#content [data-action="reveal"]').click();
+
+  test('the mode is chosen at setup and remembered', async ({ page }) => {
+    await open(page, '#/countries/blitz');
+    await page.locator('#content [data-mode-choice="cards"]').click();
+    await expect(page.locator('#content [data-mode-choice="cards"]')).toHaveAttribute('aria-pressed', 'true');
+    await page.reload();
+    await page.locator('#app[data-ready="true"]').waitFor();
+    await expect(page.locator('#content [data-mode-choice="cards"]')).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('a card flips to its answer; "didn\'t know" sends it to box 1, "knew it" moves a card up', async ({ page }) => {
+    await seedSettings(page, { blitzMode: 'cards', showRu: true });
+    await open(page, '#/countries/blitz');
+    await start(page);
+    await expect(page.locator('#content [data-blitz="answer"]')).toHaveCount(0);
+    await expectOneScreen(page);
+    await expectNoSeriousAxe(page);
+
+    const first = `${await prompt(page).getAttribute('data-entry')}|${await prompt(page).getAttribute('data-template')}`;
+    await flip(page);
+    await expect(page.locator('#content [data-blitz="answer"]')).toBeVisible();
+    await expect(page.locator('#content [data-action="knew"]')).toBeFocused();
+    await expectOneScreen(page);
+    await expectNoSeriousAxe(page);
+    await page.locator('#content [data-action="didnt-know"]').click();
+    expect((await storedProgress(page)).cards[first]).toMatchObject({ box: 1, wrong: 1, confusedWith: {} });
+
+    await expect(page.locator('#content [data-blitz="counter"]')).toHaveText('2 of 10');
+    const second = `${await prompt(page).getAttribute('data-entry')}|${await prompt(page).getAttribute('data-template')}`;
+    const before = (await storedProgress(page)).cards[second]?.box ?? 0;
+    await flip(page);
+    await page.locator('#content [data-action="knew"]').click();
+    expect((await storedProgress(page)).cards[second].box).toBe(Math.min(before + 1, 5));
+  });
+});

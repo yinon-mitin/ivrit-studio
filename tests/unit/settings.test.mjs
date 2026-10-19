@@ -3,16 +3,16 @@ import assert from 'node:assert/strict';
 import { defaultSettings, parseSettings, nextTheme } from '../../assets/js/core/settings.js';
 
 describe('defaultSettings', () => {
-  it('follows SPEC: system theme, nikud on, RU translation off, UI language from the browser', () => {
-    assert.deepEqual(defaultSettings('ru-RU'), { theme: 'system', nikud: true, uiLang: 'ru', showRu: false });
+  it('follows SPEC: system theme, nikud on, RU translation off, UI language from the browser; Blitz as multiple choice', () => {
+    assert.deepEqual(defaultSettings('ru-RU'), { theme: 'system', nikud: true, uiLang: 'ru', showRu: false, blitzMode: 'choice' });
     assert.equal(defaultSettings('en-GB').uiLang, 'en');
   });
 });
 
 describe('parseSettings', () => {
   it('keeps valid stored values', () => {
-    const stored = JSON.stringify({ theme: 'dark', nikud: false, uiLang: 'en', showRu: true });
-    assert.deepEqual(parseSettings(stored, 'ru'), { theme: 'dark', nikud: false, uiLang: 'en', showRu: true });
+    const stored = JSON.stringify({ theme: 'dark', nikud: false, uiLang: 'en', showRu: true, blitzMode: 'cards' });
+    assert.deepEqual(parseSettings(stored, 'ru'), { theme: 'dark', nikud: false, uiLang: 'en', showRu: true, blitzMode: 'cards' });
   });
 
   it('returns the defaults when nothing is stored', () => {
@@ -28,8 +28,8 @@ describe('parseSettings', () => {
   });
 
   it('replaces each invalid field with its default and keeps the valid ones', () => {
-    const stored = JSON.stringify({ theme: 'sepia', nikud: 'yes', uiLang: 'he', showRu: true, extra: 1 });
-    assert.deepEqual(parseSettings(stored, 'en'), { theme: 'system', nikud: true, uiLang: 'en', showRu: true });
+    const stored = JSON.stringify({ theme: 'sepia', nikud: 'yes', uiLang: 'he', showRu: true, blitzMode: 'quiz', extra: 1 });
+    assert.deepEqual(parseSettings(stored, 'en'), { theme: 'system', nikud: true, uiLang: 'en', showRu: true, blitzMode: 'choice' });
   });
 });
 

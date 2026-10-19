@@ -2,15 +2,17 @@
 import { LANGS, pickLang } from './i18n.js';
 
 export const THEMES = ['system', 'light', 'dark'];
+export const BLITZ_MODES = ['choice', 'cards'];
 
-/** @typedef {{ theme: 'system' | 'light' | 'dark', nikud: boolean, uiLang: 'en' | 'ru', showRu: boolean }} Settings */
+/** @typedef {{ theme: 'system' | 'light' | 'dark', nikud: boolean, uiLang: 'en' | 'ru', showRu: boolean,
+ *   blitzMode: 'choice' | 'cards' }} Settings */
 
 /**
  * @param {string | undefined} language the browser locale, e.g. navigator.language
  * @returns {Settings}
  */
 export function defaultSettings(language) {
-  return { theme: 'system', nikud: true, uiLang: pickLang(language), showRu: false };
+  return { theme: 'system', nikud: true, uiLang: pickLang(language), showRu: false, blitzMode: 'choice' };
 }
 
 /**
@@ -34,6 +36,7 @@ export function parseSettings(stored, language) {
     nikud: typeof value.nikud === 'boolean' ? value.nikud : defaults.nikud,
     uiLang: LANGS.includes(value.uiLang) ? value.uiLang : defaults.uiLang,
     showRu: typeof value.showRu === 'boolean' ? value.showRu : defaults.showRu,
+    blitzMode: BLITZ_MODES.includes(value.blitzMode) ? value.blitzMode : defaults.blitzMode,
   };
 }
 

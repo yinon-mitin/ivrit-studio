@@ -394,11 +394,16 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Second mode in the same view: show the prompt, tap to flip, then "knew / didn't know". Recorded with the same Leitner rules (no `confusedWith`). Mode choice is remembered in settings.
 
 **Acceptance criteria:**
-- [ ] e2e: flip, mark "didn't know" → card `box: 1`. Mark "knew" → box increments
-- [ ] One-screen + axe pass in card mode, front and back
+- [x] e2e: flip, mark "didn't know" → card `box: 1`. Mark "knew" → box increments
+- [x] One-screen + axe pass in card mode, front and back
 
 **Verification:**
-- [ ] `npm run e2e:fast`, `npm run check:task`
+- [x] `npm run e2e:fast`, `npm run check:task` (+ webkit)
+
+**Notes:**
+- **Mode setting.** The mode is the `blitzMode` setting (`choice` | `cards`, validated in `core/settings.js`), chosen on the setup screen.
+- **Grading.** A card flips to its answer under a ruled line; then "Didn't know" / "Knew it" records with the same Leitner rules and no `confusedWith`.
+- **Focus.** Focus restoration after a settings re-render now searches the whole document, so setup controls keep focus.
 
 **Dependencies:** T17
 **Files:** `assets/js/blitz-view.js`, `tests/e2e/blitz.spec.mjs`

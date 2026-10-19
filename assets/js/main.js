@@ -84,7 +84,10 @@ const screens = {
     // SPEC: the alphabet Blitz asks only letters covered so far, once weeks exist.
     const letters = section.id === 'alphabet' ? latestLetters(await loadWeeks()) : null;
     document.title = `${t('blitzIn', current.uiLang, { section: localized(section.title, current.uiLang) })} — ${APP_NAME}`;
-    return renderBlitz({ section, lang: current.uiLang, nikud: current.nikud, showRu: current.showRu, letters });
+    return renderBlitz({
+      section, lang: current.uiLang, nikud: current.nikud, showRu: current.showRu, letters,
+      mode: current.blitzMode, onModeChange: (blitzMode) => updateSettings({ blitzMode }),
+    });
   },
 };
 
@@ -96,7 +99,7 @@ function updateSettings(change) {
   saveSettings(settings);
   applySettings(settings);
   render(menuOpen).then(() => {
-    if (focusKey) controls.querySelector(`[data-focus-key="${focusKey}"]`)?.focus();
+    if (focusKey) document.querySelector(`[data-focus-key="${focusKey}"]`)?.focus();
   });
 }
 

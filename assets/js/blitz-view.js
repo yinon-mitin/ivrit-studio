@@ -1,5 +1,6 @@
-// Blitz screen: setup (pick an exercise), questions (choose one of up to four), results. The session
-// lives here per section, so a settings change — which re-renders the screen — does not lose it.
+// Blitz screen: setup (pick an exercise and a mode), questions — choose one of up to four, or a
+// flashcard to flip and self-grade — and results. The session lives here per section, so a settings
+// change — which re-renders the screen — does not lose it.
 import { buildSession, distractors, fieldValue, shuffle } from './core/blitz.js';
 import { displayHe, stripNikud } from './core/hebrew.js';
 import { t, localized } from './core/i18n.js';
@@ -12,8 +13,8 @@ const HEBREW_FIELDS = new Set(['he', 'heCursive', 'related.he', 'forms.ms', 'for
 
 /**
  * @typedef {{ phase: 'setup' | 'question' | 'results', exercise: string, session: import('./core/blitz.js').Question[],
- *   index: number, options: any[], answered: { chosenId: string, correct: boolean } | null, score: number,
- *   empty: boolean }} State
+ *   index: number, options: any[], answered: { chosenId: string, correct: boolean } | null, revealed: boolean,
+ *   score: number, empty: boolean }} State
  */
 
 /** @type {Map<string, State>} */
@@ -22,7 +23,9 @@ const states = new Map();
 /** @param {string} sectionId */
 function stateFor(sectionId) {
   if (!states.has(sectionId)) {
-    states.set(sectionId, { phase: 'setup', exercise: ALL, session: [], index: 0, options: [], answered: null, score: 0, empty: false });
+    states.set(sectionId, {
+      phase: 'setup', exercise: ALL, session: [], index: 0, options: [], answered: null, revealed: false, score: 0, empty: false,
+    });
   }
   return states.get(sectionId);
 }
@@ -61,11 +64,12 @@ function valueNode(tag, className, entry, field, display) {
 const exerciseName = (template, lang) => `${t(`field_${template.ask}`, lang)} → ${t(`field_${template.answer}`, lang)}`;
 
 /**
- * @param {{ section: any, lang: 'en' | 'ru', nikud: boolean, showRu: boolean, letters: string[] | null }} context
+ * @param {{ section: any, lang: 'en' | 'ru', nikud: boolean, showRu: boolean, letters: string[] | null,
+ *   mode: 'choice' | 'cards', onModeChange: (mode: 'choice' | 'cards') => void }} context
  *   section with its weeks merged in; letters limits the alphabet to letters covered so far
  * @returns {HTMLElement}
  */
-export function renderBlitz({ section, lang, nikud, showRu, letters }) {
+export function renderBlitz({ section, lang, nikud, showRu, letters, mode, onModeChange }) {
   const state = stateFor(section.id);
   const display = { nikud: nikud || section.nikudToggle === false, showRu };
   const title = localized(section.title, lang);
@@ -86,7 +90,8 @@ export function renderBlitz({ section, lang, nikud, showRu, letters }) {
     const wrong = distractors(question.entry, question.template, section, loadProgress(), Math.random, { showRu: display.showRu });
     state.options = shuffle([question.entry, ...wrong], Math.random);
     state.answered = null;
-    paint('[data-blitz="option"]');
+    state.revealed = false;
+    paint(mode === 'cards' ? '[data-action="reveal"]' : '[data-blitz="option"]');
   };
 
   const answer = (chosen) => {
@@ -96,6 +101,14 @@ export function renderBlitz({ section, lang, nikud, showRu, letters }) {
     state.answered = { chosenId: chosen.id, correct };
     if (correct) state.score += 1;
     paint('[data-action="next"]');
+  };
+
+  /** Flashcards: the learner grades themself; no "confused with", as nothing else was chosen. */
+  const grade = (knew) => {
+    const question = state.session[state.index];
+    saveProgress(record(loadProgress(), question.key, knew, new Date().toISOString()));
+    if (knew) state.score += 1;
+    advance();
   };
 
   const advance = () => {
@@ -142,7 +155,17 @@ export function renderBlitz({ section, lang, nikud, showRu, letters }) {
       choice.setAttribute('aria-pressed', String(state.exercise === id));
       group.append(choice);
     }
-    body.append(group);
+    const modes = el('div', 'segmented blitz-modes');
+    modes.setAttribute('role', 'group');
+    modes.setAttribute('aria-label', t('mode', lang));
+    for (const [id, label] of [['choice', t('modeChoice', lang)], ['cards', t('modeCards', lang)]]) {
+      const choice = button('control', label, 'mode', () => onModeChange(id));
+      choice.dataset.modeChoice = id;
+      choice.dataset.focusKey = `blitz-mode-${id}`;
+      choice.setAttribute('aria-pressed', String(mode === id));
+      modes.append(choice);
+    }
+    body.append(group, modes);
     if (state.empty) {
       const note = el('p', 'blitz-note', t('noCards', lang));
       note.setAttribute('role', 'status');
@@ -163,6 +186,7 @@ export function renderBlitz({ section, lang, nikud, showRu, letters }) {
     prompt.dataset.entry = current.entry.id;
     prompt.dataset.template = current.template.id;
     prompt.append(valueNode('span', 'blitz-prompt-text', current.entry, current.template.ask, display));
+    if (mode === 'cards') return [bar(counter), flashcard(current, prompt)];
 
     const list = el('div', 'blitz-options');
     for (const option of state.options) {
@@ -196,6 +220,27 @@ export function renderBlitz({ section, lang, nikud, showRu, letters }) {
     }
     body.append(prompt, list, footer);
     return [bar(counter), body];
+  }
+
+  function flashcard(current, prompt) {
+    const body = el('div', 'blitz-body');
+    const footer = el('div', 'blitz-footer blitz-grade');
+    if (state.revealed) {
+      const answerText = valueNode('span', 'blitz-answer-text', current.entry, current.template.answer, display);
+      answerText.dataset.blitz = 'answer';
+      prompt.append(answerText);
+      footer.append(
+        button('control', t('didntKnow', lang), 'didnt-know', () => grade(false)),
+        button('action', t('knew', lang), 'knew', () => grade(true)),
+      );
+    } else {
+      footer.append(button('action blitz-reveal', t('reveal', lang), 'reveal', () => {
+        state.revealed = true;
+        paint('[data-action="knew"]');
+      }));
+    }
+    body.append(prompt, footer);
+    return body;
   }
 
   function results() {

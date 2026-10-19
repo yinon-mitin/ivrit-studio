@@ -14,6 +14,11 @@ for (const route of sectionRoutes()) {
       await expect(page.locator('#content nav a[aria-current="page"]')).toHaveAttribute('href', `#/${route.section}/${route.tab}`);
     }
     await expect(page.locator(`#content [data-view="${route.view}"] [data-entry]`)).toHaveCount(route.count);
+    for (const item of route.items) {
+      const entry = page.locator(`#content [data-entry="${item.id}"]`);
+      await expect(entry).toContainText(item.he);
+      for (const related of item.related) await expect(entry).toContainText(related);
+    }
 
     const unmarked = await page.evaluate(() => {
       const walker = document.createTreeWalker(document.getElementById('content'), NodeFilter.SHOW_TEXT);

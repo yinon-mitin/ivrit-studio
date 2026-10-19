@@ -15,7 +15,8 @@ const readSections = () => readJson('data/index.json').sections.map((id) => read
 /**
  * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), including
  * week tabs, with what it should show.
- * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number }>}
+ * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number,
+ *   items: Array<{ id: string, he: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
   const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`));
@@ -30,14 +31,17 @@ export function sectionRoutes() {
       items.push(...own.map((item) => ({ tab: weekTab, ...item })));
     }
     const tabIds = tabs.map((tab) => tab.id);
+    const shown = (entries) => entries.map((item) => ({ id: item.id, he: item.he, related: (item.related ?? []).map((r) => r.he) }));
     if (tabs.length === 0) {
-      list.push({ hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length });
+      list.push({ hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length, items: shown(items) });
     }
     for (const tab of tabs) {
-      const own = items.filter((item) => item.tab === tab.id).length;
+      const own = items.filter((item) => item.tab === tab.id);
       // A letter-rows tab without entries of its own shows the whole section (SPEC decision, T7).
-      const count = own === 0 && tab.view === 'letter-rows' ? items.length : own;
-      list.push({ hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count });
+      const entries = own.length === 0 && tab.view === 'letter-rows' ? items : own;
+      list.push({
+        hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count: entries.length, items: shown(entries),
+      });
     }
   }
   return list;

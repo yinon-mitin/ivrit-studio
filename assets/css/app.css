@@ -311,3 +311,72 @@ a { color: var(--accent); }
   border-bottom-right-radius: 0;
   border-right-width: 0;
 }
+
+/* card-grid: 2 columns in portrait, 4 in landscape; rows share the height. Each card is a size
+   container: main text on the start (right) side, related words stacked on the end side, sized by
+   how many there are. Line heights cover Heebo's content area (1.47em). */
+.card-grid {
+  --cols: 2;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .card-grid { --cols: 4; }
+}
+
+.card {
+  container-type: size;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3cqw;
+  padding: 0 3cqw;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.card-main,
+.card-related {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  font-size: min(26cqh, 10cqw);
+  font-weight: 600;
+}
+
+.card-line {
+  font-size: min(16cqh, 6.5cqw);
+}
+
+.card-meaning { color: var(--muted); }
+
+.card-related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: flex-end;
+  font-size: min(18cqh, 7cqw);
+}
+
+.card-related[data-count='3'] { font-size: min(15cqh, 6.5cqw); }
+
+.card-related[data-count='4'] { font-size: min(13cqh, 6cqw); }

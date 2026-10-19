@@ -462,7 +462,7 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Acceptance criteria:**
 - [x] `npm run check:full` green (webkit 390×664, Semgrep 0 ERROR, osv-scanner clean)
 - [x] First load ≤ 200 KB and fonts ≤ 60 KB, as reported by the e2e
-- [ ] After approved push: CI green, site live at `https://yinon-mitin.github.io/ivrit-studio/`, opened on iOS Safari and Android Chrome
+- [x] After approved push: CI green (run 39328284210), site live at `https://yinon-mitin.github.io/ivrit-studio/`. *Opening on a real iPhone and Android phone is left to the human*
 
 **Verification:**
 - [x] `npm run check:full` (93 s: 142 unit, 240 chromium + 120 webkit e2e, Semgrep clean, osv-scanner no issues)
@@ -471,7 +471,7 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Notes:**
 - **Weight measurement changed.** The first-load test now counts text responses gzipped, as GitHub Pages serves them; woff2 counts as is. Home: 98.6 KB transferred (189 KB uncompressed). The old raw measurement would have failed CI after 2–3 weekly data updates, though phones download ~2 KB per week. The threshold (200 KB) and CONSTRAINTS.md are unchanged; this is the user's call to revert.
 - **README.** Covers use, adding a week (data only), checking nikud and publishing.
-- **Awaiting the user.** `git push` and enabling Pages (SPEC: ask first).
+- **Published 2026-10-20** after the user approved: pushed `main`, Pages from `main` / root, CI green.
 
 **Dependencies:** T1–T20
 **Files:** `README.md`

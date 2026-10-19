@@ -254,11 +254,17 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `data/sections/geresh.json`: the sound table (`ג׳`=j, `צ׳`=ch, `ז׳`=zh, `וו`=v/w) and example loanwords (`סרג'יו`, `צ'ילה` vs `צ'ילי`, `וודקה`, `וואטסאפ`, `ג'ינס`, `ז'נבה`, `צ'יפס`). Uses an existing view. Blitz template `translit-to-he`.
 
 **Acceptance criteria:**
-- [ ] Valid, one screen, axe clean. No code changes
-- [ ] Geresh is preserved when nikud is off (covered by T2 rules, spot-checked e2e)
+- [x] Valid, one screen, axe clean. *No changes to logic. The new data exposed a table CSS bug, fixed in its own commit (see notes)*
+- [x] Geresh is preserved when nikud is off (covered by T2 rules, spot-checked e2e)
 
 **Verification:**
-- [ ] `node scripts/validate.mjs`, `npm run check:task`
+- [x] `node scripts/validate.mjs`, `npm run check:task` (+ webkit; 207 e2e across three projects; `check:task` e2e ≈ 27 s)
+
+**Notes:**
+- **Structure.** Tabs are `sounds` (table: ג׳ j, צ׳ ch, ז׳ zh, וו v/w) and `words` (card-grid: jeans, Sergio, Chile, chili, chips, Geneva, vodka, WhatsApp, with emoji).
+- **New e2e check** (separate commit `d79768f`). Every Cheatsheet route is checked with nikud off: each entry shows `displayHe(entry, false)`, or keeps its nikud for `nikudToggle: false`. A fault check confirmed it fails when a view ignores the setting.
+- **Fix found by the data** (`fix(views)` commit). Short tables have tall rows, so text hit width caps measured on the wrapper, not the 36 rem table, and RU names overflowed sideways. Added rem ceilings and let the name wrap; it had lost a specificity fight with `td { nowrap }`. Cards without related words now give the Hebrew the full width (17 → 21 px on a phone).
+- **Content to confirm.** Geresh is written after the nikud (גִ׳ינְס). WhatsApp is unpointed (`וואטסאפ`, a brand) with a `note` giving `ווטסאפ`. "Chips" means French fries.
 
 **Dependencies:** T11, T12
 **Files:** `data/sections/geresh.json`, `data/index.json`

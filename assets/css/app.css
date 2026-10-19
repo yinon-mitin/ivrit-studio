@@ -272,3 +272,42 @@ a { color: var(--accent); }
 .letter-column .glyph-print { font-size: min(36cqh, 80cqw); }
 
 .letter-column .glyph-cursive { font-size: min(30cqh, 66cqw); }
+
+/* Header controls: theme cycle button and the EN/RU switch. */
+.header-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.control {
+  min-height: 32px;
+  padding: 2px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.control[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.segmented { display: inline-flex; }
+
+.segmented .control:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.segmented .control:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}

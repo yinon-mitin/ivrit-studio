@@ -143,13 +143,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `storage.js` (try/catch wrapper with in-memory fallback, key `ivrit-studio:settings`), `core/i18n.js` (UI strings `{ en, ru }`, `pickLang(navigator.language)`, `t(key, lang)`), and header controls for theme `system|light|dark` and UI language. Every UI string goes through i18n.
 
 **Acceptance criteria:**
-- [ ] The theme toggle cycles system → light → dark and persists across reload. `prefers-color-scheme` is honoured on `system` (e2e, both schemes) and both themes pass axe
-- [ ] UI language defaults from `navigator.language` (ru* → ru, else en), switches every label, and persists
-- [ ] With `localStorage` throwing, the site still loads and toggles work for the session (e2e)
+- [x] The theme toggle cycles system → light → dark and persists across reload. `prefers-color-scheme` is honoured on `system` (e2e, both schemes) and both themes pass axe
+- [x] UI language defaults from `navigator.language` (ru* → ru, else en), switches every label, and persists
+- [x] With `localStorage` throwing, the site still loads and toggles work for the session (e2e)
 
 **Verification:**
-- [ ] `node --test tests/unit/i18n.test.mjs`, `npm run e2e:fast` (`settings.spec.mjs` incl. home screenshots in both themes)
-- [ ] `npm run check:task` green
+- [x] `node --test tests/unit/i18n.test.mjs tests/unit/settings.test.mjs`, `npm run e2e:fast` (`settings.spec.mjs` incl. home screenshots in both themes, attached to the report rather than compared, since macOS and Linux CI render differently)
+- [x] `npm run check:task` green (8 s; webkit 390×664 also green)
+
+**Notes:** Added `core/settings.js` (defaults, field-by-field validated parsing, theme cycle) so a broken stored value can't break the site. Theme applies as `data-theme` on `<html>` (absent = follow the system) and the UI language as `<html lang>`. The theme button shows Auto/Light/Dark with accessible name "Theme: …". EN/RU is a pressed-button group. Focus is restored after the re-render, and a fault check confirmed the test catches its absence. Known: the saved theme applies when the JS module runs, so a dark-system user who chose Light may see a dark flash on load. An inline head script would fix it, but the CSP forbids inline scripts.
 
 **Dependencies:** T5
 **Files:** `assets/js/storage.js`, `assets/js/core/i18n.js`, `tests/unit/i18n.test.mjs`, `assets/js/ui/settings.js`, `assets/css/app.css`, `tests/e2e/settings.spec.mjs`

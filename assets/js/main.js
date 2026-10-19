@@ -1,8 +1,10 @@
-// Entry point: hash router and screen assembly.
+// Entry point: settings, hash router and screen assembly.
 import { loadIndex, loadSection } from './loader.js';
 import { resolveTab, itemsForTab, viewOf } from './core/content.js';
+import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
 import { renderTabs } from './ui/tabs.js';
+import { loadSettings, saveSettings, applySettings, renderSettings } from './ui/settings.js';
 import { el } from './views/dom.js';
 import { renderLetterGrid } from './views/letter-grid.js';
 import { renderLetterRows } from './views/letter-rows.js';
@@ -10,12 +12,15 @@ import { renderLetterRows } from './views/letter-rows.js';
 const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
 const content = document.getElementById('content');
+const controls = document.getElementById('controls');
 
 /** Cheatsheet renderers by view name (SPEC: section/tab `view`). */
 const VIEWS = {
   'letter-grid': renderLetterGrid,
   'letter-rows': renderLetterRows,
 };
+
+let settings = loadSettings();
 
 /**
  * `#/` home, `#/progress`, `#/<section>/blitz`, `#/<section>/<tab?>`.
@@ -31,41 +36,54 @@ function parseHash(hash) {
 
 // Blitz and progress screens arrive with their tasks; until then those routes show home.
 const screens = {
-  home: async () => {
+  home: async (route, lang) => {
     const index = await loadIndex();
     document.title = APP_NAME;
-    return renderHome(await Promise.all(index.sections.map(loadSection)));
+    return renderHome(await Promise.all(index.sections.map(loadSection)), lang);
   },
-  section: async (route) => {
+  section: async (route, lang) => {
     const index = await loadIndex();
-    if (!index.sections.includes(route.section)) return screens.home();
+    if (!index.sections.includes(route.section)) return screens.home(route, lang);
     const section = await loadSection(route.section);
     const tab = resolveTab(section, route.tab);
+    const title = localized(section.title, lang);
     const screen = el('section', 'screen');
     screen.dataset.screen = 'section';
     const head = el('div', 'screen-head');
-    head.append(el('h2', 'screen-title', section.title.en));
-    if (tab !== null) head.append(renderTabs(section, tab));
+    head.append(el('h2', 'screen-title', title));
+    if (tab !== null) head.append(renderTabs(section, tab, lang));
     screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab)));
-    document.title = `${section.title.en} — ${APP_NAME}`;
+    document.title = `${title} — ${APP_NAME}`;
     return screen;
   },
 };
 
+/** @param {Partial<import('./core/settings.js').Settings>} change */
+function updateSettings(change) {
+  const focusKey = document.activeElement?.dataset?.focusKey;
+  settings = { ...settings, ...change };
+  saveSettings(settings);
+  applySettings(settings);
+  render().then(() => {
+    if (focusKey) controls.querySelector(`[data-focus-key="${focusKey}"]`)?.focus();
+  });
+}
+
 async function render() {
   app.dataset.ready = 'false';
+  controls.replaceChildren(renderSettings(settings, updateSettings));
   const route = parseHash(location.hash);
   const screen = screens[route.name] ?? screens.home;
   try {
-    content.replaceChildren(await screen(route));
+    content.replaceChildren(await screen(route, settings.uiLang));
   } catch (error) {
-    const message = document.createElement('p');
+    const message = el('p', '', t('loadError', settings.uiLang, { detail: error.message }));
     message.setAttribute('role', 'alert');
-    message.textContent = `Could not load: ${error.message}`;
     content.replaceChildren(message);
   }
   app.dataset.ready = 'true';
 }
 
+applySettings(settings);
 window.addEventListener('hashchange', render);
 render();

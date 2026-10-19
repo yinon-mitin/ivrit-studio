@@ -196,11 +196,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Add the Asia (14), Americas (10) and Middle East/Africa/Oceania (13, Israel first) tabs. Spellings follow Hebrew Wikipedia. Nikud is unverified.
 
 **Acceptance criteria:**
-- [ ] 6 tabs, about 73 countries total, every tab ≤ 14, Israel first in its tab
-- [ ] Validator and one-screen e2e pass with no code change
+- [x] 6 tabs, about 73 countries total, every tab ≤ 14, Israel first in its tab
+- [x] Validator and one-screen e2e pass with no code change
 
 **Verification:**
-- [ ] `node scripts/validate.mjs`, `npm run check:task`
+- [x] `node scripts/validate.mjs`, `npm run check:task` (+ webkit 390×664; 123 e2e across three projects)
+
+**Notes:** 73 countries: 14/13/9/14/10/13. Long names fit without code changes (קוֹרֵיאָה הַדְּרוֹמִית, אִיחוּד הָאֲמִירוּיוֹת, עֲרָב הַסְּעוּדִית). Six tabs wrap to two rows on a phone in EN and RU. Four-language cards (Singapore, South Africa, Switzerland) have the smallest text (≈ 8 px). Human check on a real phone. Content choices to confirm: South Africa lists Zulu, Xhosa, Afrikaans, English (of 11 official); Singapore lists English, Malay, Chinese, Tamil; India lists Hindi + English; UAE uses the short name אִיחוּד הָאֲמִירוּיוֹת; USA is אַרְצוֹת הַבְּרִית. Classmates' home countries (SPEC open question) are not added yet. 104 entries site-wide are `verified: false`.
 
 **Dependencies:** T9
 **Files:** `data/sections/countries.json`

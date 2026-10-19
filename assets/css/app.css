@@ -838,3 +838,115 @@ button.action { border: 0; font: inherit; font-weight: 600; cursor: pointer; }
 .blitz-modes { display: flex; }
 
 .blitz-modes .control { flex: 1; }
+
+/* Progress screen: two numbers, then export and import as two blocks on a sheet; a readable column. */
+.progress-body {
+  flex: 1;
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.stats {
+  display: flex;
+  gap: var(--gap);
+}
+
+.stat {
+  flex: 1;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
+.stat-number {
+  font-size: 1.8em;
+  line-height: 1.2;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label { color: var(--muted); font-size: 0.9em; }
+
+.progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: calc(var(--gap) * 1.2);
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+}
+
+.block-title {
+  margin: 0;
+  font-size: 1em;
+}
+
+.block-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88em;
+  line-height: 1.4;
+}
+
+.progress-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-actions .action,
+.progress-actions .control {
+  justify-content: center;
+  min-height: 2.6rem;
+}
+
+.paste {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85em;
+  resize: none;
+}
+
+.file-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+.progress-status {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+.progress-status[data-state='ok'] { color: var(--good); }
+
+.progress-status[data-state='error'] { color: var(--bad); }
+
+.menu-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}

@@ -413,12 +413,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `#/progress`: download `ivrit-progress-YYYY-MM-DD.json`, "copy as text", import from a file or pasted text → `parse` + `merge` → save, with clear localized success/error messages. Imported content goes into the DOM only via `textContent`.
 
 **Acceptance criteria:**
-- [ ] e2e: progress made in context A, exported, then imported into context B (which has its own progress) → B holds the union, and newer `lastSeen` wins
-- [ ] Broken JSON, a foreign `app`, or a newer `version` → message shown, local progress byte-identical
-- [ ] `#/progress` one-screen + axe in both themes
+- [x] e2e: progress made in context A, exported, then imported into context B (which has its own progress) → B holds the union, and newer `lastSeen` wins
+- [x] Broken JSON, a foreign `app`, or a newer `version` → message shown, local progress byte-identical
+- [x] `#/progress` one-screen + axe in both themes
 
 **Verification:**
-- [ ] `npm run e2e:fast` (`progress.spec.mjs`), `npm run check:task`
+- [x] `npm run e2e:fast` (`progress.spec.mjs`), `npm run check:task` (+ webkit; 339 e2e across three projects)
+
+**Notes:**
+- **Screen.** A summary (practised / learned = box 4–5). Export offers "Download file" (`ivrit-progress-YYYY-MM-DD.json`, local date) and "Copy as text" (Clipboard API, with a clear fallback message). Import takes pasted text or a chosen file (the file wins), then `parse` + `merge` + save.
+- **Messages.** Each parse error has a plain message that adds "Progress on this device is unchanged".
+- **Entry point.** The ⚙ menu has a "Progress & backup" link. The screen is capped at 40 rem on wide screens.
+- **Tests.** Copying is tested with a stubbed `navigator.clipboard`, so it runs in WebKit too. A file import is tested with `setInputFiles`, and nothing empty is accepted.
 
 **Dependencies:** T15, T17
 **Files:** `assets/js/ui/progress-screen.js`, `assets/js/main.js`, `assets/js/core/i18n.js`, `tests/e2e/progress.spec.mjs`

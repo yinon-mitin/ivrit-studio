@@ -81,8 +81,10 @@ export function renderSettings(settings, onChange, menuOpen) {
   const summary = el('summary', 'control', '⚙');
   summary.setAttribute('aria-label', t('settings', lang));
   summary.dataset.focusKey = 'menu';
+  const progress = el('a', 'control menu-link', t('progressTitle', lang));
+  progress.href = '#/progress';
   const panel = el('div', 'menu-panel');
-  panel.append(theme, languages, showRu);
+  panel.append(theme, languages, showRu, progress);
   menu.append(summary, panel);
 
   const fragment = document.createDocumentFragment();

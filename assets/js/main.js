@@ -6,6 +6,7 @@ import { renderHome } from './ui/home.js';
 import { renderTabs } from './ui/tabs.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { renderBlitz } from './blitz-view.js';
+import { renderProgress } from './ui/progress-screen.js';
 import { el } from './views/dom.js';
 import { renderCardGrid } from './views/card-grid.js';
 import { renderTable } from './views/table.js';
@@ -39,7 +40,6 @@ function parseHash(hash) {
   return { name: 'section', section: first, tab: second };
 }
 
-// The progress screen arrives with its task; until then that route shows home.
 const screens = {
   home: async (route, { uiLang: lang }) => {
     const index = await loadIndex();
@@ -75,6 +75,10 @@ const screens = {
     screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab), options));
     document.title = `${title} — ${APP_NAME}`;
     return screen;
+  },
+  progress: async (route, current) => {
+    document.title = `${t('progressTitle', current.uiLang)} — ${APP_NAME}`;
+    return renderProgress(current.uiLang);
   },
   blitz: async (route, current) => {
     const index = await loadIndex();

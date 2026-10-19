@@ -1,6 +1,7 @@
 // Cheatsheet screens, for every section tab in data/: tabs, entries, Hebrew markup, cursive font.
 import { test, expect } from '@playwright/test';
-import { sectionRoutes, open } from './helpers.mjs';
+import { sectionRoutes, open, seedSettings } from './helpers.mjs';
+import { displayHe } from '../../assets/js/core/hebrew.js';
 
 const LETTER_VIEWS = ['letter-grid', 'letter-rows'];
 
@@ -31,6 +32,15 @@ for (const route of sectionRoutes()) {
       return found;
     });
     expect(unmarked).toEqual([]);
+  });
+
+  test(`${route.hash} with nikud off ${route.nikudToggle ? 'shows plain or stripped Hebrew' : 'keeps its nikud'}`, async ({ page }) => {
+    await seedSettings(page, { nikud: false });
+    await open(page, route.hash);
+    for (const item of route.items) {
+      const expected = route.nikudToggle ? displayHe(item, false) : item.he;
+      await expect(page.locator(`#content [data-entry="${item.id}"]`)).toContainText(expected);
+    }
   });
 
   if (LETTER_VIEWS.includes(route.view) && route.count > 0) {

@@ -61,13 +61,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `scripts/subset-fonts.sh` (`pipx run --spec 'fonttools[woff,unicode]' pyftsubset`) produces `woff2` for Hebrew + nikud (U+0590–05FF, U+FB1D–FB4F), Basic Latin and common punctuation. Heebo is instanced to the weight(s) the UI uses. Add `"fonts"` npm script. *Ask before downloading if the Gveret Levin license is unclear (plan Open Question 3).*
 
 **Acceptance criteria:**
-- [ ] `assets/fonts/heebo.woff2` and `gveret-levin.woff2` are each ≤ 60 KB
-- [ ] `OFL-Heebo.txt` and `OFL-GveretLevin.txt` are present, and the README credits the sources
-- [ ] A scratch page (not committed) renders `שָׁלוֹם, מַה שְּׁלוֹמֵךְ? בְּבַיִת` correctly in both fonts (screenshot reviewed)
+- [x] `assets/fonts/heebo.woff2` and `gveret-levin.woff2` are each ≤ 60 KB
+- [x] `OFL-Heebo.txt` and `OFL-GveretLevin.txt` are present, and the README credits the sources
+- [x] A scratch page (not committed) renders `שָׁלוֹם, מַה שְּׁלוֹמֵךְ? בְּבַיִת` correctly in both fonts (screenshot reviewed)
 
 **Verification:**
-- [ ] `npm run fonts` is reproducible; `ls -l assets/fonts/*.woff2` is within budget
-- [ ] `npm run check:fast` green
+- [x] `npm run fonts` is reproducible; `ls -l assets/fonts/*.woff2` is within budget
+- [x] `npm run check:fast` green
+
+**Notes:** Source: `google/fonts` @ `47d54ca` (`ofl/heebo`, `ofl/gveretlevin`), both OFL 1.1, so Open Question 3 is settled. Sizes: Heebo 29,260 B (variable, wght 400–700), Gveret Levin 23,624 B. Both cover all 27 letters and every nikud mark except meteg U+05BD (not used). Neither has the dotted circle U+25CC, so a bare nikud sign falls back to a system font; use example letters (as T12 plans). Downloads go to the gitignored `.fonts-src/`. `SOURCE_DATE_EPOCH=0` makes the output byte-identical between runs. The script fails if a font is over 60 KB.
 
 **Dependencies:** T1
 **Files:** `scripts/subset-fonts.sh`, `assets/fonts/*`, `package.json`, `README.md`

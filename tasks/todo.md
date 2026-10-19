@@ -107,14 +107,16 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `content.js` (pure: `tabsOf(section)`, `itemsForTab(section, tabId)`, default tab), `ui/tabs.js` (tap-switch, `#/<section>/<tab>`), `views/letter-grid.js` (print glyph in Heebo, cursive below in Gveret Levin, name + translit). Commit 1: code + unit tests. Commit 2: `data/sections/alphabet.json` (22 letters + 5 finals + בּ/כּ/פּ/שׁ/שׂ, split into tabs ≤ 24, `nikudToggle: false`, blitz templates such as `print-to-name` and `cursive-to-print`, confusables ה/ח/ת, ד/ר, ו/ז/ן, ס/ם, ב/כ, all `verified: false`) registered in `index.json`.
 
 **Acceptance criteria:**
-- [ ] Every alphabet tab passes one-screen at 360×640 / 1280×720 with `showRu` on (resolves the SPEC open question about the 24 limit)
-- [ ] Hebrew nodes have `lang="he" dir="rtl"`. Cursive glyphs use Gveret Levin (`document.fonts.check`)
-- [ ] `content.js` unit tests cover default tab, unknown tab → default, and sections without tabs
+- [x] Every alphabet tab passes one-screen at 360×640 / 1280×720 (resolves the SPEC open question about the 24 limit). *`showRu` doesn't exist until T11; T11 re-checks every tab in that densest mode*
+- [x] Hebrew nodes have `lang="he" dir="rtl"`. Cursive glyphs use Gveret Levin (`document.fonts.check`)
+- [x] `content.js` unit tests cover default tab, unknown tab → default, and sections without tabs
 
 **Verification:**
-- [ ] `npm test`, `node scripts/validate.mjs`, `npm run e2e:fast`
-- [ ] Manual: phone-size screenshot of `#/alphabet` reviewed by a human
-- [ ] `npm run check:task` green before each of the two commits
+- [x] `npm test`, `node scripts/validate.mjs`, `npm run e2e:fast` (+ webkit 390×664)
+- [ ] Manual: phone-size screenshot of `#/alphabet` reviewed by a human (agent-reviewed at 360×640 and 1280×720; human review at the Phase 2 checkpoint)
+- [x] `npm run check:task` green before each of the two commits
+
+**Notes:** Tabs are `letters` (22 letters in order; בּ כּ פּ שׁ are the named forms) and `variants` (ב כ פ שׂ + 5 finals), so the 24 limit holds. Letter cells sit in a 5-column grid in portrait and 8 columns in landscape. At 360×640 a cell is 64×106 px, print glyph ≈ 32 px, cursive ≈ 25 px, label ≈ 9.6 px. Line heights must stay ≥ each font's content area (Heebo 1.47 em, Gveret Levin 1.3 em) or glyphs spill. The new `[data-fit]` harness check catches this, and views should mark their cells with it. `views/dom.js` (`el`, `hebrew`) is the shared builder for all views.
 
 **Dependencies:** T5
 **Files:** `assets/js/core/content.js`, `tests/unit/content.test.mjs`, `assets/js/ui/tabs.js`, `assets/js/views/letter-grid.js`, `assets/js/main.js`, `data/sections/alphabet.json`, `data/index.json`

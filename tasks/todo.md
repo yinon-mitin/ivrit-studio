@@ -305,12 +305,19 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** A modern, pleasant look and clear navigation on phone and laptop, before Blitz and progress are built, so they use it from the start. Covers: typography and colour accents (tokens), header and back navigation, home as a real entry point (sections with an icon, count and "Blitz" action), section screen head (title, tabs, actions), consistent controls, focus/hover/pressed states, and motion that respects `prefers-reduced-motion`.
 
 **Acceptance criteria:**
-- [ ] One documented token set (colour, accent, radius, spacing, type scale) in `app.css`, light + dark, axe-clean
-- [ ] Home lists every section as a card with its icon, title, entry count and a Blitz action. A section screen always offers a way back home
-- [ ] Every existing e2e check stays green (one screen at 360×640 / 390×664 / 1280×720, densest mode, both themes)
+- [x] One documented token set (colour, accent, radius, spacing, type scale) in `app.css`, light + dark, axe-clean
+- [x] Home lists every section as a card with its icon, title, entry count and a Blitz action. A section screen always offers a way back home
+- [x] Every existing e2e check stays green (one screen at 360×640 / 390×664 / 1280×720, densest mode, both themes)
 
 **Verification:**
-- [ ] `npm run check:task` + webkit; screenshots of home, a section, a dense tab and the menu on phone and laptop in both themes reviewed
+- [x] `npm run check:task` + webkit; screenshots of home, a section, a dense tab and the menu on phone and laptop in both themes reviewed
+
+**Notes:**
+- **Commits.** `e0ef17a` (code) and `eff0622` (icons data).
+- **Visual idea: a study notebook.** Paper `#f6f7fb`, white sheets, ruled lines, ink `#2445c8` for cursive and anything actionable, highlighter `#ffe14d` under the current tab; the night desk `#11151f` in dark.
+- **Home.** Tiles show a cursive icon, the title, a pluralised card count (`Intl.PluralRules`) and a Blitz link. Section screens have a bar with back, title and Blitz.
+- **Motion.** Colour transitions were dropped: they also ran on theme switches, and axe caught unreadable mid-transition colours. Only `transform` animates, and only without reduced motion.
+- **`icon`.** A new optional section field `icon`, validated and documented in SPEC.
 
 **Dependencies:** T13, T14
 **Files:** `assets/css/app.css`, `index.html`, `assets/js/ui/home.js`, `assets/js/ui/tabs.js`, `assets/js/main.js`, `assets/js/core/i18n.js`, tests as needed
@@ -327,12 +334,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Pure: `emptyProgress()`, `record(progress, key, correct, now, confusedWithId?)` (Leitner: correct → box+1 capped at 5, wrong → box 1, `seen`/`wrong`/`lastSeen`/`confusedWith`), `serialize`, `parse` (rejects foreign `app`, newer `version`, broken JSON with a typed error; migrates older versions), `merge(local, incoming)` (union, newer `lastSeen` wins). `storage.js` gains progress get/set under `ivrit-studio:progress`.
 
 **Acceptance criteria:**
-- [ ] Unit tests for every SPEC progress rule, including "rejection leaves local data untouched" and migration from a v0 fixture
-- [ ] `merge` is commutative on non-conflicting keys and deterministic on ties
-- [ ] Core coverage thresholds still met
+- [x] Unit tests for every SPEC progress rule, including "rejection leaves local data untouched" and migration from a v0 fixture
+- [x] `merge` is commutative on non-conflicting keys and deterministic on ties
+- [x] Core coverage thresholds still met
 
 **Verification:**
-- [ ] `node --test tests/unit/progress.test.mjs`, `npm run check:task`
+- [x] `node --test tests/unit/progress.test.mjs`, `npm run check:task`
+
+**Notes:**
+- **Never throws.** `parse` returns `{ ok, progress }` or `{ ok: false, error }` with error `invalid-json`, `not-ivrit-studio`, `newer-version` or `invalid-format`. The caller can't touch local data on an error.
+- **Version 0** (defined here so migration has a path): cards with only `box` and `lastSeen`.
+- **Ties.** `merge` keeps the local record on a tie.
+- **Persistence** (`ivrit-studio:progress` via `storage.js`) is wired with the Blitz UI in T17, where it is first used.
 
 **Dependencies:** T3
 **Files:** `assets/js/core/progress.js`, `tests/unit/progress.test.mjs`, `assets/js/storage.js`

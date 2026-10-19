@@ -1,9 +1,19 @@
 // Entry point: hash router and screen assembly.
 import { loadIndex, loadSection } from './loader.js';
+import { resolveTab, itemsForTab, viewOf } from './core/content.js';
 import { renderHome } from './ui/home.js';
+import { renderTabs } from './ui/tabs.js';
+import { el } from './views/dom.js';
+import { renderLetterGrid } from './views/letter-grid.js';
 
+const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
 const content = document.getElementById('content');
+
+/** Cheatsheet renderers by view name (SPEC: section/tab `view`). */
+const VIEWS = {
+  'letter-grid': renderLetterGrid,
+};
 
 /**
  * `#/` home, `#/progress`, `#/<section>/blitz`, `#/<section>/<tab?>`.
@@ -17,11 +27,26 @@ function parseHash(hash) {
   return { name: 'section', section: first, tab: second };
 }
 
-// Section, Blitz and progress screens arrive with their tasks; until then every route shows home.
+// Blitz and progress screens arrive with their tasks; until then those routes show home.
 const screens = {
   home: async () => {
     const index = await loadIndex();
+    document.title = APP_NAME;
     return renderHome(await Promise.all(index.sections.map(loadSection)));
+  },
+  section: async (route) => {
+    const index = await loadIndex();
+    if (!index.sections.includes(route.section)) return screens.home();
+    const section = await loadSection(route.section);
+    const tab = resolveTab(section, route.tab);
+    const screen = el('section', 'screen');
+    screen.dataset.screen = 'section';
+    const head = el('div', 'screen-head');
+    head.append(el('h2', 'screen-title', section.title.en));
+    if (tab !== null) head.append(renderTabs(section, tab));
+    screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab)));
+    document.title = `${section.title.en} — ${APP_NAME}`;
+    return screen;
   },
 };
 

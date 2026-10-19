@@ -10,26 +10,45 @@ const readJson = (path) => JSON.parse(readFileSync(new URL(path, ROOT), 'utf8'))
 export const FONTS_DIR = fileURLToPath(new URL('assets/fonts/', ROOT));
 export const fontFiles = () => readdirSync(FONTS_DIR).filter((file) => file.endsWith('.woff2'));
 
+const readSections = () => readJson('data/index.json').sections.map((id) => readJson(`data/sections/${id}.json`));
+
+/**
+ * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), including
+ * week tabs, with what it should show.
+ * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number }>}
+ */
+export function sectionRoutes() {
+  const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`));
+  const list = [];
+  for (const section of readSections()) {
+    const items = [...section.items];
+    const tabs = (section.tabs ?? []).map((tab) => ({ id: tab.id, view: tab.view ?? section.view }));
+    for (const week of weeks) {
+      const own = week.items.filter((item) => item.section === section.id);
+      const weekTab = `week-${week.week}`;
+      if (own.some((item) => item.tab === undefined)) tabs.push({ id: weekTab, view: section.view });
+      items.push(...own.map((item) => ({ tab: weekTab, ...item })));
+    }
+    const tabIds = tabs.map((tab) => tab.id);
+    if (tabs.length === 0) {
+      list.push({ hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length });
+    }
+    for (const tab of tabs) {
+      const count = items.filter((item) => item.tab === tab.id).length;
+      list.push({ hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count });
+    }
+  }
+  return list;
+}
+
 /**
  * Every screen the site can show, computed from data/ so new sections and weeks are covered
  * without editing tests: home, progress, each section tab (or the section), each week tab, each Blitz.
  * @returns {string[]} hashes such as '#/countries/eu-1'
  */
 export function routes() {
-  const index = readJson('data/index.json');
-  const weeks = index.weeks.map((date) => readJson(`data/weeks/${date}.json`));
-  const list = ['#/', '#/progress'];
-  for (const id of index.sections) {
-    const section = readJson(`data/sections/${id}.json`);
-    const tabs = (section.tabs ?? []).map((tab) => tab.id);
-    for (const week of weeks) {
-      if (week.items.some((item) => item.section === id && item.tab === undefined)) tabs.push(`week-${week.week}`);
-    }
-    if (tabs.length === 0) list.push(`#/${id}`);
-    for (const tab of tabs) list.push(`#/${id}/${tab}`);
-    if ((section.blitz ?? []).length > 0) list.push(`#/${id}/blitz`);
-  }
-  return list;
+  const blitz = readSections().filter((section) => (section.blitz ?? []).length > 0).map((section) => `#/${section.id}/blitz`);
+  return ['#/', '#/progress', ...sectionRoutes().map((route) => route.hash), ...blitz];
 }
 
 /**
@@ -44,7 +63,8 @@ export async function open(page, hash) {
 }
 
 /**
- * One screen: no vertical or horizontal overflow on the document or the content container.
+ * One screen: no vertical or horizontal overflow on the document or the content container, and no
+ * view cell marked `[data-fit]` whose content spills out of it (1 px tolerance for rounding).
  * @param {import('@playwright/test').Page} page
  */
 export async function expectOneScreen(page) {
@@ -53,9 +73,12 @@ export async function expectOneScreen(page) {
       x: el.scrollWidth - el.clientWidth,
       y: el.scrollHeight - el.clientHeight,
     });
-    return { document: measure(document.documentElement), content: measure(document.getElementById('content')) };
+    const spilling = [...document.querySelectorAll('#content [data-fit]')]
+      .filter((el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1)
+      .map((el) => el.textContent.trim());
+    return { document: measure(document.documentElement), content: measure(document.getElementById('content')), spilling };
   });
-  expect(overflow).toEqual({ document: { x: 0, y: 0 }, content: { x: 0, y: 0 } });
+  expect(overflow).toEqual({ document: { x: 0, y: 0 }, content: { x: 0, y: 0 }, spilling: [] });
 }
 
 /**

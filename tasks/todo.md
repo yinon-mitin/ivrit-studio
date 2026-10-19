@@ -88,14 +88,16 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `index.html` (noindex, CSP `default-src 'self'`, `lang`, viewport), `app.css` (light/dark tokens via `prefers-color-scheme` + `[data-theme]`, `100dvh` grid: header + tabs + content, `@font-face`), `main.js` hash router (`#/`, `#/<section>/<tab?>`, `#/<section>/blitz`, `#/progress`, unknown → home), `loader.js`, home grid from `index.json`. Data-driven e2e harness: `helpers.mjs` (`expectOneScreen`, `expectNoAxe`, request log, route enumeration from `data/`), and `quality.spec.mjs` covering every route. Activates the app-shell constraint rows.
 
 **Acceptance criteria:**
-- [ ] Home renders on one screen at 360×640 and 1280×720 with 0 serious/critical axe violations, in light and dark
-- [ ] The e2e fails on any request to another origin, on first-load weight > 200 KB, and on any `woff2` > 60 KB
-- [ ] The route list is computed from `data/`: adding a section JSON adds its routes to the e2e with no test edit
+- [x] Home renders on one screen at 360×640 and 1280×720 with 0 serious/critical axe violations, in light and dark
+- [x] The e2e fails on any request to another origin, on first-load weight > 200 KB, and on any `woff2` > 60 KB
+- [x] The route list is computed from `data/`: adding a section JSON adds its routes to the e2e with no test edit
 
 **Verification:**
-- [ ] `npm run e2e:fast` green
-- [ ] Manual: `npm run serve`, then open `http://localhost:8000` in a narrow window
-- [ ] `npm run check:task` green
+- [x] `npm run e2e:fast` green (webkit 390×664 also green)
+- [x] Manual: phone (light) and laptop (dark) screenshots of home reviewed
+- [x] `npm run check:task` green (~4 s)
+
+**Notes:** Fault injection showed the harness catches content overflow, document overflow, an external request (with CSP removed) and dark-only low contrast. The harness also fails on any uncaught page error. Until T6/T17/T19 add their screens, section, Blitz and `#/progress` routes render home, so their quality checks pass trivially for now. The "Sections" label is English until T8 (i18n). Every screen waits on `#app[data-ready="true"]`; new screens must keep setting it.
 
 **Dependencies:** T3 (T4 for the font-size test to have files)
 **Files:** `index.html`, `assets/css/app.css`, `assets/js/main.js`, `assets/js/loader.js`, `assets/js/ui/home.js`, `tests/e2e/helpers.mjs`, `tests/e2e/quality.spec.mjs`

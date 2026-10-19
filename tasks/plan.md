@@ -47,6 +47,7 @@ Build bottom-up, but each phase ends with something a student can open on a phon
 | 1. Foundation | T1 baseline commit · T2 `hebrew.js` · T3 schema + validator · T4 fonts | Green toolchain, data contract enforced, fonts within budget |
 | 2. Alphabet slice | T5 shell + harness · T6 alphabet letter-grid · T7 letter-rows tab · T8 theme + UI language | Student opens Alphabet on a phone, both fonts, both themes |
 | 3. Cheatsheet content | T9 card-grid + countries I · T10 countries II · T11 nikud + RU toggles · T12 table + nikud · T13 geresh · T14 weeks + vocab | All MVP cheatsheets |
+| 3b. Design | T14b visual language, accents, navigation (user request, 2026-10-19) | Modern, pleasant UI on phone and laptop before Blitz/progress are built |
 | 4. Blitz & progress | T15 `progress.js` · T16 `blitz.js` · T17 Blitz choice · T18 Blitz cards · T19 progress screen | Training with Leitner, export/import merge |
 | 5. Anki & ship | T20 Anki TSV · T21 release readiness | `check:full` green, ready to push (with approval) |
 
@@ -71,7 +72,7 @@ Checkpoints after each phase (see `tasks/todo.md`).
 
 ## Open Questions
 1. ~~**Alphabet "print over cursive" tab content.**~~ **Decided 2026-10-19:** a `letter-rows` tab with no entries of its own shows every letter of the section, print over cursive (implemented in T7). Own reading-practice words were the rejected alternative.
-2. **Week 2026-10-11 teacher summary** (`Week of October 11 summary and homework.docx`). Where is it? It should not be committed. Only the derived JSON goes in `data/weeks/`.
+2. ~~**Week 2026-10-11 teacher summary**~~ **Done 2026-10-19:** read from the user's Downloads (not committed); the week feeds `vocab`, `greetings`, `gender-number`. `letters` is an assumption (all but ק צ ץ).
 3. **Font sources.** Heebo from `google/fonts` (OFL). Gveret Levin from AlefAlefAlef's OFL release. OK to download both once in T4?
 4. From SPEC: classmates' home countries missing from the list? Who verifies nikud, and how is it marked?
 5. **Pushing to GitHub + enabling Pages** (Boundaries: ask first). Planned only at the end of T21, after `check:full` is green.

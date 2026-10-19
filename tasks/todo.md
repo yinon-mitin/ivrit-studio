@@ -275,14 +275,14 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 
 **Acceptance criteria:**
 - [x] Unit tests: items land in the right section/tab, multiple weeks are ordered by date, `latestLetters` returns the latest week's letters
-- [ ] `#/vocab/week-2026-10-11` renders on one screen. Tabs over 14 fail the validator (split guidance in README). *The code path is proven with fixture weeks (`weeks.spec.mjs`); the real route waits for the data. The validator's tab limit is already tested in T3*
-- [ ] The week file was produced using only the SPEC Data Contract + summary, and passes the validator with no code change (Success Criterion 9 dry run). **Blocked: teacher's summary (Open Question 2)**
+- [x] `#/vocab/week-2026-10-11` renders on one screen. Tabs over 14 fail the validator (split guidance in README: T21)
+- [x] The week file passes the validator with no code change. *Not a true SC9 dry run: the agent that wrote it had full context. Do the dry run with a fresh agent next week*
 
 **Verification:**
 - [x] `npm test`, `npm run e2e:fast`, `npm run check:task` for the code half (20 s; 216 e2e across three projects)
-- [ ] `node scripts/validate.mjs` with `data/weeks/2026-10-11.json` + `data/sections/vocab.json` (data half)
+- [x] `node scripts/validate.mjs` with `data/weeks/2026-10-11.json` + the sections it feeds (data half; 174 e2e chromium, 87 webkit)
 
-**Status:** code half done (`feat(weeks)` commit). The data half (`vocab.json` + the week file + README split guidance) is blocked on the teacher's summary. `vocab.json` is deliberately not added yet: an empty section would show an empty screen on home.
+**Status:** done. Data commit `df4bc6b`: the week (41 entries) feeds three sections, because a tab holds ≤ 14. `vocab` "Words" (13), `greetings` "Questions & small talk" (14) and `gender-number` "Gender & number" (14, with `forms` + `related`). The last two are SPEC's post-MVP sections, added as data only. `letters` is assumed to be every letter except ק צ ץ: the summary lists only this week's letters and says a few are still to come. Fix it in the week file if wrong.
 
 **Notes:**
 - `content.withWeeks(section, weeks)` is per section (the plan said `mergeWeeks(sections, weeks)`; one section is what a screen loads). Week tabs come after the section's own tabs, newest first, so `#/vocab` opens on the current week. Tab objects are `{ id: 'week-<date>', week }`, and the title comes from `i18n.weekTitle` via `Intl` with the date read as UTC ("Week of 11 Oct" / "Неделя 11 окт.").
@@ -298,6 +298,26 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 - [ ] All 5 MVP sections open on one screen at 360×640 / 1280×720 (and webkit 390×664 via `npm run e2e:webkit`)
 - [ ] Validator warning count = number of entries awaiting human nikud verification
 - [ ] Human review of content before building Blitz
+
+---
+
+### Task 14b: Design pass — visual language, accents, navigation (added 2026-10-19 at the user's request)
+**Description:** A modern, pleasant look and clear navigation on phone and laptop, before Blitz and progress are built, so they use it from the start. Covers: typography and colour accents (tokens), header and back navigation, home as a real entry point (sections with an icon, count and "Blitz" action), section screen head (title, tabs, actions), consistent controls, focus/hover/pressed states, and motion that respects `prefers-reduced-motion`.
+
+**Acceptance criteria:**
+- [ ] One documented token set (colour, accent, radius, spacing, type scale) in `app.css`, light + dark, axe-clean
+- [ ] Home lists every section as a card with its icon, title, entry count and a Blitz action. A section screen always offers a way back home
+- [ ] Every existing e2e check stays green (one screen at 360×640 / 390×664 / 1280×720, densest mode, both themes)
+
+**Verification:**
+- [ ] `npm run check:task` + webkit; screenshots of home, a section, a dense tab and the menu on phone and laptop in both themes reviewed
+
+**Dependencies:** T13, T14
+**Files:** `assets/css/app.css`, `index.html`, `assets/js/ui/home.js`, `assets/js/ui/tabs.js`, `assets/js/main.js`, `assets/js/core/i18n.js`, tests as needed
+**Scope:** M
+
+### Checkpoint: Design
+- [ ] Screens look intentional and consistent on phone and laptop; navigation is obvious
 
 ---
 

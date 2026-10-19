@@ -1,10 +1,11 @@
 // Entry point: settings, hash router and screen assembly.
-import { loadIndex, loadSectionWithWeeks } from './loader.js';
-import { resolveTab, itemsForTab, viewOf } from './core/content.js';
+import { loadIndex, loadSectionWithWeeks, loadWeeks } from './loader.js';
+import { resolveTab, itemsForTab, viewOf, latestLetters } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
 import { renderTabs } from './ui/tabs.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
+import { renderBlitz } from './blitz-view.js';
 import { el } from './views/dom.js';
 import { renderCardGrid } from './views/card-grid.js';
 import { renderTable } from './views/table.js';
@@ -38,7 +39,7 @@ function parseHash(hash) {
   return { name: 'section', section: first, tab: second };
 }
 
-// Blitz and progress screens arrive with their tasks; until then those routes show home.
+// The progress screen arrives with its task; until then that route shows home.
 const screens = {
   home: async (route, { uiLang: lang }) => {
     const index = await loadIndex();
@@ -74,6 +75,16 @@ const screens = {
     screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab), options));
     document.title = `${title} — ${APP_NAME}`;
     return screen;
+  },
+  blitz: async (route, current) => {
+    const index = await loadIndex();
+    if (!index.sections.includes(route.section)) return screens.home(route, current);
+    const section = await loadSectionWithWeeks(route.section);
+    if ((section.blitz ?? []).length === 0) return screens.section({ name: 'section', section: route.section }, current);
+    // SPEC: the alphabet Blitz asks only letters covered so far, once weeks exist.
+    const letters = section.id === 'alphabet' ? latestLetters(await loadWeeks()) : null;
+    document.title = `${t('blitzIn', current.uiLang, { section: localized(section.title, current.uiLang) })} — ${APP_NAME}`;
+    return renderBlitz({ section, lang: current.uiLang, nikud: current.nikud, showRu: current.showRu, letters });
   },
 };
 

@@ -372,12 +372,19 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `blitz-view.js` at `#/<section>/blitz`: template picker (when the section has several), a 10-question session, 4 options, feedback, results summary. Each answer is recorded via `progress.record` + `storage.js`, and a wrong pick goes to `confusedWith`. Add a "Blitz" entry point to the cheatsheet header.
 
 **Acceptance criteria:**
-- [ ] e2e: 10 questions can be completed on alphabet and countries. A deliberate wrong answer shows up in `ivrit-studio:progress` with `box: 1` and `confusedWith`
-- [ ] Every section's Blitz route passes one-screen + axe (auto via harness)
-- [ ] Works with storage unavailable (progress lives until reload)
+- [x] e2e: 10 questions can be completed on alphabet and countries. A deliberate wrong answer shows up in `ivrit-studio:progress` with `box: 1` and `confusedWith`
+- [x] Every section's Blitz route passes one-screen + axe (auto via harness)
+- [x] Works with storage unavailable (progress lives until reload)
 
 **Verification:**
-- [ ] `npm run e2e:fast` (`blitz.spec.mjs`), `npm run check:task`
+- [x] `npm run e2e:fast` (`blitz.spec.mjs`), `npm run check:task` (+ webkit; 306 e2e across three projects)
+
+**Notes:**
+- **Screens.** Setup lists the exercises ("All mixed" by default, then `Field → Field` names from i18n) and a Start button. A question shows a counter, a prompt that fills the free height (cursive in ink, emoji large, letters and syllables extra large via `data-short`) and up to 4 options in a 2×2 grid. Feedback marks correct (green, 2 px) and wrong (red) and announces itself in a `role=status` region, with focus on Next. Results show the score, Again and Other exercise.
+- **State.** Session state is kept per section in `blitz-view.js`, so settings changes (re-renders) mid-session don't lose it. That's tested with nikud.
+- **Alphabet.** It uses `latestLetters` of the weeks.
+- **Storage.** `progress-store.js` reads/writes `ivrit-studio:progress`; unreadable stored progress starts empty.
+- **Harness.** Each Blitz route is checked for one screen + axe at setup, question (both themes) and feedback.
 
 **Dependencies:** T16
 **Files:** `assets/js/blitz-view.js`, `assets/js/main.js`, `assets/css/app.css`, `tests/e2e/blitz.spec.mjs`

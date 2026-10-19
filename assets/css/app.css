@@ -30,6 +30,10 @@
   --on-ink: #ffffff;
   --ink-soft: #e7ecfc;
   --marker: #ffe14d;
+  --good: #146c3a;
+  --good-soft: #e2f4e8;
+  --bad: #b3261e;
+  --bad-soft: #fbe7e5;
 
   --radius-s: 8px;
   --radius-m: 12px;
@@ -52,6 +56,10 @@
     --on-ink: #0f1424;
     --ink-soft: #242e4d;
     --marker: #c9a623;
+    --good: #7ad7a0;
+    --good-soft: #17352a;
+    --bad: #ff9b90;
+    --bad-soft: #3e2023;
   }
 }
 
@@ -67,6 +75,10 @@
   --on-ink: #0f1424;
   --ink-soft: #242e4d;
   --marker: #c9a623;
+  --good: #7ad7a0;
+  --good-soft: #17352a;
+  --bad: #ff9b90;
+  --bad-soft: #3e2023;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -658,3 +670,147 @@ a { color: var(--ink); }
 .card-grid[data-ru] .card:not(:has(.card-related)) .card-title { font-size: min(22cqh, 13cqw); }
 
 .card-grid[data-ru] .card-line { font-size: min(13cqh, 6cqw); }
+
+/* Blitz: the prompt takes the free height and scales with it (size container); the options sit in a
+   2×2 grid under it; feedback and Next below. Right/wrong use colour plus the border weight. */
+.blitz-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.blitz-counter {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
+}
+
+.blitz-prompt {
+  container-type: size;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  text-align: center;
+}
+
+.blitz-prompt-text {
+  max-width: 92%;
+  font-size: min(16cqh, 9cqw);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.blitz-prompt-text[lang='he'] { font-size: min(34cqh, 16cqw); font-weight: 500; }
+
+.blitz-prompt-text[data-field='heCursive'] {
+  font-family: var(--font-cursive);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.blitz-prompt-text[lang='he'][data-short] { font-size: min(52cqh, 40cqw); }
+
+.blitz-prompt-text[data-field='emoji'] { font-size: min(50cqh, 30cqw); line-height: 1.2; }
+
+.blitz-options {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.blitz-option {
+  min-height: 3.4rem;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  color: var(--text);
+  font: inherit;
+  font-size: 1em;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.blitz-option:hover:enabled { border-color: var(--ink); }
+
+.blitz-option [lang='he'] { font-size: 1.35em; }
+
+.blitz-option [data-field='heCursive'] { font-family: var(--font-cursive); color: var(--ink); }
+
+.blitz-option:disabled { cursor: default; }
+
+.blitz-option[data-state='correct'] {
+  border: 2px solid var(--good);
+  background: var(--good-soft);
+}
+
+.blitz-option[data-state='wrong'] {
+  border: 2px solid var(--bad);
+  background: var(--bad-soft);
+}
+
+.blitz-footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  min-height: 2.6rem;
+}
+
+.blitz-status {
+  margin: 0;
+  font-weight: 600;
+}
+
+.blitz-status[data-state='correct'] { color: var(--good); }
+
+.blitz-status[data-state='wrong'] { color: var(--bad); }
+
+.blitz-setup { justify-content: center; }
+
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.exercise-list .control {
+  min-height: 2.6rem;
+  border-radius: var(--radius-m);
+  text-align: start;
+}
+
+.blitz-note { margin: 0; color: var(--muted); }
+
+.blitz-start { align-self: stretch; justify-content: center; min-height: 2.8rem; font-size: 1em; }
+
+.blitz-results {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.blitz-score {
+  margin: 0;
+  font-size: 1.6em;
+  font-weight: 700;
+}
+
+.blitz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+button.action { border: 0; font: inherit; font-weight: 600; cursor: pointer; }

@@ -43,3 +43,9 @@ export async function loadSectionWithWeeks(id) {
   const [section, weeks] = await Promise.all([loadSection(id), Promise.all(index.weeks.map(loadWeek))]);
   return withWeeks(section, weeks);
 }
+
+/** @returns {Promise<any[]>} every week listed in index.json */
+export async function loadWeeks() {
+  const index = await loadIndex();
+  return Promise.all(index.weeks.map(loadWeek));
+}

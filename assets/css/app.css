@@ -109,19 +109,70 @@ a { color: var(--accent); }
   border: 0;
 }
 
-/* Header: the brand (cursive mark + name, both lead home), then the controls. Sticky on paper. */
+/* Header, sticky on paper: the brand (leads to the contents), the part navigation and the controls.
+   One row on a laptop; on a phone the parts get a second, scrollable row so they never hide in a menu. */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'brand . controls'
+    'nav nav nav';
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 52px;
-  padding: 6px var(--gutter);
+  column-gap: 16px;
+  padding: 4px var(--gutter) 0;
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 64rem) {
+  .app-header {
+    grid-template-areas: 'brand nav controls';
+    padding-block: 6px;
+  }
+}
+
+.brand { grid-area: brand; }
+
+.header-nav {
+  grid-area: nav;
+  min-width: 0;
+}
+
+.header-controls { grid-area: controls; }
+
+.part-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+@media (min-width: 64rem) {
+  .part-nav-list { justify-content: center; }
+}
+
+.part-nav-link {
+  display: block;
+  padding: 8px 10px 6px;
+  border-bottom: 2px solid transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.part-nav-link:hover { color: var(--accent); }
+
+.part-nav-link[aria-current='page'] {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
 }
 
 .brand {
@@ -309,8 +360,8 @@ a { color: var(--accent); }
   white-space: nowrap;
 }
 
-/* Part page: the part title, then its sections one after another; each section and group is an anchor
-   that clears the sticky header. */
+/* Part page: the part title, "on this page" links, then its sections one after another; each section
+   and group is an anchor that clears the sticky header (two rows on a phone). */
 .part-title {
   margin: 24px 0 0;
   font-family: var(--font-serif);
@@ -320,9 +371,21 @@ a { color: var(--accent); }
   letter-spacing: -0.01em;
 }
 
+.part-toc-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  font-size: 0.95rem;
+}
+
+.part-toc-link { text-underline-offset: 3px; }
+
 .section {
   margin-top: 40px;
-  scroll-margin-top: 64px;
+  scroll-margin-top: 104px;
 }
 
 .section-title {
@@ -336,7 +399,11 @@ a { color: var(--accent); }
   letter-spacing: -0.005em;
 }
 
-.group { scroll-margin-top: 64px; }
+.group { scroll-margin-top: 104px; }
+
+@media (min-width: 64rem) {
+  .section, .group { scroll-margin-top: 72px; }
+}
 
 .group-title {
   margin: 32px 0 12px;

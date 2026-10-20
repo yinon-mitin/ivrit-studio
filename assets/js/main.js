@@ -4,6 +4,7 @@ import { resolveRoute, groupAnchor } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
+import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { el } from './views/dom.js';
 
@@ -11,6 +12,7 @@ const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
 const content = document.getElementById('content');
 const controls = document.getElementById('controls');
+const nav = document.getElementById('nav');
 
 let settings = loadSettings();
 
@@ -29,7 +31,9 @@ const screens = {
     screen.dataset.screen = 'part';
     screen.dataset.part = part.id;
     const title = el('h2', 'part-title', localized(part.title, lang));
-    screen.append(title, ...part.sections.map((section) => renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang })));
+    screen.append(title);
+    if (part.sections.length > 1) screen.append(renderPartToc(part, lang));
+    screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang })));
     document.title = `${localized(part.title, lang)} — ${APP_NAME}`;
     return screen;
   },
@@ -57,6 +61,7 @@ async function render(menuOpen = false, navigated = false) {
   try {
     const index = await loadIndex();
     const route = resolveRoute(location.hash, index);
+    nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.uiLang));
     content.replaceChildren(await screens[route.name](route, index, settings));
     if (navigated) {
       // The group, else the section, else the top of the page.

@@ -2,7 +2,7 @@
 // All remembered in localStorage; the site keeps working when storage is unavailable or broken.
 import { test, expect } from '@playwright/test';
 import { open, sectionRoutes, readParts, expectNoSeriousAxe, SETTINGS_KEY } from './helpers.mjs';
-import { displayHe } from '../../assets/js/core/hebrew.js';
+import { displayHe, stripNikud } from '../../assets/js/core/hebrew.js';
 
 // The --paper token of each theme (assets/css/app.css).
 const LIGHT_BG = 'rgb(246, 242, 233)';
@@ -136,6 +136,37 @@ test.describe('nikud', () => {
     await ready(page);
     await expect(page.locator('[data-setting="nikud"]')).toHaveAttribute('aria-pressed', 'false');
     await expect(entry(page, item.id)).toContainText(item.he);
+  });
+
+  test('on the contents, the toggle strips the section icons and the header mark, with a short fade-in', async ({ page }) => {
+    const icons = readParts().flatMap((part) => part.sections).filter((section) => section.icon && stripNikud(section.icon) !== section.icon);
+    const icon = (section) => page.locator(`#content a[data-section="${section.id}"] .contents-icon`);
+    const mark = page.locator('.brand-mark');
+    await open(page, '#/');
+    for (const section of icons) await expect(icon(section)).toHaveText(section.icon);
+    await expect(mark).toHaveText('עִבְרִית');
+
+    await page.locator('[data-setting="nikud"]').click();
+    await ready(page);
+    for (const section of icons) {
+      await expect(icon(section)).toHaveText(section.nikudToggle === false ? section.icon : stripNikud(section.icon));
+    }
+    await expect(mark).toHaveText('עברית');
+    expect(await icon(icons[0]).evaluate((node) => getComputedStyle(node).animationName)).toBe('nikud-in');
+    expect(await mark.evaluate((node) => getComputedStyle(node).animationName)).toBe('nikud-in');
+
+    await page.locator('[data-setting="nikud"]').click();
+    await ready(page);
+    await expect(icon(icons[0])).toHaveText(icons[0].icon);
+    await expect(mark).toHaveText('עִבְרִית');
+  });
+
+  test('the fade-in is off when the system asks for reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await open(page, '#/');
+    await page.locator('[data-setting="nikud"]').click();
+    await ready(page);
+    expect(await page.locator('.brand-mark').evaluate((node) => getComputedStyle(node).animationName)).toBe('none');
   });
 
   test('a settings change keeps the reader in place on a long page', async ({ page }) => {

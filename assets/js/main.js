@@ -1,6 +1,7 @@
 // Entry point: settings, hash router and screen assembly.
 import { loadIndex, loadSection } from './loader.js';
 import { resolveRoute, groupAnchor } from './core/content.js';
+import { displayHe } from './core/hebrew.js';
 import { t, localized } from './core/i18n.js';
 import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
@@ -15,6 +16,11 @@ const app = document.getElementById('app');
 const content = document.getElementById('content');
 const controls = document.getElementById('controls');
 const nav = document.getElementById('nav');
+const brandMark = document.querySelector('.brand-mark');
+const BRAND_HE = brandMark.textContent;
+/** How long the Hebrew fades in after the nikud setting changes (matches the CSS animation). */
+const NIKUD_FADE_MS = 400;
+let nikudFade;
 
 let settings = loadSettings();
 /** The search text; while it is not blank, the results replace the page. */
@@ -30,9 +36,9 @@ const search = mountSearch(document.querySelector('.app-header'), (value) => {
 const loadPart = async (part) => ({ ...part, sections: await Promise.all(part.sections.map(loadSection)) });
 
 const screens = {
-  contents: async (route, index, { lang }) => {
+  contents: async (route, index, { lang, nikud }) => {
     document.title = APP_NAME;
-    return renderContents(await Promise.all(index.parts.map(loadPart)), lang);
+    return renderContents(await Promise.all(index.parts.map(loadPart)), { lang, nikud });
   },
   part: async (route, index, current) => {
     const { lang } = current;
@@ -50,9 +56,23 @@ const screens = {
   },
 };
 
+/**
+ * Marks the page while the nikud setting has just changed, so Hebrew drawn now fades in (CSS) and the
+ * change is easy to see. The mark goes once the re-rendered page has had time to fade in (render());
+ * a second change restarts the fade.
+ */
+function showNikudChange() {
+  const root = document.documentElement;
+  clearTimeout(nikudFade);
+  delete root.dataset.nikudChanged;
+  void root.offsetWidth; // restart the animation on elements that stay (the header mark)
+  root.dataset.nikudChanged = '';
+}
+
 /** @param {Partial<import('./core/settings.js').Settings>} change */
 function updateSettings(change) {
   const focusKey = document.activeElement?.dataset?.focusKey;
+  if ('nikud' in change && change.nikud !== settings.nikud) showNikudChange();
   settings = { ...settings, ...change };
   saveSettings(settings);
   applySettings(settings);
@@ -68,6 +88,7 @@ async function render(navigated = false) {
   const run = ++renders;
   app.dataset.ready = 'false';
   controls.replaceChildren(renderSettings(settings, updateSettings));
+  brandMark.textContent = displayHe({ he: BRAND_HE }, settings.nikud);
   try {
     const index = await loadIndex();
     const route = resolveRoute(location.hash, index);
@@ -99,7 +120,13 @@ async function render(navigated = false) {
     content.replaceChildren(message);
   } finally {
     // A newer render that started meanwhile marks the page ready itself.
-    if (run === renders) app.dataset.ready = 'true';
+    if (run === renders) {
+      app.dataset.ready = 'true';
+      if ('nikudChanged' in document.documentElement.dataset) {
+        clearTimeout(nikudFade);
+        nikudFade = setTimeout(() => { delete document.documentElement.dataset.nikudChanged; }, NIKUD_FADE_MS);
+      }
+    }
   }
 }
 

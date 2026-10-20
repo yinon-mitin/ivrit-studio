@@ -1,15 +1,18 @@
 // Contents: each part as a heading that opens its page, with its sections listed under it — the
-// section's icon written in cursive, its title and size, each opening the part at that section.
+// section's icon written in cursive (following the nikud setting), its title and size, each opening
+// the part at that section.
+import { displayHe } from '../core/hebrew.js';
 import { t, localized, countEntries } from '../core/i18n.js';
 import { el, hebrew } from '../views/dom.js';
 
 /**
  * @param {Array<{ id: string, title: { en: string, ru: string }, sections: Array<{ id: string,
- *   title: { en: string, ru: string }, icon?: string, items: Array<object> }> }>} parts with their sections loaded
- * @param {'en' | 'ru'} lang
+ *   title: { en: string, ru: string }, icon?: string, nikudToggle?: boolean, items: Array<object> }> }>} parts
+ *   with their sections loaded
+ * @param {{ lang: 'en' | 'ru', nikud: boolean }} options
  * @returns {HTMLElement}
  */
-export function renderContents(parts, lang) {
+export function renderContents(parts, { lang, nikud }) {
   const screen = el('section', 'contents');
   screen.dataset.screen = 'contents';
   screen.setAttribute('aria-labelledby', 'contents-title');
@@ -30,7 +33,8 @@ export function renderContents(parts, lang) {
       link.href = `#/${part.id}/${section.id}`;
       link.dataset.section = section.id;
       if (section.icon) {
-        const icon = hebrew('span', 'contents-icon', section.icon);
+        // Sections with nikudToggle false (the alphabet) always keep their nikud.
+        const icon = hebrew('span', 'contents-icon', displayHe({ he: section.icon }, nikud || section.nikudToggle === false));
         icon.setAttribute('aria-hidden', 'true');
         link.append(icon);
       }

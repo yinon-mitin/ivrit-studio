@@ -526,6 +526,17 @@ a { color: var(--accent); }
   text-underline-offset: 3px;
 }
 
+/* Just after the nikud setting changes, Hebrew fades in from faint, so the change is visible.
+   Off when the system asks for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-nikud-changed] [lang='he'] { animation: nikud-in 400ms ease-out; }
+}
+
+@keyframes nikud-in {
+  from { opacity: 0.15; }
+  to { opacity: 1; }
+}
+
 /* Hebrew glyphs. Line heights are at least each font's content area (Heebo 1.47em, Gveret Levin
    1.3em), so nikud below the letter is never clipped. */
 .glyph {

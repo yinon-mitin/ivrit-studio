@@ -12,12 +12,12 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Make the docs the new contract before any code changes. SPEC: the objective becomes a thematic web cheatsheet. Blitz, progress, Anki, weeks and one-screen are removed from objective, capability map, data contract, behaviour contracts, testing strategy and success criteria. Added: parts, groups, settings `{ theme, nikud, lang, hide }`, search, hide mode, print, routing `#/`, `#/<part>`, `#/<part>/<section>`. CONSTRAINTS: the "One screen" row becomes "No horizontal overflow" (0 px horizontal overflow at 360×640, 390×664, 1280×720; vertical scroll allowed). Add exception **E1**: floor-guard findings `test-deleted`, `assertion-removed`, `rule-removed`, `new-exception` for the Phase 1 paths, owner @yinon-mitin, approved 2026-10-20, expires 2026-11-20. Update CLAUDE.md: drop "weekly content updates".
 
 **Acceptance criteria:**
-- [ ] SPEC has no mention of Blitz, Leitner, progress, Anki, weeks, `letters`, `showRu`, `uiLang`, one-screen. It describes parts, groups, `lang`, search, hide, print and the new routes.
-- [ ] CONSTRAINTS keeps every other threshold unchanged (coverage, weight, fonts, axe, external requests, security). E1 lists the exact paths to be deleted in Tasks 2–4.
-- [ ] Owner has reviewed and approved the SPEC/CONSTRAINTS diff in the conversation
+- [x] SPEC has no mention of Blitz, Leitner, progress, Anki, weeks, `letters`, `showRu`, `uiLang`, one-screen. It describes parts, groups, `lang`, search, hide, print and the new routes.
+- [x] CONSTRAINTS keeps every other threshold unchanged (coverage, weight, fonts, axe, external requests, security). E1 lists the exact paths to be deleted in Tasks 2–4.
+- [ ] Owner has reviewed and approved the SPEC/CONSTRAINTS diff in the conversation (owner said to build through to Checkpoint 2; diff is reviewed there)
 
 **Verification:**
-- [ ] `npm run check:fast`: the only findings are `rule-removed` (One screen) and `new-exception` (E1), as listed in E1
+- [x] `npm run check:fast`: the only findings are `rule-removed` (One screen) and `new-exception` (E1), as listed in E1
 - [ ] Manual: owner reads the diff
 
 **Dependencies:** None
@@ -75,7 +75,7 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 ## Checkpoint 1: Contract and removal
 - [ ] `npm run check:task` green except the floor guard
 - [ ] Floor-guard output compared line by line with E1. Nothing outside E1.
-- [ ] Owner approves → `git push origin main`; CI floor-guard step red once, all other steps green
+- [ ] Owner approves → `git push origin main`; CI floor-guard step red once, all other steps green. Deferred to Checkpoint 2 (owner: "build through to the screenshot checkpoint"); until then every task runs the floor guard and confirms its findings are all within E1
 - [ ] After push, `npm run check:fast` is clean (base moved)
 
 ---

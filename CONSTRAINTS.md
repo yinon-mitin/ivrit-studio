@@ -1,6 +1,6 @@
 # Constraints
 
-Last reviewed: 2026-10-19 by @yinon-mitin
+Last reviewed: 2026-10-20 by @yinon-mitin
 
 The quality bar for Ivrit Studio. `SPEC.md` says what to build; this file says what "good enough to commit" means. Failing checks **block** — a task is not done and nothing is committed until `npm run check:task` is green. This file is the canonical source; the `package.json` scripts mirror it.
 
@@ -24,12 +24,12 @@ Checked by `node scripts/floor-guard.mjs` (diff against `origin/main`, or everyt
 | Coverage: core branches | ≥ 80% of branches in `assets/js/core/` | Edge cases (bad import, version mismatch) live in branches | `npm run test:coverage` | task end, CI |
 | Coverage: core functions | ≥ 90% of functions in `assets/js/core/` | Every exported helper has a caller in a test | `npm run test:coverage` | task end, CI |
 | Coverage: changed lines | ≥ 80% of changed lines in `assets/js/core/` | Forces a test with each change, allows a config line | `node scripts/diff-coverage.mjs` (diff-cover vs `origin/main`) | task end, CI (PR) |
-| One screen | 0 px vertical or horizontal overflow per view at 360×640, 390×664, 1280×720 | The product promise: every section fits without scrolling | Playwright `tests/e2e/` (`npm run e2e:fast`; webkit in `check:full`) | task end, CI |
+| No horizontal overflow | 0 px horizontal overflow per screen at 360×640, 390×664, 1280×720 (pages scroll vertically) | A cheatsheet scrolls down, never sideways; sideways scroll on a phone hides content | Playwright `tests/e2e/` (`npm run e2e:fast`; webkit in `check:full`) | task end, CI |
 | Accessibility | Zero critical or serious axe violations (wcag2a, wcag2aa, wcag21aa) in both themes | External WCAG check; covers contrast of light and dark | `@axe-core/playwright` inside `tests/e2e/` | task end, CI |
 | Page weight | First load ≤ 200 KB transferred | Phone users on mobile data; the site is HTML + JS + JSON + 2 fonts | Playwright: sum of response sizes | task end, CI |
 | Fonts | Each `woff2` ≤ 60 KB | Subset to Hebrew + Latin + punctuation keeps fonts small | Playwright: font response sizes | task end, CI |
 | External requests | Zero requests to any origin other than the site | No CDN, analytics or tracking (SPEC Boundaries) | Playwright: request log | task end, CI |
-| Security: code | Zero ERROR findings; no HTML sinks (`innerHTML`, `insertAdjacentHTML`, `document.write`, `eval`) in `assets/js/` | Imported progress files are user-supplied; DOM is built with `createElement`/`textContent` | `pipx run semgrep scan --config p/javascript --config .semgrep.yml --error --metrics=off` | CI, `check:full` |
+| Security: code | Zero ERROR findings; no HTML sinks (`innerHTML`, `insertAdjacentHTML`, `document.write`, `eval`) in `assets/js/` | Search input is user-supplied; DOM is built with `createElement`/`textContent` | `pipx run semgrep scan --config p/javascript --config .semgrep.yml --error --metrics=off` | CI, `check:full` |
 | Security: deps | Nothing at high or above | Below that is mostly noise; only dev dependencies exist | `osv-scanner scan source -L package-lock.json` (the only lockfile; a missing file fails the check) | CI, `check:full` |
 
 External opinions in this bar (not judged by our own tests): axe-core, gitleaks, Semgrep, osv-scanner.
@@ -40,7 +40,7 @@ These rows have their tool wired but nothing to run yet. The task that creates t
 | Rule | Activated by | Check |
 |------|--------------|-------|
 | Data valid: every `data/**/*.json` passes the SPEC validator | `content-schema` | `tests/unit/data.test.mjs` runs `validateAll('data')` (part of `npm run test:coverage`); `node scripts/validate.mjs` for manual runs |
-| One screen, accessibility, weight, fonts, external requests | `app-shell` | `tests/e2e/*.spec.mjs` |
+| No horizontal overflow, accessibility, weight, fonts, external requests | `app-shell` | `tests/e2e/*.spec.mjs` |
 
 ## Where each check runs
 
@@ -60,5 +60,6 @@ These rows have their tool wired but nothing to run yet. The task that creates t
 
 | ID | Rule | Path | Reason | Owner | Expires |
 |----|------|------|--------|-------|---------|
+| E1 | Floor: deleted tests and removed assertions; rule "One screen" replaced by "No horizontal overflow" | Deleted: `tests/unit/{blitz,progress,anki}.test.mjs`, `tests/e2e/{blitz,progress,anki,weeks}.spec.mjs`. Assertions removed or rewritten for removed or changed behaviour in `tests/e2e/*.spec.mjs`, `tests/unit/{content,schema,i18n,settings}.test.mjs`. `CONSTRAINTS.md` rows "One screen" and "One screen, accessibility, …" | Pivot from trainer to cheatsheet (SPEC 2026-10-20, `tasks/plan.md` Tasks 1–9): Blitz, progress, Anki, weeks and the one-screen rule are removed from the product, so their tests go with them. Every other threshold is unchanged. Any floor finding outside this list is a real violation. | @yinon-mitin (approved in conversation 2026-10-20) | 2026-11-20 |
 
 New rows need the owner's approval in the conversation and an expiry ≤ 90 days.

@@ -82,9 +82,9 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** A fixed overlay (`pointer-events: none`) beside the ruler shows the part's section titles in three states. Passed sections sit small and muted in a stack at the top right, the current one is large and bold below them, and the coming ones are small in a stack at the bottom right. While scrolling, titles flow between places and sizes with transform transitions (none under reduced motion). Each title is a link (`pointer-events: auto`) that scrolls to its section. Pure `core/toc.js` lays out positions and scales from (count, current index, metrics), unit-tested. Shown at ≥ 72rem on part pages with 2+ sections; the content keeps clear of it.
 
 **Acceptance criteria:**
-- [ ] Unit: `tocLayout` places past titles stacked from the top, the current one in the next slot at the large scale, and upcoming titles stacked from the bottom, with no overlaps for up to 8 sections
-- [ ] e2e: scrolling into a section moves its title to the current slot (`data-state="current"`), earlier ones `past`, later ones `upcoming`. Clicking a title scrolls to its section. The links are keyboard-reachable with accessible names. axe clean in both themes.
-- [ ] The content does not run under the titles (content right edge ≤ titles' left edge) at 1280 and 1440 px. Hidden below 72rem and in print.
+- [x] Unit: `tocLayout` places past titles stacked from the top, the current one in the next slot at the large scale, and upcoming titles stacked from the bottom, with no overlaps for up to 8 sections
+- [x] e2e: scrolling into a section moves its title to the current slot (`data-state="current"`), earlier ones `past`, later ones `upcoming`. Clicking a title scrolls to its section. The links are keyboard-reachable with accessible names. axe clean in both themes.
+- [x] The content does not run under the titles (content right edge ≤ titles' left edge) at 1280 and 1440 px. Hidden below 72rem and in print.
 
 **Verification:** `npm run check:task` green; screenshots at 1280 and 1440 mid-page
 **Dependencies:** Task 12

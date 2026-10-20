@@ -1,17 +1,13 @@
 // Settings: nikud toggle in the header; theme, interface language and RU translation in the ⚙ menu.
 // All remembered in localStorage; the site keeps working when storage is unavailable or broken.
-import { readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
-import { open, openMenu, sectionRoutes, expectNoSeriousAxe, SETTINGS_KEY } from './helpers.mjs';
+import { open, openMenu, sectionRoutes, readParts, expectNoSeriousAxe, SETTINGS_KEY } from './helpers.mjs';
 import { displayHe } from '../../assets/js/core/hebrew.js';
 
 // The --paper token of each theme (assets/css/app.css).
 const LIGHT_BG = 'rgb(246, 242, 233)';
 const DARK_BG = 'rgb(24, 22, 19)';
-const firstSection = (() => {
-  const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
-  return JSON.parse(readFileSync(new URL(`../../data/sections/${index.sections[0]}.json`, import.meta.url), 'utf8'));
-})();
+const firstSection = readParts()[0].sections[0];
 // A section whose Hebrew changes without nikud, and one in a section that keeps its nikud (the alphabet).
 const togglable = sectionRoutes().find((r) => r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
 const fixed = sectionRoutes().find((r) => !r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
@@ -76,7 +72,7 @@ test.describe('interface language', () => {
 
     test('defaults to Russian', async ({ page }) => {
       await open(page, '#/');
-      await expect(page.locator('#home-title')).toHaveText('Разделы');
+      await expect(page.locator('#contents-title')).toHaveText('Содержание');
       await expect(page.locator(`#content a[data-section="${firstSection.id}"]`)).toContainText(firstSection.title.ru);
       await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
     });
@@ -84,7 +80,7 @@ test.describe('interface language', () => {
 
   test('defaults to English in an English browser', async ({ page }) => {
     await open(page, '#/');
-    await expect(page.locator('#home-title')).toHaveText('Sections');
+    await expect(page.locator('#contents-title')).toHaveText('Contents');
     await openMenu(page);
     await expect(page.locator('[data-setting="uiLang"] [data-value="en"]')).toHaveAttribute('aria-pressed', 'true');
   });
@@ -95,18 +91,18 @@ test.describe('interface language', () => {
     // Keyboard activation: WebKit does not focus buttons on mouse click, and focus restoration is for keyboard users.
     await page.locator('[data-setting="uiLang"] [data-value="ru"]').focus();
     await page.keyboard.press('Enter');
-    await expect(page.locator('#home-title')).toHaveText('Разделы');
+    await expect(page.locator('#contents-title')).toHaveText('Содержание');
     await expect(page.locator('[data-setting="uiLang"] [data-value="ru"]')).toBeFocused();
     await expect(page.locator('[data-setting="theme"]')).toHaveAccessibleName('Тема: Авто');
     await expect(page.locator('[data-setting="nikud"]')).toHaveText('Огласовки');
 
     await open(page, `#/${firstSection.id}`);
-    await expect(page.locator('#content h2')).toHaveText(firstSection.title.ru);
+    await expect(page.locator(`#${firstSection.id} .section-title`)).toHaveText(firstSection.title.ru);
     if (firstSection.groups) await expect(page.locator('#content .group-title').first()).toHaveText(firstSection.groups[0].title.ru);
 
     await page.reload();
     await ready(page);
-    await expect(page.locator('#content h2')).toHaveText(firstSection.title.ru);
+    await expect(page.locator(`#${firstSection.id} .section-title`)).toHaveText(firstSection.title.ru);
   });
 });
 
@@ -194,7 +190,7 @@ test('works for the session when localStorage is unavailable', async ({ page }) 
   await page.locator('[data-setting="theme"]').click();
   expect(await background(page)).toBe(DARK_BG);
   await page.locator('[data-setting="uiLang"] [data-value="ru"]').click();
-  await expect(page.locator('#home-title')).toHaveText('Разделы');
+  await expect(page.locator('#contents-title')).toHaveText('Содержание');
   await page.locator('[data-setting="nikud"]').click();
   await expect(page.locator('[data-setting="nikud"]')).toHaveAttribute('aria-pressed', 'false');
   expect(errors).toEqual([]);
@@ -204,7 +200,7 @@ test('ignores a broken stored settings value', async ({ page }) => {
   await page.addInitScript((key) => window.localStorage.setItem(key, '{ "theme": '), SETTINGS_KEY);
   const errors = recordErrors(page);
   await open(page, '#/');
-  await expect(page.locator('#home-title')).toHaveText('Sections');
+  await expect(page.locator('#contents-title')).toHaveText('Contents');
   await expect(page.locator('[data-setting="nikud"]')).toHaveAttribute('aria-pressed', 'true');
   await openMenu(page);
   await expect(page.locator('[data-setting="theme"]')).toHaveAccessibleName('Theme: Auto');

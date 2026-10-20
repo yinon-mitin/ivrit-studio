@@ -68,18 +68,48 @@ export function validateSection(section) {
 }
 
 /**
- * Validates all data: index.json against the section files, and each section.
+ * Validates index.json's parts against the section files.
+ * @param {any[]} parts
+ * @param {string[]} files section file names without `.json`
+ * @returns {string[]}
+ */
+function validateParts(parts, files) {
+  const errors = [];
+  const partIds = new Set();
+  const placed = new Map();
+  for (const part of parts) {
+    const at = `part ${part?.id}`;
+    if (!isText(part?.id) || !SLUG.test(part.id)) errors.push(`${at}: id must be a lowercase slug`);
+    if (partIds.has(part?.id)) errors.push(`index.json: duplicate part "${part.id}"`);
+    partIds.add(part?.id);
+    if (!isText(part?.title?.en) || !isText(part?.title?.ru)) errors.push(`${at}: title needs en and ru`);
+    if (!Array.isArray(part?.sections)) {
+      errors.push(`${at}: sections must be an array`);
+      continue;
+    }
+    for (const name of part.sections) {
+      if (!files.includes(name)) errors.push(`${at}: section "${name}" has no file`);
+      placed.set(name, (placed.get(name) ?? 0) + 1);
+    }
+  }
+  for (const name of files) {
+    if (!placed.has(name)) errors.push(`sections/${name}.json is not in any part`);
+    if (placed.get(name) > 1) errors.push(`index.json: section "${name}" is in more than one part`);
+  }
+  return errors;
+}
+
+/**
+ * Validates all data: index.json's parts against the section files, and each section.
  * @param {{ index: any, sections: Record<string, any> }} data sections are keyed by file name without `.json`.
  * @returns {Report}
  */
 export function validateAll({ index, sections }) {
-  if (!Array.isArray(index?.sections)) return { errors: ['index.json: needs a "sections" array'], warnings: [] };
-  const errors = [];
+  if (!Array.isArray(index?.parts)) return { errors: ['index.json: needs a "parts" array'], warnings: [] };
+  const errors = validateParts(index.parts, Object.keys(sections));
   const warnings = [];
   const add = (report) => { errors.push(...report.errors); warnings.push(...report.warnings); };
 
-  for (const name of index.sections) if (!(name in sections)) errors.push(`index.json: section "${name}" has no file`);
-  for (const name of Object.keys(sections)) if (!index.sections.includes(name)) errors.push(`sections/${name}.json is not listed in index.json`);
   for (const [name, section] of Object.entries(sections)) {
     if (section.id !== name) errors.push(`sections/${name}.json: id is "${section.id}"`);
   }

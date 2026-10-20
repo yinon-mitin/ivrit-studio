@@ -1,8 +1,8 @@
 // Entry point: settings, hash router and screen assembly.
 import { loadIndex, loadSection } from './loader.js';
-import { groupAnchor } from './core/content.js';
+import { resolveRoute, groupAnchor } from './core/content.js';
 import { t, localized } from './core/i18n.js';
-import { renderHome } from './ui/home.js';
+import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { el } from './views/dom.js';
@@ -14,35 +14,23 @@ const controls = document.getElementById('controls');
 
 let settings = loadSettings();
 
-/**
- * `#/` home, `#/<section>/<group?>`. Anything else (an unknown section) shows home.
- * @param {string} hash
- */
-function parseHash(hash) {
-  const [first, second] = hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
-  if (first === undefined) return { name: 'home' };
-  return { name: 'section', section: first, group: second };
-}
+/** @param {{ sections: string[] }} part */
+const loadPart = async (part) => ({ ...part, sections: await Promise.all(part.sections.map(loadSection)) });
 
 const screens = {
-  home: async (route, { uiLang: lang }) => {
-    const index = await loadIndex();
+  contents: async (route, index, { uiLang: lang }) => {
     document.title = APP_NAME;
-    return renderHome(await Promise.all(index.sections.map(loadSection)), lang);
+    return renderContents(await Promise.all(index.parts.map(loadPart)), lang);
   },
-  section: async (route, current) => {
+  part: async (route, index, current) => {
     const lang = current.uiLang;
-    const index = await loadIndex();
-    if (!index.sections.includes(route.section)) return screens.home(route, current);
-    const section = await loadSection(route.section);
-    const screen = el('div', 'screen');
-    screen.dataset.screen = 'section';
-    const home = el('a', 'back', '‹');
-    home.href = '#/';
-    home.dataset.action = 'home';
-    home.setAttribute('aria-label', t('home', lang));
-    screen.append(home, renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang }));
-    document.title = `${localized(section.title, lang)} — ${APP_NAME}`;
+    const part = await loadPart(index.parts.find((p) => p.id === route.part));
+    const screen = el('div', 'part');
+    screen.dataset.screen = 'part';
+    screen.dataset.part = part.id;
+    const title = el('h2', 'part-title', localized(part.title, lang));
+    screen.append(title, ...part.sections.map((section) => renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang })));
+    document.title = `${localized(part.title, lang)} — ${APP_NAME}`;
     return screen;
   },
 };
@@ -61,17 +49,19 @@ function updateSettings(change) {
 
 /**
  * @param {boolean} [menuOpen] keep the settings menu open across the re-render
- * @param {boolean} [navigated] a new route: scroll to its group, or to the top; a settings change keeps the place
+ * @param {boolean} [navigated] a new route: scroll to its group or section, or to the top; a settings change keeps the place
  */
 async function render(menuOpen = false, navigated = false) {
   app.dataset.ready = 'false';
   controls.replaceChildren(renderSettings(settings, updateSettings, menuOpen));
-  const route = parseHash(location.hash);
-  const screen = screens[route.name] ?? screens.home;
   try {
-    content.replaceChildren(await screen(route, settings));
+    const index = await loadIndex();
+    const route = resolveRoute(location.hash, index);
+    content.replaceChildren(await screens[route.name](route, index, settings));
     if (navigated) {
-      const target = route.group ? document.getElementById(groupAnchor(route.section, route.group)) : null;
+      // The group, else the section, else the top of the page.
+      const target = (route.group && document.getElementById(groupAnchor(route.section, route.group)))
+        || (route.section && document.getElementById(route.section));
       if (target) target.scrollIntoView();
       else window.scrollTo(0, 0);
     }

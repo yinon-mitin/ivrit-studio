@@ -1,26 +1,31 @@
-// App shell behaviour: home lists the sections from data/index.json; unknown routes fall back to home.
-import { readFileSync } from 'node:fs';
+// App shell behaviour: the contents lists the parts and sections from data/index.json; old and unknown
+// routes land somewhere sensible.
 import { test, expect } from '@playwright/test';
-import { open } from './helpers.mjs';
+import { open, readParts } from './helpers.mjs';
 
-const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
+const parts = readParts();
 
-test('home shows the app name and one link per section in index.json', async ({ page }) => {
+test('the contents shows the app name and one link per section in index.json', async ({ page }) => {
   await open(page, '#/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ivrit Studio');
-  await expect(page.locator('#content a[data-section]')).toHaveCount(index.sections.length);
+  await expect(page.locator('#content a[data-section]')).toHaveCount(parts.flatMap((part) => part.sections).length);
 });
 
-test('an unknown route shows home', async ({ page }) => {
-  await open(page, '#/no-such-section/x');
-  await expect(page.locator('#content [data-screen="home"]')).toBeVisible();
+test('an unknown route shows the contents', async ({ page }) => {
+  await open(page, '#/no-such-section/x/y');
+  await expect(page.locator('#content [data-screen="contents"]')).toBeVisible();
 });
 
-test('old Blitz and progress links open the section and home', async ({ page }) => {
-  await open(page, '#/alphabet/blitz');
-  await expect(page.locator('#content [data-screen="section"] h2')).toHaveText('Alphabet');
+test('old section, Blitz and progress links open the section in its part, and the contents', async ({ page }) => {
+  for (const hash of ['#/alphabet', '#/alphabet/blitz']) {
+    await open(page, hash);
+    await expect(page.locator('#content [data-screen="part"]')).toHaveAttribute('data-part', 'reading');
+    await expect(page.locator('#alphabet .section-title')).toBeInViewport();
+  }
+  await open(page, '#/countries/asia');
+  await expect(page.locator('#countries-asia .group-title')).toBeInViewport();
   await open(page, '#/progress');
-  await expect(page.locator('#content [data-screen="home"]')).toBeVisible();
+  await expect(page.locator('#content [data-screen="contents"]')).toBeVisible();
 });
 
 test('the page is not indexed and allows only same-origin resources', async ({ page }) => {

@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { STRINGS, pickLang, t, localized, countCards } from '../../assets/js/core/i18n.js';
+import { STRINGS, pickLang, t, localized, countEntries } from '../../assets/js/core/i18n.js';
 
 describe('pickLang', () => {
   it('picks Russian for any ru locale', () => {
@@ -14,8 +14,8 @@ describe('pickLang', () => {
 
 describe('t', () => {
   it('returns the string in the requested language', () => {
-    assert.equal(t('sections', 'en'), 'Sections');
-    assert.equal(t('sections', 'ru'), 'Разделы');
+    assert.equal(t('contents', 'en'), 'Contents');
+    assert.equal(t('contents', 'ru'), 'Содержание');
   });
 
   it('fills {placeholders} from params', () => {
@@ -43,17 +43,17 @@ describe('localized', () => {
   });
 });
 
-describe('countCards', () => {
-  it('uses English singular and plural', () => {
-    assert.equal(countCards(1, 'en'), '1 card');
-    assert.equal(countCards(31, 'en'), '31 cards');
+describe('countEntries', () => {
+  it('uses the English singular and plural', () => {
+    assert.equal(countEntries(1, 'en'), '1 entry');
+    assert.equal(countEntries(31, 'en'), '31 entries');
   });
 
   it('uses the three Russian plural forms', () => {
-    assert.equal(countCards(1, 'ru'), '1 карточка');
-    assert.equal(countCards(21, 'ru'), '21 карточка');
-    assert.equal(countCards(3, 'ru'), '3 карточки');
-    assert.equal(countCards(14, 'ru'), '14 карточек');
-    assert.equal(countCards(73, 'ru'), '73 карточки');
+    assert.equal(countEntries(1, 'ru'), '1 запись');
+    assert.equal(countEntries(21, 'ru'), '21 запись');
+    assert.equal(countEntries(3, 'ru'), '3 записи');
+    assert.equal(countEntries(14, 'ru'), '14 записей');
+    assert.equal(countEntries(73, 'ru'), '73 записи');
   });
 });

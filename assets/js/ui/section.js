@@ -1,5 +1,5 @@
-// A section on its page: its title, then each group under its own subheading, rendered by the group's
-// view. Groups are anchors for `#/<section>/<group>`.
+// A section on its part's page: its title, then each group under its own subheading, rendered by the
+// group's view. The section and its groups are anchors for `#/<part>/<section>[/<group>]`.
 import { sectionGroups, groupAnchor } from '../core/content.js';
 import { localized } from '../core/i18n.js';
 import { el } from '../views/dom.js';
@@ -27,7 +27,7 @@ export function renderSection(section, { nikud, showRu, lang }) {
   node.dataset.section = section.id;
   const titleId = `${section.id}-title`;
   node.setAttribute('aria-labelledby', titleId);
-  const title = el('h2', 'section-title', localized(section.title, lang));
+  const title = el('h3', 'section-title', localized(section.title, lang));
   title.id = titleId;
   node.append(title);
   // Sections with nikudToggle false (the alphabet) always keep their nikud.
@@ -41,7 +41,7 @@ export function renderSection(section, { nikud, showRu, lang }) {
     const block = el('section', 'group');
     block.id = groupAnchor(section.id, group.id);
     block.dataset.group = group.id;
-    const heading = el('h3', 'group-title', localized(group.title, lang));
+    const heading = el('h4', 'group-title', localized(group.title, lang));
     heading.id = `${block.id}-title`;
     block.setAttribute('aria-labelledby', heading.id);
     block.append(heading, view);

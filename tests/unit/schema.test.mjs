@@ -10,8 +10,9 @@ const section = (extra = {}) => ({
   id: 'countries', title: { en: 'Countries', ru: 'Страны' }, view: 'card-grid', items: [entry('france')], ...extra,
 });
 const entries = (count, extra = {}) => Array.from({ length: count }, (_, i) => entry(`c${i}`, extra));
+const part = (extra = {}) => ({ id: 'words', title: { en: 'Words', ru: 'Слова' }, sections: ['countries'], ...extra });
 const data = (extra = {}) => ({
-  index: { sections: ['countries'] },
+  index: { parts: [part()] },
   sections: { countries: section() },
   ...extra,
 });
@@ -128,18 +129,34 @@ describe('validateAll', () => {
     assert.equal(report.warnings.length, 1);
   });
 
-  it('rejects an index without a sections array', () => {
-    assert.ok(hasError(validateAll(data({ index: {} })), /index\.json: needs a "sections" array/));
+  it('rejects an index without a parts array', () => {
+    assert.ok(hasError(validateAll(data({ index: { sections: ['countries'] } })), /index\.json: needs a "parts" array/));
   });
 
-  it('rejects an index section without a file', () => {
-    const report = validateAll(data({ index: { sections: ['countries', 'nikud'] } }));
-    assert.ok(hasError(report, /index\.json: section "nikud" has no file/));
+  it('rejects a part section without a file', () => {
+    const report = validateAll(data({ index: { parts: [part({ sections: ['countries', 'nikud'] })] } }));
+    assert.ok(hasError(report, /part words: section "nikud" has no file/));
   });
 
-  it('rejects a section file missing from the index', () => {
-    const report = validateAll(data({ index: { sections: [] } }));
-    assert.ok(hasError(report, /sections\/countries\.json is not listed in index\.json/));
+  it('rejects a section file in no part', () => {
+    const report = validateAll(data({ index: { parts: [part({ sections: [] })] } }));
+    assert.ok(hasError(report, /sections\/countries\.json is not in any part/));
+  });
+
+  it('rejects a section in more than one part', () => {
+    const report = validateAll(data({ index: { parts: [part(), part({ id: 'reading' })] } }));
+    assert.ok(hasError(report, /section "countries" is in more than one part/));
+  });
+
+  it('rejects a duplicate part id', () => {
+    const report = validateAll(data({ index: { parts: [part(), part({ sections: [] })] } }));
+    assert.ok(hasError(report, /duplicate part "words"/));
+  });
+
+  it('rejects a part id that is not a slug, a title without en or ru, and sections that are not an array', () => {
+    assert.ok(hasError(validateAll(data({ index: { parts: [part({ id: 'Words' })] } })), /part Words: id must be a lowercase slug/));
+    assert.ok(hasError(validateAll(data({ index: { parts: [part({ title: { en: 'Words' } })] } })), /part words: title needs en and ru/));
+    assert.ok(hasError(validateAll(data({ index: { parts: [part({ sections: 'countries' })] } })), /part words: sections must be an array/));
   });
 
   it('rejects a section whose id does not match its file name', () => {

@@ -4,7 +4,7 @@ export const LANGS = ['en', 'ru'];
 
 /** @type {Record<string, { en: string, ru: string }>} */
 export const STRINGS = {
-  sections: { en: 'Sections', ru: 'Разделы' },
+  contents: { en: 'Contents', ru: 'Содержание' },
   settings: { en: 'Settings', ru: 'Настройки' },
   theme: { en: 'Theme: {value}', ru: 'Тема: {value}' },
   themeSystem: { en: 'Auto', ru: 'Авто' },
@@ -14,7 +14,7 @@ export const STRINGS = {
   nikud: { en: 'Nikud', ru: 'Огласовки' },
   showRu: { en: 'Russian translation', ru: 'Перевод на русский' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
-  home: { en: 'All sections', ru: 'Все разделы' },
+  home: { en: 'Contents', ru: 'Содержание' },
 };
 
 /**
@@ -49,19 +49,19 @@ export function localized(text, lang) {
   return text[lang] ?? text.en;
 }
 
-/** Card-count nouns by plural category (Intl.PluralRules). */
-const CARDS = {
-  en: { one: 'card', other: 'cards' },
-  ru: { one: 'карточка', few: 'карточки', many: 'карточек', other: 'карточки' },
+/** Entry-count nouns by plural category (Intl.PluralRules). */
+const ENTRIES = {
+  en: { one: 'entry', other: 'entries' },
+  ru: { one: 'запись', few: 'записи', many: 'записей', other: 'записи' },
 };
 
 /**
- * "31 cards" / "31 карточка", with the language's plural rules.
+ * "31 entries" / "31 запись", with the language's plural rules.
  * @param {number} count
  * @param {'en' | 'ru'} lang
  * @returns {string}
  */
-export function countCards(count, lang) {
-  const forms = CARDS[lang];
+export function countEntries(count, lang) {
+  const forms = ENTRIES[lang];
   return `${count} ${forms[new Intl.PluralRules(lang).select(count)] ?? forms.other}`;
 }

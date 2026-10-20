@@ -27,3 +27,39 @@ export function sectionGroups(section) {
  * @returns {string}
  */
 export const groupAnchor = (sectionId, groupId) => `${sectionId}-${groupId}`;
+
+/** @typedef {{ id: string, title: { en: string, ru: string }, sections: string[] }} Part */
+
+/**
+ * The part whose page holds a section.
+ * @param {{ parts: Part[] }} index
+ * @param {string} sectionId
+ * @returns {Part | undefined}
+ */
+export const partOf = (index, sectionId) => index.parts.find((part) => part.sections.includes(sectionId));
+
+/**
+ * The screen for a hash (SPEC Routing): `#/` the contents, `#/<part>[/<section>[/<group>]]` a part page
+ * scrolled to the section or group. Old `#/<section>[/<group>]` links open the section in its part.
+ * Anything else opens the contents.
+ * @param {string} hash
+ * @param {{ parts: Part[] }} index
+ * @returns {{ name: 'contents' } | { name: 'part', part: string, section: string | null, group: string | null }}
+ */
+export function resolveRoute(hash, index) {
+  let segments;
+  try {
+    segments = hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
+  } catch {
+    return { name: 'contents' };
+  }
+  const [first, second, third] = segments;
+  const part = index.parts.find((p) => p.id === first);
+  if (part) {
+    const section = part.sections.includes(second) ? second : null;
+    return { name: 'part', part: part.id, section, group: section && third ? third : null };
+  }
+  const home = partOf(index, first);
+  if (home && segments.length <= 2) return { name: 'part', part: home.id, section: first, group: second ?? null };
+  return { name: 'contents' };
+}

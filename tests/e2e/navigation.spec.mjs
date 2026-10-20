@@ -1,29 +1,31 @@
-// Navigation: home is the entry point to every section (with its size), and every section screen
-// leads back home.
-import { readFileSync } from 'node:fs';
+// Navigation: the contents is the entry point to every part and section (with its icon and size), and
+// a section link opens its part scrolled to it.
 import { test, expect } from '@playwright/test';
-import { open, sectionRoutes } from './helpers.mjs';
+import { open, readParts } from './helpers.mjs';
 
-const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
-const sections = index.sections.map((id) => JSON.parse(readFileSync(new URL(`../../data/sections/${id}.json`, import.meta.url), 'utf8')));
-const countOf = (id) => sectionRoutes().find((r) => r.section === id).items.length;
+const parts = readParts();
 
-test('home shows each section with its icon, title and card count', async ({ page }) => {
+test('the contents shows each part with a link to its page, and its sections with icon, title and entry count', async ({ page }) => {
   await open(page, '#/');
-  for (const section of sections) {
-    const tile = page.locator(`#content [data-tile="${section.id}"]`);
-    await expect(tile.locator(`a[data-section="${section.id}"]`)).toHaveAttribute('href', `#/${section.id}`);
-    await expect(tile).toContainText(section.title.en);
-    await expect(tile).toContainText(`${countOf(section.id)} cards`);
-    if (section.icon) await expect(tile.locator('[lang="he"]')).toHaveText(section.icon);
+  for (const part of parts) {
+    const entry = page.locator(`#content [data-part="${part.id}"]`);
+    await expect(entry.locator('h3 a')).toHaveText(part.title.en);
+    await expect(entry.locator('h3 a')).toHaveAttribute('href', `#/${part.id}`);
+    for (const section of part.sections) {
+      const link = entry.locator(`a[data-section="${section.id}"]`);
+      await expect(link).toHaveAttribute('href', `#/${part.id}/${section.id}`);
+      await expect(link).toContainText(section.title.en);
+      await expect(link).toContainText(`${section.items.length} ${section.items.length === 1 ? 'entry' : 'entries'}`);
+      if (section.icon) await expect(link.locator('[lang="he"]')).toHaveText(section.icon);
+    }
   }
 });
 
-test('every section screen links back home', async ({ page }) => {
-  for (const section of sections) {
-    await open(page, `#/${section.id}`);
-    await expect(page.locator('#content a[data-action="home"]')).toHaveAttribute('href', '#/');
-  }
-  await page.locator('#content a[data-action="home"]').click();
-  await expect(page.locator('#content [data-screen="home"]')).toBeVisible();
+test('a section link opens its part page scrolled to the section', async ({ page }) => {
+  const part = parts.find((p) => p.sections.length > 1);
+  const section = part.sections.at(-1);
+  await open(page, '#/');
+  await page.locator(`#content a[data-section="${section.id}"]`).click();
+  await expect(page.locator('#content [data-screen="part"]')).toHaveAttribute('data-part', part.id);
+  await expect(page.locator(`#${section.id} .section-title`)).toBeInViewport();
 });

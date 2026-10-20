@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { sectionGroups, groupAnchor } from '../../assets/js/core/content.js';
+import { sectionGroups, groupAnchor, partOf, resolveRoute } from '../../assets/js/core/content.js';
 
 const grouped = {
   id: 'alphabet',
@@ -54,5 +54,56 @@ describe('sectionGroups', () => {
 describe('groupAnchor', () => {
   it('is <section>-<group>, the id of the group on the page', () => {
     assert.equal(groupAnchor('countries', 'eu-1'), 'countries-eu-1');
+  });
+});
+
+const index = {
+  parts: [
+    { id: 'reading', title: { en: 'Reading', ru: 'Чтение' }, sections: ['alphabet', 'nikud'] },
+    { id: 'words', title: { en: 'Words', ru: 'Слова' }, sections: ['countries'] },
+  ],
+};
+
+describe('partOf', () => {
+  it('returns the part that lists the section', () => {
+    assert.equal(partOf(index, 'countries').id, 'words');
+  });
+
+  it('is undefined for a section in no part', () => {
+    assert.equal(partOf(index, 'colors'), undefined);
+  });
+});
+
+describe('resolveRoute', () => {
+  it('opens the contents for #/, an empty hash and anything unknown', () => {
+    for (const hash of ['', '#', '#/', '#/nowhere', '#/nowhere/at/all']) {
+      assert.deepEqual(resolveRoute(hash, index), { name: 'contents' }, hash);
+    }
+  });
+
+  it('opens a part at the top', () => {
+    assert.deepEqual(resolveRoute('#/reading', index), { name: 'part', part: 'reading', section: null, group: null });
+  });
+
+  it('opens a part at one of its sections, and at a group of it', () => {
+    assert.deepEqual(resolveRoute('#/words/countries', index), { name: 'part', part: 'words', section: 'countries', group: null });
+    assert.deepEqual(resolveRoute('#/words/countries/asia', index), { name: 'part', part: 'words', section: 'countries', group: 'asia' });
+  });
+
+  it('opens a part at the top for a section of another part or no part', () => {
+    assert.deepEqual(resolveRoute('#/reading/countries', index), { name: 'part', part: 'reading', section: null, group: null });
+  });
+
+  it('maps old #/<section> and #/<section>/<group> links to the section in its part', () => {
+    assert.deepEqual(resolveRoute('#/nikud', index), { name: 'part', part: 'reading', section: 'nikud', group: null });
+    assert.deepEqual(resolveRoute('#/countries/eu-1', index), { name: 'part', part: 'words', section: 'countries', group: 'eu-1' });
+  });
+
+  it('opens the contents for a malformed URI escape', () => {
+    assert.deepEqual(resolveRoute('#/words/%E0%A4%A', index), { name: 'contents' });
+  });
+
+  it('decodes URI-encoded segments', () => {
+    assert.deepEqual(resolveRoute('#/words/countries/%61sia', index), { name: 'part', part: 'words', section: 'countries', group: 'asia' });
   });
 });

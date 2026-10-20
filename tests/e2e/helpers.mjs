@@ -10,12 +10,14 @@ const readJson = (path) => JSON.parse(readFileSync(new URL(path, ROOT), 'utf8'))
 export const FONTS_DIR = fileURLToPath(new URL('assets/fonts/', ROOT));
 export const fontFiles = () => readdirSync(FONTS_DIR).filter((file) => file.endsWith('.woff2'));
 
-const readSections = () => readJson('data/index.json').sections.map((id) => readJson(`data/sections/${id}.json`));
+/** Every part in index.json order, with its sections loaded. */
+export const readParts = () => readJson('data/index.json').parts
+  .map((part) => ({ ...part, sections: part.sections.map((id) => readJson(`data/sections/${id}.json`)) }));
 
 /**
- * Every section page in data/, with what it should show: its groups in order (one untitled group for a
+ * Every section in data/, in contents order, with its place on its part page and what it should show: its groups in order (one untitled group for a
  * section without groups), each with its view and entries, and every entry of the section.
- * @returns {Array<{ hash: string, section: string, title: { en: string, ru: string }, nikudToggle: boolean,
+ * @returns {Array<{ hash: string, part: string, section: string, title: { en: string, ru: string }, nikudToggle: boolean,
  *   groups: Array<{ id: string | null, title?: { en: string, ru: string }, view: string, items: Array<object> }>,
  *   items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
  */
@@ -24,7 +26,7 @@ export function sectionRoutes() {
     id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
     related: (item.related ?? []).map((r) => r.he),
   }));
-  return readSections().map((section) => {
+  return readParts().flatMap((part) => part.sections.map((section) => {
     const declared = section.groups ?? [];
     const groups = declared.length === 0
       ? [{ id: null, view: section.view, items: shown(section.items) }]
@@ -35,19 +37,19 @@ export function sectionRoutes() {
         return { id: group.id, title: group.title, view, items: shown(own.length === 0 && view === 'letter-rows' ? section.items : own) };
       });
     return {
-      hash: `#/${section.id}`, section: section.id, title: section.title, nikudToggle: section.nikudToggle !== false,
-      groups, items: shown(section.items),
+      hash: `#/${part.id}/${section.id}`, part: part.id, section: section.id, title: section.title,
+      nikudToggle: section.nikudToggle !== false, groups, items: shown(section.items),
     };
-  });
+  }));
 }
 
 /**
- * Every screen the site can show, computed from data/ so new sections are covered without editing
- * tests: home and each section page.
- * @returns {string[]} hashes such as '#/countries'
+ * Every screen the site can show, computed from data/ so new parts and sections are covered without
+ * editing tests: the contents and each part page.
+ * @returns {string[]} hashes such as '#/words'
  */
 export function routes() {
-  return ['#/', ...sectionRoutes().map((route) => route.hash)];
+  return ['#/', ...readParts().map((part) => `#/${part.id}`)];
 }
 
 /**

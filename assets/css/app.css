@@ -234,78 +234,101 @@ a { color: var(--accent); }
   padding: 8px var(--gutter) 64px;
 }
 
-/* Home: section tiles on a ruled grid. */
-.home-grid {
+/* Contents: parts as large serif headings, their sections as a ruled list (cursive icon, title,
+   size). Two columns of parts on a laptop. */
+.contents-parts {
   list-style: none;
   margin: 24px 0 0;
   padding: 0;
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 32px 56px;
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.tile {
-  background: var(--sheet);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
+@media (min-width: 48rem) {
+  .contents-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.tile:hover { border-color: var(--rule-strong); }
+.contents-part-title {
+  margin: 0 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
 
-.tile-open {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 16px 20px 18px;
+.contents-part-title a {
   color: var(--ink);
   text-decoration: none;
-  border-radius: inherit;
 }
 
-.tile-icon {
-  align-self: flex-start;
+.contents-part-title a:hover { color: var(--accent); }
+
+.contents-sections {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contents-section {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contents-section:hover { background: var(--sheet); }
+
+.contents-icon {
+  grid-column: 1;
   padding-inline: 0.12em; /* Gveret Levin glyphs overhang their box */
   font-family: var(--font-cursive);
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   line-height: 1.35;
   color: var(--accent);
   white-space: nowrap;
+  text-align: start;
 }
 
-.tile-title {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
+.contents-title {
+  grid-column: 2;
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
-.tile-count {
-  font-size: 0.875rem;
+.contents-count {
+  grid-column: 3;
   color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
-/* Section page: a back link, the section title, then each group under a small-caps subheading. */
-.back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  margin-top: 12px;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
-  color: var(--ink);
-  font-size: 1.3em;
-  line-height: 1;
-  text-decoration: none;
+/* Part page: the part title, then its sections one after another; each section and group is an anchor
+   that clears the sticky header. */
+.part-title {
+  margin: 24px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 1.7rem + 2vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
-.back:hover { background: var(--sheet); }
-
-.section { scroll-margin-top: 64px; }
+.section {
+  margin-top: 40px;
+  scroll-margin-top: 64px;
+}
 
 .section-title {
-  margin: 20px 0 8px;
+  margin: 0 0 8px;
+  padding-top: 16px;
+  border-top: 2px solid var(--ink);
   font-family: var(--font-serif);
   font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
   font-weight: 600;

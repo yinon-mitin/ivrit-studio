@@ -1,5 +1,5 @@
-// Section pages, for every section in data/: title, groups under subheadings, entries in their views,
-// Hebrew markup, cursive font, and group links that scroll to the group.
+// Sections on their part pages, for every section in data/: title, groups under subheadings, entries in
+// their views, Hebrew markup, cursive font, and links that scroll to the section or group.
 import { test, expect } from '@playwright/test';
 import { sectionRoutes, open, seedSettings } from './helpers.mjs';
 import { displayHe } from '../../assets/js/core/hebrew.js';
@@ -16,10 +16,11 @@ for (const route of sectionRoutes()) {
   test(`${route.hash} shows its title, its groups in order with their entries, and Hebrew as lang="he" dir="rtl"`, async ({ page }) => {
     await open(page, route.hash);
 
-    await expect(page.locator('#content [data-screen="section"] h2')).toHaveText(route.title.en);
+    const section = page.locator(`#content [data-screen="part"][data-part="${route.part}"] [data-section="${route.section}"]`);
+    await expect(section.locator('.section-title')).toHaveText(route.title.en);
+    await expect(section.locator('.section-title')).toBeInViewport();
     const titled = route.groups.filter((group) => group.id !== null);
-    await expect(page.locator('#content .group-title')).toHaveText(titled.map((group) => group.title.en));
-    await expect(page.locator('#content nav')).toHaveCount(0);
+    await expect(section.locator('.group-title')).toHaveText(titled.map((group) => group.title.en));
     for (const group of route.groups) {
       await expect(viewOf(page, route, group).locator('[data-entry]')).toHaveCount(group.items.length);
       for (const item of group.items) {
@@ -92,12 +93,11 @@ for (const route of sectionRoutes()) {
 
   const last = route.groups.at(-1);
   if (last.id !== null) {
-    test(`#/${route.section}/<group> scrolls to the group; an unknown group opens the section at the top`, async ({ page }) => {
-      await open(page, `#/${route.section}/${last.id}`);
+    test(`${route.hash}/<group> scrolls to the group; an unknown group scrolls to the section`, async ({ page }) => {
+      await open(page, `${route.hash}/${last.id}`);
       await expect(page.locator(`#${route.section}-${last.id} .group-title`)).toBeInViewport();
-      await open(page, `#/${route.section}/no-such-group`);
-      await expect(page.locator('#content [data-screen="section"] h2')).toBeInViewport();
-      expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      await open(page, `${route.hash}/no-such-group`);
+      await expect(page.locator(`#${route.section} .section-title`)).toBeInViewport();
     });
   }
 }

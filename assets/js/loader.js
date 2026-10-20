@@ -17,7 +17,7 @@ function loadJson(path) {
   return cache.get(path);
 }
 
-/** @returns {Promise<{ sections: string[] }>} */
+/** @returns {Promise<{ parts: Array<{ id: string, title: { en: string, ru: string }, sections: string[] }> }>} */
 export const loadIndex = () => loadJson('data/index.json');
 
 /**

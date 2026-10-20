@@ -126,11 +126,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** New section `numbers` in the Vocabulary part. Groups: `0–10`, `11–20`, `tens` (30…90), `hundreds` (100…900), `big` (1000, 2000, 3000, 10 000, 100 000, 1 000 000; owner: "100 and above"). Entry: `he` = the feminine (counting) form, `forms.ms`/`forms.fs`, translit of the feminine form, `en`/`ru` as the digit and the word ("3 — three"). Icon: `אַחַת`.
 
 **Acceptance criteria:**
-- [ ] 0–20, 30…90, 100…900, 1000, 2000, 3000, 10 000, 100 000, 1 000 000 (~43 entries), ids `numbers.n<value>`, all `verified: false`. Hundreds and thousands have no gender: `he` alone, no `forms`.
-- [ ] Validator passes; the section shows up in contents, search ("7", "шесть", "שבע") and print
+- [x] 0–20, 30…90, 100…900, 1000, 2000, 3000, 10 000, 100 000, 1 000 000 (~43 entries), ids `numbers.n<value>`, all `verified: false`. Hundreds and thousands have no gender: `he` alone, no `forms`.
+- [x] Validator passes; the section shows up in contents, search ("7", "шесть", "שבע") and print
 
 **Verification:**
-- [ ] `node scripts/validate.mjs`; `npm run check:task` green (data-driven e2e cover the new section)
+- [x] `node scripts/validate.mjs`; `npm run check:task` green (data-driven e2e cover the new section)
 
 **Dependencies:** Task 6 (m/f-only forms)
 **Files:** `data/sections/numbers.json` (new), `data/index.json`

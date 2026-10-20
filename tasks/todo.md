@@ -60,13 +60,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Rename `tabs`/`tab` to `groups`/`group` in the data contract (schema, content.js, data). A section page renders all its groups one after another with subheadings instead of a tab bar. CSS drops `height: 100dvh`, the `clamp()`-to-fit sizing and `[data-fit]`. The page scrolls. The 14/24-per-tab validator limit goes. The e2e one-screen check becomes a horizontal-overflow check (`scrollWidth <= clientWidth`) on every route. The visual style is still the old one; the redesign comes in Phase 2.
 
 **Acceptance criteria:**
-- [ ] Every section shows all its entries on one scrollable page. Group subheadings appear in data order. No tab bar.
-- [ ] `ui/tabs.js` deleted. Validator has no per-group limit. `tests/e2e/helpers.mjs` has `expectNoHorizontalOverflow` instead of `expectOneScreen`.
-- [ ] Old `#/<section>/<tab>` hashes open the section scrolled to that group
+- [x] Every section shows all its entries on one scrollable page. Group subheadings appear in data order. No tab bar.
+- [x] `ui/tabs.js` deleted. Validator has no per-group limit. `tests/e2e/helpers.mjs` has `expectNoHorizontalOverflow` instead of `expectOneScreen`.
+- [x] Old `#/<section>/<tab>` hashes open the section scrolled to that group
 
 **Verification:**
-- [ ] `npm run check:task`: green except E1 findings
-- [ ] Manual: phone screenshot of countries shows all 6 groups by scrolling
+- [x] `npm run check:task`: green except E1 findings
+- [x] Manual: phone screenshot of countries shows all 6 groups by scrolling
+
+**Note (done):** the old CSS sized everything to the screen height, so it could not simply flow. The variant A base stylesheet (tokens, flow, views) landed here instead of in Task 6; Task 6 keeps the shell, navigation and contents page.
 
 **Dependencies:** Task 3
 **Files:** `assets/js/main.js`, `assets/js/core/{content,schema}.js`, `assets/css/app.css`, `assets/js/ui/tabs.js` (deleted), `data/sections/{alphabet,countries,geresh,greetings}.json`, `tests/e2e/{helpers,quality.spec,cheatsheet.spec}.mjs`, `tests/unit/{content,schema}.test.mjs`

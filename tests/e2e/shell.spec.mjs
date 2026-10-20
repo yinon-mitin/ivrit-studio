@@ -16,6 +16,13 @@ test('an unknown route shows home', async ({ page }) => {
   await expect(page.locator('#content [data-screen="home"]')).toBeVisible();
 });
 
+test('old Blitz and progress links open the section and home', async ({ page }) => {
+  await open(page, '#/alphabet/blitz');
+  await expect(page.locator('#content [data-screen="section"] .screen-title')).toHaveText('Alphabet');
+  await open(page, '#/progress');
+  await expect(page.locator('#content [data-screen="home"]')).toBeVisible();
+});
+
 test('the page is not indexed and allows only same-origin resources', async ({ page }) => {
   await open(page, '#/');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');

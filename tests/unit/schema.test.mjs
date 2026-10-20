@@ -84,28 +84,6 @@ describe('validateSection', () => {
     assert.ok(hasError(report, /countries\.x: needs a tab/));
   });
 
-  it('rejects confusables that reference an unknown id', () => {
-    const report = validateSection(section({ confusables: [['countries.france', 'countries.nowhere']] }));
-    assert.ok(hasError(report, /confusables reference unknown id "countries\.nowhere"/));
-  });
-
-  it('accepts every SPEC blitz field', () => {
-    const fields = ['he', 'heCursive', 'translit', 'meaning', 'emoji', 'related.he', 'forms.ms', 'forms.fs', 'forms.mp', 'forms.fp'];
-    const blitz = fields.map((field, i) => ({ id: `t${i}`, ask: field, answer: 'he' }));
-    assert.deepEqual(validateSection(section({ blitz })).errors, []);
-  });
-
-  it('rejects a blitz ask or answer that is not a known field', () => {
-    const report = validateSection(section({ blitz: [{ id: 'flag-to-he', ask: 'flag', answer: 'forms.xx' }] }));
-    assert.ok(hasError(report, /blitz flag-to-he ask "flag" is not a known field/));
-    assert.ok(hasError(report, /blitz flag-to-he answer "forms\.xx" is not a known field/));
-  });
-
-  it('rejects a duplicate blitz template id', () => {
-    const blitz = [{ id: 'he-to-meaning', ask: 'he', answer: 'meaning' }, { id: 'he-to-meaning', ask: 'meaning', answer: 'he' }];
-    assert.ok(hasError(validateSection(section({ blitz })), /duplicate blitz template "he-to-meaning"/));
-  });
-
   it('rejects an unknown section view', () => {
     assert.ok(hasError(validateSection(section({ view: 'carousel' })), /unknown view "carousel"/));
   });

@@ -1,11 +1,11 @@
 // Home screen: one tile per section, in index.json order — the section's icon written in cursive
-// "ink", its title and size (the tile opens the section), and a Blitz link when it has Blitz.
+// "ink", its title and size (the tile opens the section).
 import { t, localized, countCards } from '../core/i18n.js';
 import { el, hebrew } from '../views/dom.js';
 
 /**
- * @param {Array<{ id: string, title: { en: string, ru: string }, icon?: string, blitz?: Array<object>,
- *   items: Array<object> }>} sections with their weeks merged in
+ * @param {Array<{ id: string, title: { en: string, ru: string }, icon?: string, items: Array<object> }>} sections
+ *   with their weeks merged in
  * @param {'en' | 'ru'} lang
  * @returns {HTMLElement}
  */
@@ -29,13 +29,6 @@ export function renderHome(sections, lang) {
     }
     open.append(el('span', 'tile-title', localized(section.title, lang)), el('span', 'tile-count', countCards(section.items.length, lang)));
     tile.append(open);
-    if ((section.blitz ?? []).length > 0) {
-      const blitz = el('a', 'tile-blitz', t('blitz', lang));
-      blitz.href = `#/${section.id}/blitz`;
-      blitz.dataset.action = 'blitz';
-      blitz.setAttribute('aria-label', t('blitzIn', lang, { section: localized(section.title, lang) }));
-      tile.append(blitz);
-    }
     list.append(tile);
   }
   screen.append(title, list);

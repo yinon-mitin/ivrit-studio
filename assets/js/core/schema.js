@@ -3,9 +3,6 @@ import { isHebrew } from './hebrew.js';
 import { weekTabId } from './content.js';
 
 export const VIEWS = ['letter-grid', 'letter-rows', 'card-grid', 'table'];
-export const BLITZ_FIELDS = [
-  'he', 'heCursive', 'translit', 'meaning', 'emoji', 'related.he', 'forms.ms', 'forms.fs', 'forms.mp', 'forms.fp',
-];
 
 const LETTER_VIEWS = ['letter-grid', 'letter-rows'];
 const TAB_LIMIT = 14;
@@ -77,19 +74,6 @@ export function validateSection(section) {
   for (const { name, view, count } of groups) {
     const limit = LETTER_VIEWS.includes(view) ? LETTER_TAB_LIMIT : TAB_LIMIT;
     if (count > limit) errors.push(`${at}: ${name} has ${count} entries, limit ${limit}`);
-  }
-
-  for (const ref of (section.confusables ?? []).flat()) {
-    if (!ids.has(ref)) errors.push(`${at}: confusables reference unknown id "${ref}"`);
-  }
-
-  const templateIds = new Set();
-  for (const template of section.blitz ?? []) {
-    if (templateIds.has(template.id)) errors.push(`${at}: duplicate blitz template "${template.id}"`);
-    templateIds.add(template.id);
-    for (const key of ['ask', 'answer']) {
-      if (!BLITZ_FIELDS.includes(template[key])) errors.push(`${at}: blitz ${template.id} ${key} "${template[key]}" is not a known field`);
-    }
   }
 
   const unverified = items.filter((item) => item.verified === false).length;

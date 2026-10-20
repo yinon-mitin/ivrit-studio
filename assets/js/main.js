@@ -1,14 +1,11 @@
 // Entry point: settings, hash router and screen assembly.
-import { loadIndex, loadSectionWithWeeks, loadWeeks } from './loader.js';
-import { resolveTab, itemsForTab, viewOf, latestLetters } from './core/content.js';
+import { loadIndex, loadSectionWithWeeks } from './loader.js';
+import { resolveTab, itemsForTab, viewOf } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
 import { renderTabs } from './ui/tabs.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
-import { renderBlitz } from './blitz-view.js';
-import { renderProgress } from './ui/progress-screen.js';
-import { toTsv, ankiFileName } from './core/anki.js';
-import { downloadFile, el } from './views/dom.js';
+import { el } from './views/dom.js';
 import { renderCardGrid } from './views/card-grid.js';
 import { renderTable } from './views/table.js';
 import { renderLetterGrid } from './views/letter-grid.js';
@@ -30,14 +27,12 @@ const VIEWS = {
 let settings = loadSettings();
 
 /**
- * `#/` home, `#/progress`, `#/<section>/blitz`, `#/<section>/<tab?>`.
+ * `#/` home, `#/<section>/<tab?>`. Anything else (an unknown section) shows home.
  * @param {string} hash
  */
 function parseHash(hash) {
   const [first, second] = hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
   if (first === undefined) return { name: 'home' };
-  if (first === 'progress') return { name: 'progress' };
-  if (second === 'blitz') return { name: 'blitz', section: first };
   return { name: 'section', section: first, tab: second };
 }
 
@@ -63,18 +58,6 @@ const screens = {
     home.dataset.action = 'home';
     home.setAttribute('aria-label', t('home', lang));
     bar.append(home, el('h2', 'screen-title', title));
-    if ((section.blitz ?? []).length > 0) {
-      const blitz = el('a', 'action', t('blitz', lang));
-      blitz.href = `#/${section.id}/blitz`;
-      blitz.dataset.action = 'blitz';
-      bar.append(blitz);
-    }
-    const anki = el('button', 'control', t('anki', lang));
-    anki.type = 'button';
-    anki.dataset.action = 'anki';
-    anki.setAttribute('aria-label', t('ankiDownload', lang, { section: title }));
-    anki.addEventListener('click', () => downloadFile(ankiFileName(section), toTsv(section), 'text/tab-separated-values;charset=utf-8'));
-    bar.append(anki);
     head.append(bar);
     if (tab !== null) head.append(renderTabs(section, tab, lang));
     // Sections with nikudToggle false (the alphabet) always keep their nikud.
@@ -82,23 +65,6 @@ const screens = {
     screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab), options));
     document.title = `${title} — ${APP_NAME}`;
     return screen;
-  },
-  progress: async (route, current) => {
-    document.title = `${t('progressTitle', current.uiLang)} — ${APP_NAME}`;
-    return renderProgress(current.uiLang);
-  },
-  blitz: async (route, current) => {
-    const index = await loadIndex();
-    if (!index.sections.includes(route.section)) return screens.home(route, current);
-    const section = await loadSectionWithWeeks(route.section);
-    if ((section.blitz ?? []).length === 0) return screens.section({ name: 'section', section: route.section }, current);
-    // SPEC: the alphabet Blitz asks only letters covered so far, once weeks exist.
-    const letters = section.id === 'alphabet' ? latestLetters(await loadWeeks()) : null;
-    document.title = `${t('blitzIn', current.uiLang, { section: localized(section.title, current.uiLang) })} — ${APP_NAME}`;
-    return renderBlitz({
-      section, lang: current.uiLang, nikud: current.nikud, showRu: current.showRu, letters,
-      mode: current.blitzMode, onModeChange: (blitzMode) => updateSettings({ blitzMode }),
-    });
   },
 };
 

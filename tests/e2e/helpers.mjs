@@ -58,12 +58,11 @@ export function sectionRoutes() {
 
 /**
  * Every screen the site can show, computed from data/ so new sections and weeks are covered
- * without editing tests: home, progress, each section tab (or the section), each week tab, each Blitz.
+ * without editing tests: home, each section tab (or the section), each week tab.
  * @returns {string[]} hashes such as '#/countries/eu-1'
  */
 export function routes() {
-  const blitz = readSections().filter((section) => (section.blitz ?? []).length > 0).map((section) => `#/${section.id}/blitz`);
-  return ['#/', '#/progress', ...sectionRoutes().map((route) => route.hash), ...blitz];
+  return ['#/', ...sectionRoutes().map((route) => route.hash)];
 }
 
 /**

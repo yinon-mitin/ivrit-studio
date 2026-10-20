@@ -188,15 +188,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Scope:** M
 
 ### Task 11: Hide-translations self-check mode
-**Description:** A "Hide" toggle in the header (setting `hide`) blurs translations and transliterations in list and table views. Each hidden value is a button that reveals itself on click/Enter/Space; turning Hide off reveals everything. Letters keep their names visible (the alphabet is reference, not quiz).
+**Description:** A "Hide" toggle (setting `hide`; done: under each part title, since the phone header has no room left) blurs translations and transliterations in list and table views. Each hidden value is a button that reveals itself on click/Enter/Space; turning Hide off reveals everything. Letters keep their names visible (the alphabet is reference, not quiz).
 
 **Acceptance criteria:**
-- [ ] Hidden values are not readable visually and have an accessible name "Show translation". Revealed state is `aria-expanded="true"`.
-- [ ] Remembered across reloads; axe clean with Hide on, both themes
+- [x] Hidden values are not readable visually and have an accessible name "Show translation". Revealed state is `aria-expanded="true"`.
+- [x] Remembered across reloads; axe clean with Hide on, both themes
 
 **Verification:**
-- [ ] `npm run check:task` green
-- [ ] e2e: hide → value hidden → click reveals one → toggle off reveals all
+- [x] `npm run check:task` green
+- [x] e2e: hide → value hidden → click reveals one → toggle off reveals all
 
 **Dependencies:** Task 10 (header layout settled)
 **Files:** `assets/js/ui/settings.js`, `assets/js/views/{list,table}.js`, `assets/css/app.css`, `tests/e2e/settings.spec.mjs`

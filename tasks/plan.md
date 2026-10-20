@@ -78,7 +78,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 
 ### Phase 3: Cheatsheet tools
 - [x] Task 10: Search across all sections
-- [ ] Task 11: Hide-translations self-check mode
+- [x] Task 11: Hide-translations self-check mode
 - [ ] Task 12: Print stylesheet (A4)
 - [ ] Task 13: README, cleanup, release
 

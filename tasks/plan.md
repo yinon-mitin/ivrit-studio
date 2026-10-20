@@ -70,7 +70,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 - [x] Task 6: Variant A design tokens and the new shell (header, part navigation)
 - [x] Task 7: Settings: one EN/RU switch, nikud, theme
 - [x] Task 8: Reading views: letters, print over cursive, nikud and geresh tables
-- [ ] Task 9: Dictionary views: phrases, words, countries, gender & number
+- [x] Task 9: Dictionary views: phrases, words, countries, gender & number
 
 ### Checkpoint 2: Design review
 - [ ] `npm run check:task` green

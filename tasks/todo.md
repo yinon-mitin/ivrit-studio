@@ -152,13 +152,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Replace `card-grid` with a `list` view: dictionary-style rows. Large Hebrew on the right, transliteration, translation in the current language, emoji when present, related words (a country's languages) on a second line with a label, `forms` (ms/fs/mp/fp) as a compact inline table when present. Responsive columns: 1 on phone, 2–3 on laptop. Rename in schema and data: `card-grid` → `list` (code commit accepts both, data commit renames).
 
 **Acceptance criteria:**
-- [ ] Countries at 390 px: one entry per row, flag + Hebrew + translit + translation readable without zoom (Hebrew ≥ 22 px). Languages labelled.
-- [ ] gender-number shows forms for `talmid`, `medaber`, `gar`, `oved`
-- [ ] Nikud off shows `plain ?? stripNikud(he)` everywhere in the list
+- [x] Countries at 390 px: one entry per row, flag + Hebrew + translit + translation readable without zoom (Hebrew ≥ 22 px). Languages labelled.
+- [x] gender-number shows forms for `talmid`, `medaber`, `gar`, `oved`
+- [x] Nikud off shows `plain ?? stripNikud(he)` everywhere in the list
 
 **Verification:**
-- [ ] `npm run check:task` green
-- [ ] Screenshots of Phrases, Words, Grammar (phone/laptop × light/dark)
+- [x] `npm run check:task` green
+- [x] Screenshots of Phrases, Words, Grammar (phone/laptop × light/dark)
 
 **Dependencies:** Task 7 (parallel with Task 8)
 **Files:** `assets/js/views/list.js` (new; `card-grid.js` deleted), `assets/js/core/schema.js`, `assets/css/app.css`, `data/sections/*.json`, `tests/e2e/cheatsheet.spec.mjs`

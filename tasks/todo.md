@@ -28,12 +28,12 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Delete the trainer and everything that exists only for it: Blitz core and UI, progress store/screen/core, Anki core and button, their i18n strings, `blitzMode` setting, the ⚙ "Progress & backup" link, Blitz links on home and section screens, `#/<section>/blitz` and `#/progress` routes (they fall back to the section / home). Code commit first, then a data commit that removes `blitz` and `confusables` from section JSON. The validator stops checking them in the code commit.
 
 **Acceptance criteria:**
-- [ ] Deleted: `assets/js/core/{blitz,progress,anki}.js`, `assets/js/{blitz-view,progress-store}.js`, `assets/js/ui/progress-screen.js`, `tests/unit/{blitz,progress,anki}.test.mjs`, `tests/e2e/{blitz,progress,anki}.spec.mjs`
-- [ ] No reference to blitz/progress/anki remains in `assets/`, `tests/`, `data/` (`grep -ri` clean). `#/alphabet/blitz` shows the alphabet and `#/progress` shows home.
-- [ ] Remaining unit coverage of `core/` meets thresholds
+- [x] Deleted: `assets/js/core/{blitz,progress,anki}.js`, `assets/js/{blitz-view,progress-store}.js`, `assets/js/ui/progress-screen.js`, `tests/unit/{blitz,progress,anki}.test.mjs`, `tests/e2e/{blitz,progress,anki}.spec.mjs`
+- [x] No reference to blitz/progress/anki remains in `assets/`, `tests/`, `data/` (`grep -ri` clean). `#/alphabet/blitz` shows the alphabet and `#/progress` shows home.
+- [x] Remaining unit coverage of `core/` meets thresholds
 
 **Verification:**
-- [ ] `npm run check:task`: green except the E1 floor-guard findings
+- [x] `npm run check:task`: green except the E1 floor-guard findings
 - [ ] Manual: home and every section open, no Blitz/Anki buttons
 
 **Dependencies:** Task 1

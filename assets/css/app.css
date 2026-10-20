@@ -37,6 +37,9 @@
 
   --gutter: 16px;
   --measure: 72rem;
+  /* Heights of the sticky header and page bar, kept current by main.js; anchors clear them. */
+  --header-h: 96px;
+  --bar-h: 0px;
   --radius: 6px;
 }
 
@@ -403,8 +406,123 @@ a { color: var(--accent); }
   white-space: nowrap;
 }
 
+/* Page bar: sticky under the header on part pages — where you are (opens a jump list), the
+   hide-translations toggle, and a progress line along the bottom edge. Empty elsewhere. */
+.page-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 19;
+  background: var(--paper);
+}
+
+.page-bar-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--measure);
+  min-height: 36px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--rule);
+}
+
+.page-bar-inner .control { min-height: 28px; flex-shrink: 0; }
+
+.page-jump {
+  position: relative;
+  min-width: 0;
+}
+
+.page-current {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 6px 0;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.page-current::-webkit-details-marker { display: none; }
+
+.page-current::after {
+  content: '▾';
+  color: var(--muted);
+  font-size: 0.8em;
+}
+
+.page-current-section {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.page-current-group {
+  flex-shrink: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.page-current-group:not(:empty)::before { content: '· '; }
+
+.page-jump-panel {
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+  min-width: 16rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 8px 0;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgb(20 16 8 / 0.16);
+}
+
+.page-jump-list,
+.page-jump-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-jump-list a {
+  display: block;
+  padding: 6px 16px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.page-jump-list a:hover { background: var(--paper); }
+
+.page-jump-section { font-weight: 600; }
+
+.page-jump-list .page-jump-group {
+  padding-inline-start: 32px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.page-progress {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+}
+
 /* Part page: the part title, "on this page" links, then its sections one after another; each section
-   and group is an anchor that clears the sticky header (two rows on a phone). */
+   and group is an anchor that clears the sticky header and page bar. */
 .part-title {
   margin: 24px 0 0;
   font-family: var(--font-serif);
@@ -414,19 +532,9 @@ a { color: var(--accent); }
   letter-spacing: -0.01em;
 }
 
-/* Under the part title: links to its sections, and the hide-translations toggle at the end. */
-.part-tools {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px 24px;
-  margin-top: 12px;
-}
-
 .part-toc-list {
   list-style: none;
-  margin: 0;
+  margin: 12px 0 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -438,7 +546,7 @@ a { color: var(--accent); }
 
 .section {
   margin-top: 40px;
-  scroll-margin-top: 104px;
+  scroll-margin-top: calc(var(--header-h) + var(--bar-h) + 8px);
 }
 
 .section-title {
@@ -452,11 +560,7 @@ a { color: var(--accent); }
   letter-spacing: -0.005em;
 }
 
-.group { scroll-margin-top: 104px; }
-
-@media (min-width: 64rem) {
-  .section, .group { scroll-margin-top: 72px; }
-}
+.group { scroll-margin-top: calc(var(--header-h) + var(--bar-h) + 8px); }
 
 .group-title {
   margin: 32px 0 12px;
@@ -849,7 +953,7 @@ a { color: var(--accent); }
   body { font-size: 10pt; }
 
   .app-header,
-  .part-tools,
+  .page-bar,
   .results-where,
   .control { display: none !important; }
 

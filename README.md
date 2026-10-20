@@ -26,7 +26,7 @@ npm run check:full   # before push (adds webkit, Semgrep, osv-scanner)
 - **Nikud** in the header turns the vowel points off, to test your reading. The alphabet keeps its dagesh and shin/sin dots.
 - **EN / RU** switches the interface and the translations. English is the default.
 - **◐** cycles the theme: auto (follows the system), light, dark.
-- **Hide translations**, under each part title, blurs readings and meanings. Tap one to check yourself.
+- **The bar under the header** on a part page names the section you are reading. Tap it to jump to another section or group. It also holds **Hide translations**, which blurs readings and meanings: tap one to check yourself.
 - **Print** a part (Ctrl/⌘ + P) for a clean A4 sheet, black on white, with everything shown.
 
 ## Changing content (data only, no code)

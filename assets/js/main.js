@@ -7,6 +7,8 @@ import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
+import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
+import { scrollPercent, currentAnchor } from './core/scroll.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
@@ -16,6 +18,8 @@ const app = document.getElementById('app');
 const content = document.getElementById('content');
 const controls = document.getElementById('controls');
 const nav = document.getElementById('nav');
+const header = document.querySelector('.app-header');
+const pageBar = document.getElementById('page-bar');
 const brandMark = document.querySelector('.brand-mark');
 const BRAND_HE = brandMark.textContent;
 /** How long the Hebrew fades in after the nikud setting changes (matches the CSS animation). */
@@ -47,10 +51,10 @@ const screens = {
     screen.dataset.screen = 'part';
     screen.dataset.part = part.id;
     const title = el('h2', 'part-title', localized(part.title, lang));
-    const tools = el('div', 'part-tools');
-    if (part.sections.length > 1) tools.append(renderPartToc(part, lang));
-    tools.append(renderHideToggle(current, updateSettings));
-    screen.append(title, tools, ...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang, hide: current.hide })));
+    pageBar.replaceChildren(renderPageBar(part, lang, renderHideToggle(current, updateSettings)));
+    screen.append(title);
+    if (part.sections.length > 1) screen.append(renderPartToc(part, lang));
+    screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang, hide: current.hide })));
     document.title = `${localized(part.title, lang)} — ${APP_NAME}`;
     return screen;
   },
@@ -94,6 +98,8 @@ async function render(navigated = false) {
     const route = resolveRoute(location.hash, index);
     nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.lang));
     search.setLang(settings.lang);
+    // Part screens put their page bar back; every other screen has none.
+    pageBar.replaceChildren();
     if (query.trim() !== '') {
       const parts = await Promise.all(index.parts.map(loadPart));
       const { screen, summary } = renderResults(searchParts(parts, query), query, { nikud: settings.nikud, lang: settings.lang });
@@ -114,6 +120,7 @@ async function render(navigated = false) {
       if (target) target.scrollIntoView();
       else window.scrollTo(0, 0);
     }
+    measureAnchors();
   } catch (error) {
     const message = el('p', '', t('loadError', settings.lang, { detail: error.message }));
     message.setAttribute('role', 'alert');
@@ -130,7 +137,47 @@ async function render(navigated = false) {
   }
 }
 
+/** Sections and groups of the page on screen, with their titles and their tops (document coordinates). */
+let anchors = [];
+
+function measureAnchors() {
+  anchors = [...content.querySelectorAll('.section, .group')].map((node) => {
+    const section = node.closest('.section');
+    return {
+      top: node.getBoundingClientRect().top + window.scrollY,
+      section: section.querySelector('.section-title').textContent,
+      group: node.classList.contains('group') ? node.querySelector('.group-title').textContent : null,
+    };
+  });
+  updatePosition();
+}
+
+/** Where the reader is: the bar's labels and progress line. */
+function updatePosition() {
+  const root = document.documentElement;
+  const percent = scrollPercent(window.scrollY, root.scrollHeight, window.innerHeight);
+  // 8 px below where anchors land (their scroll-margin), so a section scrolled to counts as being read.
+  const reading = header.offsetHeight + pageBar.offsetHeight + 16;
+  updatePageBar(pageBar, currentAnchor(anchors, window.scrollY, reading), percent);
+}
+
+let frame = 0;
+window.addEventListener('scroll', () => {
+  cancelAnimationFrame(frame);
+  frame = requestAnimationFrame(updatePosition);
+}, { passive: true });
+window.addEventListener('resize', measureAnchors);
+// The sticky header and bar change height (search row, wrapping); anchors clear them via these.
+const stickyHeights = new ResizeObserver(() => {
+  const root = document.documentElement;
+  root.style.setProperty('--header-h', `${header.offsetHeight}px`);
+  root.style.setProperty('--bar-h', `${pageBar.offsetHeight}px`);
+});
+stickyHeights.observe(header);
+stickyHeights.observe(pageBar);
+
 applySettings(settings);
+bindJumpDismiss(pageBar);
 window.addEventListener('hashchange', () => {
   // Following a link (a result's place, a part) leaves the search.
   query = '';

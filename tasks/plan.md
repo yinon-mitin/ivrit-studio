@@ -68,7 +68,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 - [x] Task 7: Numbers (data)
 - [x] Task 8: Days and time (data)
 - [x] Task 9: Colours (data)
-- [ ] Task 10: Family and people (data)
+- [x] Task 10: Family and people (data)
 
 ### Checkpoint C: content review
 - [ ] Owner skims the new sections; nikud stays `verified: false` until checked with Dicta

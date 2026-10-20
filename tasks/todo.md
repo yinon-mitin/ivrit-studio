@@ -168,11 +168,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** New section `family`. Groups: `family` (mother, father, parents, brother, sister, son and daughter are already in vocab and are not duplicated, grandfather, grandmother, husband, wife, family) and `people` (man, boy, girl, child, friend m/f, neighbour m/f, teacher m/f). Where gender pairs exist, use `forms` or `related` with meanings. Icon: `מִשְׁפָּחָה`.
 
 **Acceptance criteria:**
-- [ ] ~20 entries, all `verified: false`, no id or meaning that duplicates `vocab` (checked by a one-off script; the validator already rejects duplicate ids)
-- [ ] Validator passes
+- [x] ~20 entries, all `verified: false`, no id or meaning that duplicates `vocab` (checked by a one-off script; the validator already rejects duplicate ids)
+- [x] Validator passes
 
 **Verification:**
-- [ ] `npm run check:task` green
+- [x] `npm run check:task` green
 
 **Dependencies:** None
 **Files:** `data/sections/family.json` (new), `data/index.json`

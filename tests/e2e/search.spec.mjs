@@ -68,3 +68,12 @@ test('results follow the language and pass axe in both themes without horizontal
     await expectNoSeriousAxe(page);
   }
 });
+
+test('numbers are found by digit, by Russian word and by Hebrew without nikud', async ({ page }) => {
+  const seven = find('numbers.n7');
+  await open(page, '#/');
+  for (const query of ['7 —', 'семь', stripNikud(seven.he)]) {
+    await searchFor(page, query);
+    await expect(page.locator(`#content [data-screen="search"] [data-entry="${seven.id}"]`)).toBeVisible();
+  }
+});

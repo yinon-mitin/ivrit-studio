@@ -414,9 +414,19 @@ a { color: var(--accent); }
   letter-spacing: -0.01em;
 }
 
+/* Under the part title: links to its sections, and the hide-translations toggle at the end. */
+.part-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 24px;
+  margin-top: 12px;
+}
+
 .part-toc-list {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -457,6 +467,40 @@ a { color: var(--accent); }
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* Hidden translations: a button over blurred text until it is pressed. Print shows everything. */
+.reveal {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.reveal[aria-expanded='false'] {
+  filter: blur(6px);
+  user-select: none;
+  background: var(--mark);
+}
+
+.reveal[aria-expanded='false'] > * { display: block; }
+
+.reveal[aria-expanded='true'] { cursor: auto; }
+
+.entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note) {
+  filter: blur(5px);
+  user-select: none;
+}
+
+.entry-gloss .reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* Search results: the count, then each matching section led by a link to its place. */

@@ -18,10 +18,10 @@ const VIEWS = {
 
 /**
  * @param {{ id: string, title: { en: string, ru: string }, nikudToggle?: boolean }} section
- * @param {{ nikud: boolean, lang: 'en' | 'ru' }} options
+ * @param {{ nikud: boolean, lang: 'en' | 'ru', hide?: boolean }} options
  * @returns {HTMLElement}
  */
-export function renderSection(section, { nikud, lang }) {
+export function renderSection(section, { nikud, lang, hide = false }) {
   const node = el('section', 'section');
   node.id = section.id;
   node.dataset.section = section.id;
@@ -31,7 +31,7 @@ export function renderSection(section, { nikud, lang }) {
   title.id = titleId;
   node.append(title);
   // Sections with nikudToggle false (the alphabet) always keep their nikud.
-  const options = { nikud: nikud || section.nikudToggle === false, lang };
+  const options = { nikud: nikud || section.nikudToggle === false, lang, hide };
   for (const group of sectionGroups(section)) {
     const view = VIEWS[group.view](group.items, options);
     if (group.id === null) {

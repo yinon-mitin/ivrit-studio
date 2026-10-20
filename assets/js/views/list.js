@@ -4,6 +4,7 @@
 import { displayHe } from '../core/hebrew.js';
 import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
+import { revealButton } from './reveal.js';
 
 const FORM_ROWS = [['formMasculine', 'ms', 'mp'], ['formFeminine', 'fs', 'fp']];
 /** A run of Hebrew inside other text, so it can be marked lang="he" dir="rtl". */
@@ -61,11 +62,11 @@ function renderForms(forms, { nikud, lang }) {
  * @param {Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, emoji?: string,
  *   note?: { en: string, ru: string }, forms?: Record<string, string>,
  *   related?: Array<{ he: string, plain?: string, en?: string, ru?: string }> }>} items
- * @param {{ nikud: boolean, lang: 'en' | 'ru' }} options
+ * @param {{ nikud: boolean, lang: 'en' | 'ru', hide?: boolean }} options hide: reading and meaning start hidden
  * @returns {HTMLElement}
  */
 export function renderList(items, options) {
-  const { nikud, lang } = options;
+  const { nikud, lang, hide } = options;
   const list = el('ul', 'entry-list');
   list.dataset.view = 'list';
   for (const item of items) {
@@ -85,7 +86,12 @@ export function renderList(items, options) {
     gloss.dir = 'ltr';
     const meaning = el('span', 'entry-meaning', item[lang]);
     meaning.lang = lang;
-    gloss.append(el('span', 'entry-translit', item.translit), meaning);
+    const reading = [el('span', 'entry-translit', item.translit), meaning];
+    if (hide) {
+      // The related words' meanings and the note stay hidden with the entry's own until it is shown.
+      entry.dataset.hidden = '';
+      gloss.append(revealButton(reading, lang, () => { entry.dataset.revealed = ''; }));
+    } else gloss.append(...reading);
     head.append(word, gloss);
     entry.append(head);
 

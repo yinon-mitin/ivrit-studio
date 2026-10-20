@@ -15,6 +15,8 @@ export const STRINGS = {
   formMasculine: { en: 'Masc.', ru: 'М. р.' },
   formFeminine: { en: 'Fem.', ru: 'Ж. р.' },
   search: { en: 'Search', ru: 'Поиск' },
+  hide: { en: 'Hide translations', ru: 'Скрыть перевод' },
+  reveal: { en: 'Show translation', ru: 'Показать перевод' },
   searchLabel: { en: 'Search Hebrew, reading or translation', ru: 'Поиск по ивриту, чтению или переводу' },
   searchPlaceholder: { en: 'Search…', ru: 'Поиск…' },
   searchFor: { en: '{count} for “{query}”', ru: '{count} по запросу «{query}»' },

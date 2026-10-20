@@ -78,3 +78,16 @@ export function renderSettings(settings, onChange) {
   fragment.append(nikud, languages, theme);
   return fragment;
 }
+
+/**
+ * The hide-translations toggle, shown on part pages under the title (the header has no room left on a
+ * phone).
+ * @param {Settings} settings
+ * @param {(change: Partial<Settings>) => void} onChange
+ * @returns {HTMLElement}
+ */
+export function renderHideToggle(settings, onChange) {
+  const hide = button(t('hide', settings.lang), 'hide', 'hide', () => onChange({ hide: !settings.hide }));
+  hide.setAttribute('aria-pressed', String(settings.hide));
+  return hide;
+}

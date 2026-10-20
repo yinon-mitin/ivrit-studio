@@ -7,7 +7,7 @@ import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { searchParts } from './core/search.js';
-import { loadSettings, saveSettings, applySettings, renderSettings } from './ui/settings.js';
+import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
 
 const APP_NAME = 'Ivrit Studio';
@@ -41,9 +41,10 @@ const screens = {
     screen.dataset.screen = 'part';
     screen.dataset.part = part.id;
     const title = el('h2', 'part-title', localized(part.title, lang));
-    screen.append(title);
-    if (part.sections.length > 1) screen.append(renderPartToc(part, lang));
-    screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang })));
+    const tools = el('div', 'part-tools');
+    if (part.sections.length > 1) tools.append(renderPartToc(part, lang));
+    tools.append(renderHideToggle(current, updateSettings));
+    screen.append(title, tools, ...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang, hide: current.hide })));
     document.title = `${localized(part.title, lang)} — ${APP_NAME}`;
     return screen;
   },

@@ -4,13 +4,15 @@
 import { displayHe } from '../core/hebrew.js';
 import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
+import { revealButton } from './reveal.js';
 
 /**
  * @param {Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string }>} items
- * @param {{ nikud: boolean, lang: 'en' | 'ru' }} options
+ * @param {{ nikud: boolean, lang: 'en' | 'ru', hide?: boolean }} options hide: sound and name start hidden
  * @returns {HTMLElement}
  */
-export function renderTable(items, { nikud, lang }) {
+export function renderTable(items, { nikud, lang, hide }) {
+  const hidden = (text) => (hide ? [revealButton([text], lang)] : [text]);
   const wrap = el('div', 'table-wrap');
   wrap.dataset.view = 'table';
   const table = el('table', 'entry-table');
@@ -34,12 +36,14 @@ export function renderTable(items, { nikud, lang }) {
     if (startsGroup) {
       let span = 1;
       while (items[i + span]?.translit === item.translit) span += 1;
-      const sound = el('td', 'table-sound', item.translit);
+      const sound = el('td', 'table-sound');
+      sound.append(...hidden(item.translit));
       sound.dir = 'ltr';
       sound.rowSpan = span;
       row.append(sound);
     }
-    const name = el('td', 'table-name', item[lang]);
+    const name = el('td', 'table-name');
+    name.append(...hidden(item[lang]));
     name.dir = 'ltr';
     name.lang = lang;
     row.append(name);

@@ -5,19 +5,17 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { test, expect } from '@playwright/test';
 import {
-  routes, open, expectNoHorizontalOverflow, expectNoSeriousAxe, recordRequests, externalRequests, fontFiles, FONTS_DIR, seedSettings,
+  routes, open, expectNoHorizontalOverflow, expectNoSeriousAxe, recordRequests, externalRequests, fontFiles, FONTS_DIR,
 } from './helpers.mjs';
 
 const KB = 1024;
 
 for (const route of routes()) {
-  test(`${route} has no horizontal overflow with RU on and nikud on/off, passes axe in both themes, stays on the site`, async ({ page, baseURL }) => {
+  test(`${route} has no horizontal overflow in EN and RU and with nikud on/off, passes axe in both themes, stays on the site`, async ({ page, baseURL }) => {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     const requests = recordRequests(page);
 
-    // Densest mode (SPEC): RU translations shown.
-    await seedSettings(page, { showRu: true });
     await page.emulateMedia({ colorScheme: 'light' });
     await open(page, route);
     for (const colorScheme of ['light', 'dark']) {
@@ -26,6 +24,9 @@ for (const route of routes()) {
       await expectNoSeriousAxe(page);
     }
     await page.locator('[data-setting="nikud"]').click();
+    await page.locator('#app[data-ready="true"]').waitFor();
+    await expectNoHorizontalOverflow(page);
+    await page.locator('[data-setting="lang"] [data-value="ru"]').click();
     await page.locator('#app[data-ready="true"]').waitFor();
     await expectNoHorizontalOverflow(page);
 

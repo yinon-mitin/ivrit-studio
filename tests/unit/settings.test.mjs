@@ -3,33 +3,37 @@ import assert from 'node:assert/strict';
 import { defaultSettings, parseSettings, nextTheme } from '../../assets/js/core/settings.js';
 
 describe('defaultSettings', () => {
-  it('follows SPEC: system theme, nikud on, RU translation off, UI language from the browser', () => {
-    assert.deepEqual(defaultSettings('ru-RU'), { theme: 'system', nikud: true, uiLang: 'ru', showRu: false });
-    assert.equal(defaultSettings('en-GB').uiLang, 'en');
+  it('follows SPEC: system theme, nikud on, English, translations shown', () => {
+    assert.deepEqual(defaultSettings(), { theme: 'system', nikud: true, lang: 'en', hide: false });
   });
 });
 
 describe('parseSettings', () => {
   it('keeps valid stored values', () => {
-    const stored = JSON.stringify({ theme: 'dark', nikud: false, uiLang: 'en', showRu: true });
-    assert.deepEqual(parseSettings(stored, 'ru'), { theme: 'dark', nikud: false, uiLang: 'en', showRu: true });
+    const stored = JSON.stringify({ theme: 'dark', nikud: false, lang: 'ru', hide: true });
+    assert.deepEqual(parseSettings(stored), { theme: 'dark', nikud: false, lang: 'ru', hide: true });
   });
 
   it('returns the defaults when nothing is stored', () => {
-    assert.deepEqual(parseSettings(null, 'ru'), defaultSettings('ru'));
+    assert.deepEqual(parseSettings(null), defaultSettings());
   });
 
   it('returns the defaults for broken JSON', () => {
-    assert.deepEqual(parseSettings('{ theme: dark', 'en'), defaultSettings('en'));
+    assert.deepEqual(parseSettings('{ theme: dark'), defaultSettings());
   });
 
   it('returns the defaults when the stored value is not an object', () => {
-    for (const stored of ['null', '[]', '7', '"dark"']) assert.deepEqual(parseSettings(stored, 'en'), defaultSettings('en'), stored);
+    for (const stored of ['null', '[]', '7', '"dark"']) assert.deepEqual(parseSettings(stored), defaultSettings(), stored);
   });
 
   it('replaces each invalid field with its default and keeps the valid ones', () => {
-    const stored = JSON.stringify({ theme: 'sepia', nikud: 'yes', uiLang: 'he', showRu: true, blitzMode: 'quiz', extra: 1 });
-    assert.deepEqual(parseSettings(stored, 'en'), { theme: 'system', nikud: true, uiLang: 'en', showRu: true });
+    const stored = JSON.stringify({ theme: 'sepia', nikud: false, lang: 'he', hide: 'yes', extra: 1 });
+    assert.deepEqual(parseSettings(stored), { theme: 'system', nikud: false, lang: 'en', hide: false });
+  });
+
+  it('reads settings saved by the trainer version: known fields kept, old ones dropped', () => {
+    const stored = JSON.stringify({ theme: 'light', nikud: false, uiLang: 'ru', showRu: true, blitzMode: 'cards' });
+    assert.deepEqual(parseSettings(stored), { theme: 'light', nikud: false, lang: 'en', hide: false });
   });
 });
 

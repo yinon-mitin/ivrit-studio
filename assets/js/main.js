@@ -5,7 +5,7 @@ import { t, localized } from './core/i18n.js';
 import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
-import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
+import { loadSettings, saveSettings, applySettings, renderSettings } from './ui/settings.js';
 import { el } from './views/dom.js';
 
 const APP_NAME = 'Ivrit Studio';
@@ -20,12 +20,12 @@ let settings = loadSettings();
 const loadPart = async (part) => ({ ...part, sections: await Promise.all(part.sections.map(loadSection)) });
 
 const screens = {
-  contents: async (route, index, { uiLang: lang }) => {
+  contents: async (route, index, { lang }) => {
     document.title = APP_NAME;
     return renderContents(await Promise.all(index.parts.map(loadPart)), lang);
   },
   part: async (route, index, current) => {
-    const lang = current.uiLang;
+    const { lang } = current;
     const part = await loadPart(index.parts.find((p) => p.id === route.part));
     const screen = el('div', 'part');
     screen.dataset.screen = 'part';
@@ -33,7 +33,7 @@ const screens = {
     const title = el('h2', 'part-title', localized(part.title, lang));
     screen.append(title);
     if (part.sections.length > 1) screen.append(renderPartToc(part, lang));
-    screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang })));
+    screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang })));
     document.title = `${localized(part.title, lang)} — ${APP_NAME}`;
     return screen;
   },
@@ -42,26 +42,24 @@ const screens = {
 /** @param {Partial<import('./core/settings.js').Settings>} change */
 function updateSettings(change) {
   const focusKey = document.activeElement?.dataset?.focusKey;
-  const menuOpen = controls.querySelector('[data-setting="menu"]')?.open ?? false;
   settings = { ...settings, ...change };
   saveSettings(settings);
   applySettings(settings);
-  render(menuOpen).then(() => {
+  render().then(() => {
     if (focusKey) document.querySelector(`[data-focus-key="${focusKey}"]`)?.focus();
   });
 }
 
 /**
- * @param {boolean} [menuOpen] keep the settings menu open across the re-render
  * @param {boolean} [navigated] a new route: scroll to its group or section, or to the top; a settings change keeps the place
  */
-async function render(menuOpen = false, navigated = false) {
+async function render(navigated = false) {
   app.dataset.ready = 'false';
-  controls.replaceChildren(renderSettings(settings, updateSettings, menuOpen));
+  controls.replaceChildren(renderSettings(settings, updateSettings));
   try {
     const index = await loadIndex();
     const route = resolveRoute(location.hash, index);
-    nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.uiLang));
+    nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.lang));
     content.replaceChildren(await screens[route.name](route, index, settings));
     if (navigated) {
       // The group, else the section, else the top of the page.
@@ -71,7 +69,7 @@ async function render(menuOpen = false, navigated = false) {
       else window.scrollTo(0, 0);
     }
   } catch (error) {
-    const message = el('p', '', t('loadError', settings.uiLang, { detail: error.message }));
+    const message = el('p', '', t('loadError', settings.lang, { detail: error.message }));
     message.setAttribute('role', 'alert');
     content.replaceChildren(message);
   }
@@ -79,6 +77,5 @@ async function render(menuOpen = false, navigated = false) {
 }
 
 applySettings(settings);
-bindMenuDismiss(controls);
-window.addEventListener('hashchange', () => render(false, true));
-render(false, true);
+window.addEventListener('hashchange', () => render(true));
+render(true);

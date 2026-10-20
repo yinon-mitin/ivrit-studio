@@ -7,26 +7,15 @@ export const STRINGS = {
   contents: { en: 'Contents', ru: 'Содержание' },
   parts: { en: 'Parts', ru: 'Части' },
   onThisPage: { en: 'On this page', ru: 'На этой странице' },
-  settings: { en: 'Settings', ru: 'Настройки' },
   theme: { en: 'Theme: {value}', ru: 'Тема: {value}' },
   themeSystem: { en: 'Auto', ru: 'Авто' },
   themeLight: { en: 'Light', ru: 'Светлая' },
   themeDark: { en: 'Dark', ru: 'Тёмная' },
-  language: { en: 'Interface language', ru: 'Язык интерфейса' },
+  language: { en: 'Language of the site and translations', ru: 'Язык сайта и переводов' },
   nikud: { en: 'Nikud', ru: 'Огласовки' },
-  showRu: { en: 'Russian translation', ru: 'Перевод на русский' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
   home: { en: 'Contents', ru: 'Содержание' },
 };
-
-/**
- * The interface language for a browser locale: Russian for `ru` / `ru-*`, otherwise English.
- * @param {string | undefined} language e.g. navigator.language
- * @returns {'en' | 'ru'}
- */
-export function pickLang(language) {
-  return /^ru(-|$)/i.test(language ?? '') ? 'ru' : 'en';
-}
 
 /**
  * An interface string with `{name}` placeholders filled; the key itself when it is unknown.

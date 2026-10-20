@@ -1,16 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { STRINGS, pickLang, t, localized, countEntries } from '../../assets/js/core/i18n.js';
-
-describe('pickLang', () => {
-  it('picks Russian for any ru locale', () => {
-    for (const language of ['ru', 'ru-RU', 'RU-ua']) assert.equal(pickLang(language), 'ru', language);
-  });
-
-  it('picks English for every other or missing locale', () => {
-    for (const language of ['en-US', 'he-IL', 'rus', '', undefined]) assert.equal(pickLang(language), 'en', String(language));
-  });
-});
+import { STRINGS, t, localized, countEntries } from '../../assets/js/core/i18n.js';
 
 describe('t', () => {
   it('returns the string in the requested language', () => {

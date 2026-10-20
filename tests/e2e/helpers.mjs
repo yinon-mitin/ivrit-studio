@@ -124,12 +124,3 @@ export const SETTINGS_KEY = 'ivrit-studio:settings';
 export async function seedSettings(page, settings) {
   await page.addInitScript(([key, value]) => window.localStorage.setItem(key, value), [SETTINGS_KEY, JSON.stringify(settings)]);
 }
-
-/**
- * Opens the ⚙ settings menu if it is closed.
- * @param {import('@playwright/test').Page} page
- */
-export async function openMenu(page) {
-  const menu = page.locator('[data-setting="menu"]');
-  if (!(await menu.evaluate((details) => details.open))) await menu.locator('summary').click();
-}

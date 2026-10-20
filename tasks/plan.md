@@ -1,101 +1,96 @@
-# Implementation Plan: Ivrit Studio — Cheatsheet Redesign
+# Implementation Plan: Ivrit Studio — Reading aids, page navigation, second cursive, more vocabulary
 
-Previous plan (MVP: trainer + one-screen cheatsheet): `tasks/archive/mvp-plan.md`, `tasks/archive/mvp-todo.md`.
+Previous plans: `tasks/archive/mvp-*.md` (trainer MVP), `tasks/archive/redesign-*.md` (pivot to cheatsheet, released 2026-10-20 as `abb677b`).
 
 ## Overview
-Turn Ivrit Studio from a one-screen trainer into a modern **web cheatsheet** in the "typographic reference" style (variant A). The site loses Blitz, progress with export/import, Anki export, weekly data files and the one-screen rule. In their place come scrollable thematic pages, search, a "hide translations" self-check mode, and a print stylesheet. Translations are English by default, with one switch to Russian (interface and translations together). Static, zero runtime dependencies and no build step stay as they are. Detailed tasks: `tasks/todo.md`.
+Five owner requests (2026-10-20):
+1. **Nikud you can see change on the contents page.** Today the toggle does nothing there. The contents icons and the header mark will follow it, with a short crossfade.
+2. **Hide translations always at hand.** The toggle moves into a sticky page bar, so it works anywhere on a long page.
+3. **Two cursive styles** instead of the "Print over cursive" group, which repeats the letter grid.
+4. **More vocabulary:** numbers, days and time, colours, family and people.
+5. **Page navigation on long pages**, after getartcraft.com. On a laptop: a fixed vertical ruler on the right (`role="scrollbar"`, ticks, a position marker with %, section markers, click/drag to jump). On a phone: the sticky page bar shows the current section (tap for a jump list) and a progress line.
 
-Decided with the owner (2026-10-20): the feature table, variant A, EN-first with an RU switch, thematic parts instead of one page or a page per section, current fonts (Heebo + Gveret Levin, no new downloads), exception E1 plus one push after Phase 1, and archiving the MVP plan.
+Static, zero runtime deps and no build stay as they are. The `CONSTRAINTS.md` bar is unchanged. Detailed tasks: `tasks/todo.md`.
 
-## Target structure
-```
-#/                 Contents: the parts, each listing its sections (typographic table of contents)
-#/reading          Reading:  alphabet (letters · finals & variants · print over cursive), nikud, geresh
-#/phrases          Phrases:  greetings & small talk, question words
-#/words            Words:    vocab, countries & languages
-#/grammar          Grammar:  gender & number
-#/<part>/<section> the same page, scrolled to the section (anchor)
-```
-On each part page every section is a heading and every former tab is a subheading. The page scrolls naturally. A sticky header holds the part navigation, search, and the Nikud · Hide · EN/RU · theme controls.
+## Decisions (owner, 2026-10-20)
+- Archive the redesign plan; its open manual checks move here (Checkpoint D).
+- Cursive: a **second cursive font**. Google Fonts has no second modern Israeli cursive (only Gveret Levin; Solitreo is a historical Ladino script, Playpen Sans Hebrew and Amatic SC are handwritten print). Candidate: **Ktav Yad CLM** (Culmus, GPL-2 with font exception, no nikud). Task 5 is a spike that ends with an owner go/no-go before any font lands (SPEC: font changes are "ask first").
+- Vocabulary blocks: numbers, days and time, colours, family and people. Every new entry is `verified: false`, and the owner checks the nikud.
+- Phone navigation: the **sticky page bar** (current section with a jump list, a progress line, Hide). On a laptop the bar keeps Hide and the current section, and the ruler is added.
 
 ## Dependency Graph
 ```
-SPEC.md + CONSTRAINTS.md (new contract, exception E1)
+core/scroll.js (pure: scroll %, current anchor, % → scrollY)
         │
-        ├── remove Blitz / progress / Anki (code + tests + strings)
-        ├── remove weeks (data migration → sections; content.js, schema.js)
-        └── drop one-screen (CSS flow, groups instead of tabs, overflow-x test only)
-                    │
-              ── push (floor-guard findings approved) ──
-                    │
-        parts in index.json + validator + router + contents page
-                    │
-        design tokens + shell (variant A) ── settings: lang en|ru, nikud, theme, hide
-                    │
-        ┌───────────┴───────────┐
-   reading views           words / phrases views
-   (letters, rows,         (dictionary list, flags + languages,
-    nikud & geresh tables)  forms when present)
-                    │
-        search (core filter + UI) · hide-translations · print CSS
-                    │
-                README, check:full, push
+        ├── T2 sticky page bar (phone + laptop): current section, jump list, progress, Hide
+        │         │
+        │         └── T3 laptop ruler (role=scrollbar) — reuses the same anchors and scroll math
+        │
+T1 nikud on contents + brand (independent)
+
+T4 font spike ──(owner go)──► T5 second cursive in the alphabet (font subset, letter-rows view, data)
+
+T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 days & time · T9 colours · T10 family (data only)
+                                                                │
+                                                       T11 docs, release
 ```
 
 ## Architecture Decisions
-- **Contract first.** `SPEC.md` and `CONSTRAINTS.md` are rewritten before any code (Task 1). The owner reviews the diff. Code follows the new contract.
-- **One red window, made visible.** Removing features deletes tests and the "One screen" rule, and the floor guard flags exactly that (`test-deleted`, `assertion-removed`, `rule-removed`, `new-exception`). Exception **E1** in `CONSTRAINTS.md` records the owner's approval, scoped to Phase 1 paths, with an expiry date. All removals happen in Phase 1. At the checkpoint the agent shows the full guard output, and with the owner's "yes" pushes once. CI's floor-guard step fails on that one push, as designed. From Phase 2 on, every check is green again. The guard is not edited.
-- **Remove before redesign.** Removal goes first so that the new layout is not fighting one-screen e2e tests or Blitz routes.
-- **`tabs` → `groups`.** Without tabs the field names lie, so `tabs`/`tab` become `groups`/`group` (subheadings). Ids of entries never change. The 14/24-per-tab limit goes away.
-- **Parts live in `data/index.json`.** `{ "parts": [{ "id", "title": {en, ru}, "sections": [...] }] }`. The validator checks that every section file belongs to exactly one part. Adding a section stays data-only.
-- **One language switch.** Settings become `{ theme, nikud, lang: 'en'|'ru', hide }`. `lang` drives both the interface and the translation shown (en by default, not taken from `navigator.language`). Old stored settings fall back field by field, as `parseSettings` already does.
-- **Pure logic in `core/`, test first.** New pure functions are `partOf`/`resolveRoute` (content.js) and `matchEntry`/`searchSections` (new `core/search.js`, nikud-insensitive via `stripNikud`, matching he/plain/translit/en/ru). Coverage thresholds are unchanged.
-- **Variant A design system** in `app.css` tokens: warm paper background and ink text (light), deep warm-dark (dark), one accent, hairline rules instead of bordered cards, large Hebrew. Latin headings use a system serif stack (`Iowan Old Style, Charter, Georgia, 'Noto Serif', serif`), so nothing new downloads. The interface stays in Heebo.
-- **What stays:** no build, no runtime deps, CSP, `createElement`/`textContent` only, ≤ 200 KB first load, ≤ 60 KB per font, zero external requests, axe in both themes, `storage.js` for settings.
+- **One scroll model.** `core/scroll.js` holds the pure math: `scrollPercent`, `currentAnchor(anchors, scrollY, offset)` and `scrollForPercent`, unit-tested. The DOM side reads anchor offsets once per render and on resize. A single passive `scroll` listener (rAF-throttled) updates both the bar and the ruler.
+- **The ruler is accessible, its marks are not interactive.** Children of `role="scrollbar"` are presentational. The ruler is focusable (`tabindex="0"`) with arrow/PageUp/PageDown/Home/End, and `aria-valuenow` is the scroll %. Section links for keyboard and screen-reader users live in the page bar's jump list, which is a real list of links.
+- **Ticks in CSS, not 100 spans.** A `repeating-linear-gradient` draws minor and major ticks. Only section markers and the position marker are elements.
+- **Sticky height budget.** Phone: header (≤ 96 px) + page bar (≤ 36 px) ≤ 132 px of 664 px. `scroll-margin-top` follows. Laptop: header ≤ 64 px + bar ≤ 40 px.
+- **Nikud crossfade without duplicating content.** Only the contents icons and the brand mark (short words) get a two-layer crossfade (with/without nikud stacked, opacity transition, off under `prefers-reduced-motion`). Entries on part pages swap as today.
+- **Second cursive as a third line in letter-rows.** The "rows" group becomes "Two cursive styles": print, Gveret Levin, Ktav Yad, right to left, with the style names at the line starts. The letter grid stays print + Gveret Levin. The font loads only when that group renders (`font-display: swap`, unicode-range Hebrew).
+- **New list features stay generic.** `swatch` (already in the Data Contract) renders as a colour chip. Numbers use `forms` with only `ms`/`fs`, and the forms table drops empty columns. Content stays data-only.
 
 ## Task List
 
-### Phase 1: New contract and removal
-- [x] Task 1: Rewrite SPEC.md and CONSTRAINTS.md for the cheatsheet (plus exception E1)
-- [x] Task 2: Remove Blitz, progress and Anki
-- [x] Task 3: Fold weeks into sections and remove the weeks mechanism
-- [x] Task 4: Drop one-screen: scrolling sections, groups instead of tabs
+### Phase 1: Reading aids
+- [ ] Task 1: Nikud toggle visibly changes the contents page and the header mark
+- [ ] Task 2: Sticky page bar: current section, jump list, progress line, Hide toggle
 
-### Checkpoint 1: Contract and removal
-- [ ] `npm run check:task` green except the floor guard; guard output equals the E1 list
-- [ ] Owner approves → push (CI floor-guard step red once, everything else green)
+### Checkpoint A
+- [ ] `npm run check:task` green; phone + laptop screenshots of a long part with the bar
 
-### Phase 2: Structure and design
-- [x] Task 5: Thematic parts: index.json, validator, router, contents page
-- [x] Task 6: Variant A design tokens and the new shell (header, part navigation)
-- [x] Task 7: Settings: one EN/RU switch, nikud, theme
-- [x] Task 8: Reading views: letters, print over cursive, nikud and geresh tables
-- [x] Task 9: Dictionary views: phrases, words, countries, gender & number
+### Phase 2: Laptop ruler
+- [ ] Task 3: Scroll ruler on the right (role=scrollbar) with section markers
 
-### Checkpoint 2: Design review
-- [ ] `npm run check:task` green
-- [ ] Owner reviews screenshots: phone 390×664 and laptop 1280×720, light and dark, every part
+### Checkpoint B: navigation review
+- [ ] Owner reviews the bar and the ruler (screenshots or local run) before content work
 
-### Phase 3: Cheatsheet tools
-- [x] Task 10: Search across all sections
-- [x] Task 11: Hide-translations self-check mode
-- [x] Task 12: Print stylesheet (A4)
-- [x] Task 13: README, cleanup, release
+### Phase 3: Second cursive
+- [ ] Task 4: Spike: Ktav Yad CLM — license, glyphs, look, size → owner go/no-go
+- [ ] Task 5: Two cursive styles in the alphabet (only after "go")
 
-### Checkpoint 3: Complete
-- [x] `npm run check:full` green, E1 marked closed
-- [ ] Owner opens the site on a real phone; push with approval
+### Phase 4: Vocabulary
+- [ ] Task 6: List view: colour swatches and m/f-only forms
+- [ ] Task 7: Numbers (data)
+- [ ] Task 8: Days and time (data)
+- [ ] Task 9: Colours (data)
+- [ ] Task 10: Family and people (data)
+
+### Checkpoint C: content review
+- [ ] Owner skims the new sections; nikud stays `verified: false` until checked with Dicta
+
+### Phase 5: Release
+- [ ] Task 11: SPEC/README, `check:full`, push (with approval)
+
+### Checkpoint D: complete (includes checks carried over from the redesign)
+- [ ] CI green on the release push
+- [ ] Owner opens the print PDFs of Reading and Vocabulary (carried over)
+- [ ] Owner opens the site on a real phone in both themes and both languages (carried over)
 
 ## Risks and Mitigations
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Floor guard red during Phase 1 is mistaken for real regressions | Med | E1 lists the exact paths. The agent diffs guard output against E1 before asking to push. Any finding outside E1 is a real problem. |
-| Removing week merging breaks entries' ids or section membership | Med | Data migration is a separate commit. `data.test.mjs` plus a one-off count check (same ids, same totals: 171) |
-| Variant A still looks "generic" | High | Checkpoint 2 is a human screenshot review before tools are built on top. Tokens are centralized in `app.css`, so a retune is cheap. |
-| Search on every keystroke is slow on phones | Low | ~170 entries, pre-stripped nikud index built once. Measured in e2e at 360 px. |
-| axe contrast fails on warm paper palette | Med | Contrast ratios are computed when the tokens are picked (Task 6), and axe runs in both themes. |
-| Old bookmarks `#/alphabet`, `#/countries/eu-1`, `#/x/blitz` | Low | `resolveRoute` maps a known section id to its part and anchor. Anything else goes to contents. |
+| No acceptable second cursive font (license, look, missing dagesh/shin dots) | High | Task 4 is a spike with a written verdict and a sample screenshot. Nothing ships without the owner's "go". Fallbacks to offer: cursive-only drill, words in cursive. |
+| Sticky header + bar eat too much of a phone screen | Med | Height budget ≤ 132 px tested in e2e. The bar is one 32–36 px line. |
+| Scroll listener jank on phones | Low | Passive listener + rAF, offsets cached per render/resize, ~200 anchors at most |
+| `role="scrollbar"` axe rules (required `aria-controls`, `aria-valuenow`) | Med | e2e axe on every part with the ruler visible (laptop project) |
+| New Hebrew content with wrong nikud | High | All `verified: false`; validator warning count reported; owner checks with Dicta Nakdan; no `verified: true` without the owner |
+| Second font pushes first load over 200 KB | Low | Font is lazy (only the alphabet's style group requests it); ≤ 60 KB subset; weight test unchanged |
 
-## Open Questions
-- Content: there are no real greetings yet (hello, bye, thanks). The current "greetings" are small-talk questions. Should a "Greetings" group be added in Phase 3 (data only, `verified: false`)?
-- Are `vocab` (13 words of week 1) and `gender-number` worth separate pages, or should the "Grammar" part merge into "Words" until there is more grammar?
+## Answered (owner, 2026-10-20)
+- Numbers: 0–20, tens, and 100 and above (hundreds to 900, thousands, a million).
+- Months: Gregorian only.

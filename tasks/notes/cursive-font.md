@@ -1,13 +1,29 @@
 # Spike: a second cursive font (Task 4, 2026-10-20)
 
-**Verdict: usable, with one limitation and one license note. Owner decides go / no-go.**
+**Verdict (updated): four usable second cursives. Refoyl is the strongest (nikud, GPL+FE); Ktav Yad has the lightest school look. Owner picks.**
 
 ![Print, Gveret Levin and Ktav Yad CLM side by side](cursive-font-compare.png)
 
-## Candidates
-- **Google Fonts, Hebrew + handwriting** (catalogue metadata, 2026-10-20): Gveret Levin (in use), Playpen Sans Hebrew (handwritten *print*), Amatic SC (print), Solitreo (historical Sephardic/Ladino cursive, not modern Israeli cursive). There is no second modern cursive.
-- **Dana Yad** (AlefAlefAlef): its license forbids redistribution. Out.
-- **Ktav Yad CLM** (Culmus "fancy" fonts, Maxim Iorsh): the only remaining open option. Examined below.
+## Candidates (searched again, owner: "search deeper")
+
+![Eight Hebrew handwriting fonts compared](cursive-font-candidates.png)
+
+Where I looked: the Google Fonts catalogue (all Hebrew families), the Open Siddur Project's open Hebrew font pack (github.com/aharonium/fonts, 396 font files) and its LICENSES.txt, the Culmus "fancy" fonts, github.com/johnlockejrr/hebrew_cursive_fonts, Awesome-Hebrew-Fonts, Israeli free-font sites (freefonts.co.il, fontup, AlefAlefAlef), and web search in English and Hebrew.
+
+| Font | Style | License (read from the files) | Nikud / dagesh | Verdict |
+|---|---|---|---|---|
+| Gveret Levin (AlefAlefAlef) | modern cursive, marker | OFL 1.1 | yes | in use |
+| **Ktav Yad CLM** (Maxim Iorsh, Culmus) | light school cursive | GPL-2, no font exception | **no** | usable |
+| **Refoyl** (Raphael Finkel / Refoyl Finkl) | bold modern cursive | No license in the file. Open Siddur's LICENSES.txt: the author let them distribute it under a license of their choice; they ship it as **GPL + font exception** | **yes**: dagesh, shin/sin dots, vowels | usable; the cleanest license of the three |
+| **Cafe** (Meir Sadan, 1998–2003) | thin pen cursive | **CC BY-NC-ND 1.0**: non-commercial and no derivatives, so it must be served unmodified (33 KB TTF, no subsetting) | no | possible for a free study site; strict |
+| **Motek** (Meir Sadan) | rounded thin cursive | CC BY-NC-ND 1.0 (as Cafe), 20 KB TTF | no | possible, as Cafe |
+| Dana Yad (AlefAlefAlef) | modern cursive | AlefAlefAlef EULA: "property of AlefAlefAlef", no redistribution | — | out |
+| Nachlaot | cursive | The file says "Copyright 1991, Atech Software … converted from DAVKA NACHLAOT": a converted commercial font, open status unclear | partial | out (provenance) |
+| Playpen Sans Hebrew | handwritten **print** | OFL | yes | not cursive |
+| Solitreo | historical Sephardic/Ladino cursive | OFL | — | not modern cursive |
+| Mashkit, Amatic SC, others | print-like | various | — | not cursive |
+
+So there are **four usable second cursives**: Ktav Yad CLM, Refoyl, Cafe and Motek. Refoyl is the only one with nikud and dagesh, which matters for the alphabet's variants (בּ כּ פּ שׁ שׂ).
 
 ## Ktav Yad CLM
 | | |

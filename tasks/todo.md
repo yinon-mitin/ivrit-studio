@@ -206,11 +206,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `@media print`: hide header, navigation, search and controls. Black ink on white. Every section starts with its heading, groups avoid breaking inside, lists go to 2 columns, and Hebrew sizes are fixed in pt. Printing `#/reading` gives a clean A4 sheet set. Hide mode is ignored in print (everything visible).
 
 **Acceptance criteria:**
-- [ ] Playwright `page.pdf({ format: 'A4' })` of each part succeeds. No horizontal clipping (text width ≤ page width), checked with the print media emulation.
-- [ ] No controls in the printed output
+- [x] Playwright `page.pdf({ format: 'A4' })` of each part succeeds. No horizontal clipping (text width ≤ page width), checked with the print media emulation.
+- [x] No controls in the printed output
 
 **Verification:**
-- [ ] `npm run check:task` green
+- [x] `npm run check:task` green
 - [ ] Manual: owner opens the generated PDFs of Reading and Words
 
 **Dependencies:** Task 11

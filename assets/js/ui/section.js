@@ -3,7 +3,7 @@
 import { sectionGroups, groupAnchor } from '../core/content.js';
 import { localized } from '../core/i18n.js';
 import { el } from '../views/dom.js';
-import { renderCardGrid } from '../views/card-grid.js';
+import { renderList } from '../views/list.js';
 import { renderTable } from '../views/table.js';
 import { renderLetterGrid } from '../views/letter-grid.js';
 import { renderLetterRows } from '../views/letter-rows.js';
@@ -12,7 +12,9 @@ import { renderLetterRows } from '../views/letter-rows.js';
 const VIEWS = {
   'letter-grid': renderLetterGrid,
   'letter-rows': renderLetterRows,
-  'card-grid': renderCardGrid,
+  list: renderList,
+  // The name before the list rename; read until the data is renamed.
+  'card-grid': renderList,
   table: renderTable,
 };
 

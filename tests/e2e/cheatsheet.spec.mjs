@@ -1,7 +1,7 @@
 // Sections on their part pages, for every section in data/: title, groups under subheadings, entries in
 // their views, Hebrew markup, cursive font, and links that scroll to the section or group.
 import { test, expect } from '@playwright/test';
-import { sectionRoutes, open, seedSettings } from './helpers.mjs';
+import { sectionRoutes, readParts, open, seedSettings } from './helpers.mjs';
 import { displayHe } from '../../assets/js/core/hebrew.js';
 
 const LETTER_VIEWS = ['letter-grid', 'letter-rows'];
@@ -131,4 +131,33 @@ test('a table fills the content width up to 48rem, under a header row', async ({
     return [node.getBoundingClientRect().width, Math.min(48 * rem, content.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight))];
   });
   expect(tableWidth).toBeGreaterThanOrEqual(contentWidth - 1);
+});
+
+// Dictionary entries (list view): readable on a phone; words with gender and number show their forms.
+const listRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'list' && g.items.length >= 6));
+const formsRoute = sectionRoutes().find((r) => readParts().flatMap((p) => p.sections)
+  .find((s) => s.id === r.section).items.some((item) => item.forms));
+
+test('dictionary entries: one per row on a phone, several columns on a laptop, Hebrew at least 22 px', async ({ page }) => {
+  await open(page, listRoute.hash);
+  const list = page.locator(`#content [data-section="${listRoute.section}"] [data-view="list"]`).first();
+  const entries = await list.locator('[data-entry]').evaluateAll((nodes) => nodes.map((node) => ({
+    top: Math.round(node.getBoundingClientRect().top),
+    he: parseFloat(getComputedStyle(node.querySelector('.entry-he')).fontSize),
+  })));
+  const perRow = entries.filter((entry) => entry.top === entries[0].top).length;
+  expect(perRow).toBe(page.viewportSize().width < 600 ? 1 : 3);
+  for (const entry of entries) expect(entry.he).toBeGreaterThanOrEqual(22);
+});
+
+test('words with forms show a singular/plural × masculine/feminine table, without repeating them as related words', async ({ page }) => {
+  const section = readParts().flatMap((p) => p.sections).find((s) => s.id === formsRoute.section);
+  await open(page, formsRoute.hash);
+  for (const item of section.items.filter((i) => i.forms)) {
+    const entry = page.locator(`#content [data-entry="${item.id}"]`);
+    const cells = entry.locator('.entry-forms tbody td');
+    await expect(cells).toHaveText([item.forms.ms, item.forms.mp, item.forms.fs, item.forms.fp]);
+    await expect(entry.locator('.entry-forms thead th')).toHaveText(['Singular', 'Plural']);
+    for (const form of Object.values(item.forms)) await expect(entry.locator('.entry-related-he', { hasText: form })).toHaveCount(0);
+  }
 });

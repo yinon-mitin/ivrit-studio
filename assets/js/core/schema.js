@@ -1,7 +1,8 @@
 // Data contract validator (SPEC.md, Data Contract). Pure: takes parsed JSON, returns messages.
 import { isHebrew } from './hebrew.js';
 
-export const VIEWS = ['letter-grid', 'letter-rows', 'card-grid', 'table'];
+// 'card-grid' is the name before the list rename; accepted until the data is renamed.
+export const VIEWS = ['letter-grid', 'letter-rows', 'list', 'table', 'card-grid'];
 
 const REQUIRED = ['id', 'he', 'translit', 'en', 'ru'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

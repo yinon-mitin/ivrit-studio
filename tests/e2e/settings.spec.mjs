@@ -13,7 +13,7 @@ const firstSection = firstPart.sections[0];
 const togglable = sectionRoutes().find((r) => r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
 const fixed = sectionRoutes().find((r) => !r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
 // A section with list or table entries, where the translation is shown in full.
-const translated = sectionRoutes().find((r) => r.groups.every((g) => ['card-grid', 'table'].includes(g.view)));
+const translated = sectionRoutes().find((r) => r.groups.every((g) => ['list', 'table'].includes(g.view)));
 
 const background = (page) => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
 const ready = (page) => page.locator('#app[data-ready="true"]').waitFor();

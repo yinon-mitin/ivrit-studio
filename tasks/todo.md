@@ -88,13 +88,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** `data/index.json` becomes `{ "parts": [{ "id", "title": {en, ru}, "sections": [] }] }`: reading (alphabet, nikud, geresh), phrases (greetings), words (vocab, countries), grammar (gender-number). The validator requires every section file in exactly one part, unique part ids, and a title with en+ru. Pure `resolveRoute(hash, index)` in `core/content.js` maps `#/`, `#/<part>`, `#/<part>/<section>`, legacy `#/<section>[/<group>]` and unknown hashes. `#/` is a contents page that lists each part and its sections as links. A part page renders its sections in order, each with an `id` anchor.
 
 **Acceptance criteria:**
-- [ ] Unit tests (first): `resolveRoute` for every route form, including legacy and unknown. Validator rules for parts.
-- [ ] `#/words/countries` opens Words scrolled to Countries. `#/countries/asia` opens Words at the Asia group.
-- [ ] Adding a section = a section file + one line in a part (README describes it)
+- [x] Unit tests (first): `resolveRoute` for every route form, including legacy and unknown. Validator rules for parts.
+- [x] `#/words/countries` opens Words scrolled to Countries. `#/countries/asia` opens Words at the Asia group.
+- [x] Adding a section = a section file + one line in a part (README describes it)
 
 **Verification:**
-- [ ] `npm run check:task` green (floor guard clean)
-- [ ] e2e: contents lists all parts/sections; every part route passes axe and overflow-x checks
+- [x] `npm run check:task` green (floor guard clean)
+- [x] e2e: contents lists all parts/sections; every part route passes axe and overflow-x checks
 
 **Dependencies:** Checkpoint 1
 **Files:** `data/index.json`, `assets/js/core/{content,schema}.js`, `assets/js/{main,loader}.js`, `assets/js/ui/home.js` → `ui/contents.js`, `tests/unit/{content,schema}.test.mjs`, `tests/e2e/{navigation,shell}.spec.mjs`

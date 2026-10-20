@@ -66,7 +66,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 - [ ] Owner approves → push (CI floor-guard step red once, everything else green)
 
 ### Phase 2: Structure and design
-- [ ] Task 5: Thematic parts: index.json, validator, router, contents page
+- [x] Task 5: Thematic parts: index.json, validator, router, contents page
 - [ ] Task 6: Variant A design tokens and the new shell (header, part navigation)
 - [ ] Task 7: Settings: one EN/RU switch, nikud, theme
 - [ ] Task 8: Reading views: letters, print over cursive, nikud and geresh tables

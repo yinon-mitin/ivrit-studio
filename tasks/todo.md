@@ -221,11 +221,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** README rewritten for the cheatsheet: what it is, parts, search, hide, print, how to add or change content (section file + part in index.json, `verified` rules), commands, fonts. Remove leftovers: unused CSS, i18n strings, the subset of e2e helpers nobody calls. E1 marked closed in CONSTRAINTS (row moved to a closed note, not deleted). `docs/ideas/ivrit-studio.md` gets a short "2026-10-20: pivot to cheatsheet" note at the top.
 
 **Acceptance criteria:**
-- [ ] README has no Blitz/progress/Anki/weeks. A new contributor can add a section from README + SPEC Data Contract alone.
-- [ ] `npm run check:full` green
+- [x] README has no Blitz/progress/Anki/weeks. A new contributor can add a section from README + SPEC Data Contract alone.
+- [x] `npm run check:full` green
 
 **Verification:**
-- [ ] `npm run check:full` green
+- [x] `npm run check:full` green
 - [ ] Owner approves push → CI green → site checked on a real phone
 
 **Dependencies:** Task 12

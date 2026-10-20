@@ -80,10 +80,10 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 - [x] Task 10: Search across all sections
 - [x] Task 11: Hide-translations self-check mode
 - [x] Task 12: Print stylesheet (A4)
-- [ ] Task 13: README, cleanup, release
+- [x] Task 13: README, cleanup, release
 
 ### Checkpoint 3: Complete
-- [ ] `npm run check:full` green, E1 marked closed
+- [x] `npm run check:full` green, E1 marked closed
 - [ ] Owner opens the site on a real phone; push with approval
 
 ## Risks and Mitigations

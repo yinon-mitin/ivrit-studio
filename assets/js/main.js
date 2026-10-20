@@ -35,7 +35,7 @@ let renders = 0;
 const ruler = mountRuler(document.getElementById('app'), (percent) => {
   const root = document.documentElement;
   window.scrollTo(0, scrollForPercent(percent, root.scrollHeight, window.innerHeight));
-});
+}, () => scrollPercent(window.scrollY, document.documentElement.scrollHeight, window.innerHeight));
 const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);

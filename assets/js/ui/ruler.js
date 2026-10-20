@@ -13,11 +13,13 @@ const KEY_STEPS = { ArrowUp: -5, ArrowDown: 5, PageUp: -25, PageDown: 25 };
  * Builds the ruler once and returns its controls.
  * @param {HTMLElement} root where to put it (the app container)
  * @param {(percent: number) => void} scrollTo scrolls the page to a percentage
+ * @param {() => number} position the page's scroll percentage now (keys step from it, not from the
+ *   last drawn value, which lags a frame behind fast key presses)
  * @returns {{ setLang: (lang: 'en' | 'ru') => void, setActive: (active: boolean) => void,
  *   setSections: (sections: Array<{ title: string, percent: number }>) => void,
  *   update: (percent: number, title: string) => void }}
  */
-export function mountRuler(root, scrollTo) {
+export function mountRuler(root, scrollTo, position) {
   const ruler = el('div', 'ruler');
   ruler.id = 'ruler';
   ruler.setAttribute('role', 'scrollbar');
@@ -42,7 +44,6 @@ export function mountRuler(root, scrollTo) {
   ruler.append(scale, marks, thumb, title);
   root.append(ruler);
 
-  let percent = 0;
   const fromPointer = (event) => {
     const box = scale.getBoundingClientRect();
     scrollTo(((event.clientY - box.top) / box.height) * 100);
@@ -56,7 +57,7 @@ export function mountRuler(root, scrollTo) {
   });
   ruler.addEventListener('keydown', (event) => {
     let target;
-    if (event.key in KEY_STEPS) target = percent + KEY_STEPS[event.key];
+    if (event.key in KEY_STEPS) target = position() + KEY_STEPS[event.key];
     else if (event.key === 'Home') target = 0;
     else if (event.key === 'End') target = 100;
     else return;
@@ -83,7 +84,6 @@ export function mountRuler(root, scrollTo) {
       }));
     },
     update(next, current) {
-      percent = next;
       const rounded = Math.round(next);
       ruler.setAttribute('aria-valuenow', String(rounded));
       ruler.setAttribute('aria-valuetext', current ? `${rounded}% — ${current}` : `${rounded}%`);

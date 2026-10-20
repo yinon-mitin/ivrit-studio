@@ -2,7 +2,7 @@
   "id": "geresh",
   "title": {"en": "Geresh & double vav", "ru": "Чупчик и двойной вав"},
   "icon": "ג׳",
-  "view": "card-grid",
+  "view": "list",
   "nikudToggle": true,
   "groups": [
     {"id": "sounds", "title": {"en": "Sounds", "ru": "Звуки"}, "view": "table"},

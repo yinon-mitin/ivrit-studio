@@ -2,7 +2,7 @@
   "id": "gender-number",
   "title": {"en": "Gender & number", "ru": "Род и число"},
   "icon": "זֹאת",
-  "view": "card-grid",
+  "view": "list",
   "nikudToggle": true,
   "items": [
     {"id": "gender-number.ze", "he": "זֶה", "translit": "Ze", "en": "this (m.)", "ru": "это (м.)", "verified": false},

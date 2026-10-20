@@ -2,7 +2,7 @@
   "id": "vocab",
   "title": {"en": "Words", "ru": "Слова"},
   "icon": "מִלָּה",
-  "view": "card-grid",
+  "view": "list",
   "nikudToggle": true,
   "items": [
     {"id": "vocab.hine", "he": "הִנֵּה", "translit": "Hine", "en": "here it is", "ru": "вот", "verified": false},

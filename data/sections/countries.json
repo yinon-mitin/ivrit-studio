@@ -2,7 +2,7 @@
   "id": "countries",
   "title": {"en": "Countries & languages", "ru": "Страны и языки"},
   "icon": "אֶרֶץ",
-  "view": "card-grid",
+  "view": "list",
   "nikudToggle": true,
   "groups": [
     {"id": "eu-1", "title": {"en": "EU I", "ru": "ЕС I"}},

@@ -2,7 +2,7 @@
   "id": "greetings",
   "title": {"en": "Questions & small talk", "ru": "Вопросы и small talk"},
   "icon": "שָׁלוֹם",
-  "view": "card-grid",
+  "view": "list",
   "nikudToggle": true,
   "groups": [
     {"id": "small-talk", "title": {"en": "Small talk", "ru": "Small talk"}},

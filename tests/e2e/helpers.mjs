@@ -26,14 +26,12 @@ export function sectionRoutes() {
     id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
     related: (item.related ?? []).map((r) => r.he),
   }));
-  // 'card-grid' is the name of the list view before the rename.
-  const viewName = (view) => (view === 'card-grid' ? 'list' : view);
   return readParts().flatMap((part) => part.sections.map((section) => {
     const declared = section.groups ?? [];
     const groups = declared.length === 0
-      ? [{ id: null, view: viewName(section.view), items: shown(section.items) }]
+      ? [{ id: null, view: section.view, items: shown(section.items) }]
       : declared.map((group) => {
-        const view = viewName(group.view ?? section.view);
+        const view = group.view ?? section.view;
         const own = section.items.filter((item) => item.group === group.id);
         // A letter-rows group without entries of its own shows the whole section (SPEC Section).
         return { id: group.id, title: group.title, view, items: shown(own.length === 0 && view === 'letter-rows' ? section.items : own) };

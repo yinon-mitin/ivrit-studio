@@ -7,7 +7,7 @@ const entry = (slug, extra = {}) => ({
   id: `countries.${slug}`, he: 'צָרְפַת', translit: 'Tsarfat', en: 'France', ru: 'Франция', verified: false, ...extra,
 });
 const section = (extra = {}) => ({
-  id: 'countries', title: { en: 'Countries', ru: 'Страны' }, view: 'card-grid', items: [entry('france')], ...extra,
+  id: 'countries', title: { en: 'Countries', ru: 'Страны' }, view: 'list', items: [entry('france')], ...extra,
 });
 const entries = (count, extra = {}) => Array.from({ length: count }, (_, i) => entry(`c${i}`, extra));
 const part = (extra = {}) => ({ id: 'words', title: { en: 'Words', ru: 'Слова' }, sections: ['countries'], ...extra });

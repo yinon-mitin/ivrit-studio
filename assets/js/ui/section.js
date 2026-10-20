@@ -13,8 +13,6 @@ const VIEWS = {
   'letter-grid': renderLetterGrid,
   'letter-rows': renderLetterRows,
   list: renderList,
-  // The name before the list rename; read until the data is renamed.
-  'card-grid': renderList,
   table: renderTable,
 };
 

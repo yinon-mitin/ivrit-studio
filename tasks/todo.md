@@ -136,13 +136,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Restyle the reading views for variant A. Letters: a ruled grid, large print glyph, cursive glyph below in accent ink, name + sound in small caps, finals and variants as their own group. Print over cursive: rows read right to left like text. Nikud and geresh tables: full width, serif column headers, sound groups separated by rules, large vowel glyphs. Translations follow `lang`.
 
 **Acceptance criteria:**
-- [ ] Alphabet at 390 px: 5–6 letters per row, print glyph ≥ 40 px. Laptop: 8–10 per row.
-- [ ] The nikud table fills the content width (no floating narrow column). Sound grouping is kept.
-- [ ] Existing cheatsheet e2e checks (Hebrew `lang`/`dir`, cursive font, RTL order, sound grouping, nikud toggle) still pass, adjusted for groups
+- [x] Alphabet at 390 px: 5–6 letters per row, print glyph ≥ 40 px. Laptop: 8–10 per row.
+- [x] The nikud table fills the content width (no floating narrow column). Sound grouping is kept.
+- [x] Existing cheatsheet e2e checks (Hebrew `lang`/`dir`, cursive font, RTL order, sound grouping, nikud toggle) still pass, adjusted for groups
 
 **Verification:**
-- [ ] `npm run check:task` green
-- [ ] Screenshots of Reading (phone/laptop × light/dark)
+- [x] `npm run check:task` green
+- [x] Screenshots of Reading (phone/laptop × light/dark)
 
 **Dependencies:** Task 7
 **Files:** `assets/js/views/{letter-grid,letter-rows,table}.js`, `assets/css/app.css`, `tests/e2e/cheatsheet.spec.mjs`

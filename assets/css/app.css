@@ -521,65 +521,71 @@ a { color: var(--accent); }
   transform-origin: left;
 }
 
-/* Scroll ruler (laptop, long part pages): fixed at the right edge under the header. Minor ticks every
-   2% and major ticks every 10% are drawn by gradients; numbers, section marks and the position
-   marker are placed at --at (0–1) of the scale's height. */
+/* Scroll ruler (laptop, long part pages): fixed at the right edge under the header and the page bar.
+   The tape is marked in CSS millimetres (1 mm, 5 mm, 10 mm numbered) and moves 1:1 with the page
+   (--scroll); a fixed marker at the reading line (--offset) shows the reading in mm. */
 .ruler {
   position: fixed;
-  top: var(--header-h);
+  top: calc(var(--header-h) + var(--bar-h));
   right: 0;
   bottom: 0;
   z-index: 18;
   display: none;
-  width: 56px;
-  cursor: crosshair;
+  width: 64px;
+  overflow: hidden;
+  cursor: grab;
   touch-action: none;
   user-select: none;
-  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  border-inline-start: 1px solid var(--rule);
 }
+
+.ruler:active { cursor: grabbing; }
 
 @media (min-width: 64rem) {
   .ruler:not([hidden]) { display: block; }
 
-  /* The content keeps clear of the ruler. */
-  :root[data-ruler] .content { padding-inline-end: calc(var(--gutter) + 40px); }
+  /* The content keeps clear of the ruler; the ruler is the scrollbar, so the browser's goes. */
+  :root[data-ruler] .content { padding-inline-end: calc(var(--gutter) + 48px); }
+
+  :root[data-ruler] { scrollbar-width: none; }
+
+  :root[data-ruler]::-webkit-scrollbar { display: none; }
 }
 
-.ruler-scale {
+.ruler-tape {
   position: absolute;
-  inset: 16px 0 16px 0;
-  /* Each tile is one step tall with its tick along the top edge; the bottom edge is the 100% tick. */
-  border-bottom: 1px solid var(--rule-strong);
+  inset-inline: 0;
+  top: 0;
+  height: var(--length, 100%);
+  transform: translateY(calc(-1 * var(--scroll, 0px)));
   background:
-    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 18px 10% repeat-y,
-    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 8px 2% repeat-y;
-}
-
-.ruler-number,
-.ruler-mark,
-.ruler-thumb {
-  position: absolute;
-  right: 0;
-  top: calc(16px + var(--at) * (100% - 32px));
+    linear-gradient(to bottom, var(--ink) 1px, transparent 1px) right top / 20px 10mm repeat-y,
+    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 12px 5mm repeat-y,
+    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 6px 1mm repeat-y;
 }
 
 .ruler-number {
-  right: 22px;
-  translate: 0 -50%;
+  position: absolute;
+  right: 23px;
+  top: calc(var(--cm) * 10mm);
+  /* Under its tick, as on a ruler, so the 0 at the top edge shows whole. */
+  translate: 0 1px;
   color: var(--muted);
   font-size: 9px;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
-.ruler-scale .ruler-number { top: calc(var(--at) * 100%); }
-
 .ruler-mark {
-  width: 30px;
-  height: 2px;
+  position: absolute;
+  right: 0;
+  top: var(--offset);
+  width: 36px;
+  height: 3px;
   translate: 0 -50%;
   background: var(--ink);
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .ruler-mark[data-current] {
@@ -587,28 +593,35 @@ a { color: var(--accent); }
   opacity: 1;
 }
 
-.ruler-thumb {
-  left: 0;
+.ruler-marker {
+  position: absolute;
+  inset-inline: 0;
+  top: var(--offset);
   height: 1px;
   background: var(--accent);
 }
 
 .ruler-value {
   position: absolute;
-  left: 4px;
-  bottom: 3px;
+  left: 3px;
+  top: 3px;
+  padding: 0 2px;
+  background: var(--paper);
   color: var(--accent);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .ruler-title {
   position: absolute;
-  left: 6px;
-  bottom: 24px;
+  left: 3px;
+  bottom: 16px;
   max-height: 45%;
   overflow: hidden;
+  padding: 2px 0;
+  background: var(--paper);
   color: var(--muted);
   font-family: var(--font-serif);
   font-size: 0.8rem;

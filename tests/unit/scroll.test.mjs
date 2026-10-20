@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { scrollPercent, scrollForPercent, currentAnchor } from '../../assets/js/core/scroll.js';
+import { scrollPercent, scrollForPercent, currentAnchor, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
 
 describe('scrollPercent', () => {
   it('is 0 at the top and 100 at the bottom', () => {
@@ -54,5 +54,14 @@ describe('currentAnchor', () => {
 
   it('is null without anchors', () => {
     assert.equal(currentAnchor([], 500, 100), null);
+  });
+});
+
+describe('toMillimetres', () => {
+  it('converts CSS pixels to CSS millimetres (96 px per inch, 25.4 mm per inch)', () => {
+    assert.equal(PX_PER_MM, 96 / 25.4);
+    assert.equal(toMillimetres(0), 0);
+    assert.equal(Math.round(toMillimetres(96)), 25);
+    assert.equal(Math.round(toMillimetres(378)), 100);
   });
 });

@@ -44,3 +44,13 @@ export function currentAnchor(anchors, scrollY, offset) {
   }
   return current;
 }
+
+/** CSS pixels in a CSS millimetre: 96 px per inch, 25.4 mm per inch. */
+export const PX_PER_MM = 96 / 25.4;
+
+/**
+ * A length in CSS pixels as CSS millimetres, the unit of the ruler.
+ * @param {number} px
+ * @returns {number}
+ */
+export const toMillimetres = (px) => px / PX_PER_MM;

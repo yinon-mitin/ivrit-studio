@@ -1,25 +1,28 @@
-// Scroll ruler (laptop, long part pages), after getartcraft.com: a fixed strip at the right edge with
-// ticks every 2% and numbers every 10%, a marker at each section, the scroll position in %, and the
-// current section's title written down its side. It is the page's scrollbar (role="scrollbar"):
-// click or drag to scroll there; with focus, arrows move 5%, Page Up/Down 25%, Home/End to the ends.
-// Its children are presentational for assistive tech; the page bar's jump list is the accessible way
-// to reach a section.
+// Scroll ruler (laptop, long part pages), after getartcraft.com: a real-scale ruler at the right edge.
+// Its tape is marked in CSS millimetres (1 mm, 5 mm, and every 10 mm numbered) and moves 1:1 with the
+// page, so it measures the page from the top of the content; a fixed marker at the reading line reads
+// "NNN mm", and each section is a mark on the tape. It is the page's scrollbar (role="scrollbar"):
+// drag it to move the page with it, click to bring that point to the reading line; with focus,
+// arrows move 10 mm, Page Up/Down a screen, Home/End to the ends. Its children are presentational for
+// assistive tech; the page bar's jump list is the accessible way to reach a section.
 import { t } from '../core/i18n.js';
+import { PX_PER_MM, toMillimetres } from '../core/scroll.js';
 import { el } from '../views/dom.js';
 
-const KEY_STEPS = { ArrowUp: -5, ArrowDown: 5, PageUp: -25, PageDown: 25 };
+/** Where the marker sits below the ruler's top edge, in px: the reading line under the page bar. */
+export const MARKER_OFFSET = 16;
+const DRAG_THRESHOLD = 4;
 
 /**
  * Builds the ruler once and returns its controls.
  * @param {HTMLElement} root where to put it (the app container)
- * @param {(percent: number) => void} scrollTo scrolls the page to a percentage
- * @param {() => number} position the page's scroll percentage now (keys step from it, not from the
- *   last drawn value, which lags a frame behind fast key presses)
+ * @param {{ scrollY: () => number, scrollTo: (y: number) => void, screen: () => number }} page
+ *   the page's scroll position, a way to set it, and how much of it one screen shows (Page Up/Down)
  * @returns {{ setLang: (lang: 'en' | 'ru') => void, setActive: (active: boolean) => void,
- *   setSections: (sections: Array<{ title: string, percent: number }>) => void,
+ *   setTape: (length: number, sections: Array<{ title: string, offset: number }>) => void,
  *   update: (percent: number, title: string) => void }}
  */
-export function mountRuler(root, scrollTo, position) {
+export function mountRuler(root, page) {
   const ruler = el('div', 'ruler');
   ruler.id = 'ruler';
   ruler.setAttribute('role', 'scrollbar');
@@ -30,39 +33,46 @@ export function mountRuler(root, scrollTo, position) {
   ruler.setAttribute('aria-valuenow', '0');
   ruler.tabIndex = 0;
 
-  const scale = el('div', 'ruler-scale');
-  for (let n = 0; n <= 100; n += 10) {
-    const number = el('span', 'ruler-number', String(n));
-    number.style.setProperty('--at', String(n / 100));
-    scale.append(number);
-  }
+  const tape = el('div', 'ruler-tape');
+  const numbers = el('div', 'ruler-numbers');
   const marks = el('div', 'ruler-marks');
-  const thumb = el('div', 'ruler-thumb');
-  const value = el('span', 'ruler-value', '0%');
-  thumb.append(value);
+  tape.append(numbers, marks);
+  const marker = el('div', 'ruler-marker');
+  marker.style.setProperty('--offset', `${MARKER_OFFSET}px`);
+  const value = el('span', 'ruler-value', '0 mm');
+  marker.append(value);
   const title = el('span', 'ruler-title');
-  ruler.append(scale, marks, thumb, title);
+  ruler.append(tape, marker, title);
   root.append(ruler);
 
-  const fromPointer = (event) => {
-    const box = scale.getBoundingClientRect();
-    scrollTo(((event.clientY - box.top) / box.height) * 100);
-  };
+  // Drag moves the page with the tape; a press without movement is a click on that point.
+  let drag = null;
   ruler.addEventListener('pointerdown', (event) => {
     ruler.setPointerCapture(event.pointerId);
-    fromPointer(event);
+    drag = { y: event.clientY, scroll: page.scrollY(), moved: false };
   });
   ruler.addEventListener('pointermove', (event) => {
-    if (ruler.hasPointerCapture(event.pointerId)) fromPointer(event);
+    if (!drag || !ruler.hasPointerCapture(event.pointerId)) return;
+    const dy = event.clientY - drag.y;
+    if (Math.abs(dy) >= DRAG_THRESHOLD) drag.moved = true;
+    if (drag.moved) page.scrollTo(drag.scroll - dy);
+  });
+  ruler.addEventListener('pointerup', (event) => {
+    if (drag && !drag.moved) {
+      const point = event.clientY - ruler.getBoundingClientRect().top;
+      page.scrollTo(page.scrollY() + point - MARKER_OFFSET);
+    }
+    drag = null;
   });
   ruler.addEventListener('keydown', (event) => {
+    const steps = { ArrowUp: -10 * PX_PER_MM, ArrowDown: 10 * PX_PER_MM, PageUp: -page.screen(), PageDown: page.screen() };
     let target;
-    if (event.key in KEY_STEPS) target = position() + KEY_STEPS[event.key];
+    if (event.key in steps) target = page.scrollY() + steps[event.key];
     else if (event.key === 'Home') target = 0;
-    else if (event.key === 'End') target = 100;
+    else if (event.key === 'End') target = Number.MAX_SAFE_INTEGER;
     else return;
     event.preventDefault();
-    scrollTo(target);
+    page.scrollTo(target);
   });
 
   return {
@@ -74,21 +84,29 @@ export function mountRuler(root, scrollTo, position) {
       if (active) document.documentElement.dataset.ruler = '';
       else delete document.documentElement.dataset.ruler;
     },
-    setSections(sections) {
+    setTape(length, sections) {
+      tape.style.setProperty('--length', `${length}px`);
+      const count = Math.floor(toMillimetres(length) / 10);
+      numbers.replaceChildren(...Array.from({ length: count + 1 }, (_, i) => {
+        const number = el('span', 'ruler-number', String(i * 10));
+        number.style.setProperty('--cm', String(i));
+        return number;
+      }));
       marks.replaceChildren(...sections.map((section) => {
         const mark = el('span', 'ruler-mark');
-        mark.style.setProperty('--at', String(section.percent / 100));
-        mark.dataset.percent = section.percent.toFixed(2);
+        mark.style.setProperty('--offset', `${section.offset}px`);
         mark.dataset.title = section.title;
+        mark.dataset.mm = String(Math.round(toMillimetres(section.offset)));
         return mark;
       }));
     },
-    update(next, current) {
-      const rounded = Math.round(next);
-      ruler.setAttribute('aria-valuenow', String(rounded));
-      ruler.setAttribute('aria-valuetext', current ? `${rounded}% — ${current}` : `${rounded}%`);
-      thumb.style.setProperty('--at', String(next / 100));
-      value.textContent = `${String(rounded).padStart(2, '0')}%`;
+    update(percent, current) {
+      const scroll = page.scrollY();
+      tape.style.setProperty('--scroll', `${scroll}px`);
+      const mm = Math.round(toMillimetres(scroll + MARKER_OFFSET));
+      ruler.setAttribute('aria-valuenow', String(Math.round(percent)));
+      ruler.setAttribute('aria-valuetext', current ? `${mm} mm — ${current}` : `${mm} mm`);
+      value.textContent = `${mm} mm`;
       title.textContent = current;
       for (const mark of marks.children) mark.toggleAttribute('data-current', mark.dataset.title === current);
     },

@@ -8,7 +8,7 @@ import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
-import { scrollPercent, scrollForPercent, currentAnchor } from './core/scroll.js';
+import { scrollPercent, currentAnchor } from './core/scroll.js';
 import { mountRuler } from './ui/ruler.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
@@ -32,10 +32,13 @@ let settings = loadSettings();
 let query = '';
 /** Counts renders, so an older one that finishes late does not replace a newer screen. */
 let renders = 0;
-const ruler = mountRuler(document.getElementById('app'), (percent) => {
-  const root = document.documentElement;
-  window.scrollTo(0, scrollForPercent(percent, root.scrollHeight, window.innerHeight));
-}, () => scrollPercent(window.scrollY, document.documentElement.scrollHeight, window.innerHeight));
+const ruler = mountRuler(document.getElementById('app'), {
+  scrollY: () => window.scrollY,
+  scrollTo: (y) => window.scrollTo(0, y),
+  screen: () => window.innerHeight - header.offsetHeight - pageBar.offsetHeight - 40,
+});
+/** The ruler is a laptop feature (it is hidden below this width by CSS as well). */
+const wide = window.matchMedia('(min-width: 64rem)');
 const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);
@@ -161,11 +164,13 @@ function measureAnchors() {
       group: node.classList.contains('group') ? node.querySelector('.group-title').textContent : null,
     };
   });
-  // The ruler: part pages taller than the screen; a mark where each section reaches the reading place.
-  ruler.setActive(content.querySelector('[data-screen="part"]') !== null && root.scrollHeight > window.innerHeight);
-  ruler.setSections(anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
+  // The ruler: laptops, part pages taller than the screen. Its tape starts at the top of the content
+  // and has a mark at each section.
+  ruler.setActive(wide.matches && content.querySelector('[data-screen="part"]') !== null && root.scrollHeight > window.innerHeight);
+  const start = content.getBoundingClientRect().top + window.scrollY;
+  ruler.setTape(root.scrollHeight - start, anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
     title: anchor.section,
-    percent: scrollPercent(anchor.top - landing(), root.scrollHeight, window.innerHeight),
+    offset: anchor.top - start,
   })));
   updatePosition();
 }

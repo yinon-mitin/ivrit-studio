@@ -9,16 +9,16 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 ## Phase 1: Reading aids
 
 ### Task 1: Nikud toggle visibly changes the contents page and the header mark
-**Description:** On the contents page the section icons (בָ, אֶרֶץ, מִלָּה, שָׁלוֹם, זֹאת…) and the header mark עִבְרִית ignore the Nikud toggle, so pressing it seems to do nothing there. Render them through `displayHe` like entries. A short crossfade (two stacked layers, with and without nikud, ~200 ms) shows what changed. No animation under `prefers-reduced-motion`. The alphabet icon keeps its marks only where its section has `nikudToggle: false`.
+**Description:** On the contents page the section icons (בָ, אֶרֶץ, מִלָּה, שָׁלוֹם, זֹאת…) and the header mark עִבְרִית ignore the Nikud toggle, so pressing it seems to do nothing there. Render them through `displayHe` like entries. A short fade-in of the Hebrew (~400 ms) shows what changed. (Done this way instead of a two-layer crossfade: a setting change re-renders the page, so new elements could not crossfade from the old ones.) No animation under `prefers-reduced-motion`. The alphabet icon keeps its marks only where its section has `nikudToggle: false`.
 
 **Acceptance criteria:**
-- [ ] With nikud off, every contents icon and the header mark show `stripNikud(text)`, except icons of sections with `nikudToggle: false`. Turning nikud on restores them.
-- [ ] The swap crossfades (opacity transition) and is instant under `prefers-reduced-motion: reduce`. Screen readers get the text once (the hidden layer is `aria-hidden`).
-- [ ] Both layers keep `lang="he" dir="rtl"`. No layout shift: the icon box does not change size.
+- [x] With nikud off, every contents icon and the header mark show `stripNikud(text)`, except icons of sections with `nikudToggle: false`. Turning nikud on restores them.
+- [x] Hebrew fades in after the change (CSS animation `nikud-in`) and does not animate under `prefers-reduced-motion: reduce`. Screen readers get the text once (icons and mark stay `aria-hidden`; the section titles name them).
+- [x] Icons and mark keep `lang="he" dir="rtl"`. No layout shift beyond the glyphs themselves.
 
 **Verification:**
-- [ ] e2e: toggle on `#/` changes the icons' visible text. `getComputedStyle(...).transitionDuration` is `0s` with reduced motion.
-- [ ] `npm run check:task` green
+- [x] e2e: toggle on `#/` changes the icons' and the mark's visible text. `animationName` is `nikud-in`, and `none` with reduced motion.
+- [x] `npm run check:task` green
 
 **Dependencies:** None
 **Files:** `assets/js/ui/contents.js`, `index.html` / `assets/js/main.js` (brand mark), `assets/css/app.css`, `tests/e2e/settings.spec.mjs` or `tests/e2e/navigation.spec.mjs`

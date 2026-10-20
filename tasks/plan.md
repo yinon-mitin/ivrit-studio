@@ -47,7 +47,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 ## Task List
 
 ### Phase 1: Reading aids
-- [ ] Task 1: Nikud toggle visibly changes the contents page and the header mark
+- [x] Task 1: Nikud toggle visibly changes the contents page and the header mark
 - [ ] Task 2: Sticky page bar: current section, jump list, progress line, Hide toggle
 
 ### Checkpoint A

@@ -1,0 +1,30 @@
+{
+  "id": "family",
+  "title": {"en": "Family & people", "ru": "Семья и люди"},
+  "icon": "מִשְׁפָּחָה",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "family", "title": {"en": "Family", "ru": "Семья"}},
+    {"id": "people", "title": {"en": "People", "ru": "Люди"}}
+  ],
+  "items": [
+    {"id": "family.family", "he": "מִשְׁפָּחָה", "translit": "Mishpakha", "en": "family", "ru": "семья", "group": "family", "related": [{"he": "מִשְׁפָּחוֹת", "translit": "Mishpakhot", "en": "families", "ru": "семьи"}], "verified": false},
+    {"id": "family.ima", "he": "אִמָּא", "translit": "Ima", "en": "mom", "ru": "мама", "group": "family", "verified": false},
+    {"id": "family.horim", "he": "הוֹרִים", "translit": "Horim", "en": "parents", "ru": "родители", "group": "family", "verified": false},
+    {"id": "family.akh", "he": "אָח", "translit": "Akh", "en": "brother", "ru": "брат", "group": "family", "related": [{"he": "אַחִים", "translit": "Akhim", "en": "brothers", "ru": "братья"}], "verified": false},
+    {"id": "family.akhot", "he": "אָחוֹת", "translit": "Akhot", "en": "sister", "ru": "сестра", "group": "family", "related": [{"he": "אֲחָיוֹת", "translit": "Akhayot", "en": "sisters", "ru": "сёстры"}], "verified": false},
+    {"id": "family.saba", "he": "סַבָּא", "translit": "Saba", "en": "grandpa", "ru": "дедушка", "group": "family", "verified": false},
+    {"id": "family.savta", "he": "סַבְתָּא", "translit": "Savta", "en": "grandma", "ru": "бабушка", "group": "family", "verified": false},
+    {"id": "family.baal", "he": "בַּעַל", "translit": "Ba'al", "en": "husband", "ru": "муж", "group": "family", "related": [{"he": "אִשָּׁה", "translit": "Isha", "en": "wife", "ru": "жена"}], "verified": false},
+    {"id": "family.dod", "he": "דּוֹד", "translit": "Dod", "en": "uncle", "ru": "дядя", "group": "family", "related": [{"he": "דּוֹדָה", "translit": "Doda", "en": "aunt", "ru": "тётя"}], "verified": false},
+    {"id": "family.nekhed", "he": "נֶכֶד", "translit": "Nekhed", "en": "grandson", "ru": "внук", "group": "family", "related": [{"he": "נֶכְדָּה", "translit": "Nekhda", "en": "granddaughter", "ru": "внучка"}], "verified": false},
+    {"id": "family.tinok", "he": "תִּינוֹק", "translit": "Tinok", "en": "baby", "ru": "младенец", "group": "family", "related": [{"he": "תִּינוֹקֶת", "translit": "Tinoket", "en": "baby girl", "ru": "малышка"}], "verified": false},
+    {"id": "family.ish", "he": "אִישׁ", "translit": "Ish", "en": "man", "ru": "мужчина", "group": "people", "related": [{"he": "אֲנָשִׁים", "translit": "Anashim", "en": "people", "ru": "люди"}], "verified": false},
+    {"id": "family.yeled", "he": "יֶלֶד", "translit": "Yeled", "en": "child, boy", "ru": "ребёнок, мальчик", "group": "people", "forms": {"ms": "יֶלֶד", "fs": "יַלְדָּה", "mp": "יְלָדִים", "fp": "יְלָדוֹת"}, "verified": false},
+    {"id": "family.khaver", "he": "חָבֵר", "translit": "Khaver", "en": "friend", "ru": "друг", "group": "people", "forms": {"ms": "חָבֵר", "fs": "חֲבֵרָה", "mp": "חֲבֵרִים", "fp": "חֲבֵרוֹת"}, "verified": false},
+    {"id": "family.shakhen", "he": "שָׁכֵן", "translit": "Shakhen", "en": "neighbour", "ru": "сосед", "group": "people", "forms": {"ms": "שָׁכֵן", "fs": "שְׁכֵנָה", "mp": "שְׁכֵנִים", "fp": "שְׁכֵנוֹת"}, "verified": false},
+    {"id": "family.more", "he": "מוֹרֶה", "translit": "More", "en": "teacher", "ru": "учитель", "group": "people", "forms": {"ms": "מוֹרֶה", "fs": "מוֹרָה", "mp": "מוֹרִים", "fp": "מוֹרוֹת"}, "verified": false},
+    {"id": "family.ben-adam", "he": "בֶּן אָדָם", "translit": "Ben adam", "en": "person, human being", "ru": "человек", "group": "people", "verified": false}
+  ]
+}

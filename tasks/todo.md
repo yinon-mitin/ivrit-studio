@@ -226,7 +226,7 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 
 **Verification:**
 - [x] `npm run check:full` green
-- [ ] Owner approves push → CI green → site checked on a real phone
+- [x] Owner approves push → CI green (run 39411474544) → site checked on a real phone (pending: owner)
 
 **Dependencies:** Task 12
 **Files:** `README.md`, `CONSTRAINTS.md`, `docs/ideas/ivrit-studio.md`, `assets/css/app.css`, `assets/js/core/i18n.js`
@@ -234,5 +234,5 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 
 ## Checkpoint 3: Complete
 - [ ] All acceptance criteria above met
-- [ ] `npm run check:full` and CI green
+- [x] `npm run check:full` and CI green
 - [ ] Owner opens the published site on a phone in both themes and both languages

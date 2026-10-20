@@ -12,19 +12,6 @@
     {"id": "americas", "title": {"en": "Americas", "ru": "Америка"}},
     {"id": "mideast-africa-oceania", "title": {"en": "Middle East · Africa · Oceania", "ru": "Ближний Восток · Африка · Океания"}}
   ],
-  "blitz": [
-    {"id": "flag-to-he", "ask": "emoji", "answer": "he"},
-    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"},
-    {"id": "country-to-language", "ask": "he", "answer": "related.he"}
-  ],
-  "confusables": [
-    ["countries.slovakia", "countries.slovenia"],
-    ["countries.latvia", "countries.lithuania", "countries.estonia"],
-    ["countries.sweden", "countries.switzerland"],
-    ["countries.austria", "countries.hungary"],
-    ["countries.austria", "countries.australia"],
-    ["countries.india", "countries.indonesia"]
-  ],
   "items": [
     {"id": "countries.austria", "he": "אוֹסְטְרִיָּה", "translit": "Ostriya", "en": "Austria", "ru": "Австрия", "tab": "eu-1", "emoji": "🇦🇹", "related": [{"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},
     {"id": "countries.belgium", "he": "בֶּלְגְיָה", "translit": "Belgya", "en": "Belgium", "ru": "Бельгия", "tab": "eu-1", "emoji": "🇧🇪", "related": [{"he": "הוֹלַנְדִּית", "translit": "Holandit", "en": "Dutch", "ru": "нидерландский"}, {"he": "צָרְפָתִית", "translit": "Tzarfatit", "en": "French", "ru": "французский"}, {"he": "גֶּרְמָנִית", "translit": "Germanit", "en": "German", "ru": "немецкий"}], "verified": false},

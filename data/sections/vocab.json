@@ -4,9 +4,5 @@
   "icon": "מִלָּה",
   "view": "card-grid",
   "nikudToggle": true,
-  "blitz": [
-    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"},
-    {"id": "meaning-to-he", "ask": "meaning", "answer": "he"}
-  ],
   "items": []
 }

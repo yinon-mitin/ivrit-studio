@@ -8,14 +8,6 @@
     {"id": "sounds", "title": {"en": "Sounds", "ru": "Звуки"}, "view": "table"},
     {"id": "words", "title": {"en": "Words", "ru": "Слова"}}
   ],
-  "blitz": [
-    {"id": "translit-to-he", "ask": "translit", "answer": "he"},
-    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"}
-  ],
-  "confusables": [
-    ["geresh.chile", "geresh.chili"],
-    ["geresh.gimel", "geresh.tzadi", "geresh.zayin"]
-  ],
   "items": [
     {"id": "geresh.gimel", "he": "ג׳", "translit": "j", "en": "Gimel with geresh", "ru": "Гимель с чупчиком", "tab": "sounds", "verified": false},
     {"id": "geresh.tzadi", "he": "צ׳", "translit": "ch", "en": "Tzadi with geresh", "ru": "Цади с чупчиком", "tab": "sounds", "verified": false},

@@ -4,17 +4,6 @@
   "icon": "בָּ",
   "view": "table",
   "nikudToggle": false,
-  "blitz": [
-    {"id": "syllable-to-reading", "ask": "he", "answer": "translit"},
-    {"id": "sign-to-name", "ask": "he", "answer": "meaning"}
-  ],
-  "confusables": [
-    ["nikud.patah", "nikud.kamatz", "nikud.hataf-patah"],
-    ["nikud.segol", "nikud.tzere", "nikud.hataf-segol"],
-    ["nikud.hirik", "nikud.hirik-male"],
-    ["nikud.holam", "nikud.holam-male", "nikud.hataf-kamatz"],
-    ["nikud.kubutz", "nikud.shuruk"]
-  ],
   "items": [
     {"id": "nikud.patah", "he": "בַּ", "translit": "ba", "en": "Patah", "ru": "Патах", "verified": false},
     {"id": "nikud.kamatz", "he": "בָּ", "translit": "ba", "en": "Kamatz", "ru": "Камац", "verified": false},

@@ -4,14 +4,5 @@
   "icon": "שָׁלוֹם",
   "view": "card-grid",
   "nikudToggle": true,
-  "blitz": [
-    {"id": "he-to-meaning", "ask": "he", "answer": "meaning"},
-    {"id": "meaning-to-he", "ask": "meaning", "answer": "he"}
-  ],
-  "confusables": [
-    ["greetings.ma-shlomkha", "greetings.ma-shimkha"],
-    ["greetings.ma-shlomkha", "greetings.ma-shlomekh"],
-    ["greetings.eifo", "greetings.eikh", "greetings.kama"]
-  ],
   "items": []
 }

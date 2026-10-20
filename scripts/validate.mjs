@@ -7,10 +7,10 @@ import { basename, join } from 'node:path';
 import { validateAll } from '../assets/js/core/schema.js';
 
 /**
- * Reads index.json and every sections/*.json and weeks/*.json, keyed by file name without `.json`.
+ * Reads index.json and every sections/*.json, keyed by file name without `.json`.
  * Throws with the file path when a file is missing or is not valid JSON.
  * @param {string} dir
- * @returns {{ index: any, sections: Record<string, any>, weeks: Record<string, any> }}
+ * @returns {{ index: any, sections: Record<string, any> }}
  */
 export function loadData(dir) {
   const read = (file) => {
@@ -26,7 +26,7 @@ export function loadData(dir) {
     const files = readdirSync(path).filter((file) => file.endsWith('.json')).sort();
     return Object.fromEntries(files.map((file) => [basename(file, '.json'), read(join(path, file))]));
   };
-  return { index: read(join(dir, 'index.json')), sections: folder('sections'), weeks: folder('weeks') };
+  return { index: read(join(dir, 'index.json')), sections: folder('sections') };
 }
 
 if (import.meta.main) {

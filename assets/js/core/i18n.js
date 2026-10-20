@@ -15,7 +15,6 @@ export const STRINGS = {
   nikud: { en: 'Nikud', ru: 'Огласовки' },
   showRu: { en: 'Russian translation', ru: 'Перевод на русский' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
-  weekTab: { en: 'Week of {date}', ru: 'Неделя {date}' },
   home: { en: 'All sections', ru: 'Все разделы' },
 };
 
@@ -49,19 +48,6 @@ export function t(key, lang, params = {}) {
  */
 export function localized(text, lang) {
   return text[lang] ?? text.en;
-}
-
-/**
- * The title of a week tab, e.g. "Week of 11 Oct" / "Неделя 11 окт.". The date is read as a calendar
- * day (UTC), so the time zone cannot shift it.
- * @param {string} date YYYY-MM-DD
- * @param {'en' | 'ru'} lang
- * @returns {string}
- */
-export function weekTitle(date, lang) {
-  const [year, month, day] = date.split('-').map(Number);
-  const format = new Intl.DateTimeFormat(lang === 'ru' ? 'ru-RU' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
-  return t('weekTab', lang, { date: format.format(Date.UTC(year, month - 1, day)) });
 }
 
 /** Card-count nouns by plural category (Intl.PluralRules). */

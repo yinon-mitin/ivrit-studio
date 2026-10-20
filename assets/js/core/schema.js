@@ -1,6 +1,5 @@
 // Data contract validator (SPEC.md, Data Contract). Pure: takes parsed JSON, returns messages.
 import { isHebrew } from './hebrew.js';
-import { weekTabId } from './content.js';
 
 export const VIEWS = ['letter-grid', 'letter-rows', 'card-grid', 'table'];
 
@@ -9,8 +8,6 @@ const TAB_LIMIT = 14;
 const LETTER_TAB_LIMIT = 24;
 const REQUIRED = ['id', 'he', 'translit', 'en', 'ru'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const LETTER = /^[א-ת]$/;
 
 /** @typedef {{ errors: string[], warnings: string[] }} Report */
 
@@ -37,7 +34,7 @@ function validateEntry(item, sectionId) {
 }
 
 /**
- * Validates one section. Week entries must already be merged into `items` (validateAll does this).
+ * Validates one section.
  * @param {any} section
  * @returns {Report}
  */
@@ -82,68 +79,21 @@ export function validateSection(section) {
 }
 
 /**
- * Validates a week file's own fields and its section references. Its entries are checked by validateAll.
- * @param {any} week
- * @param {string[]} sectionIds
+ * Validates all data: index.json against the section files, and each section.
+ * @param {{ index: any, sections: Record<string, any> }} data sections are keyed by file name without `.json`.
  * @returns {Report}
  */
-export function validateWeek(week, sectionIds) {
-  const at = `week ${week.week}`;
-  const errors = [];
-  if (!DATE.test(week.week ?? '')) errors.push(`${at}: week must be YYYY-MM-DD`);
-  if (!Array.isArray(week.letters) || !week.letters.every((letter) => LETTER.test(letter))) {
-    errors.push(`${at}: letters must be Hebrew letters`);
-  }
-  if (!Array.isArray(week.items)) return { errors: [...errors, `${at}: items must be an array`], warnings: [] };
-  for (const item of week.items) {
-    if (!sectionIds.includes(item?.section)) errors.push(`${item?.id}: unknown section "${item?.section}"`);
-  }
-  return { errors, warnings: [] };
-}
-
-/**
- * The section with every week's entries for it added; entries without a tab go to the week tab.
- * @param {any} section
- * @param {any[]} weeks
- */
-function withWeeks(section, weeks) {
-  if (!Array.isArray(section.items)) return section;
-  const tabs = [...(section.tabs ?? [])];
-  const items = [...section.items];
-  for (const week of weeks) {
-    const own = (Array.isArray(week.items) ? week.items : []).filter((item) => item?.section === section.id);
-    const tabId = weekTabId(week.week);
-    if (own.some((item) => item.tab === undefined)) tabs.push({ id: tabId });
-    for (const { section: _section, ...item } of own) items.push({ tab: tabId, ...item });
-  }
-  return tabs.length > 0 ? { ...section, tabs, items } : { ...section, items };
-}
-
-/**
- * Validates all data: index.json against the files, each week, and each section with its week entries.
- * @param {{ index: any, sections: Record<string, any>, weeks: Record<string, any> }} data
- *   sections and weeks are keyed by file name without `.json`.
- * @returns {Report}
- */
-export function validateAll({ index, sections, weeks }) {
-  if (!Array.isArray(index?.sections) || !Array.isArray(index?.weeks)) {
-    return { errors: ['index.json: needs "sections" and "weeks" arrays'], warnings: [] };
-  }
+export function validateAll({ index, sections }) {
+  if (!Array.isArray(index?.sections)) return { errors: ['index.json: needs a "sections" array'], warnings: [] };
   const errors = [];
   const warnings = [];
   const add = (report) => { errors.push(...report.errors); warnings.push(...report.warnings); };
 
-  for (const [kind, listed, files] of [['section', index.sections, sections], ['week', index.weeks, weeks]]) {
-    for (const name of listed) if (!(name in files)) errors.push(`index.json: ${kind} "${name}" has no file`);
-    for (const name of Object.keys(files)) if (!listed.includes(name)) errors.push(`${kind}s/${name}.json is not listed in index.json`);
-  }
+  for (const name of index.sections) if (!(name in sections)) errors.push(`index.json: section "${name}" has no file`);
+  for (const name of Object.keys(sections)) if (!index.sections.includes(name)) errors.push(`sections/${name}.json is not listed in index.json`);
   for (const [name, section] of Object.entries(sections)) {
     if (section.id !== name) errors.push(`sections/${name}.json: id is "${section.id}"`);
   }
-  for (const [name, week] of Object.entries(weeks)) {
-    if (week.week !== name) errors.push(`weeks/${name}.json: week is "${week.week}"`);
-    add(validateWeek(week, Object.keys(sections)));
-  }
-  for (const section of Object.values(sections)) add(validateSection(withWeeks(section, Object.values(weeks))));
+  for (const section of Object.values(sections)) add(validateSection(section));
   return { errors, warnings };
 }

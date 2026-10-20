@@ -5,7 +5,6 @@ import { el, hebrew } from '../views/dom.js';
 
 /**
  * @param {Array<{ id: string, title: { en: string, ru: string }, icon?: string, items: Array<object> }>} sections
- *   with their weeks merged in
  * @param {'en' | 'ru'} lang
  * @returns {HTMLElement}
  */

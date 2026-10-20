@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { STRINGS, pickLang, t, localized, weekTitle, countCards } from '../../assets/js/core/i18n.js';
+import { STRINGS, pickLang, t, localized, countCards } from '../../assets/js/core/i18n.js';
 
 describe('pickLang', () => {
   it('picks Russian for any ru locale', () => {
@@ -40,17 +40,6 @@ describe('localized', () => {
 
   it('falls back to English when the language is missing', () => {
     assert.equal(localized({ en: 'Alphabet' }, 'ru'), 'Alphabet');
-  });
-});
-
-describe('weekTitle', () => {
-  it('names a week tab by its date in the interface language', () => {
-    assert.equal(weekTitle('2026-10-11', 'en'), 'Week of 11 Oct');
-    assert.equal(weekTitle('2026-10-11', 'ru'), 'Неделя 11 окт.');
-  });
-
-  it('does not shift the day across time zones', () => {
-    assert.equal(weekTitle('2026-01-01', 'en'), 'Week of 1 Jan');
   });
 });
 

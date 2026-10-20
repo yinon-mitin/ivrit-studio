@@ -1,5 +1,4 @@
 // Fetches data/ JSON once per path and caches the promise.
-import { withWeeks } from './core/content.js';
 
 /** @type {Map<string, Promise<any>>} */
 const cache = new Map();
@@ -18,7 +17,7 @@ function loadJson(path) {
   return cache.get(path);
 }
 
-/** @returns {Promise<{ sections: string[], weeks: string[] }>} */
+/** @returns {Promise<{ sections: string[] }>} */
 export const loadIndex = () => loadJson('data/index.json');
 
 /**
@@ -26,26 +25,3 @@ export const loadIndex = () => loadJson('data/index.json');
  * @returns {Promise<any>}
  */
 export const loadSection = (id) => loadJson(`data/sections/${id}.json`);
-
-/**
- * @param {string} date YYYY-MM-DD, as listed in index.json
- * @returns {Promise<any>}
- */
-export const loadWeek = (date) => loadJson(`data/weeks/${date}.json`);
-
-/**
- * A section with the entries of every week listed in index.json merged in (core/content.withWeeks).
- * @param {string} id
- * @returns {Promise<any>}
- */
-export async function loadSectionWithWeeks(id) {
-  const index = await loadIndex();
-  const [section, weeks] = await Promise.all([loadSection(id), Promise.all(index.weeks.map(loadWeek))]);
-  return withWeeks(section, weeks);
-}
-
-/** @returns {Promise<any[]>} every week listed in index.json */
-export async function loadWeeks() {
-  const index = await loadIndex();
-  return Promise.all(index.weeks.map(loadWeek));
-}

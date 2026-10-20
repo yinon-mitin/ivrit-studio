@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { validateSection, validateWeek, validateAll } from '../../assets/js/core/schema.js';
+import { validateSection, validateAll } from '../../assets/js/core/schema.js';
 
 // A valid baseline; each test changes one thing.
 const entry = (slug, extra = {}) => ({
@@ -10,11 +10,9 @@ const section = (extra = {}) => ({
   id: 'countries', title: { en: 'Countries', ru: 'Страны' }, view: 'card-grid', items: [entry('france')], ...extra,
 });
 const entries = (count, extra = {}) => Array.from({ length: count }, (_, i) => entry(`c${i}`, extra));
-const week = (extra = {}) => ({ week: '2026-10-11', letters: ['א', 'ב'], items: [], ...extra });
 const data = (extra = {}) => ({
-  index: { sections: ['countries'], weeks: ['2026-10-11'] },
+  index: { sections: ['countries'] },
   sections: { countries: section() },
-  weeks: { '2026-10-11': week() },
   ...extra,
 });
 const hasError = (report, pattern) => report.errors.some((e) => pattern.test(e));
@@ -140,30 +138,6 @@ describe('validateSection', () => {
   });
 });
 
-describe('validateWeek', () => {
-  it('accepts a valid week', () => {
-    assert.deepEqual(validateWeek(week({ items: [{ section: 'countries' }] }), ['countries']).errors, []);
-  });
-
-  it('rejects a week date that is not YYYY-MM-DD', () => {
-    assert.ok(hasError(validateWeek(week({ week: '11.10.2026' }), []), /week 11\.10\.2026: week must be YYYY-MM-DD/));
-  });
-
-  it('rejects letters that are not Hebrew letters', () => {
-    assert.ok(hasError(validateWeek(week({ letters: ['א', 'b'] }), []), /letters must be Hebrew letters/));
-    assert.ok(hasError(validateWeek(week({ letters: 'אב' }), []), /letters must be Hebrew letters/));
-  });
-
-  it('rejects an item whose section does not exist', () => {
-    const report = validateWeek(week({ items: [{ id: 'colors.red', section: 'colors' }] }), ['countries']);
-    assert.ok(hasError(report, /colors\.red: unknown section "colors"/));
-  });
-
-  it('rejects items that are not an array', () => {
-    assert.ok(hasError(validateWeek(week({ items: null }), []), /items must be an array/));
-  });
-});
-
 describe('validateAll', () => {
   it('accepts valid data and passes section warnings through', () => {
     const report = validateAll(data());
@@ -171,77 +145,22 @@ describe('validateAll', () => {
     assert.equal(report.warnings.length, 1);
   });
 
-  it('rejects an index without sections and weeks arrays', () => {
-    assert.ok(hasError(validateAll(data({ index: {} })), /index\.json: needs "sections" and "weeks" arrays/));
+  it('rejects an index without a sections array', () => {
+    assert.ok(hasError(validateAll(data({ index: {} })), /index\.json: needs a "sections" array/));
   });
 
   it('rejects an index section without a file', () => {
-    const report = validateAll(data({ index: { sections: ['countries', 'nikud'], weeks: ['2026-10-11'] } }));
+    const report = validateAll(data({ index: { sections: ['countries', 'nikud'] } }));
     assert.ok(hasError(report, /index\.json: section "nikud" has no file/));
   });
 
   it('rejects a section file missing from the index', () => {
-    const report = validateAll(data({ index: { sections: [], weeks: ['2026-10-11'] } }));
+    const report = validateAll(data({ index: { sections: [] } }));
     assert.ok(hasError(report, /sections\/countries\.json is not listed in index\.json/));
-  });
-
-  it('rejects an index week without a file', () => {
-    const report = validateAll(data({ index: { sections: ['countries'], weeks: ['2026-10-11', '2026-10-18'] } }));
-    assert.ok(hasError(report, /index\.json: week "2026-10-18" has no file/));
-  });
-
-  it('rejects a week file missing from the index', () => {
-    const report = validateAll(data({ index: { sections: ['countries'], weeks: [] } }));
-    assert.ok(hasError(report, /weeks\/2026-10-11\.json is not listed in index\.json/));
   });
 
   it('rejects a section whose id does not match its file name', () => {
     const report = validateAll(data({ sections: { countries: section({ id: 'lands' }) } }));
     assert.ok(hasError(report, /sections\/countries\.json: id is "lands"/));
-  });
-
-  it('rejects a week whose date does not match its file name', () => {
-    const report = validateAll(data({ weeks: { '2026-10-11': week({ week: '2026-10-12' }) } }));
-    assert.ok(hasError(report, /weeks\/2026-10-11\.json: week is "2026-10-12"/));
-  });
-
-  it('rejects a week item whose section does not exist', () => {
-    const weeks = { '2026-10-11': week({ items: [{ ...entry('x', { id: 'colors.red' }), section: 'colors' }] }) };
-    assert.ok(hasError(validateAll(data({ weeks })), /colors\.red: unknown section "colors"/));
-  });
-
-  it('validates week items as entries of their section', () => {
-    const weeks = { '2026-10-11': week({ items: [{ ...entry('spain', { he: 'Spain' }), section: 'countries' }] }) };
-    assert.ok(hasError(validateAll(data({ weeks })), /countries\.spain: he has no Hebrew letter/));
-  });
-
-  it('rejects a week item that duplicates a section id', () => {
-    const weeks = { '2026-10-11': week({ items: [{ ...entry('france'), section: 'countries' }] }) };
-    assert.ok(hasError(validateAll(data({ weeks })), /countries\.france: duplicate id/));
-  });
-
-  it('puts week items without a tab into the week tab', () => {
-    const vocab = { id: 'vocab', title: { en: 'Vocabulary', ru: 'Слова' }, view: 'card-grid', items: [] };
-    const items = entries(3).map((e, i) => ({ ...e, id: `vocab.w${i}`, section: 'vocab' }));
-    const report = validateAll({
-      index: { sections: ['vocab'], weeks: ['2026-10-11'] }, sections: { vocab }, weeks: { '2026-10-11': week({ items }) },
-    });
-    assert.deepEqual(report.errors, []);
-  });
-
-  it('applies the tab limit to the week tab', () => {
-    const vocab = { id: 'vocab', title: { en: 'Vocabulary', ru: 'Слова' }, view: 'card-grid', items: [] };
-    const items = entries(15).map((e, i) => ({ ...e, id: `vocab.w${i}`, section: 'vocab' }));
-    const report = validateAll({
-      index: { sections: ['vocab'], weeks: ['2026-10-11'] }, sections: { vocab }, weeks: { '2026-10-11': week({ items }) },
-    });
-    assert.ok(hasError(report, /tab week-2026-10-11 has 15 entries, limit 14/));
-  });
-
-  it('keeps an explicit tab on a week item', () => {
-    const tabs = [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }];
-    const weeks = { '2026-10-11': week({ items: [{ ...entry('spain', { tab: 'eu-1' }), section: 'countries' }] }) };
-    const report = validateAll(data({ sections: { countries: section({ tabs, items: [entry('france', { tab: 'eu-1' })] }) }, weeks }));
-    assert.deepEqual(report.errors, []);
   });
 });

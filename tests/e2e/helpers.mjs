@@ -13,25 +13,16 @@ export const fontFiles = () => readdirSync(FONTS_DIR).filter((file) => file.ends
 const readSections = () => readJson('data/index.json').sections.map((id) => readJson(`data/sections/${id}.json`));
 
 /**
- * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), including
- * week tabs, with what it should show.
+ * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), with what
+ * it should show.
  * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number,
  *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
-  // Newest first, as the app orders week tabs (core/content.withWeeks).
-  const weeks = readJson('data/index.json').weeks.map((date) => readJson(`data/weeks/${date}.json`))
-    .sort((x, y) => y.week.localeCompare(x.week));
   const list = [];
   for (const section of readSections()) {
     const items = [...section.items];
     const tabs = (section.tabs ?? []).map((tab) => ({ id: tab.id, view: tab.view ?? section.view }));
-    for (const week of weeks) {
-      const own = week.items.filter((item) => item.section === section.id);
-      const weekTab = `week-${week.week}`;
-      if (own.some((item) => item.tab === undefined)) tabs.push({ id: weekTab, view: section.view });
-      items.push(...own.map((item) => ({ tab: weekTab, ...item })));
-    }
     const tabIds = tabs.map((tab) => tab.id);
     const shown = (entries) => entries.map((item) => ({
       id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
@@ -57,8 +48,8 @@ export function sectionRoutes() {
 }
 
 /**
- * Every screen the site can show, computed from data/ so new sections and weeks are covered
- * without editing tests: home, each section tab (or the section), each week tab.
+ * Every screen the site can show, computed from data/ so new sections are covered without editing
+ * tests: home and each section tab (or the section).
  * @returns {string[]} hashes such as '#/countries/eu-1'
  */
 export function routes() {

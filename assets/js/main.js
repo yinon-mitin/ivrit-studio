@@ -1,5 +1,5 @@
 // Entry point: settings, hash router and screen assembly.
-import { loadIndex, loadSectionWithWeeks } from './loader.js';
+import { loadIndex, loadSection } from './loader.js';
 import { resolveTab, itemsForTab, viewOf } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
@@ -40,13 +40,13 @@ const screens = {
   home: async (route, { uiLang: lang }) => {
     const index = await loadIndex();
     document.title = APP_NAME;
-    return renderHome(await Promise.all(index.sections.map(loadSectionWithWeeks)), lang);
+    return renderHome(await Promise.all(index.sections.map(loadSection)), lang);
   },
   section: async (route, current) => {
     const lang = current.uiLang;
     const index = await loadIndex();
     if (!index.sections.includes(route.section)) return screens.home(route, current);
-    const section = await loadSectionWithWeeks(route.section);
+    const section = await loadSection(route.section);
     const tab = resolveTab(section, route.tab);
     const title = localized(section.title, lang);
     const screen = el('section', 'screen');

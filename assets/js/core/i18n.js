@@ -17,6 +17,7 @@ export const STRINGS = {
   search: { en: 'Search', ru: 'Поиск' },
   hide: { en: 'Hide translations', ru: 'Скрыть перевод' },
   reveal: { en: 'Show translation', ru: 'Показать перевод' },
+  pagePosition: { en: 'Page position', ru: 'Положение на странице' },
   searchLabel: { en: 'Search Hebrew, reading or translation', ru: 'Поиск по ивриту, чтению или переводу' },
   searchPlaceholder: { en: 'Search…', ru: 'Поиск…' },
   searchFor: { en: '{count} for “{query}”', ru: '{count} по запросу «{query}»' },

@@ -521,6 +521,105 @@ a { color: var(--accent); }
   transform-origin: left;
 }
 
+/* Scroll ruler (laptop, long part pages): fixed at the right edge under the header. Minor ticks every
+   2% and major ticks every 10% are drawn by gradients; numbers, section marks and the position
+   marker are placed at --at (0–1) of the scale's height. */
+.ruler {
+  position: fixed;
+  top: var(--header-h);
+  right: 0;
+  bottom: 0;
+  z-index: 18;
+  display: none;
+  width: 56px;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+}
+
+@media (min-width: 64rem) {
+  .ruler:not([hidden]) { display: block; }
+
+  /* The content keeps clear of the ruler. */
+  :root[data-ruler] .content { padding-inline-end: calc(var(--gutter) + 40px); }
+}
+
+.ruler-scale {
+  position: absolute;
+  inset: 16px 0 16px 0;
+  /* Each tile is one step tall with its tick along the top edge; the bottom edge is the 100% tick. */
+  border-bottom: 1px solid var(--rule-strong);
+  background:
+    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 18px 10% repeat-y,
+    linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 8px 2% repeat-y;
+}
+
+.ruler-number,
+.ruler-mark,
+.ruler-thumb {
+  position: absolute;
+  right: 0;
+  top: calc(16px + var(--at) * (100% - 32px));
+}
+
+.ruler-number {
+  right: 22px;
+  translate: 0 -50%;
+  color: var(--muted);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.ruler-scale .ruler-number { top: calc(var(--at) * 100%); }
+
+.ruler-mark {
+  width: 30px;
+  height: 2px;
+  translate: 0 -50%;
+  background: var(--ink);
+  opacity: 0.55;
+}
+
+.ruler-mark[data-current] {
+  background: var(--accent);
+  opacity: 1;
+}
+
+.ruler-thumb {
+  left: 0;
+  height: 1px;
+  background: var(--accent);
+}
+
+.ruler-value {
+  position: absolute;
+  left: 4px;
+  bottom: 3px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ruler-title {
+  position: absolute;
+  left: 6px;
+  bottom: 24px;
+  max-height: 45%;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+}
+
+.ruler:focus-visible { outline-offset: -2px; }
+
 /* Part page: the part title, "on this page" links, then its sections one after another; each section
    and group is an anchor that clears the sticky header and page bar. */
 .part-title {
@@ -954,6 +1053,7 @@ a { color: var(--accent); }
 
   .app-header,
   .page-bar,
+  .ruler,
   .results-where,
   .control { display: none !important; }
 

@@ -8,7 +8,8 @@ import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
-import { scrollPercent, currentAnchor } from './core/scroll.js';
+import { scrollPercent, scrollForPercent, currentAnchor } from './core/scroll.js';
+import { mountRuler } from './ui/ruler.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
@@ -31,6 +32,10 @@ let settings = loadSettings();
 let query = '';
 /** Counts renders, so an older one that finishes late does not replace a newer screen. */
 let renders = 0;
+const ruler = mountRuler(document.getElementById('app'), (percent) => {
+  const root = document.documentElement;
+  window.scrollTo(0, scrollForPercent(percent, root.scrollHeight, window.innerHeight));
+});
 const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);
@@ -98,6 +103,7 @@ async function render(navigated = false) {
     const route = resolveRoute(location.hash, index);
     nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.lang));
     search.setLang(settings.lang);
+    ruler.setLang(settings.lang);
     // Part screens put their page bar back; every other screen has none.
     pageBar.replaceChildren();
     if (query.trim() !== '') {
@@ -120,7 +126,6 @@ async function render(navigated = false) {
       if (target) target.scrollIntoView();
       else window.scrollTo(0, 0);
     }
-    measureAnchors();
   } catch (error) {
     const message = el('p', '', t('loadError', settings.lang, { detail: error.message }));
     message.setAttribute('role', 'alert');
@@ -128,6 +133,7 @@ async function render(navigated = false) {
   } finally {
     // A newer render that started meanwhile marks the page ready itself.
     if (run === renders) {
+      measureAnchors();
       app.dataset.ready = 'true';
       if ('nikudChanged' in document.documentElement.dataset) {
         clearTimeout(nikudFade);
@@ -140,7 +146,11 @@ async function render(navigated = false) {
 /** Sections and groups of the page on screen, with their titles and their tops (document coordinates). */
 let anchors = [];
 
+/** Where anchors land when scrolled to, and the line that counts as being read (8 px below). */
+const landing = () => header.offsetHeight + pageBar.offsetHeight + 8;
+
 function measureAnchors() {
+  const root = document.documentElement;
   anchors = [...content.querySelectorAll('.section, .group')].map((node) => {
     const section = node.closest('.section');
     return {
@@ -149,6 +159,12 @@ function measureAnchors() {
       group: node.classList.contains('group') ? node.querySelector('.group-title').textContent : null,
     };
   });
+  // The ruler: part pages taller than the screen; a mark where each section reaches the reading place.
+  ruler.setActive(content.querySelector('[data-screen="part"]') !== null && root.scrollHeight > window.innerHeight);
+  ruler.setSections(anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
+    title: anchor.section,
+    percent: scrollPercent(anchor.top - landing(), root.scrollHeight, window.innerHeight),
+  })));
   updatePosition();
 }
 
@@ -157,8 +173,9 @@ function updatePosition() {
   const root = document.documentElement;
   const percent = scrollPercent(window.scrollY, root.scrollHeight, window.innerHeight);
   // 8 px below where anchors land (their scroll-margin), so a section scrolled to counts as being read.
-  const reading = header.offsetHeight + pageBar.offsetHeight + 16;
-  updatePageBar(pageBar, currentAnchor(anchors, window.scrollY, reading), percent);
+  const place = currentAnchor(anchors, window.scrollY, landing() + 8);
+  updatePageBar(pageBar, place, percent);
+  ruler.update(percent, place?.section ?? '');
 }
 
 let frame = 0;

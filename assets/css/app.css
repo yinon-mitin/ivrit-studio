@@ -116,12 +116,13 @@ a { color: var(--accent); }
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   grid-template-areas:
-    'brand . controls'
-    'nav nav nav';
+    'brand . toggle controls'
+    'nav nav nav nav'
+    'search search search search';
   align-items: center;
-  column-gap: 16px;
+  column-gap: 8px;
   padding: 4px var(--gutter) 0;
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
@@ -129,7 +130,9 @@ a { color: var(--accent); }
 
 @media (min-width: 64rem) {
   .app-header {
-    grid-template-areas: 'brand nav controls';
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: 'brand nav search controls';
+    column-gap: 16px;
     padding-block: 6px;
   }
 }
@@ -142,6 +145,52 @@ a { color: var(--accent); }
 }
 
 .header-controls { grid-area: controls; }
+
+/* Search: a button opens the field under the navigation on a phone; on a laptop the field is always
+   in the header row. */
+.search-toggle {
+  grid-area: toggle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-toggle[aria-expanded='true'] { background: var(--sheet); }
+
+.header-search {
+  grid-area: search;
+  display: none;
+  margin: 0;
+  padding: 4px 0 8px;
+}
+
+.app-header[data-search='open'] .header-search { display: block; }
+
+.search-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--sheet);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.search-input::placeholder { color: var(--muted); opacity: 1; }
+
+@media (min-width: 64rem) {
+  .search-toggle { display: none; }
+
+  .header-search,
+  .app-header[data-search='open'] .header-search {
+    display: block;
+    width: 15rem;
+    padding: 0;
+  }
+}
 
 .part-nav-list {
   list-style: none;
@@ -220,7 +269,7 @@ a { color: var(--accent); }
 
 .header-controls {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 6px;
 }
@@ -240,6 +289,11 @@ a { color: var(--accent); }
 }
 
 .control:hover { background: var(--sheet); }
+
+/* A narrow phone fits the brand, search and every control on one row, in Russian too. */
+@media (max-width: 26rem) {
+  .control { padding-inline: 8px; }
+}
 
 .control[aria-pressed='true'] {
   background: var(--accent);
@@ -403,6 +457,29 @@ a { color: var(--accent); }
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* Search results: the count, then each matching section led by a link to its place. */
+.results-summary {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.results .section { margin-top: 28px; }
+
+.results .section-title {
+  padding-top: 12px;
+  border-top-width: 1px;
+  font-size: 1.5rem;
+}
+
+.results .group-title { margin-top: 16px; }
+
+.results-where {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  text-underline-offset: 3px;
 }
 
 /* Hebrew glyphs. Line heights are at least each font's content area (Heebo 1.47em, Gveret Levin

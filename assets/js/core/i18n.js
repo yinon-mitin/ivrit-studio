@@ -14,6 +14,12 @@ export const STRINGS = {
   formPlural: { en: 'Plural', ru: 'Мн. ч.' },
   formMasculine: { en: 'Masc.', ru: 'М. р.' },
   formFeminine: { en: 'Fem.', ru: 'Ж. р.' },
+  search: { en: 'Search', ru: 'Поиск' },
+  searchLabel: { en: 'Search Hebrew, reading or translation', ru: 'Поиск по ивриту, чтению или переводу' },
+  searchPlaceholder: { en: 'Search…', ru: 'Поиск…' },
+  searchFor: { en: '{count} for “{query}”', ru: '{count} по запросу «{query}»' },
+  searchNone: { en: 'Nothing found for “{query}”.', ru: 'По запросу «{query}» ничего не найдено.' },
+  searchOpen: { en: 'Open in {part}', ru: 'Открыть в разделе «{part}»' },
   theme: { en: 'Theme: {value}', ru: 'Тема: {value}' },
   themeSystem: { en: 'Auto', ru: 'Авто' },
   themeLight: { en: 'Light', ru: 'Светлая' },
@@ -47,11 +53,28 @@ export function localized(text, lang) {
   return text[lang] ?? text.en;
 }
 
-/** Entry-count nouns by plural category (Intl.PluralRules). */
-const ENTRIES = {
-  en: { one: 'entry', other: 'entries' },
-  ru: { one: 'запись', few: 'записи', many: 'записей', other: 'записи' },
+/** Counted nouns by plural category (Intl.PluralRules). */
+const NOUNS = {
+  entry: {
+    en: { one: 'entry', other: 'entries' },
+    ru: { one: 'запись', few: 'записи', many: 'записей', other: 'записи' },
+  },
+  result: {
+    en: { one: 'result', other: 'results' },
+    ru: { one: 'результат', few: 'результата', many: 'результатов', other: 'результата' },
+  },
 };
+
+/**
+ * @param {number} count
+ * @param {keyof NOUNS} noun
+ * @param {'en' | 'ru'} lang
+ * @returns {string}
+ */
+function countNoun(count, noun, lang) {
+  const forms = NOUNS[noun][lang];
+  return `${count} ${forms[new Intl.PluralRules(lang).select(count)] ?? forms.other}`;
+}
 
 /**
  * "31 entries" / "31 запись", with the language's plural rules.
@@ -59,7 +82,12 @@ const ENTRIES = {
  * @param {'en' | 'ru'} lang
  * @returns {string}
  */
-export function countEntries(count, lang) {
-  const forms = ENTRIES[lang];
-  return `${count} ${forms[new Intl.PluralRules(lang).select(count)] ?? forms.other}`;
-}
+export const countEntries = (count, lang) => countNoun(count, 'entry', lang);
+
+/**
+ * "5 results" / "5 результатов", with the language's plural rules.
+ * @param {number} count
+ * @param {'en' | 'ru'} lang
+ * @returns {string}
+ */
+export const countResults = (count, lang) => countNoun(count, 'result', lang);

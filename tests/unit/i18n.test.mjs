@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { STRINGS, t, localized, countEntries } from '../../assets/js/core/i18n.js';
+import { STRINGS, t, localized, countEntries, countResults } from '../../assets/js/core/i18n.js';
 
 describe('t', () => {
   it('returns the string in the requested language', () => {
@@ -45,5 +45,18 @@ describe('countEntries', () => {
     assert.equal(countEntries(3, 'ru'), '3 записи');
     assert.equal(countEntries(14, 'ru'), '14 записей');
     assert.equal(countEntries(73, 'ru'), '73 записи');
+  });
+});
+
+describe('countResults', () => {
+  it('uses the English singular and plural', () => {
+    assert.equal(countResults(1, 'en'), '1 result');
+    assert.equal(countResults(5, 'en'), '5 results');
+  });
+
+  it('uses the three Russian plural forms', () => {
+    assert.equal(countResults(1, 'ru'), '1 результат');
+    assert.equal(countResults(3, 'ru'), '3 результата');
+    assert.equal(countResults(11, 'ru'), '11 результатов');
   });
 });

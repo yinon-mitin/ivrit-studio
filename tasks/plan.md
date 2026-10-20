@@ -54,7 +54,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 - [x] `npm run check:task` green; phone + laptop screenshots of a long part with the bar
 
 ### Phase 2: Laptop ruler
-- [ ] Task 3: Scroll ruler on the right (role=scrollbar) with section markers
+- [x] Task 3: Scroll ruler on the right (role=scrollbar) with section markers
 
 ### Checkpoint B: navigation review
 - [ ] Owner reviews the bar and the ruler (screenshots or local run) before content work

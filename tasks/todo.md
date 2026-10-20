@@ -53,13 +53,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** On screens ≥ 64rem with a part page taller than the viewport, add a fixed 56 px ruler at the right edge, after getartcraft.com: `role="scrollbar"`, `aria-controls="content"`, `aria-orientation="vertical"`, `aria-valuemin=0`, `aria-valuemax=100`, `aria-valuenow` = scroll % (`core/scroll.js`), `aria-label` "Page position". The CSS draws minor ticks every 2% and major ticks with numbers every 10%. A position marker shows "NN%" in the accent. Each section is a longer tick at its offset, with its title beside the marker when current. Click or drag on the ruler scrolls to that %. While focused, ArrowUp/Down move 5%, PageUp/PageDown 25%, Home/End go to top/bottom. Hidden on phones, in print, and on short pages.
 
 **Acceptance criteria:**
-- [ ] `aria-valuenow` follows scrolling (0 at top, 100 at bottom, ±1). Clicking at 50% of the ruler's height scrolls to about the middle (±3%). Keys move as specified.
-- [ ] Section markers sit at their sections' offsets (±1% of the ruler height). The current section's title is shown next to the marker.
-- [ ] Does not cover content at 1280×720 (content right edge ≤ ruler left edge). Hidden below 64rem and in print. axe clean in both themes.
+- [x] `aria-valuenow` follows scrolling (0 at top, 100 at bottom, ±1). Clicking at 50% of the ruler's height scrolls to about the middle (±3%). Keys move as specified.
+- [x] Section markers sit at their sections' offsets (±1% of the ruler height). The current section's title is shown next to the marker.
+- [x] Does not cover content at 1280×720 (content right edge ≤ ruler left edge). Hidden below 64rem and in print. axe clean in both themes.
 
 **Verification:**
-- [ ] e2e on `chromium-laptop` (projects with width < 1024 assert it is hidden)
-- [ ] `npm run check:task` green
+- [x] e2e on `chromium-laptop` (projects with width < 1024 assert it is hidden)
+- [x] `npm run check:task` green
 
 **Dependencies:** Task 2 (scroll.js, anchor cache)
 **Files:** `assets/js/ui/ruler.js` (new), `assets/js/main.js`, `assets/css/app.css`, `tests/e2e/ruler.spec.mjs` (new), `SPEC.md`

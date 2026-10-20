@@ -30,10 +30,11 @@ test('a swatch entry shows a chip in its colour, hidden from screen readers', as
   await expect(page.locator('[data-entry="fixture.three"] .entry-swatch')).toHaveCount(0);
 });
 
-test('forms with only masculine and feminine show one column and no dashes; full forms show both', async ({ page }) => {
+test('forms with only masculine and feminine show one column, no column header and no dashes; full forms show both', async ({ page }) => {
   await open(page, '#/test');
   const three = page.locator('[data-entry="fixture.three"] .entry-forms');
-  await expect(three.locator('thead th')).toHaveText(['Singular']);
+  await expect(three.locator('thead')).toHaveCount(0);
+  await expect(three.locator('tbody th')).toHaveText(['Masc.', 'Fem.']);
   await expect(three.locator('tbody td')).toHaveText(['שְׁלוֹשָׁה', 'שָׁלוֹשׁ']);
   await expect(three).not.toContainText('—');
   await expect(page.locator('[data-entry="fixture.red"] .entry-forms thead th')).toHaveText(['Singular', 'Plural']);

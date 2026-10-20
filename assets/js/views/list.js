@@ -61,7 +61,9 @@ function renderForms(forms, { nikud, lang }) {
     }
     body.append(row);
   }
-  table.append(thead, body);
+  // Masculine/feminine only (numbers): "Singular" would mislead, so the rows speak for themselves.
+  if (columns.length > 1) table.append(thead);
+  table.append(body);
   return table;
 }
 

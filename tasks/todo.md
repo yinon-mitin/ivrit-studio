@@ -77,11 +77,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Research only, no product code. Find the official Culmus source and its license text (GPL-2 with font exception). Confirm it may be redistributed from a public MIT repo, and which notices must ship. Check that it has a glyph for every alphabet entry: 27 letters including finals, and the dagesh and shin/sin variants. Report what happens to the marks. Subset to Hebrew + punctuation and measure woff2 size against the 60 KB limit. Render a comparison sheet (print / Gveret Levin / Ktav Yad) as a screenshot for the owner.
 
 **Acceptance criteria:**
-- [ ] A short verdict in `tasks/notes/cursive-font.md`: source URL + pinned version, license and required notices, glyph coverage table, woff2 size, screenshot path
+- [x] A short verdict in `tasks/notes/cursive-font.md`: source URL + pinned version, license and required notices, glyph coverage table, woff2 size, screenshot path
 - [ ] Owner says go or no-go. On no-go, the alternatives are listed (cursive-only drill, words in cursive) and Task 5 is re-planned.
 
 **Verification:**
-- [ ] Manual: owner looks at the comparison screenshot
+- [x] Manual: owner looks at the comparison screenshot
 
 **Dependencies:** None (can run in parallel with Phase 1–2)
 **Files:** `tasks/notes/cursive-font.md` (new), `scripts/subset-fonts.sh` (only if go, in Task 5)

@@ -60,7 +60,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 - [ ] Owner reviews the bar and the ruler (screenshots or local run) before content work
 
 ### Phase 3: Second cursive
-- [ ] Task 4: Spike: Ktav Yad CLM — license, glyphs, look, size → owner go/no-go
+- [x] Task 4: Spike: Ktav Yad CLM — license, glyphs, look, size → owner go/no-go
 - [ ] Task 5: Two cursive styles in the alphabet (only after "go")
 
 ### Phase 4: Vocabulary

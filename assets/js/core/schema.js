@@ -45,8 +45,7 @@ export function validateSection(section) {
   if (section.icon !== undefined && !isText(section.icon)) errors.push(`${at}: icon must be a non-empty string`);
   if (!Array.isArray(section.items)) return { errors: [...errors, `${at}: items must be an array`], warnings };
 
-  // `tabs`/`tab` are the names before the groups rename; read until the data is renamed.
-  const groups = section.groups ?? section.tabs ?? [];
+  const groups = section.groups ?? [];
   const groupIds = new Set(groups.map((group) => group.id));
   for (const group of groups) {
     if (group.view !== undefined && !VIEWS.includes(group.view)) errors.push(`${at}: group ${group.id} has unknown view "${group.view}"`);
@@ -58,9 +57,8 @@ export function validateSection(section) {
     if (!isObject(item)) continue;
     if (ids.has(item.id)) errors.push(`${item.id}: duplicate id`);
     ids.add(item.id);
-    const group = item.group ?? item.tab;
-    if (group === undefined && groups.length > 0) errors.push(`${item.id}: needs a group, section ${section.id} has groups`);
-    if (group !== undefined && !groupIds.has(group)) errors.push(`${item.id}: unknown group "${group}"`);
+    if (item.group === undefined && groups.length > 0) errors.push(`${item.id}: needs a group, section ${section.id} has groups`);
+    if (item.group !== undefined && !groupIds.has(item.group)) errors.push(`${item.id}: unknown group "${item.group}"`);
   }
 
   const items = section.items.filter(isObject);

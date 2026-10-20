@@ -11,12 +11,11 @@
  * @returns {Group[]}
  */
 export function sectionGroups(section) {
-  // `tabs`/`tab` are the names before the groups rename; read until the data is renamed.
-  const groups = section.groups ?? section.tabs ?? [];
+  const groups = section.groups ?? [];
   if (groups.length === 0) return [{ id: null, view: section.view, items: section.items }];
   return groups.map((group) => {
     const view = group.view ?? section.view;
-    const own = section.items.filter((item) => (item.group ?? item.tab) === group.id);
+    const own = section.items.filter((item) => item.group === group.id);
     return { id: group.id, title: group.title, view, items: own.length === 0 && view === 'letter-rows' ? section.items : own };
   });
 }

@@ -102,8 +102,7 @@ test.describe('interface language', () => {
 
     await open(page, `#/${firstSection.id}`);
     await expect(page.locator('#content h2')).toHaveText(firstSection.title.ru);
-    const groups = firstSection.groups ?? firstSection.tabs;
-    if (groups) await expect(page.locator('#content .group-title').first()).toHaveText(groups[0].title.ru);
+    if (firstSection.groups) await expect(page.locator('#content .group-title').first()).toHaveText(firstSection.groups[0].title.ru);
 
     await page.reload();
     await ready(page);

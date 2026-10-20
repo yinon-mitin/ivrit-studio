@@ -25,14 +25,12 @@ export function sectionRoutes() {
     related: (item.related ?? []).map((r) => r.he),
   }));
   return readSections().map((section) => {
-    // `tabs`/`tab` are the names before the groups rename.
-    const declared = section.groups ?? section.tabs ?? [];
-    const groupOf = (item) => item.group ?? item.tab;
+    const declared = section.groups ?? [];
     const groups = declared.length === 0
       ? [{ id: null, view: section.view, items: shown(section.items) }]
       : declared.map((group) => {
         const view = group.view ?? section.view;
-        const own = section.items.filter((item) => groupOf(item) === group.id);
+        const own = section.items.filter((item) => item.group === group.id);
         // A letter-rows group without entries of its own shows the whole section (SPEC Section).
         return { id: group.id, title: group.title, view, items: shown(own.length === 0 && view === 'letter-rows' ? section.items : own) };
       });

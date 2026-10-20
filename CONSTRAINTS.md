@@ -20,7 +20,7 @@ Checked by `node scripts/floor-guard.mjs` (diff against `origin/main`, or everyt
 |-----------|------|-----------------|-----------|---------|
 | Floor | Zero floor violations | The cheap roads to green are what agents take | `node scripts/floor-guard.mjs` | every edit |
 | Secrets | Zero findings | Public repo: one leaked key is permanent | `gitleaks dir . --redact --no-banner --config .gitleaks.toml` (CI: `gitleaks git`, full history) | every edit, CI |
-| Coverage: core lines | ≥ 90% of lines in `assets/js/core/` | Core is small pure logic (merge, Blitz, nikud); untested lines there corrupt progress or teach wrong reading | `npm run test:coverage` | task end, CI |
+| Coverage: core lines | ≥ 90% of lines in `assets/js/core/` | Core is small pure logic (routing, search, nikud); untested lines there corrupt progress or teach wrong reading | `npm run test:coverage` | task end, CI |
 | Coverage: core branches | ≥ 80% of branches in `assets/js/core/` | Edge cases (bad import, version mismatch) live in branches | `npm run test:coverage` | task end, CI |
 | Coverage: core functions | ≥ 90% of functions in `assets/js/core/` | Every exported helper has a caller in a test | `npm run test:coverage` | task end, CI |
 | Coverage: changed lines | ≥ 80% of changed lines in `assets/js/core/` | Forces a test with each change, allows a config line | `node scripts/diff-coverage.mjs` (diff-cover vs `origin/main`) | task end, CI (PR) |
@@ -60,6 +60,8 @@ These rows have their tool wired but nothing to run yet. The task that creates t
 
 | ID | Rule | Path | Reason | Owner | Expires |
 |----|------|------|--------|-------|---------|
-| E1 | Floor: deleted tests and removed assertions; rule "One screen" replaced by "No horizontal overflow" | Deleted: `tests/unit/{blitz,progress,anki}.test.mjs`, `tests/e2e/{blitz,progress,anki,weeks}.spec.mjs`. Assertions removed or rewritten for removed or changed behaviour in `tests/e2e/*.spec.mjs`, `tests/unit/{content,schema,i18n,settings}.test.mjs`. `CONSTRAINTS.md` rows "One screen" and "One screen, accessibility, …" | Pivot from trainer to cheatsheet (SPEC 2026-10-20, `tasks/plan.md` Tasks 1–9): Blitz, progress, Anki, weeks and the one-screen rule are removed from the product, so their tests go with them. Every other threshold is unchanged. Any floor finding outside this list is a real violation. | @yinon-mitin (approved in conversation 2026-10-20) | 2026-11-20 |
 
 New rows need the owner's approval in the conversation and an expiry ≤ 90 days.
+
+Closed:
+- E1 (2026-10-20 to 2026-10-20): tests and the "One screen" rule removed with Blitz, progress, Anki and weeks in the pivot to a cheatsheet (`tasks/plan.md` Tasks 1–9). Closed when that work was pushed (`64e6680`); owner @yinon-mitin.

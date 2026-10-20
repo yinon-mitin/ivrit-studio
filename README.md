@@ -1,6 +1,6 @@
 # Ivrit Studio
 
-A one-screen Hebrew cheatsheet and trainer for Alef-level ulpan students: print and cursive letters, nikud, countries and languages, geresh, and the vocabulary of each week of the course. Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
+A Hebrew cheatsheet for Alef-level ulpan students, set like a small reference book: print and cursive letters, nikud, geresh, phrases, words, countries and languages, gender and number. Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
 
 - What to build: [`SPEC.md`](SPEC.md)
 - Quality bar: [`CONSTRAINTS.md`](CONSTRAINTS.md)
@@ -21,23 +21,21 @@ npm run check:full   # before push (adds webkit, Semgrep, osv-scanner)
 
 ## Using the site
 
-- **Home** has one tile per section. Open a section, or go straight to its **Blitz**.
-- **Nikud** in the header turns vowel points off to test your reading. The alphabet and the nikud chart keep theirs.
-- **⚙** holds the theme, the interface language (EN/RU), the Russian translation, and **Progress & backup**.
-- **Blitz** asks 10 questions in one of two modes: choose one of 4, or flashcards you grade yourself. Mistakes come back more often (Leitner boxes), and wrong options are look-alikes.
-- **Progress** stays in this browser. To combine two devices, export on one (download the file or copy the text) and import on the other. Progress from both is merged.
-- **Anki**: the Anki button in a section downloads `ivrit-<section>.tsv`. In Anki, use File → Import.
+- **Contents** (`#/`) lists the four parts (Reading, Phrases, Vocabulary, Grammar) and their sections. Each part is one scrolling page. The header always shows the parts.
+- **Search** (the magnifier on a phone, the field on a laptop, or press `/`) finds an entry by Hebrew with or without nikud, by reading, or by its English or Russian meaning. Press Escape to clear it.
+- **Nikud** in the header turns the vowel points off, to test your reading. The alphabet keeps its dagesh and shin/sin dots.
+- **EN / RU** switches the interface and the translations. English is the default.
+- **◐** cycles the theme: auto (follows the system), light, dark.
+- **Hide translations**, under each part title, blurs readings and meanings. Tap one to check yourself.
+- **Print** a part (Ctrl/⌘ + P) for a clean A4 sheet, black on white, with everything shown.
 
-## Adding a week (data only, no code)
+## Changing content (data only, no code)
 
-1. Give an agent the **Data Contract** section of [`SPEC.md`](SPEC.md) and the teacher's summary, and ask for `data/weeks/YYYY-MM-DD.json`.
-2. Add the date to `"weeks"` in `data/index.json`.
-3. Follow these rules:
-   - Ids are `<section>.<slug>`, and an id is never renamed (progress is stored by id).
-   - New entries are `"verified": false`.
-   - `letters` lists **every letter taught so far**. The alphabet Blitz asks only these.
-   - A tab holds at most 14 entries (24 in letter views). Each week gets its own tab in every section it feeds. If a week has more, spread it over sections (`vocab`, `greetings`, `gender-number`) or put some entries in a tab the section defines.
-4. Run `node scripts/validate.mjs`, then `npm run check:task`, then commit the data alone and push.
+Content lives in `data/`. The **Data Contract** section of [`SPEC.md`](SPEC.md) is all the context an agent needs.
+
+- **New entry:** add it to the section file in `data/sections/<id>.json`. In a section with groups, give it a `group`. Ids are `<section>.<slug>` and are never renamed. New entries are `"verified": false`.
+- **New section:** add `data/sections/<id>.json` and put its id in the `sections` of one part in `data/index.json`.
+- Run `node scripts/validate.mjs`, then `npm run check:task`, then commit the data alone and push.
 
 ## Checking nikud
 
@@ -49,7 +47,7 @@ The site is static and has no build step. On GitHub, go to **Settings → Pages 
 
 ## Fonts
 
-Self-hosted, subset to Hebrew with nikud, Basic Latin and punctuation (`npm run fonts`, which downloads from [google/fonts](https://github.com/google/fonts) at a pinned commit):
+Self-hosted, subset to Hebrew with nikud, Basic Latin and punctuation (`npm run fonts`, which downloads from [google/fonts](https://github.com/google/fonts) at a pinned commit). Latin headings use the system serif, so nothing else is downloaded.
 
 - **Heebo** by Oded Ezer (print and interface), weights 400–700, SIL Open Font License 1.1 ([`assets/fonts/OFL-Heebo.txt`](assets/fonts/OFL-Heebo.txt))
 - **Gveret Levin** by AlefAlefAlef (cursive), SIL Open Font License 1.1 ([`assets/fonts/OFL-GveretLevin.txt`](assets/fonts/OFL-GveretLevin.txt))

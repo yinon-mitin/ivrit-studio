@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-// Viewports are the one-screen budgets from SPEC.md (Behaviour Contracts).
+// Viewports are the layout test viewports from SPEC.md (Behaviour Contracts, Layout).
 export default defineConfig({
   testDir: 'tests/e2e',
   testMatch: '**/*.spec.mjs',

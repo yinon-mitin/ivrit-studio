@@ -40,7 +40,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: npm run coverage:diff
 
-      - name: E2E (chromium + webkit, one-screen, axe, weight, no external requests)
+      - name: E2E (chromium + webkit, no horizontal overflow, axe, weight, no external requests)
         run: npx playwright test --pass-with-no-tests
 
       - name: Semgrep

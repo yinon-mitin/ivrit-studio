@@ -29,7 +29,6 @@ export const STRINGS = {
   language: { en: 'Language of the site and translations', ru: 'Язык сайта и переводов' },
   nikud: { en: 'Nikud', ru: 'Огласовки' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
-  home: { en: 'Contents', ru: 'Содержание' },
 };
 
 /**

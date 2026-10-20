@@ -3,7 +3,7 @@ rules:
     languages: [javascript]
     severity: ERROR
     message: >-
-      HTML sinks are banned (CONSTRAINTS.md, Security). Imported progress files are
+      HTML sinks are banned (CONSTRAINTS.md, Security). Search input is
       user-supplied; build DOM with createElement/textContent instead.
     paths:
       include:

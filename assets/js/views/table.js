@@ -1,6 +1,8 @@
-// table view: one row per entry — Hebrew, sound, name (in the current language) — right to left. Consecutive entries with the
-// same `translit` share one sound cell, so things that sound alike (kamatz/patah) read as a group.
+// table view: a header row, then one row per entry — Hebrew, sound, name (in the current language) —
+// right to left. Consecutive entries with the same `translit` share one sound cell, so things that
+// sound alike (kamatz/patah) read as a group.
 import { displayHe } from '../core/hebrew.js';
+import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
 
 /**
@@ -13,6 +15,15 @@ export function renderTable(items, { nikud, lang }) {
   wrap.dataset.view = 'table';
   const table = el('table', 'entry-table');
   table.dir = 'rtl';
+  const head = el('tr', '');
+  for (const key of ['columnHebrew', 'columnSound', 'columnName']) {
+    const cell = el('th', '', t(key, lang));
+    cell.scope = 'col';
+    cell.dir = 'auto';
+    head.append(cell);
+  }
+  const thead = el('thead', '');
+  thead.append(head);
   const body = el('tbody', '');
   items.forEach((item, i) => {
     const row = el('tr', '');
@@ -34,7 +45,7 @@ export function renderTable(items, { nikud, lang }) {
     row.append(name);
     body.append(row);
   });
-  table.append(body);
+  table.append(thead, body);
   wrap.append(table);
   return wrap;
 }

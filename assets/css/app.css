@@ -421,29 +421,36 @@ a { color: var(--accent); }
   color: var(--accent);
 }
 
-/* letter-grid: a ruled grid of letters, right to left; 5–6 per row on a phone, 9–10 on a laptop. */
+/* letter-grid: ruled cells of letters, right to left; 6 per row on a phone, 8 on a tablet, 10 on a
+   laptop. Each cell draws its own frame and overlaps its neighbours by 1 px, so the rules stay single
+   and an unfilled last row stays open. */
 .letter-grid {
+  --cols: 6;
   list-style: none;
   margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));
-  border-top: 1px solid var(--rule);
-  border-inline-start: 1px solid var(--rule);
+  padding: 1px 0 0 1px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-@media (min-width: 48rem) {
-  .letter-grid { grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); }
+@media (min-width: 40rem) {
+  .letter-grid { --cols: 8; }
+}
+
+@media (min-width: 60rem) {
+  .letter-grid { --cols: 10; }
 }
 
 .letter-cell {
+  box-sizing: border-box;
+  flex: 0 0 calc((100% + var(--cols) * 1px) / var(--cols));
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 0;
+  margin: -1px 0 0 -1px;
   padding: 6px 2px 8px;
-  border-bottom: 1px solid var(--rule);
-  border-inline-end: 1px solid var(--rule);
+  border: 1px solid var(--rule);
 }
 
 .letter-cell .glyph-print { font-size: 2.6rem; }
@@ -460,7 +467,7 @@ a { color: var(--accent); }
 
 .letter-name { font-weight: 600; }
 
-.letter-sound { color: var(--muted); }
+.letter-sound { color: var(--accent); }
 
 @media (min-width: 48rem) {
   .letter-cell .glyph-print { font-size: 3.2rem; }
@@ -572,17 +579,34 @@ a { color: var(--accent); }
   text-align: end;
 }
 
-/* table: full width, Hebrew | sound | name, right to left. Rows that sound alike share one sound
+/* table: Hebrew | sound | name, right to left, under a small-caps header row; full width up to a
+   comfortable reading width (48rem), aligned with the headings. Rows that sound alike share one sound
    cell; a heavier rule starts each sound group. */
-.table-wrap { overflow-x: auto; }
+.table-wrap {
+  max-width: 48rem;
+  overflow-x: auto;
+}
 
 .entry-table {
   width: 100%;
   border-collapse: collapse;
 }
 
+.entry-table th {
+  padding: 4px 12px 6px;
+  border-bottom: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.entry-table th:last-child { text-align: start; }
+
 .entry-table td {
-  padding: 6px 12px;
+  padding: 4px 12px;
   border-bottom: 1px solid var(--rule);
   vertical-align: middle;
 }
@@ -590,20 +614,26 @@ a { color: var(--accent); }
 .entry-table tr.group-start td { border-top: 1px solid var(--rule-strong); }
 
 .table-he {
-  width: 22%;
-  font-size: 2rem;
+  width: 24%;
+  font-size: 2.1rem;
   line-height: 1.5;
   text-align: center;
 }
 
 .table-sound {
-  width: 22%;
+  width: 24%;
   color: var(--accent);
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 600;
   text-align: center;
   background: var(--sheet);
 }
 
 .table-name { font-size: 0.95rem; }
+
+@media (min-width: 48rem) {
+  .table-he { font-size: 2.5rem; }
+
+  .table-name { font-size: 1.05rem; }
+}

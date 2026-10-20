@@ -101,3 +101,34 @@ for (const route of sectionRoutes()) {
     });
   }
 }
+
+// Readability (SPEC Layout): letters large and several per row; tables use the page width.
+const letterRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'letter-grid' && g.items.length >= 10));
+const tableRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'table'));
+
+test('the letter grid shows 5–6 letters per row on a phone, 8–10 on a laptop, print glyphs at least 40 px', async ({ page }) => {
+  await open(page, letterRoute.hash);
+  const grid = page.locator('#content [data-view="letter-grid"]').first();
+  const cells = await grid.locator('[data-entry]').evaluateAll((entries) => entries.map((entry) => ({
+    top: Math.round(entry.getBoundingClientRect().top),
+    glyph: parseFloat(getComputedStyle(entry.querySelector('.glyph-print')).fontSize),
+  })));
+  const perRow = cells.filter((cell) => cell.top === cells[0].top).length;
+  const phone = page.viewportSize().width < 600;
+  expect(perRow).toBeGreaterThanOrEqual(phone ? 5 : 8);
+  expect(perRow).toBeLessThanOrEqual(phone ? 6 : 10);
+  for (const cell of cells) expect(cell.glyph).toBeGreaterThanOrEqual(40);
+});
+
+test('a table fills the content width up to 48rem, under a header row', async ({ page }) => {
+  await open(page, tableRoute.hash);
+  const table = page.locator(`#content [data-section="${tableRoute.section}"] .entry-table`).first();
+  await expect(table.locator('thead th')).toHaveText(['Hebrew', 'Sound', 'Name']);
+  const [tableWidth, contentWidth] = await table.evaluate((node) => {
+    const content = document.getElementById('content');
+    const style = getComputedStyle(content);
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return [node.getBoundingClientRect().width, Math.min(48 * rem, content.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight))];
+  });
+  expect(tableWidth).toBeGreaterThanOrEqual(contentWidth - 1);
+});

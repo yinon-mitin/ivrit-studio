@@ -58,7 +58,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 ### Phase 1: New contract and removal
 - [x] Task 1: Rewrite SPEC.md and CONSTRAINTS.md for the cheatsheet (plus exception E1)
 - [x] Task 2: Remove Blitz, progress and Anki
-- [ ] Task 3: Fold weeks into sections and remove the weeks mechanism
+- [x] Task 3: Fold weeks into sections and remove the weeks mechanism
 - [ ] Task 4: Drop one-screen: scrolling sections, groups instead of tabs
 
 ### Checkpoint 1: Contract and removal

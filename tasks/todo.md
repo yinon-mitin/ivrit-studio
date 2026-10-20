@@ -44,13 +44,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Move every entry of `data/weeks/2026-10-11.json` into its section file. Ids stay the same. `vocab` has no groups. `greetings` splits into groups `small-talk` and `question-words` (eifo, eikh, kama, mi-ze, ma-ze). `gender-number` has no groups. Data commit first: entries move, `index.json` `weeks: []`, week file deleted. The current code still runs. Then the code commit removes `withWeeks`, `weekTabId`, `latestLetters`, `weekTitle`, `loadWeek(s)`, the week validator rules and `tests/e2e/weeks.spec.mjs`, and makes `weeks` absent from `index.json`.
 
 **Acceptance criteria:**
-- [ ] Same set of entry ids before and after (171), each in the same section, each still `verified: false` where it was
-- [ ] No `week`/`weeks`/`letters` handling left in `assets/js/`, `scripts/`, `tests/`
-- [ ] `node scripts/validate.mjs` exits 0
+- [x] Same set of entry ids before and after (171), each in the same section, each still `verified: false` where it was
+- [x] No `week`/`weeks`/`letters` handling left in `assets/js/`, `scripts/`, `tests/`
+- [x] `node scripts/validate.mjs` exits 0
 
 **Verification:**
-- [ ] One-off id comparison (old merged ids vs new section ids) printed in the task notes
-- [ ] `npm run check:task`: green except E1 findings
+- [x] One-off id comparison (old merged ids vs new section ids) printed in the task notes
+- [x] `npm run check:task`: green except E1 findings
 
 **Dependencies:** Task 2
 **Files:** `data/index.json`, `data/sections/{vocab,greetings,gender-number}.json`, `data/weeks/` (deleted), `assets/js/{loader,main}.js`, `assets/js/core/{content,schema,i18n}.js`, `tests/unit/{content,schema,i18n}.test.mjs`, `tests/e2e/{weeks.spec,helpers}.mjs`

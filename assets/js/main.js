@@ -201,6 +201,10 @@ window.addEventListener('scroll', () => {
   frame = requestAnimationFrame(updatePosition);
 }, { passive: true });
 window.addEventListener('resize', measureAnchors);
+// Crossing a breakpoint shows or hides the ruler and the titles; media queries can settle after the
+// resize event (WebKit), so they report the change themselves.
+wide.addEventListener('change', measureAnchors);
+wider.addEventListener('change', measureAnchors);
 // The sticky header and bar change height (search row, wrapping); anchors clear them via these.
 function syncStickyHeights() {
   const root = document.documentElement;

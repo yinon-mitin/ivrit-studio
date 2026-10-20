@@ -51,11 +51,13 @@ test.describe('at 1440 px', () => {
   });
 });
 
-test('hidden below 72rem, on the contents and in print', async ({ page }) => {
+test('hidden below 72rem, on the contents and in print', async ({ page, isMobile }) => {
   await open(page, `#/${part.id}`);
   if (page.viewportSize().width < 1152) await expect(page.locator('#flow-toc')).toBeHidden();
   await open(page, '#/');
   await expect(page.locator('#flow-toc')).toBeHidden();
+  // A phone never grows to 1440 px (its layout width stays the device's); widen desktop projects only.
+  if (isMobile) return;
   await page.setViewportSize({ width: 1440, height: 900 });
   await open(page, `#/${part.id}`);
   await expect(page.locator('#flow-toc')).toBeVisible();

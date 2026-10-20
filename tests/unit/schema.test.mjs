@@ -65,6 +65,15 @@ describe('validateSection', () => {
     assert.ok(hasError(validateSection(section({ items: [null] })), /entry must be an object/));
   });
 
+  it('accepts a #rgb or #rrggbb swatch and rejects anything else', () => {
+    for (const swatch of ['#fff', '#d32f2f', '#A0B1C2']) {
+      assert.deepEqual(validateSection(section({ items: [entry('france', { swatch })] })).errors, [], swatch);
+    }
+    for (const swatch of ['red', '#12', '#gggggg', '#1234', 'd32f2f', '']) {
+      assert.ok(hasError(validateSection(section({ items: [entry('france', { swatch })] })), /countries\.france: swatch must be #rgb or #rrggbb/), swatch);
+    }
+  });
+
   it('rejects he without a Hebrew letter', () => {
     assert.ok(hasError(validateSection(section({ items: [entry('x', { he: 'Tsarfat' })] })), /he has no Hebrew letter/));
   });

@@ -106,8 +106,8 @@ SPEC.md  CONSTRAINTS.md  CLAUDE.md  README.md  LICENSE  package.json  playwright
   "group": "eu-1",                 // id группы раздела (обязателен, если у раздела есть группы)
   "verified": false,               // true ставит только человек после сверки огласовок
   "emoji": "🇫🇷",                   // опционально
-  "swatch": "#d32f2f",             // опционально (цвета)
-  "forms": { "ms": "…", "fs": "…", "mp": "…", "fp": "…" },  // опционально (род/число)
+  "swatch": "#d32f2f",             // опционально (цвета): #rgb или #rrggbb, рисуется кружком перед ивритом
+  "forms": { "ms": "…", "fs": "…", "mp": "…", "fp": "…" },  // опционально (род/число); можно только ms/fs (числа) — колонка без форм не показывается
   "related": [{ "he": "צָרְפָתִית", "translit": "Tsarfatit", "en": "French", "ru": "французский" }],
   "note": { "en": "…", "ru": "…" } // опционально
 }
@@ -143,6 +143,7 @@ SPEC.md  CONSTRAINTS.md  CLAUDE.md  README.md  LICENSE  package.json  playwright
 
 ### Validator (`scripts/validate.mjs`, через `schema.js`) — падает с ненулевым кодом, если:
 - `id` записи не уникален или не соответствует `<section>.<slug>`;
+- `swatch` не `#rgb` и не `#rrggbb`;
 - нет обязательных полей (`id`, `he`, `translit`, `en`, `ru`, `verified`);
 - `he` не содержит ни одной еврейской буквы;
 - `view` раздела или группы неизвестен;

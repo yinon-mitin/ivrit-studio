@@ -886,6 +886,19 @@ a { color: var(--accent); }
 
 .entry-emoji { font-size: 1.15rem; }
 
+/* A colour chip; the rule border keeps white and black chips visible in both themes. */
+.entry-swatch {
+  flex-shrink: 0;
+  align-self: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--swatch);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
 .entry-he {
   font-size: 1.6rem;
   line-height: 1.5;

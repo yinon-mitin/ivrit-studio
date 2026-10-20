@@ -1,12 +1,14 @@
-// list view: dictionary entries. Each entry is a row with the Hebrew (and emoji) at the start (right)
-// and its reading and meaning at the end; under it the related words with their meanings (a country's
-// languages, a plural) and, for words with gender and number, a 2×2 table of the forms.
+// list view: dictionary entries. Each entry is a row with the Hebrew (and a colour swatch or emoji) at
+// the start (right) and its reading and meaning at the end; under it the related words with their
+// meanings (a country's languages, a plural) and, for words with gender and number, a table of the
+// forms (masculine/feminine × singular/plural, without a column no form fills — numbers have no plural).
 import { displayHe } from '../core/hebrew.js';
 import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
 import { revealButton } from './reveal.js';
 
 const FORM_ROWS = [['formMasculine', 'ms', 'mp'], ['formFeminine', 'fs', 'fp']];
+const FORM_COLUMNS = [['formSingular', 1, ['ms', 'fs']], ['formPlural', 2, ['mp', 'fp']]];
 /** A run of Hebrew inside other text, so it can be marked lang="he" dir="rtl". */
 const HEBREW_RUN = /([\u0590-\u05FF][\u0590-\u05FF'"׳״־-]*)/;
 
@@ -36,7 +38,8 @@ function renderForms(forms, { nikud, lang }) {
   table.dir = 'rtl';
   const head = el('tr', '');
   head.append(el('td', ''));
-  for (const key of ['formSingular', 'formPlural']) {
+  const columns = FORM_COLUMNS.filter(([, , keys]) => keys.some((key) => forms[key]));
+  for (const [key] of columns) {
     const cell = el('th', '', t(key, lang));
     cell.scope = 'col';
     cell.dir = 'auto';
@@ -51,7 +54,11 @@ function renderForms(forms, { nikud, lang }) {
     name.scope = 'row';
     name.dir = 'auto';
     row.append(name);
-    for (const form of [single, plural]) row.append(hebrew('td', '', forms[form] ? displayHe({ he: forms[form] }, nikud) : '—'));
+    const cells = { 1: single, 2: plural };
+    for (const [, index] of columns) {
+      const form = forms[cells[index]];
+      row.append(hebrew('td', '', form ? displayHe({ he: form }, nikud) : '—'));
+    }
     body.append(row);
   }
   table.append(thead, body);
@@ -59,7 +66,7 @@ function renderForms(forms, { nikud, lang }) {
 }
 
 /**
- * @param {Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, emoji?: string,
+ * @param {Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, emoji?: string, swatch?: string,
  *   note?: { en: string, ru: string }, forms?: Record<string, string>,
  *   related?: Array<{ he: string, plain?: string, en?: string, ru?: string }> }>} items
  * @param {{ nikud: boolean, lang: 'en' | 'ru', hide?: boolean }} options hide: reading and meaning start hidden
@@ -76,6 +83,13 @@ export function renderList(items, options) {
 
     const head = el('div', 'entry-head');
     const word = el('span', 'entry-word');
+    if (item.swatch) {
+      // The colour itself; its name is the meaning. CSSOM, which the CSP allows (style="" it does not).
+      const swatch = el('span', 'entry-swatch');
+      swatch.style.setProperty('--swatch', item.swatch);
+      swatch.setAttribute('aria-hidden', 'true');
+      word.append(swatch);
+    }
     if (item.emoji) {
       const emoji = el('span', 'entry-emoji', item.emoji);
       emoji.setAttribute('aria-hidden', 'true');

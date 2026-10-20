@@ -5,6 +5,7 @@ export const VIEWS = ['letter-grid', 'letter-rows', 'list', 'table'];
 
 const REQUIRED = ['id', 'he', 'translit', 'en', 'ru'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SWATCH = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
 
 /** @typedef {{ errors: string[], warnings: string[] }} Report */
 
@@ -27,6 +28,7 @@ function validateEntry(item, sectionId) {
     if (prefix !== sectionId || !SLUG.test(slug ?? '') || rest.length > 0) errors.push(`${at}: id must be "${sectionId}.<slug>"`);
   }
   if (isText(item.he) && !isHebrew(item.he)) errors.push(`${at}: he has no Hebrew letter`);
+  if (item.swatch !== undefined && !SWATCH.test(item.swatch)) errors.push(`${at}: swatch must be #rgb or #rrggbb`);
   return errors;
 }
 

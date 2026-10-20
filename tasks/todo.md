@@ -120,13 +120,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Settings become `{ theme, nikud, lang, hide }` with defaults `system`, `true`, `'en'`, `false`. `lang` replaces `uiLang` + `showRu`: it sets the interface strings and which translation is shown. Header controls: Nikud toggle, EN/RU segmented switch and theme toggle are all visible (no ⚙ menu). `hide` is wired in Task 11. Unused i18n strings are removed.
 
 **Acceptance criteria:**
-- [ ] Unit (first): `parseSettings` defaults, field-by-field fallback, old `{uiLang, showRu, blitzMode}` objects parse without error to the new defaults
-- [ ] Switching to RU changes interface labels and every entry's translation to Russian. It is remembered after reload.
-- [ ] Works when `localStorage` throws
+- [x] Unit (first): `parseSettings` defaults, field-by-field fallback, old `{uiLang, showRu, blitzMode}` objects parse without error to the new defaults
+- [x] Switching to RU changes interface labels and every entry's translation to Russian. It is remembered after reload.
+- [x] Works when `localStorage` throws
 
 **Verification:**
-- [ ] `npm run check:task` green
-- [ ] e2e `settings.spec.mjs` rewritten for the new controls; theme and nikud cases kept
+- [x] `npm run check:task` green
+- [x] e2e `settings.spec.mjs` rewritten for the new controls; theme and nikud cases kept
 
 **Dependencies:** Task 6
 **Files:** `assets/js/core/{settings,i18n}.js`, `assets/js/ui/settings.js`, `tests/unit/{settings,i18n}.test.mjs`, `tests/e2e/settings.spec.mjs`

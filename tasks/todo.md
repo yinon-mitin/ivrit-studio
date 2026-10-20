@@ -154,11 +154,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** New section `colors`: about 12 colours (red, orange, yellow, green, blue, light blue, purple, pink, brown, black, white, grey). Each has `swatch` and `forms` (ms/fs/mp/fp), with `he` = masculine singular. Icon: `צֶבַע`.
 
 **Acceptance criteria:**
-- [ ] ~12 entries with swatches and four forms each, all `verified: false`
-- [ ] Chips readable in both themes (white/black have the rule border); validator passes
+- [x] ~12 entries with swatches and four forms each, all `verified: false`
+- [x] Chips readable in both themes (white/black have the rule border); validator passes
 
 **Verification:**
-- [ ] `npm run check:task` green; screenshot in both themes
+- [x] `npm run check:task` green; screenshot in both themes
 
 **Dependencies:** Task 6
 **Files:** `data/sections/colors.json` (new), `data/index.json`

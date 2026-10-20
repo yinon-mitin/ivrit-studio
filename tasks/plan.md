@@ -48,10 +48,10 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 
 ### Phase 1: Reading aids
 - [x] Task 1: Nikud toggle visibly changes the contents page and the header mark
-- [ ] Task 2: Sticky page bar: current section, jump list, progress line, Hide toggle
+- [x] Task 2: Sticky page bar: current section, jump list, progress line, Hide toggle
 
 ### Checkpoint A
-- [ ] `npm run check:task` green; phone + laptop screenshots of a long part with the bar
+- [x] `npm run check:task` green; phone + laptop screenshots of a long part with the bar
 
 ### Phase 2: Laptop ruler
 - [ ] Task 3: Scroll ruler on the right (role=scrollbar) with section markers

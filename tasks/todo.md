@@ -28,22 +28,22 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Pure `core/scroll.js` (test first): `scrollPercent(scrollY, scrollHeight, viewportHeight)` (0–100, clamped), `currentAnchor(anchors, scrollY, offset)` (the last anchor at or above the reading line, else the first), `scrollForPercent(percent, scrollHeight, viewportHeight)`. On part pages a sticky bar under the header shows "Section · Group" for the current place (it updates while scrolling). Tapping it opens a jump list of the part's sections and groups as links. The Hide toggle moves into the bar, out of `.part-tools`, and a thin progress line runs along its bottom edge. One passive, rAF-throttled scroll listener. Anchor offsets are cached per render and resize.
 
 **Acceptance criteria:**
-- [ ] Unit: `scrollPercent` (top 0, bottom 100, short page 0, clamping), `currentAnchor` (before first, between, exactly at, after last, empty list), `scrollForPercent` round-trip
-- [ ] e2e: after scrolling to a group, the bar names its section and group. The Hide toggle stays visible and works after scrolling to the bottom. A jump-list link scrolls to its target and closes the list. Escape closes the list.
-- [ ] Phone: header + bar ≤ 132 px. Laptop: ≤ 104 px. No horizontal overflow. axe clean with the list open in both themes.
-- [ ] Section and group anchors clear the header + bar (`scroll-margin-top`). The existing "scrolls to the group" tests still pass.
+- [x] Unit: `scrollPercent` (top 0, bottom 100, short page 0, clamping), `currentAnchor` (before first, between, exactly at, after last, empty list), `scrollForPercent` round-trip
+- [x] e2e: after scrolling to a group, the bar names its section and group. The Hide toggle stays visible and works after scrolling to the bottom. A jump-list link scrolls to its target and closes the list. Escape closes the list.
+- [x] Phone: header + bar ≤ 132 px. Laptop: ≤ 104 px. No horizontal overflow. axe clean with the list open in both themes.
+- [x] Section and group anchors clear the header + bar (`scroll-margin-top`). The existing "scrolls to the group" tests still pass.
 
 **Verification:**
-- [ ] `npm run check:task` green; changed-line coverage ≥ 80%
-- [ ] Screenshots: phone mid-page in both themes
+- [x] `npm run check:task` green; changed-line coverage ≥ 80%
+- [x] Screenshots: phone mid-page in both themes
 
 **Dependencies:** None
 **Files:** `assets/js/core/scroll.js` (new), `tests/unit/scroll.test.mjs` (new), `assets/js/ui/page-bar.js` (new), `assets/js/main.js`, `assets/js/ui/settings.js`, `assets/css/app.css`, `tests/e2e/page-bar.spec.mjs` (new), `tests/e2e/hide.spec.mjs` (toggle location; assertions kept), `SPEC.md`
 **Scope:** M
 
 ## Checkpoint A
-- [ ] `npm run check:task` green
-- [ ] Phone + laptop screenshots of `#/words` mid-page with the bar
+- [x] `npm run check:task` green
+- [x] Phone + laptop screenshots of `#/words` mid-page with the bar (agent-reviewed; owner at Checkpoint B)
 
 ---
 

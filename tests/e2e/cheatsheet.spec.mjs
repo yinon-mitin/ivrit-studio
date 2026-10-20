@@ -135,8 +135,11 @@ test('a table fills the content width up to 48rem, under a header row', async ({
 
 // Dictionary entries (list view): readable on a phone; words with gender and number show their forms.
 const listRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'list' && g.items.length >= 6));
+// Words with all four forms (gender and number); masculine/feminine-only forms (numbers) are covered by
+// list-features.spec.mjs.
+const fourForms = (item) => ['ms', 'fs', 'mp', 'fp'].every((key) => item.forms?.[key]);
 const formsRoute = sectionRoutes().find((r) => readParts().flatMap((p) => p.sections)
-  .find((s) => s.id === r.section).items.some((item) => item.forms));
+  .find((s) => s.id === r.section).items.some(fourForms));
 
 test('dictionary entries: one per row on a phone, several columns on a laptop, Hebrew at least 22 px', async ({ page }) => {
   await open(page, listRoute.hash);
@@ -153,7 +156,7 @@ test('dictionary entries: one per row on a phone, several columns on a laptop, H
 test('words with forms show a singular/plural × masculine/feminine table, without repeating them as related words', async ({ page }) => {
   const section = readParts().flatMap((p) => p.sections).find((s) => s.id === formsRoute.section);
   await open(page, formsRoute.hash);
-  for (const item of section.items.filter((i) => i.forms)) {
+  for (const item of section.items.filter(fourForms)) {
     const entry = page.locator(`#content [data-entry="${item.id}"]`);
     const cells = entry.locator('.entry-forms tbody td');
     await expect(cells).toHaveText([item.forms.ms, item.forms.mp, item.forms.fs, item.forms.fp]);

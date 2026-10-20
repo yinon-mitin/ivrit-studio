@@ -1,78 +1,101 @@
-# Implementation Plan: Ivrit Studio MVP
+# Implementation Plan: Ivrit Studio — Cheatsheet Redesign
+
+Previous plan (MVP: trainer + one-screen cheatsheet): `tasks/archive/mvp-plan.md`, `tasks/archive/mvp-todo.md`.
 
 ## Overview
-Build the static, no-build Hebrew cheatsheet + trainer described in `SPEC.md`: a hash-routed single page that renders every `data/sections/*.json` as a one-screen Cheatsheet and a Blitz trainer, with theme / nikud / UI-language / RU toggles, Leitner progress in `localStorage` with export-import-merge, and Anki TSV export. MVP content: `alphabet`, `nikud`, `countries`, `geresh`, `vocab` (week 2026-10-11). Quality bar: `CONSTRAINTS.md`. Detailed tasks with acceptance criteria live in `tasks/todo.md`.
+Turn Ivrit Studio from a one-screen trainer into a modern **web cheatsheet** in the "typographic reference" style (variant A). The site loses Blitz, progress with export/import, Anki export, weekly data files and the one-screen rule. In their place come scrollable thematic pages, search, a "hide translations" self-check mode, and a print stylesheet. Translations are English by default, with one switch to Russian (interface and translations together). Static, zero runtime dependencies and no build step stay as they are. Detailed tasks: `tasks/todo.md`.
 
-Starting state (2026-10-19): tooling only (`package.json`, Playwright config, floor guard, diff-coverage, CI, Semgrep, gitleaks). No commits, no `origin/main`. `npm run check:task` passes on the empty tree.
+Decided with the owner (2026-10-20): the feature table, variant A, EN-first with an RU switch, thematic parts instead of one page or a page per section, current fonts (Heebo + Gveret Levin, no new downloads), exception E1 plus one push after Phase 1, and archiving the MVP plan.
+
+## Target structure
+```
+#/                 Contents: the parts, each listing its sections (typographic table of contents)
+#/reading          Reading:  alphabet (letters · finals & variants · print over cursive), nikud, geresh
+#/phrases          Phrases:  greetings & small talk, question words
+#/words            Words:    vocab, countries & languages
+#/grammar          Grammar:  gender & number
+#/<part>/<section> the same page, scrolled to the section (anchor)
+```
+On each part page every section is a heading and every former tab is a subheading. The page scrolls naturally. A sticky header holds the part navigation, search, and the Nikud · Hide · EN/RU · theme controls.
 
 ## Dependency Graph
 ```
-hebrew.js ──► schema.js + validate.mjs ──► every data file
-                     │
-fonts (woff2) ──┐    │
-                ▼    ▼
-        app shell + router + loader + e2e quality harness
-                     │
-        content.js (tabs, week merge)
-                     │
-   ┌──────────┬──────┴────┬────────────┬──────────────┐
-letter-grid letter-rows card-grid    table        settings (storage, i18n,
-   │           │          │            │           theme, nikud, showRu)
-alphabet   alphabet   countries   nikud, geresh
-                          │
-                   weeks → vocab
-                          │
-progress.js ──► blitz.js ──► Blitz UI (choice, cards) ──► progress screen (export/import)
-anki.js ──► TSV download
-                          │
-                 release readiness → (ask) push + Pages
+SPEC.md + CONSTRAINTS.md (new contract, exception E1)
+        │
+        ├── remove Blitz / progress / Anki (code + tests + strings)
+        ├── remove weeks (data migration → sections; content.js, schema.js)
+        └── drop one-screen (CSS flow, groups instead of tabs, overflow-x test only)
+                    │
+              ── push (floor-guard findings approved) ──
+                    │
+        parts in index.json + validator + router + contents page
+                    │
+        design tokens + shell (variant A) ── settings: lang en|ru, nikud, theme, hide
+                    │
+        ┌───────────┴───────────┐
+   reading views           words / phrases views
+   (letters, rows,         (dictionary list, flags + languages,
+    nikud & geresh tables)  forms when present)
+                    │
+        search (core filter + UI) · hide-translations · print CSS
+                    │
+                README, check:full, push
 ```
-Build bottom-up, but each phase ends with something a student can open on a phone.
 
 ## Architecture Decisions
-- **Pure core, DOM shell.** Everything testable lives in `assets/js/core/` (no DOM/`window`/`fetch`/`fs`), written test-first. DOM modules stay thin. Coverage thresholds apply only to `core/`.
-- **`validateAll` takes loaded objects, not a path.** `schema.js` stays importable in the browser. `scripts/validate.mjs` exports a `loadData(dir)` (node:fs) that both the CLI and `tests/unit/data.test.mjs` use.
-- **Data-driven e2e.** One quality spec reads `data/index.json` + sections and enumerates every route (home, each section × tab, each Blitz, progress) and runs one-screen, axe, external-request and weight checks. New sections and weeks get covered with no test edits, so weekly updates stay data-only. One page load per route; settings (theme, nikud, showRu) are toggled in-page to keep `check:task` ≤ 90 s.
-- **Densest mode in the one-screen check.** The harness pre-seeds settings with `showRu: true` and checks both nikud states.
-- **Lazy loading.** The loader fetches `index.json`, then only the sections the route needs (home fetches all sections for titles; they are small). The cursive font only downloads when a cursive glyph renders. The weight test measures uncompressed bytes (`python3 -m http.server` doesn't gzip), so it is stricter than Pages.
-- **CSP meta `default-src 'self'`** in `index.html` as a second guard against external requests. DOM is built only with `createElement`/`textContent` (Semgrep rule).
-- **Settings key `ivrit-studio:settings`**, separate from `ivrit-studio:progress`. All access goes through `storage.js` with try/catch, and an in-memory fallback.
-- **Code and data in separate commits.** A task that ships a view plus its first section lands as two commits: code first (green with no data), then data.
-- **Blitz templates and confusables ship with each section's data task**, so the validator checks their references from day one.
-- **Week tabs** use id `week-<date>` and a title generated by i18n (`Week of 11 Oct` / `Неделя 11 окт`). They are never stored in data.
+- **Contract first.** `SPEC.md` and `CONSTRAINTS.md` are rewritten before any code (Task 1). The owner reviews the diff. Code follows the new contract.
+- **One red window, made visible.** Removing features deletes tests and the "One screen" rule, and the floor guard flags exactly that (`test-deleted`, `assertion-removed`, `rule-removed`, `new-exception`). Exception **E1** in `CONSTRAINTS.md` records the owner's approval, scoped to Phase 1 paths, with an expiry date. All removals happen in Phase 1. At the checkpoint the agent shows the full guard output, and with the owner's "yes" pushes once. CI's floor-guard step fails on that one push, as designed. From Phase 2 on, every check is green again. The guard is not edited.
+- **Remove before redesign.** Removal goes first so that the new layout is not fighting one-screen e2e tests or Blitz routes.
+- **`tabs` → `groups`.** Without tabs the field names lie, so `tabs`/`tab` become `groups`/`group` (subheadings). Ids of entries never change. The 14/24-per-tab limit goes away.
+- **Parts live in `data/index.json`.** `{ "parts": [{ "id", "title": {en, ru}, "sections": [...] }] }`. The validator checks that every section file belongs to exactly one part. Adding a section stays data-only.
+- **One language switch.** Settings become `{ theme, nikud, lang: 'en'|'ru', hide }`. `lang` drives both the interface and the translation shown (en by default, not taken from `navigator.language`). Old stored settings fall back field by field, as `parseSettings` already does.
+- **Pure logic in `core/`, test first.** New pure functions are `partOf`/`resolveRoute` (content.js) and `matchEntry`/`searchSections` (new `core/search.js`, nikud-insensitive via `stripNikud`, matching he/plain/translit/en/ru). Coverage thresholds are unchanged.
+- **Variant A design system** in `app.css` tokens: warm paper background and ink text (light), deep warm-dark (dark), one accent, hairline rules instead of bordered cards, large Hebrew. Latin headings use a system serif stack (`Iowan Old Style, Charter, Georgia, 'Noto Serif', serif`), so nothing new downloads. The interface stays in Heebo.
+- **What stays:** no build, no runtime deps, CSP, `createElement`/`textContent` only, ≤ 200 KB first load, ≤ 60 KB per font, zero external requests, axe in both themes, `storage.js` for settings.
 
-## Task Index (details and checkboxes in `tasks/todo.md`)
-| Phase | Tasks | Delivers |
-|---|---|---|
-| 1. Foundation | T1 baseline commit · T2 `hebrew.js` · T3 schema + validator · T4 fonts | Green toolchain, data contract enforced, fonts within budget |
-| 2. Alphabet slice | T5 shell + harness · T6 alphabet letter-grid · T7 letter-rows tab · T8 theme + UI language | Student opens Alphabet on a phone, both fonts, both themes |
-| 3. Cheatsheet content | T9 card-grid + countries I · T10 countries II · T11 nikud + RU toggles · T12 table + nikud · T13 geresh · T14 weeks + vocab | All MVP cheatsheets |
-| 3b. Design | T14b visual language, accents, navigation (user request, 2026-10-19) | Modern, pleasant UI on phone and laptop before Blitz/progress are built |
-| 4. Blitz & progress | T15 `progress.js` · T16 `blitz.js` · T17 Blitz choice · T18 Blitz cards · T19 progress screen | Training with Leitner, export/import merge |
-| 5. Anki & ship | T20 Anki TSV · T21 release readiness | `check:full` green, ready to push (with approval) |
+## Task List
 
-Checkpoints after each phase (see `tasks/todo.md`).
+### Phase 1: New contract and removal
+- [ ] Task 1: Rewrite SPEC.md and CONSTRAINTS.md for the cheatsheet (plus exception E1)
+- [ ] Task 2: Remove Blitz, progress and Anki
+- [ ] Task 3: Fold weeks into sections and remove the weeks mechanism
+- [ ] Task 4: Drop one-screen: scrolling sections, groups instead of tabs
 
-## Parallelization
-- After T3: T4 (fonts) runs in parallel with T5.
-- After T5: data authoring (T10, T13) runs in parallel with view work. Pure modules T15, T16 and T20 don't depend on UI and can start any time after T3.
-- Sequential: T5 → T6 (router + harness shape), T15 → T16 → T17 (progress contract), T14 before T17 (Blitz alphabet filter reads week `letters`).
+### Checkpoint 1: Contract and removal
+- [ ] `npm run check:task` green except the floor guard; guard output equals the E1 list
+- [ ] Owner approves → push (CI floor-guard step red once, everything else green)
+
+### Phase 2: Structure and design
+- [ ] Task 5: Thematic parts: index.json, validator, router, contents page
+- [ ] Task 6: Variant A design tokens and the new shell (header, part navigation)
+- [ ] Task 7: Settings: one EN/RU switch, nikud, theme
+- [ ] Task 8: Reading views: letters, print over cursive, nikud and geresh tables
+- [ ] Task 9: Dictionary views: phrases, words, countries, gender & number
+
+### Checkpoint 2: Design review
+- [ ] `npm run check:task` green
+- [ ] Owner reviews screenshots: phone 390×664 and laptop 1280×720, light and dark, every part
+
+### Phase 3: Cheatsheet tools
+- [ ] Task 10: Search across all sections
+- [ ] Task 11: Hide-translations self-check mode
+- [ ] Task 12: Print stylesheet (A4)
+- [ ] Task 13: README, cleanup, release
+
+### Checkpoint 3: Complete
+- [ ] `npm run check:full` green, E1 marked closed
+- [ ] Owner opens the site on a real phone; push with approval
 
 ## Risks and Mitigations
 | Risk | Impact | Mitigation |
-|---|---|---|
-| Alphabet doesn't fit 360×640 (≥31 glyphs, each print + cursive + name + translit) | High | Done first (T6). Split into tabs, which the 24-per-tab limit forces anyway. Shrink with `clamp()`, and move the name/translit to a second line before cutting content |
-| Fonts over 60 KB, or Gveret Levin can't be sourced under OFL | High | T4 runs in Phase 1. Subset to Hebrew + nikud + Basic Latin. Instance Heebo to one weight. Record the source URL and license in the README. Stop and ask if the license is unclear |
-| First load over 200 KB uncompressed | Med | Measured in T5 and kept on every task by the harness. Lazy cursive font. Small JSON. No JS framework |
-| `check:task` goes over 90 s as routes multiply | Med | One load per route, in-page toggles, `fullyParallel`. If it's still slow, run `check:task` on phone + laptop chromium only, which is already the case |
-| Nikud errors in ~350 entries | High (product) | Every new entry is `verified: false`. The validator reports the count. A human verifies (Dicta Nakdan / teacher) |
-| Week 2026-10-11 source missing from repo | Med | T14 is blocked until the teacher's summary is provided. Code half of T14 can land first |
-| No `origin/main` before the first push | Low | The floor guard scans the whole tree. diff-coverage is skipped and whole-module thresholds still apply. Expected until T21 |
-| Emoji flags show as `IL`/`FR` on Windows | Low | Accepted in the idea doc |
+|------|--------|------------|
+| Floor guard red during Phase 1 is mistaken for real regressions | Med | E1 lists the exact paths. The agent diffs guard output against E1 before asking to push. Any finding outside E1 is a real problem. |
+| Removing week merging breaks entries' ids or section membership | Med | Data migration is a separate commit. `data.test.mjs` plus a one-off count check (same ids, same totals: 171) |
+| Variant A still looks "generic" | High | Checkpoint 2 is a human screenshot review before tools are built on top. Tokens are centralized in `app.css`, so a retune is cheap. |
+| Search on every keystroke is slow on phones | Low | ~170 entries, pre-stripped nikud index built once. Measured in e2e at 360 px. |
+| axe contrast fails on warm paper palette | Med | Contrast ratios are computed when the tokens are picked (Task 6), and axe runs in both themes. |
+| Old bookmarks `#/alphabet`, `#/countries/eu-1`, `#/x/blitz` | Low | `resolveRoute` maps a known section id to its part and anchor. Anything else goes to contents. |
 
 ## Open Questions
-1. ~~**Alphabet "print over cursive" tab content.**~~ **Decided 2026-10-19:** a `letter-rows` tab with no entries of its own shows every letter of the section, print over cursive (implemented in T7). Own reading-practice words were the rejected alternative.
-2. ~~**Week 2026-10-11 teacher summary**~~ **Done 2026-10-19:** read from the user's Downloads (not committed); the week feeds `vocab`, `greetings`, `gender-number`. `letters` is an assumption (all but ק צ ץ).
-3. **Font sources.** Heebo from `google/fonts` (OFL). Gveret Levin from AlefAlefAlef's OFL release. OK to download both once in T4?
-4. From SPEC: classmates' home countries missing from the list? Who verifies nikud, and how is it marked?
-5. **Pushing to GitHub + enabling Pages** (Boundaries: ask first). Planned only at the end of T21, after `check:full` is green.
+- Content: there are no real greetings yet (hello, bye, thanks). The current "greetings" are small-talk questions. Should a "Greetings" group be added in Phase 3 (data only, `verified: false`)?
+- Are `vocab` (13 words of week 1) and `gender-number` worth separate pages, or should the "Grammar" part merge into "Words" until there is more grammar?

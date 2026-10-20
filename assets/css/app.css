@@ -812,3 +812,90 @@ a { color: var(--accent); }
 
   .table-name { font-size: 1.05rem; }
 }
+
+/* Print (SPEC Print): A4, black on white whatever the theme, no header, navigation, search or buttons;
+   hidden translations are shown; lists in two columns; Hebrew sized in points; entries, cells and
+   rows do not break across pages. Selectors match the themes' specificity and come later. */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+
+  :root:not([data-print]),
+  :root[data-theme] {
+    color-scheme: light;
+    --paper: #fff;
+    --sheet: #fff;
+    --ink: #000;
+    --muted: #333;
+    --accent: #000;
+    --rule: #bbb;
+    --rule-strong: #666;
+    --mark: #fff;
+  }
+
+  body { font-size: 10pt; }
+
+  .app-header,
+  .part-tools,
+  .results-where,
+  .control { display: none !important; }
+
+  .content {
+    max-width: none;
+    padding: 0;
+  }
+
+  .part-title { font-size: 24pt; margin-top: 0; }
+
+  .section { margin-top: 14pt; }
+
+  .section-title { font-size: 17pt; }
+
+  .group-title {
+    margin: 10pt 0 4pt;
+    break-after: avoid;
+  }
+
+  .reveal[aria-expanded='false'],
+  .entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note) {
+    filter: none;
+    background: none;
+  }
+
+  .entry-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24pt;
+  }
+
+  .entry,
+  .letter-cell,
+  .letter-column,
+  .entry-table tr { break-inside: avoid; }
+
+  .entry { padding: 3pt 0 4pt; }
+
+  .entry-he { font-size: 15pt; }
+
+  .entry-related-he,
+  .entry-forms tbody td { font-size: 11pt; }
+
+  .letter-grid { --cols: 10; }
+
+  .letter-cell .glyph-print { font-size: 24pt; }
+
+  .letter-cell .glyph-cursive { font-size: 18pt; }
+
+  .letter-label { font-size: 7pt; }
+
+  .letter-column .glyph-print { font-size: 18pt; }
+
+  .letter-column .glyph-cursive { font-size: 15pt; }
+
+  .table-wrap { max-width: none; overflow: visible; }
+
+  .table-he { font-size: 18pt; }
+
+  .table-sound { font-size: 12pt; background: none; }
+}

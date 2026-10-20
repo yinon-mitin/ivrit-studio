@@ -56,7 +56,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 ### Phase 2: Laptop ruler
 - [x] Task 3: Scroll ruler on the right (role=scrollbar) with section markers
 
-- [ ] Task 12: Ruler v2 — below the bar, millimetre scale moving with the page, no native scrollbar (owner feedback)
+- [x] Task 12: Ruler v2 — below the bar, millimetre scale moving with the page, no native scrollbar (owner feedback)
 - [ ] Task 13: Flowing section titles on laptops, after getartcraft.com (owner request)
 
 ### Checkpoint B: navigation review

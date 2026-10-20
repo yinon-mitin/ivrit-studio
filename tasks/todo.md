@@ -69,9 +69,9 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description (owner feedback 2026-10-20):** (1) The page bar covered the top of the ruler (0% hidden): the ruler starts under header + bar. (2) Millimetres instead of percent, "a real digital ruler" sized to the screen: ticks in CSS millimetres (1 mm minor, 5 mm mid, 10 mm major with the number in mm), and the ruler scrolls 1:1 with the page, so it measures the page. A fixed marker at the reading line shows "NNN mm". Section marks sit on the moving ruler. Drag moves the page with the ruler; a click brings the clicked point to the reading line; keys: arrows ±10 mm, PageUp/PageDown ± one screen, Home/End. `role="scrollbar"` stays (`aria-valuenow` = %, `aria-valuetext` = "NNN mm — Section"). (3) While the ruler is shown, the browser's own scrollbar is hidden (the ruler replaces it).
 
 **Acceptance criteria:**
-- [ ] The ruler's top edge is at or below the page bar's bottom edge; its 0 is visible at the top of the page
-- [ ] Tick spacing is 10 mm per major tick in CSS units (±0.5 px); the marker reads the reading line's distance from the page top in mm (±1 mm); scrolling by 378 px moves the ruler and the reading by ~100 mm
-- [ ] Drag, click and keys move as specified. Native scrollbar width is 0 on part pages with the ruler and is unchanged elsewhere. axe clean in both themes.
+- [x] The ruler's top edge is at or below the page bar's bottom edge; its 0 is visible at the top of the page
+- [x] Tick spacing is 10 mm per major tick in CSS units (±0.5 px); the marker reads the reading line's distance from the page top in mm (±1 mm); scrolling by 378 px moves the ruler and the reading by ~100 mm
+- [x] Drag, click and keys move as specified. Native scrollbar width is 0 on part pages with the ruler and is unchanged elsewhere. axe clean in both themes.
 
 **Verification:** `npm run check:task` green; e2e `ruler.spec.mjs` rewritten for the mm scale
 **Dependencies:** Task 3

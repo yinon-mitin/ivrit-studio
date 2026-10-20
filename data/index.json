@@ -2,7 +2,7 @@
   "parts": [
     { "id": "reading", "title": { "en": "Reading", "ru": "Чтение" }, "sections": ["alphabet", "nikud", "geresh"] },
     { "id": "phrases", "title": { "en": "Phrases", "ru": "Фразы" }, "sections": ["greetings"] },
-    { "id": "words", "title": { "en": "Vocabulary", "ru": "Лексика" }, "sections": ["vocab", "numbers", "time", "countries"] },
+    { "id": "words", "title": { "en": "Vocabulary", "ru": "Лексика" }, "sections": ["vocab", "numbers", "time", "colors", "countries"] },
     { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["gender-number"] }
   ]
 }

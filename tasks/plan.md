@@ -66,7 +66,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 ### Phase 4: Vocabulary
 - [x] Task 6: List view: colour swatches and m/f-only forms
 - [x] Task 7: Numbers (data)
-- [ ] Task 8: Days and time (data)
+- [x] Task 8: Days and time (data)
 - [ ] Task 9: Colours (data)
 - [ ] Task 10: Family and people (data)
 

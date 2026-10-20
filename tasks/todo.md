@@ -140,11 +140,11 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** New section `time`. Groups: `days` (Sunday–Saturday, יוֹם רִאשׁוֹן … שַׁבָּת), `months` (January–December, Gregorian, as used in Israel), `when` (today, tomorrow, yesterday, now, morning, noon, evening, night, week, month, year, hour, minute). Icon: `יוֹם`.
 
 **Acceptance criteria:**
-- [ ] 7 + 12 + ~13 entries, all `verified: false`, transliteration rules from SPEC
-- [ ] Validator passes; search finds "Tuesday", "вторник", "שלישי"
+- [x] 7 + 12 + ~13 entries, all `verified: false`, transliteration rules from SPEC
+- [x] Validator passes; search finds "Tuesday", "вторник", "שלישי"
 
 **Verification:**
-- [ ] `npm run check:task` green
+- [x] `npm run check:task` green
 
 **Dependencies:** None (list view as is)
 **Files:** `data/sections/time.json` (new), `data/index.json`

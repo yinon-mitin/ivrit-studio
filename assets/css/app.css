@@ -633,6 +633,61 @@ a { color: var(--accent); }
 
 .ruler:focus-visible { outline-offset: -2px; }
 
+/* Flowing section titles (laptops ≥ 72rem), after getartcraft.com: a fixed layer beside the ruler that
+   lets clicks through; each title is placed by --y and drawn at --scale (from core/toc.js) and flows
+   between places when the section being read changes. */
+.flow-toc {
+  position: fixed;
+  inset: 0;
+  z-index: 17;
+  pointer-events: none;
+}
+
+.flow-toc[hidden] { display: none; }
+
+.flow-toc-item {
+  position: absolute;
+  right: 80px;
+  top: 0;
+  max-width: 12rem;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 22px;
+  text-align: end;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: auto;
+  transform: translateY(var(--y, 0)) scale(var(--scale, 1));
+  transform-origin: right top;
+}
+
+.flow-toc-item[data-state='past'] { opacity: 0.7; }
+
+.flow-toc-item[data-state='current'] {
+  max-width: 6.5rem;
+  color: var(--ink);
+  font-weight: 600;
+  white-space: normal;
+  line-height: 1.1;
+}
+
+.flow-toc-item:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Position and size flow; colour does not, so a theme switch is instant. */
+  .flow-toc-item { transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 300ms; }
+}
+
+@media (min-width: 72rem) {
+  /* The content keeps clear of the titles and the ruler; the ruler's own title is not needed. */
+  :root[data-flow-toc][data-ruler] .content { padding-inline-end: calc(var(--gutter) + 64px + 13rem); }
+
+  :root[data-flow-toc] .ruler-title { display: none; }
+}
+
 /* Part page: the part title, "on this page" links, then its sections one after another; each section
    and group is an anchor that clears the sticky header and page bar. */
 .part-title {
@@ -1080,6 +1135,7 @@ a { color: var(--accent); }
   .app-header,
   .page-bar,
   .ruler,
+  .flow-toc,
   .results-where,
   .control { display: none !important; }
 

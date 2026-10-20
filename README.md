@@ -28,6 +28,7 @@ npm run check:full   # before push (adds webkit, Semgrep, osv-scanner)
 - **◐** cycles the theme: auto (follows the system), light, dark.
 - **The bar under the header** on a part page names the section you are reading. Tap it to jump to another section or group. It also holds **Hide translations**, which blurs readings and meanings: tap one to check yourself.
 - **The ruler** at the right edge (laptop, long pages) is a millimetre ruler that moves with the page; its marker reads where you are and the marks show where each section starts. Drag it to move the page, click a point to bring it to the reading line, or focus it and use the arrow keys, Page Up/Down, Home and End. It replaces the browser's scrollbar.
+- **Section titles** beside the ruler (wide screens) flow as you scroll: passed sections at the top, the one you are reading large, the next ones at the bottom. Click one to go there.
 - **Print** a part (Ctrl/⌘ + P) for a clean A4 sheet, black on white, with everything shown.
 
 ## Changing content (data only, no code)

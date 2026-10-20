@@ -10,6 +10,7 @@ import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
 import { scrollPercent, currentAnchor } from './core/scroll.js';
 import { mountRuler } from './ui/ruler.js';
+import { mountFlowToc } from './ui/flow-toc.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
@@ -39,6 +40,9 @@ const ruler = mountRuler(document.getElementById('app'), {
 });
 /** The ruler is a laptop feature (it is hidden below this width by CSS as well). */
 const wide = window.matchMedia('(min-width: 64rem)');
+const flowToc = mountFlowToc(document.getElementById('app'));
+/** The flowing section titles need room beside the ruler. */
+const wider = window.matchMedia('(min-width: 72rem)');
 const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);
@@ -60,6 +64,7 @@ const screens = {
     screen.dataset.part = part.id;
     const title = el('h2', 'part-title', localized(part.title, lang));
     pageBar.replaceChildren(renderPageBar(part, lang, renderHideToggle(current, updateSettings)));
+    flowToc.setPart(part, lang);
     screen.append(title);
     if (part.sections.length > 1) screen.append(renderPartToc(part, lang));
     screen.append(...part.sections.map((section) => renderSection(section, { nikud: current.nikud, lang, hide: current.hide })));
@@ -166,7 +171,9 @@ function measureAnchors() {
   });
   // The ruler: laptops, part pages taller than the screen. Its tape starts at the top of the content
   // and has a mark at each section.
-  ruler.setActive(wide.matches && content.querySelector('[data-screen="part"]') !== null && root.scrollHeight > window.innerHeight);
+  const partScreen = content.querySelector('[data-screen="part"]');
+  ruler.setActive(wide.matches && partScreen !== null && root.scrollHeight > window.innerHeight);
+  flowToc.setActive(wider.matches && partScreen !== null && partScreen.querySelectorAll('.section').length > 1);
   const start = content.getBoundingClientRect().top + window.scrollY;
   ruler.setTape(root.scrollHeight - start, anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
     title: anchor.section,
@@ -183,6 +190,9 @@ function updatePosition() {
   const place = currentAnchor(anchors, window.scrollY, landing() + 8);
   updatePageBar(pageBar, place, percent);
   ruler.update(percent, place?.section ?? '');
+  const sections = anchors.filter((anchor) => anchor.group === null);
+  const current = Math.max(0, sections.findIndex((anchor) => anchor.section === place?.section));
+  flowToc.update(current, { top: landing() + 8, bottom: window.innerHeight - 24 });
 }
 
 let frame = 0;

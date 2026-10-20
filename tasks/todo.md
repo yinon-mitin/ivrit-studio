@@ -176,12 +176,12 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** A pure `core/search.js` provides `normalize` (lowercase, stripNikud, strip geresh/apostrophe variants) and `searchSections(sections, query, lang)`. It returns matching entries grouped by part and section, matching on he/plain/related.he/translit/en/ru. UI: search field in the header (`/` focuses it, Esc clears). While the query is non-empty, a results view shows matches grouped by section, each linking to its place.
 
 **Acceptance criteria:**
-- [ ] Unit (first): Hebrew with and without nikud, `שלום` finds `שָׁלוֹם`, translit case-insensitive, RU and EN, empty query, no match
-- [ ] e2e: typing "fra" shows France; "שפה" shows safa; clearing restores the page. Results announced via `aria-live`.
-- [ ] Search loads all sections lazily on first focus; first load stays ≤ 200 KB
+- [x] Unit (first): Hebrew with and without nikud, `שלום` finds `שָׁלוֹם`, translit case-insensitive, RU and EN, empty query, no match
+- [x] e2e: typing "fra" shows France; "שפה" shows safa; clearing restores the page. Results announced via `aria-live`.
+- [x] Search loads all sections lazily on first focus; first load stays ≤ 200 KB
 
 **Verification:**
-- [ ] `npm run check:task` green; changed-line coverage ≥ 80%
+- [x] `npm run check:task` green; changed-line coverage ≥ 80%
 
 **Dependencies:** Checkpoint 2
 **Files:** `assets/js/core/search.js` (new), `tests/unit/search.test.mjs` (new), `assets/js/ui/search.js` (new), `assets/js/main.js`, `assets/css/app.css`, `tests/e2e/search.spec.mjs` (new)

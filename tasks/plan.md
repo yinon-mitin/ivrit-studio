@@ -77,7 +77,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 - [ ] Owner reviews screenshots: phone 390×664 and laptop 1280×720, light and dark, every part
 
 ### Phase 3: Cheatsheet tools
-- [ ] Task 10: Search across all sections
+- [x] Task 10: Search across all sections
 - [ ] Task 11: Hide-translations self-check mode
 - [ ] Task 12: Print stylesheet (A4)
 - [ ] Task 13: README, cleanup, release

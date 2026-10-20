@@ -64,7 +64,7 @@ T6 swatch + m/f-only forms in the list view (code) ──► T7 numbers · T8 da
 - [ ] Task 5: Two cursive styles in the alphabet (only after "go")
 
 ### Phase 4: Vocabulary
-- [ ] Task 6: List view: colour swatches and m/f-only forms
+- [x] Task 6: List view: colour swatches and m/f-only forms
 - [ ] Task 7: Numbers (data)
 - [ ] Task 8: Days and time (data)
 - [ ] Task 9: Colours (data)

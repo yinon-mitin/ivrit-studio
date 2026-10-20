@@ -111,12 +111,12 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Code only, test first where pure. Validator: `swatch` must be `#rgb` or `#rrggbb`. The list view draws a swatch as a small round chip before the Hebrew: CSSOM `style.setProperty`, allowed by the CSP. The chip has a 1 px rule border so white and black chips show in both themes, and is `aria-hidden` (the meaning says the colour). The forms table hides a column (singular or plural) when no entry form fills it, so numbers can carry only `ms`/`fs`.
 
 **Acceptance criteria:**
-- [ ] Unit: the validator rejects `red`, `#12`, `#gggggg` and accepts `#fff`, `#d32f2f`
-- [ ] e2e (fixture section served in place of data, like the old weeks spec): a swatch entry shows a chip with that background. A forms entry with only `ms`/`fs` shows one column, no "—".
-- [ ] No horizontal overflow; axe clean in both themes
+- [x] Unit: the validator rejects `red`, `#12`, `#gggggg` and accepts `#fff`, `#d32f2f`
+- [x] e2e (fixture section served in place of data, like the old weeks spec): a swatch entry shows a chip with that background. A forms entry with only `ms`/`fs` shows one column, no "—".
+- [x] No horizontal overflow; axe clean in both themes
 
 **Verification:**
-- [ ] `npm run check:task` green
+- [x] `npm run check:task` green
 
 **Dependencies:** None
 **Files:** `assets/js/core/schema.js`, `tests/unit/schema.test.mjs`, `assets/js/views/list.js`, `assets/css/app.css`, `tests/e2e/list-features.spec.mjs` (new), `SPEC.md`

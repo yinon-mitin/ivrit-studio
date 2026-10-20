@@ -77,3 +77,12 @@ test('numbers are found by digit, by Russian word and by Hebrew without nikud', 
     await expect(page.locator(`#content [data-screen="search"] [data-entry="${seven.id}"]`)).toBeVisible();
   }
 });
+
+test('a weekday is found in English, Russian and Hebrew without nikud', async ({ page }) => {
+  const tuesday = find('time.tuesday');
+  await open(page, '#/');
+  for (const query of ['Tuesday', 'вторник', stripNikud(tuesday.he).split(' ')[1]]) {
+    await searchFor(page, query);
+    await expect(page.locator(`#content [data-screen="search"] [data-entry="${tuesday.id}"]`)).toBeVisible();
+  }
+});

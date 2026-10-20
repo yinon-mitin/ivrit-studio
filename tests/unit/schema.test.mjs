@@ -68,55 +68,38 @@ describe('validateSection', () => {
     assert.ok(hasError(validateSection(section({ items: [entry('x', { he: 'Tsarfat' })] })), /he has no Hebrew letter/));
   });
 
-  it('rejects a tab that does not exist', () => {
-    const report = validateSection(section({ tabs: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }], items: [entry('x', { tab: 'eu-9' })] }));
-    assert.ok(hasError(report, /countries\.x: unknown tab "eu-9"/));
+  it('rejects a group that does not exist', () => {
+    const report = validateSection(section({ groups: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }], items: [entry('x', { group: 'eu-9' })] }));
+    assert.ok(hasError(report, /countries\.x: unknown group "eu-9"/));
   });
 
-  it('rejects an entry with a tab in a section without tabs', () => {
-    assert.ok(hasError(validateSection(section({ items: [entry('x', { tab: 'eu-1' })] })), /unknown tab "eu-1"/));
+  it('rejects an entry with a group in a section without groups', () => {
+    assert.ok(hasError(validateSection(section({ items: [entry('x', { group: 'eu-1' })] })), /unknown group "eu-1"/));
   });
 
-  it('rejects an entry without a tab when the section has tabs', () => {
-    const report = validateSection(section({ tabs: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }], items: [entry('x')] }));
-    assert.ok(hasError(report, /countries\.x: needs a tab/));
+  it('rejects an entry without a group when the section has groups', () => {
+    const report = validateSection(section({ groups: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }], items: [entry('x')] }));
+    assert.ok(hasError(report, /countries\.x: needs a group/));
   });
 
   it('rejects an unknown section view', () => {
     assert.ok(hasError(validateSection(section({ view: 'carousel' })), /unknown view "carousel"/));
   });
 
-  it('rejects an unknown tab view', () => {
-    const report = validateSection(section({ tabs: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' }, view: 'list' }], items: [] }));
-    assert.ok(hasError(report, /tab eu-1 has unknown view "list"/));
+  it('rejects an unknown group view', () => {
+    const report = validateSection(section({ groups: [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' }, view: 'carousel' }], items: [] }));
+    assert.ok(hasError(report, /group eu-1 has unknown view "carousel"/));
   });
 
-  it('allows 14 entries per card-grid tab and rejects 15', () => {
-    const tabs = [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }];
-    assert.deepEqual(validateSection(section({ tabs, items: entries(14, { tab: 'eu-1' }) })).errors, []);
-    assert.ok(hasError(validateSection(section({ tabs, items: entries(15, { tab: 'eu-1' }) })), /tab eu-1 has 15 entries, limit 14/));
+  it('accepts any number of entries in a group or section', () => {
+    const groups = [{ id: 'eu-1', title: { en: 'EU I', ru: 'ЕС I' } }];
+    assert.deepEqual(validateSection(section({ groups, items: entries(80, { group: 'eu-1' }) })).errors, []);
+    assert.deepEqual(validateSection(section({ items: entries(80) })).errors, []);
   });
 
-  it('allows 24 entries per letter-grid tab and rejects 25', () => {
-    const tabs = [{ id: 'letters', title: { en: 'Letters', ru: 'Буквы' } }];
-    const letters = section({ view: 'letter-grid', tabs });
-    assert.deepEqual(validateSection({ ...letters, items: entries(24, { tab: 'letters' }) }).errors, []);
-    assert.ok(hasError(validateSection({ ...letters, items: entries(25, { tab: 'letters' }) }), /limit 24/));
-  });
-
-  it('uses the tab view over the section view for the limit', () => {
-    const tabs = [{ id: 'rows', title: { en: 'Rows', ru: 'Строки' }, view: 'card-grid' }];
-    const report = validateSection(section({ view: 'letter-grid', tabs, items: entries(15, { tab: 'rows' }) }));
-    assert.ok(hasError(report, /tab rows has 15 entries, limit 14/));
-  });
-
-  it('applies the limit to a section without tabs', () => {
-    assert.ok(hasError(validateSection(section({ items: entries(15) })), /items has 15 entries, limit 14/));
-  });
-
-  it('accepts an empty letter-rows tab', () => {
-    const tabs = [{ id: 'rows', title: { en: 'Rows', ru: 'Строки' }, view: 'letter-rows' }];
-    assert.deepEqual(validateSection(section({ view: 'letter-grid', tabs, items: [] })).errors, []);
+  it('accepts an empty letter-rows group', () => {
+    const groups = [{ id: 'rows', title: { en: 'Rows', ru: 'Строки' }, view: 'letter-rows' }];
+    assert.deepEqual(validateSection(section({ view: 'letter-grid', groups, items: [] })).errors, []);
   });
 
   it('rejects a section id that is not a slug', () => {

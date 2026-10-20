@@ -6,10 +6,7 @@ import { open, sectionRoutes } from './helpers.mjs';
 
 const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
 const sections = index.sections.map((id) => JSON.parse(readFileSync(new URL(`../../data/sections/${id}.json`, import.meta.url), 'utf8')));
-const countOf = (id) => {
-  const routes = sectionRoutes().filter((r) => r.section === id && r.view !== 'letter-rows');
-  return new Set(routes.flatMap((r) => r.items.map((i) => i.id))).size;
-};
+const countOf = (id) => sectionRoutes().find((r) => r.section === id).items.length;
 
 test('home shows each section with its icon, title and card count', async ({ page }) => {
   await open(page, '#/');

@@ -6,13 +6,13 @@ import { open, openMenu, sectionRoutes, expectNoSeriousAxe, SETTINGS_KEY } from 
 import { displayHe } from '../../assets/js/core/hebrew.js';
 
 // The --paper token of each theme (assets/css/app.css).
-const LIGHT_BG = 'rgb(246, 247, 251)';
-const DARK_BG = 'rgb(17, 21, 31)';
+const LIGHT_BG = 'rgb(246, 242, 233)';
+const DARK_BG = 'rgb(24, 22, 19)';
 const firstSection = (() => {
   const index = JSON.parse(readFileSync(new URL('../../data/index.json', import.meta.url), 'utf8'));
   return JSON.parse(readFileSync(new URL(`../../data/sections/${index.sections[0]}.json`, import.meta.url), 'utf8'));
 })();
-// A tab whose Hebrew changes without nikud, and one in a section that keeps its nikud (the alphabet).
+// A section whose Hebrew changes without nikud, and one in a section that keeps its nikud (the alphabet).
 const togglable = sectionRoutes().find((r) => r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
 const fixed = sectionRoutes().find((r) => !r.nikudToggle && r.items.some((i) => displayHe(i, false) !== i.he));
 
@@ -102,7 +102,8 @@ test.describe('interface language', () => {
 
     await open(page, `#/${firstSection.id}`);
     await expect(page.locator('#content h2')).toHaveText(firstSection.title.ru);
-    if (firstSection.tabs) await expect(page.locator('#content nav a').first()).toHaveText(firstSection.tabs[0].title.ru);
+    const groups = firstSection.groups ?? firstSection.tabs;
+    if (groups) await expect(page.locator('#content .group-title').first()).toHaveText(groups[0].title.ru);
 
     await page.reload();
     await ready(page);
@@ -113,7 +114,7 @@ test.describe('interface language', () => {
 test.describe('nikud', () => {
   test('the header toggle removes nikud where the section allows it, and is remembered', async ({ page }) => {
     const item = togglable.items.find((i) => displayHe(i, false) !== i.he);
-    const entry = page.locator(`#content [data-entry="${item.id}"]`);
+    const entry = page.locator(`#content [data-entry="${item.id}"]`).first();
     const toggle = page.locator('[data-setting="nikud"]');
     await open(page, togglable.hash);
     await expect(toggle).toHaveAttribute('aria-pressed', 'true');
@@ -136,13 +137,13 @@ test.describe('nikud', () => {
     await page.locator('[data-setting="nikud"]').click();
     await ready(page);
     await expect(page.locator('[data-setting="nikud"]')).toHaveAttribute('aria-pressed', 'false');
-    await expect(page.locator(`#content [data-entry="${item.id}"]`)).toContainText(item.he);
+    await expect(page.locator(`#content [data-entry="${item.id}"]`).first()).toContainText(item.he);
   });
 });
 
 test('the RU translation setting adds Russian to every entry and is remembered', async ({ page }) => {
   const route = sectionRoutes()[0];
-  const entry = page.locator(`#content [data-entry="${route.items[0].id}"]`);
+  const entry = page.locator(`#content [data-entry="${route.items[0].id}"]`).first();
   await open(page, route.hash);
   await expect(entry).not.toContainText(route.items[0].ru);
   await openMenu(page);
@@ -150,7 +151,7 @@ test('the RU translation setting adds Russian to every entry and is remembered',
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-pressed', 'true');
-  for (const item of route.items) await expect(page.locator(`#content [data-entry="${item.id}"]`)).toContainText(item.ru);
+  for (const item of route.items) await expect(page.locator(`#content [data-entry="${item.id}"]`).first()).toContainText(item.ru);
 
   await page.reload();
   await ready(page);

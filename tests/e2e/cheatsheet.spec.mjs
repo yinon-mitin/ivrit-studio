@@ -1,24 +1,32 @@
-// Cheatsheet screens, for every section tab in data/: tabs, entries, Hebrew markup, cursive font.
+// Section pages, for every section in data/: title, groups under subheadings, entries in their views,
+// Hebrew markup, cursive font, and group links that scroll to the group.
 import { test, expect } from '@playwright/test';
 import { sectionRoutes, open, seedSettings } from './helpers.mjs';
 import { displayHe } from '../../assets/js/core/hebrew.js';
 
 const LETTER_VIEWS = ['letter-grid', 'letter-rows'];
+/** The view element of a group: inside its group block, or straight in the section without groups. */
+const viewOf = (page, route, group) => page.locator(
+  group.id === null
+    ? `#content [data-section="${route.section}"] > [data-view="${group.view}"]`
+    : `#content [data-section="${route.section}"] [data-group="${group.id}"] [data-view="${group.view}"]`,
+);
 
 for (const route of sectionRoutes()) {
-  test(`${route.hash} shows its tab, its entries and Hebrew as lang="he" dir="rtl"`, async ({ page }) => {
+  test(`${route.hash} shows its title, its groups in order with their entries, and Hebrew as lang="he" dir="rtl"`, async ({ page }) => {
     await open(page, route.hash);
 
-    await expect(page.locator('#content [data-screen="section"] h2')).not.toBeEmpty();
-    await expect(page.locator('#content nav a')).toHaveCount(route.tabs.length);
-    if (route.tab !== null) {
-      await expect(page.locator('#content nav a[aria-current="page"]')).toHaveAttribute('href', `#/${route.section}/${route.tab}`);
-    }
-    await expect(page.locator(`#content [data-view="${route.view}"] [data-entry]`)).toHaveCount(route.count);
-    for (const item of route.items) {
-      const entry = page.locator(`#content [data-entry="${item.id}"]`);
-      await expect(entry).toContainText(item.he);
-      for (const related of item.related) await expect(entry).toContainText(related);
+    await expect(page.locator('#content [data-screen="section"] h2')).toHaveText(route.title.en);
+    const titled = route.groups.filter((group) => group.id !== null);
+    await expect(page.locator('#content .group-title')).toHaveText(titled.map((group) => group.title.en));
+    await expect(page.locator('#content nav')).toHaveCount(0);
+    for (const group of route.groups) {
+      await expect(viewOf(page, route, group).locator('[data-entry]')).toHaveCount(group.items.length);
+      for (const item of group.items) {
+        const entry = viewOf(page, route, group).locator(`[data-entry="${item.id}"]`);
+        await expect(entry).toContainText(item.he);
+        if (group.view !== 'letter-rows') for (const related of item.related) await expect(entry).toContainText(related);
+      }
     }
 
     const unmarked = await page.evaluate(() => {
@@ -39,11 +47,11 @@ for (const route of sectionRoutes()) {
     await open(page, route.hash);
     for (const item of route.items) {
       const expected = route.nikudToggle ? displayHe(item, false) : item.he;
-      await expect(page.locator(`#content [data-entry="${item.id}"]`)).toContainText(expected);
+      await expect(page.locator(`#content [data-entry="${item.id}"]`).first()).toContainText(expected);
     }
   });
 
-  if (LETTER_VIEWS.includes(route.view) && route.count > 0) {
+  if (route.groups.some((group) => LETTER_VIEWS.includes(group.view) && group.items.length > 0)) {
     test(`${route.hash} draws cursive letters in Gveret Levin`, async ({ page }) => {
       await open(page, route.hash);
       const cursive = page.locator('#content .glyph-cursive').first();
@@ -52,42 +60,44 @@ for (const route of sectionRoutes()) {
       expect(await page.evaluate((t) => document.fonts.check('32px "Gveret Levin"', t), text)).toBe(true);
     });
   }
-}
 
-for (const route of sectionRoutes().filter((r) => r.view === 'letter-rows' && r.count > 0)) {
-  test(`${route.hash} puts each cursive letter under its print letter, right to left`, async ({ page }) => {
-    await open(page, route.hash);
-    const columns = await page.locator('#content [data-view="letter-rows"] [data-entry]').evaluateAll((entries) => entries.map((entry) => {
-      const box = (selector) => entry.querySelector(selector).getBoundingClientRect();
-      const print = box('.glyph-print');
-      const cursive = box('.glyph-cursive');
-      return {
-        sameText: entry.querySelector('.glyph-print').textContent === entry.querySelector('.glyph-cursive').textContent,
-        below: cursive.top >= print.bottom - 1,
-        centred: Math.abs((print.left + print.right) / 2 - (cursive.left + cursive.right) / 2) <= 2,
-        x: print.left,
-        y: print.top,
-      };
-    }));
-    for (const column of columns) expect(column).toMatchObject({ sameText: true, below: true, centred: true });
-    const [first, second] = columns;
-    expect(second.y === first.y && second.x < first.x).toBe(true);
-  });
-}
+  for (const group of route.groups.filter((g) => g.view === 'letter-rows' && g.items.length > 0)) {
+    test(`${route.hash} puts each cursive letter under its print letter, right to left (${group.id})`, async ({ page }) => {
+      await open(page, route.hash);
+      const columns = await viewOf(page, route, group).locator('[data-entry]').evaluateAll((entries) => entries.map((entry) => {
+        const box = (selector) => entry.querySelector(selector).getBoundingClientRect();
+        const print = box('.glyph-print');
+        const cursive = box('.glyph-cursive');
+        return {
+          sameText: entry.querySelector('.glyph-print').textContent === entry.querySelector('.glyph-cursive').textContent,
+          below: cursive.top >= print.bottom - 1,
+          centred: Math.abs((print.left + print.right) / 2 - (cursive.left + cursive.right) / 2) <= 2,
+          x: print.left,
+          y: print.top,
+        };
+      }));
+      for (const column of columns) expect(column).toMatchObject({ sameText: true, below: true, centred: true });
+      const [first, second] = columns;
+      expect(second.y === first.y && second.x < first.x).toBe(true);
+    });
+  }
 
-for (const route of sectionRoutes().filter((r) => r.view === 'table' && r.count > 0)) {
-  test(`${route.hash} groups consecutive entries with the same sound into one sound cell`, async ({ page }) => {
-    await open(page, route.hash);
-    const groups = route.items.filter((item, i) => i === 0 || route.items[i - 1].translit !== item.translit);
-    await expect(page.locator('#content .table-sound')).toHaveText(groups.map((item) => item.translit));
-  });
-}
+  for (const group of route.groups.filter((g) => g.view === 'table' && g.items.length > 0)) {
+    test(`${route.hash} groups consecutive entries with the same sound into one sound cell (${group.id ?? 'section'})`, async ({ page }) => {
+      await open(page, route.hash);
+      const sounds = group.items.filter((item, i) => i === 0 || group.items[i - 1].translit !== item.translit);
+      await expect(viewOf(page, route, group).locator('.table-sound')).toHaveText(sounds.map((item) => item.translit));
+    });
+  }
 
-for (const route of sectionRoutes().filter((r) => r.tabs.length > 0 && r.tab === r.tabs[0])) {
-  test(`#/${route.section} and an unknown tab show the first tab`, async ({ page }) => {
-    for (const hash of [`#/${route.section}`, `#/${route.section}/no-such-tab`]) {
-      await open(page, hash);
-      await expect(page.locator('#content nav a[aria-current="page"]')).toHaveAttribute('href', route.hash);
-    }
-  });
+  const last = route.groups.at(-1);
+  if (last.id !== null) {
+    test(`#/${route.section}/<group> scrolls to the group; an unknown group opens the section at the top`, async ({ page }) => {
+      await open(page, `#/${route.section}/${last.id}`);
+      await expect(page.locator(`#${route.section}-${last.id} .group-title`)).toBeInViewport();
+      await open(page, `#/${route.section}/no-such-group`);
+      await expect(page.locator('#content [data-screen="section"] h2')).toBeInViewport();
+      expect(await page.evaluate(() => window.scrollY)).toBe(0);
+    });
+  }
 }

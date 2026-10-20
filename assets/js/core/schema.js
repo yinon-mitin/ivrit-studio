@@ -3,9 +3,6 @@ import { isHebrew } from './hebrew.js';
 
 export const VIEWS = ['letter-grid', 'letter-rows', 'card-grid', 'table'];
 
-const LETTER_VIEWS = ['letter-grid', 'letter-rows'];
-const TAB_LIMIT = 14;
-const LETTER_TAB_LIMIT = 24;
 const REQUIRED = ['id', 'he', 'translit', 'en', 'ru'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -48,10 +45,11 @@ export function validateSection(section) {
   if (section.icon !== undefined && !isText(section.icon)) errors.push(`${at}: icon must be a non-empty string`);
   if (!Array.isArray(section.items)) return { errors: [...errors, `${at}: items must be an array`], warnings };
 
-  const tabs = section.tabs ?? [];
-  const tabIds = new Set(tabs.map((tab) => tab.id));
-  for (const tab of tabs) {
-    if (tab.view !== undefined && !VIEWS.includes(tab.view)) errors.push(`${at}: tab ${tab.id} has unknown view "${tab.view}"`);
+  // `tabs`/`tab` are the names before the groups rename; read until the data is renamed.
+  const groups = section.groups ?? section.tabs ?? [];
+  const groupIds = new Set(groups.map((group) => group.id));
+  for (const group of groups) {
+    if (group.view !== undefined && !VIEWS.includes(group.view)) errors.push(`${at}: group ${group.id} has unknown view "${group.view}"`);
   }
 
   const ids = new Set();
@@ -60,19 +58,12 @@ export function validateSection(section) {
     if (!isObject(item)) continue;
     if (ids.has(item.id)) errors.push(`${item.id}: duplicate id`);
     ids.add(item.id);
-    if (item.tab === undefined && tabs.length > 0) errors.push(`${item.id}: needs a tab, section ${section.id} has tabs`);
-    if (item.tab !== undefined && !tabIds.has(item.tab)) errors.push(`${item.id}: unknown tab "${item.tab}"`);
+    const group = item.group ?? item.tab;
+    if (group === undefined && groups.length > 0) errors.push(`${item.id}: needs a group, section ${section.id} has groups`);
+    if (group !== undefined && !groupIds.has(group)) errors.push(`${item.id}: unknown group "${group}"`);
   }
 
   const items = section.items.filter(isObject);
-  const groups = tabs.length > 0
-    ? tabs.map((tab) => ({ name: `tab ${tab.id}`, view: tab.view ?? section.view, count: items.filter((i) => i.tab === tab.id).length }))
-    : [{ name: 'items', view: section.view, count: items.length }];
-  for (const { name, view, count } of groups) {
-    const limit = LETTER_VIEWS.includes(view) ? LETTER_TAB_LIMIT : TAB_LIMIT;
-    if (count > limit) errors.push(`${at}: ${name} has ${count} entries, limit ${limit}`);
-  }
-
   const unverified = items.filter((item) => item.verified === false).length;
   if (unverified > 0) warnings.push(`${at}: ${unverified} entries with verified: false`);
   return { errors, warnings };

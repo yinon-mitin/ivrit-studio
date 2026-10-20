@@ -15,7 +15,6 @@ export function renderLetterRows(items, { nikud }) {
   for (const item of items) {
     const column = el('li', 'letter-column');
     column.dataset.entry = item.id;
-    column.dataset.fit = '';
     const he = displayHe(item, nikud);
     column.append(hebrew('span', 'glyph glyph-print', he), hebrew('span', 'glyph glyph-cursive', he));
     rows.append(column);

@@ -16,7 +16,6 @@ export function renderLetterGrid(items, { nikud, showRu }) {
   for (const item of items) {
     const cell = el('li', 'letter-cell');
     cell.dataset.entry = item.id;
-    cell.dataset.fit = '';
     const label = el('span', 'letter-label');
     label.dir = 'ltr';
     label.append(el('span', 'letter-name', item.en), ' ', el('span', 'letter-sound', item.translit));

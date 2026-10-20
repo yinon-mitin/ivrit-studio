@@ -1,34 +1,30 @@
-// Section content selection: which tab is shown, its entries and its view. Pure, no DOM.
+// Section content: the groups a section shows on its page, with their entries and views. Pure, no DOM.
+
+/** @typedef {{ id: string | null, title?: { en: string, ru: string }, view: string, items: Array<object> }} Group */
 
 /**
- * The tab to show: the one with `tabId`, else the first. Null for a section without tabs.
- * @param {{ tabs?: Array<{ id: string, view?: string }> }} section
- * @param {string | undefined} tabId
- * @returns {{ id: string, view?: string } | null}
+ * The groups of a section in data order, each with its view (the group's own, else the section's) and
+ * its entries in data order. A section without groups is one untitled group (id null) with every entry.
+ * A `letter-rows` group without entries of its own shows every entry of the section (the alphabet's
+ * "print over cursive" group).
+ * @param {{ view: string, groups?: Array<{ id: string, title?: object, view?: string }>, items: Array<{ group?: string }> }} section
+ * @returns {Group[]}
  */
-export function resolveTab(section, tabId) {
-  const tabs = section.tabs ?? [];
-  return tabs.find((tab) => tab.id === tabId) ?? tabs[0] ?? null;
+export function sectionGroups(section) {
+  // `tabs`/`tab` are the names before the groups rename; read until the data is renamed.
+  const groups = section.groups ?? section.tabs ?? [];
+  if (groups.length === 0) return [{ id: null, view: section.view, items: section.items }];
+  return groups.map((group) => {
+    const view = group.view ?? section.view;
+    const own = section.items.filter((item) => (item.group ?? item.tab) === group.id);
+    return { id: group.id, title: group.title, view, items: own.length === 0 && view === 'letter-rows' ? section.items : own };
+  });
 }
 
 /**
- * The entries shown in a tab, in data order. Every entry of the section when it has no tabs, or for a
- * `letter-rows` tab without entries of its own (the alphabet's "print over cursive" tab).
- * @param {{ view: string, items: Array<{ tab?: string }> }} section
- * @param {{ id: string, view?: string } | null} tab
- */
-export function itemsForTab(section, tab) {
-  if (tab === null) return section.items;
-  const own = section.items.filter((item) => item.tab === tab.id);
-  return own.length === 0 && viewOf(section, tab) === 'letter-rows' ? section.items : own;
-}
-
-/**
- * The view that renders a tab: the tab's own, else the section's.
- * @param {{ view: string }} section
- * @param {{ view?: string } | null} tab
+ * The element id of a group on its page, the target of `#/<section>/<group>`.
+ * @param {string} sectionId
+ * @param {string} groupId
  * @returns {string}
  */
-export function viewOf(section, tab) {
-  return tab?.view ?? section.view;
-}
+export const groupAnchor = (sectionId, groupId) => `${sectionId}-${groupId}`;

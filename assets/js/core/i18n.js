@@ -5,7 +5,6 @@ export const LANGS = ['en', 'ru'];
 /** @type {Record<string, { en: string, ru: string }>} */
 export const STRINGS = {
   sections: { en: 'Sections', ru: 'Разделы' },
-  tabs: { en: 'Tabs', ru: 'Вкладки' },
   settings: { en: 'Settings', ru: 'Настройки' },
   theme: { en: 'Theme: {value}', ru: 'Тема: {value}' },
   themeSystem: { en: 'Auto', ru: 'Авто' },

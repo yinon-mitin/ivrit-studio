@@ -17,7 +17,6 @@ export function renderCardGrid(items, { nikud, showRu }) {
   for (const item of items) {
     const card = el('li', 'card');
     card.dataset.entry = item.id;
-    card.dataset.fit = '';
     card.dir = 'rtl';
 
     const main = el('div', 'card-main');

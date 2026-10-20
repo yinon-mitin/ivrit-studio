@@ -13,44 +13,40 @@ export const fontFiles = () => readdirSync(FONTS_DIR).filter((file) => file.ends
 const readSections = () => readJson('data/index.json').sections.map((id) => readJson(`data/sections/${id}.json`));
 
 /**
- * Every Cheatsheet screen in data/: each section tab (or the section when it has no tabs), with what
- * it should show.
- * @returns {Array<{ hash: string, section: string, tab: string | null, view: string, tabs: string[], count: number,
- *   nikudToggle: boolean, items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
+ * Every section page in data/, with what it should show: its groups in order (one untitled group for a
+ * section without groups), each with its view and entries, and every entry of the section.
+ * @returns {Array<{ hash: string, section: string, title: { en: string, ru: string }, nikudToggle: boolean,
+ *   groups: Array<{ id: string | null, title?: { en: string, ru: string }, view: string, items: Array<object> }>,
+ *   items: Array<{ id: string, he: string, plain?: string, translit: string, en: string, ru: string, related: string[] }> }>}
  */
 export function sectionRoutes() {
-  const list = [];
-  for (const section of readSections()) {
-    const items = [...section.items];
-    const tabs = (section.tabs ?? []).map((tab) => ({ id: tab.id, view: tab.view ?? section.view }));
-    const tabIds = tabs.map((tab) => tab.id);
-    const shown = (entries) => entries.map((item) => ({
-      id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
-      related: (item.related ?? []).map((r) => r.he),
-    }));
-    if (tabs.length === 0) {
-      list.push({
-        hash: `#/${section.id}`, section: section.id, tab: null, view: section.view, tabs: [], count: items.length,
-        nikudToggle: section.nikudToggle !== false, items: shown(items),
+  const shown = (entries) => entries.map((item) => ({
+    id: item.id, he: item.he, plain: item.plain, translit: item.translit, en: item.en, ru: item.ru,
+    related: (item.related ?? []).map((r) => r.he),
+  }));
+  return readSections().map((section) => {
+    // `tabs`/`tab` are the names before the groups rename.
+    const declared = section.groups ?? section.tabs ?? [];
+    const groupOf = (item) => item.group ?? item.tab;
+    const groups = declared.length === 0
+      ? [{ id: null, view: section.view, items: shown(section.items) }]
+      : declared.map((group) => {
+        const view = group.view ?? section.view;
+        const own = section.items.filter((item) => groupOf(item) === group.id);
+        // A letter-rows group without entries of its own shows the whole section (SPEC Section).
+        return { id: group.id, title: group.title, view, items: shown(own.length === 0 && view === 'letter-rows' ? section.items : own) };
       });
-    }
-    for (const tab of tabs) {
-      const own = items.filter((item) => item.tab === tab.id);
-      // A letter-rows tab without entries of its own shows the whole section (SPEC decision, T7).
-      const entries = own.length === 0 && tab.view === 'letter-rows' ? items : own;
-      list.push({
-        hash: `#/${section.id}/${tab.id}`, section: section.id, tab: tab.id, view: tab.view, tabs: tabIds, count: entries.length,
-        nikudToggle: section.nikudToggle !== false, items: shown(entries),
-      });
-    }
-  }
-  return list;
+    return {
+      hash: `#/${section.id}`, section: section.id, title: section.title, nikudToggle: section.nikudToggle !== false,
+      groups, items: shown(section.items),
+    };
+  });
 }
 
 /**
  * Every screen the site can show, computed from data/ so new sections are covered without editing
- * tests: home and each section tab (or the section).
- * @returns {string[]} hashes such as '#/countries/eu-1'
+ * tests: home and each section page.
+ * @returns {string[]} hashes such as '#/countries'
  */
 export function routes() {
   return ['#/', ...sectionRoutes().map((route) => route.hash)];
@@ -68,22 +64,21 @@ export async function open(page, hash) {
 }
 
 /**
- * One screen: no vertical or horizontal overflow on the document or the content container, and no
- * view cell marked `[data-fit]` whose content spills out of it (1 px tolerance for rounding).
+ * No horizontal overflow (CONSTRAINTS): the document does not scroll sideways, and no scroll container
+ * inside the content hides a sideways overflow (1 px tolerance for rounding). Vertical scroll is fine.
  * @param {import('@playwright/test').Page} page
  */
-export async function expectOneScreen(page) {
+export async function expectNoHorizontalOverflow(page) {
   const overflow = await page.evaluate(() => {
-    const measure = (el) => ({
-      x: el.scrollWidth - el.clientWidth,
-      y: el.scrollHeight - el.clientHeight,
-    });
-    const spilling = [...document.querySelectorAll('#content [data-fit]')]
-      .filter((el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1)
-      .map((el) => el.textContent.trim());
-    return { document: measure(document.documentElement), content: measure(document.getElementById('content')), spilling };
+    const root = document.documentElement;
+    const inner = [...document.querySelectorAll('#content *')]
+      // Visually hidden text (1 px, clipped) is meant to overflow its box.
+      .filter((el) => el.clientWidth > 1 && ['auto', 'scroll', 'hidden'].includes(getComputedStyle(el).overflowX))
+      .filter((el) => el.scrollWidth > el.clientWidth + 1)
+      .map((el) => el.className || el.tagName);
+    return { document: root.scrollWidth - root.clientWidth, inner };
   });
-  expect(overflow).toEqual({ document: { x: 0, y: 0 }, content: { x: 0, y: 0 }, spilling: [] });
+  expect(overflow).toEqual({ document: 0, inner: [] });
 }
 
 /**

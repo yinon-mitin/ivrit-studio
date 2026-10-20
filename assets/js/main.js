@@ -1,39 +1,27 @@
 // Entry point: settings, hash router and screen assembly.
 import { loadIndex, loadSection } from './loader.js';
-import { resolveTab, itemsForTab, viewOf } from './core/content.js';
+import { groupAnchor } from './core/content.js';
 import { t, localized } from './core/i18n.js';
 import { renderHome } from './ui/home.js';
-import { renderTabs } from './ui/tabs.js';
+import { renderSection } from './ui/section.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, bindMenuDismiss } from './ui/settings.js';
 import { el } from './views/dom.js';
-import { renderCardGrid } from './views/card-grid.js';
-import { renderTable } from './views/table.js';
-import { renderLetterGrid } from './views/letter-grid.js';
-import { renderLetterRows } from './views/letter-rows.js';
 
 const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
 const content = document.getElementById('content');
 const controls = document.getElementById('controls');
 
-/** Cheatsheet renderers by view name (SPEC: section/tab `view`). */
-const VIEWS = {
-  'letter-grid': renderLetterGrid,
-  'letter-rows': renderLetterRows,
-  'card-grid': renderCardGrid,
-  table: renderTable,
-};
-
 let settings = loadSettings();
 
 /**
- * `#/` home, `#/<section>/<tab?>`. Anything else (an unknown section) shows home.
+ * `#/` home, `#/<section>/<group?>`. Anything else (an unknown section) shows home.
  * @param {string} hash
  */
 function parseHash(hash) {
   const [first, second] = hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
   if (first === undefined) return { name: 'home' };
-  return { name: 'section', section: first, tab: second };
+  return { name: 'section', section: first, group: second };
 }
 
 const screens = {
@@ -47,23 +35,14 @@ const screens = {
     const index = await loadIndex();
     if (!index.sections.includes(route.section)) return screens.home(route, current);
     const section = await loadSection(route.section);
-    const tab = resolveTab(section, route.tab);
-    const title = localized(section.title, lang);
-    const screen = el('section', 'screen');
+    const screen = el('div', 'screen');
     screen.dataset.screen = 'section';
-    const head = el('div', 'screen-head');
-    const bar = el('div', 'screen-bar');
     const home = el('a', 'back', '‹');
     home.href = '#/';
     home.dataset.action = 'home';
     home.setAttribute('aria-label', t('home', lang));
-    bar.append(home, el('h2', 'screen-title', title));
-    head.append(bar);
-    if (tab !== null) head.append(renderTabs(section, tab, lang));
-    // Sections with nikudToggle false (the alphabet) always keep their nikud.
-    const options = { nikud: current.nikud || section.nikudToggle === false, showRu: current.showRu };
-    screen.append(head, VIEWS[viewOf(section, tab)](itemsForTab(section, tab), options));
-    document.title = `${title} — ${APP_NAME}`;
+    screen.append(home, renderSection(section, { nikud: current.nikud, showRu: current.showRu, lang }));
+    document.title = `${localized(section.title, lang)} — ${APP_NAME}`;
     return screen;
   },
 };
@@ -80,14 +59,22 @@ function updateSettings(change) {
   });
 }
 
-/** @param {boolean} [menuOpen] keep the settings menu open across the re-render */
-async function render(menuOpen = false) {
+/**
+ * @param {boolean} [menuOpen] keep the settings menu open across the re-render
+ * @param {boolean} [navigated] a new route: scroll to its group, or to the top; a settings change keeps the place
+ */
+async function render(menuOpen = false, navigated = false) {
   app.dataset.ready = 'false';
   controls.replaceChildren(renderSettings(settings, updateSettings, menuOpen));
   const route = parseHash(location.hash);
   const screen = screens[route.name] ?? screens.home;
   try {
     content.replaceChildren(await screen(route, settings));
+    if (navigated) {
+      const target = route.group ? document.getElementById(groupAnchor(route.section, route.group)) : null;
+      if (target) target.scrollIntoView();
+      else window.scrollTo(0, 0);
+    }
   } catch (error) {
     const message = el('p', '', t('loadError', settings.uiLang, { detail: error.message }));
     message.setAttribute('role', 'alert');
@@ -98,5 +85,5 @@ async function render(menuOpen = false) {
 
 applySettings(settings);
 bindMenuDismiss(controls);
-window.addEventListener('hashchange', () => render());
-render();
+window.addEventListener('hashchange', () => render(false, true));
+render(false, true);

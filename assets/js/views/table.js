@@ -11,8 +11,6 @@ import { el, hebrew } from './dom.js';
 export function renderTable(items, { nikud, showRu }) {
   const wrap = el('div', 'table-wrap');
   wrap.dataset.view = 'table';
-  // Rows share the height: font sizes derive from it (CSSOM, allowed by the CSP unlike style="").
-  wrap.style.setProperty('--rows', String(Math.max(items.length, 1)));
   const table = el('table', 'entry-table');
   table.dir = 'rtl';
   const body = el('tbody', '');

@@ -1,70 +1,58 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveTab, itemsForTab, viewOf } from '../../assets/js/core/content.js';
+import { sectionGroups, groupAnchor } from '../../assets/js/core/content.js';
 
-const tabbed = {
+const grouped = {
   id: 'alphabet',
   view: 'letter-grid',
-  tabs: [{ id: 'letters' }, { id: 'rows', view: 'letter-rows' }],
-  items: [{ id: 'alphabet.alef', tab: 'letters' }, { id: 'alphabet.vet', tab: 'rows' }, { id: 'alphabet.bet', tab: 'letters' }],
+  groups: [{ id: 'letters', title: { en: 'Letters' } }, { id: 'rows', view: 'letter-rows' }],
+  items: [{ id: 'alphabet.alef', group: 'letters' }, { id: 'alphabet.vet', group: 'rows' }, { id: 'alphabet.bet', group: 'letters' }],
 };
-const untabbed = { id: 'geresh', view: 'table', items: [{ id: 'geresh.jeans' }, { id: 'geresh.chile' }] };
+const ungrouped = { id: 'geresh', view: 'table', items: [{ id: 'geresh.jeans' }, { id: 'geresh.chile' }] };
+const ids = (group) => group.items.map((item) => item.id);
 
-describe('resolveTab', () => {
-  it('returns the tab with the given id', () => {
-    assert.equal(resolveTab(tabbed, 'rows').id, 'rows');
+describe('sectionGroups', () => {
+  it('returns one untitled group with every entry for a section without groups', () => {
+    const groups = sectionGroups(ungrouped);
+    assert.equal(groups.length, 1);
+    assert.equal(groups[0].id, null);
+    assert.equal(groups[0].view, 'table');
+    assert.deepEqual(ids(groups[0]), ['geresh.jeans', 'geresh.chile']);
   });
 
-  it('defaults to the first tab when no id is given', () => {
-    assert.equal(resolveTab(tabbed, undefined).id, 'letters');
+  it('returns the groups in data order, each with its title and its entries in data order', () => {
+    const groups = sectionGroups(grouped);
+    assert.deepEqual(groups.map((g) => g.id), ['letters', 'rows']);
+    assert.deepEqual(groups[0].title, { en: 'Letters' });
+    assert.deepEqual(ids(groups[0]), ['alphabet.alef', 'alphabet.bet']);
   });
 
-  it('falls back to the first tab for an unknown id', () => {
-    assert.equal(resolveTab(tabbed, 'nope').id, 'letters');
+  it('uses the group view over the section view', () => {
+    assert.deepEqual(sectionGroups(grouped).map((g) => g.view), ['letter-grid', 'letter-rows']);
   });
 
-  it('is null for a section without tabs', () => {
-    assert.equal(resolveTab(untabbed, 'anything'), null);
-  });
-});
-
-describe('itemsForTab', () => {
-  it('returns the entries of the tab in data order', () => {
-    assert.deepEqual(itemsForTab(tabbed, tabbed.tabs[0]).map((i) => i.id), ['alphabet.alef', 'alphabet.bet']);
+  it('returns only its own entries for a letter-rows group that has some', () => {
+    assert.deepEqual(ids(sectionGroups(grouped)[1]), ['alphabet.vet']);
   });
 
-  it('returns every entry for a section without tabs', () => {
-    assert.deepEqual(itemsForTab(untabbed, null).map((i) => i.id), ['geresh.jeans', 'geresh.chile']);
+  it('gives a letter-rows group without entries of its own every entry of the section', () => {
+    const section = { ...grouped, groups: [...grouped.groups, { id: 'print-cursive', view: 'letter-rows' }] };
+    assert.deepEqual(ids(sectionGroups(section)[2]), ['alphabet.alef', 'alphabet.vet', 'alphabet.bet']);
   });
 
-  it('returns every entry of the section for a letter-rows tab without entries of its own', () => {
-    const section = { ...tabbed, tabs: [...tabbed.tabs, { id: 'print-cursive', view: 'letter-rows' }] };
-    const ids = itemsForTab(section, section.tabs[2]).map((i) => i.id);
-    assert.deepEqual(ids, ['alphabet.alef', 'alphabet.vet', 'alphabet.bet']);
+  it('treats a group that inherits letter-rows from its section the same way', () => {
+    const section = { ...ungrouped, view: 'letter-rows', groups: [{ id: 'all' }] };
+    assert.deepEqual(ids(sectionGroups(section)[0]), ['geresh.jeans', 'geresh.chile']);
   });
 
-  it('treats a tab that inherits letter-rows from its section the same way', () => {
-    const section = { ...untabbed, view: 'letter-rows', tabs: [{ id: 'all' }] };
-    assert.deepEqual(itemsForTab(section, section.tabs[0]).map((i) => i.id), ['geresh.jeans', 'geresh.chile']);
-  });
-
-  it('returns only its own entries for a letter-rows tab that has some', () => {
-    assert.deepEqual(itemsForTab(tabbed, tabbed.tabs[1]).map((i) => i.id), ['alphabet.vet']);
-  });
-
-  it('returns nothing for an empty tab of another view', () => {
-    const section = { ...tabbed, tabs: [...tabbed.tabs, { id: 'empty' }] };
-    assert.deepEqual(itemsForTab(section, section.tabs[2]), []);
+  it('returns no entries for an empty group of another view', () => {
+    const section = { ...grouped, groups: [...grouped.groups, { id: 'empty' }] };
+    assert.deepEqual(sectionGroups(section)[2].items, []);
   });
 });
 
-describe('viewOf', () => {
-  it('uses the tab view when the tab has one', () => {
-    assert.equal(viewOf(tabbed, tabbed.tabs[1]), 'letter-rows');
-  });
-
-  it('uses the section view otherwise', () => {
-    assert.equal(viewOf(tabbed, tabbed.tabs[0]), 'letter-grid');
-    assert.equal(viewOf(untabbed, null), 'table');
+describe('groupAnchor', () => {
+  it('is <section>-<group>, the id of the group on the page', () => {
+    assert.equal(groupAnchor('countries', 'eu-1'), 'countries-eu-1');
   });
 });

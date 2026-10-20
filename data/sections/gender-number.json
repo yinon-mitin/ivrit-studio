@@ -4,5 +4,20 @@
   "icon": "זֹאת",
   "view": "card-grid",
   "nikudToggle": true,
-  "items": []
+  "items": [
+    {"id": "gender-number.ze", "he": "זֶה", "translit": "Ze", "en": "this (m.)", "ru": "это (м.)", "verified": false},
+    {"id": "gender-number.zot", "he": "זֹאת", "translit": "Zot", "en": "this (f.)", "ru": "это (ж.)", "verified": false},
+    {"id": "gender-number.ele", "he": "אֵלֶּה", "translit": "Ele", "en": "these", "ru": "эти", "verified": false},
+    {"id": "gender-number.talmid", "he": "תַּלְמִיד", "translit": "Talmid", "en": "student", "ru": "ученик", "forms": {"ms": "תַּלְמִיד", "fs": "תַּלְמִידָה", "mp": "תַּלְמִידִים", "fp": "תַּלְמִידוֹת"}, "related": [{"he": "תַּלְמִידָה", "translit": "Talmida", "en": "student (f.)", "ru": "ученица"}, {"he": "תַּלְמִידִים", "translit": "Talmidim", "en": "students (m.)", "ru": "ученики"}, {"he": "תַּלְמִידוֹת", "translit": "Talmidot", "en": "students (f.)", "ru": "ученицы"}], "verified": false},
+    {"id": "gender-number.medaber", "he": "מְדַבֵּר", "translit": "Medaber", "en": "speaks (m.)", "ru": "говорит (м.)", "forms": {"ms": "מְדַבֵּר", "fs": "מְדַבֶּרֶת", "mp": "מְדַבְּרִים", "fp": "מְדַבְּרוֹת"}, "related": [{"he": "מְדַבֶּרֶת", "translit": "Medaberet", "en": "speaks (f.)", "ru": "говорит (ж.)"}, {"he": "מְדַבְּרִים", "translit": "Medabrim", "en": "speak (m. pl.)", "ru": "говорят (м.)"}, {"he": "מְדַבְּרוֹת", "translit": "Medabrot", "en": "speak (f. pl.)", "ru": "говорят (ж.)"}], "verified": false},
+    {"id": "gender-number.gar", "he": "גָּר", "translit": "Gar", "en": "lives (m.)", "ru": "живёт (м.)", "forms": {"ms": "גָּר", "fs": "גָּרָה", "mp": "גָּרִים", "fp": "גָּרוֹת"}, "related": [{"he": "גָּרָה", "translit": "Gara", "en": "lives (f.)", "ru": "живёт (ж.)"}, {"he": "גָּרִים", "translit": "Garim", "en": "live (m. pl.)", "ru": "живут (м.)"}, {"he": "גָּרוֹת", "translit": "Garot", "en": "live (f. pl.)", "ru": "живут (ж.)"}], "verified": false},
+    {"id": "gender-number.oved", "he": "עוֹבֵד", "translit": "Oved", "en": "works (m.)", "ru": "работает (м.)", "forms": {"ms": "עוֹבֵד", "fs": "עוֹבֶדֶת", "mp": "עוֹבְדִים", "fp": "עוֹבְדוֹת"}, "related": [{"he": "עוֹבֶדֶת", "translit": "Ovedet", "en": "works (f.)", "ru": "работает (ж.)"}, {"he": "עוֹבְדִים", "translit": "Ovdim", "en": "work (m. pl.)", "ru": "работают (м.)"}, {"he": "עוֹבְדוֹת", "translit": "Ovdot", "en": "work (f. pl.)", "ru": "работают (ж.)"}], "verified": false},
+    {"id": "gender-number.zakhar", "he": "זָכָר", "translit": "Zakhar", "en": "masculine", "ru": "мужской род", "verified": false},
+    {"id": "gender-number.nekeva", "he": "נְקֵבָה", "translit": "Nekeva", "en": "feminine", "ru": "женский род", "verified": false},
+    {"id": "gender-number.yakhid", "he": "יָחִיד", "translit": "Yakhid", "en": "singular", "ru": "единственное число", "verified": false},
+    {"id": "gender-number.rabim", "he": "רַבִּים", "translit": "Rabim", "en": "plural", "ru": "множественное число", "verified": false},
+    {"id": "gender-number.anakhnu", "he": "אֲנַחְנוּ", "translit": "Anakhnu", "en": "we", "ru": "мы", "verified": false},
+    {"id": "gender-number.atem", "he": "אַתֶּם", "translit": "Atem", "en": "you (m. pl.)", "ru": "вы (м.)", "related": [{"he": "אַתֶּן", "translit": "Aten", "en": "you (f. pl.)", "ru": "вы (ж.)"}], "verified": false},
+    {"id": "gender-number.hem", "he": "הֵם", "translit": "Hem", "en": "they (m.)", "ru": "они (м.)", "related": [{"he": "הֵן", "translit": "Hen", "en": "they (f.)", "ru": "они (ж.)"}], "verified": false}
+  ]
 }

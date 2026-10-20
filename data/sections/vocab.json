@@ -4,5 +4,19 @@
   "icon": "מִלָּה",
   "view": "card-grid",
   "nikudToggle": true,
-  "items": []
+  "items": [
+    {"id": "vocab.hine", "he": "הִנֵּה", "translit": "Hine", "en": "here it is", "ru": "вот", "verified": false},
+    {"id": "vocab.akhshav", "he": "עַכְשָׁו", "plain": "עכשיו", "translit": "Akhshav", "en": "now", "ru": "сейчас", "verified": false},
+    {"id": "vocab.rak", "he": "רַק", "translit": "Rak", "en": "only", "ru": "только", "verified": false},
+    {"id": "vocab.gam-ve-gam", "he": "גַּם וְגַם", "translit": "Gam ve-gam", "en": "both … and", "ru": "и … и", "verified": false},
+    {"id": "vocab.o", "he": "אוֹ", "translit": "O", "en": "or", "ru": "или", "verified": false},
+    {"id": "vocab.eretz", "he": "אֶרֶץ", "translit": "Eretz", "en": "country", "ru": "страна", "related": [{"he": "אֲרָצוֹת", "translit": "Aratzot", "en": "countries", "ru": "страны"}], "verified": false},
+    {"id": "vocab.safa", "he": "שָׂפָה", "translit": "Safa", "en": "language", "ru": "язык", "related": [{"he": "שָׂפוֹת", "translit": "Safot", "en": "languages", "ru": "языки"}], "verified": false},
+    {"id": "vocab.ben", "he": "בֵּן", "translit": "Ben", "en": "son", "ru": "сын", "verified": false},
+    {"id": "vocab.bat", "he": "בַּת", "translit": "Bat", "en": "daughter", "ru": "дочь", "verified": false},
+    {"id": "vocab.aba", "he": "אַבָּא", "translit": "Aba", "en": "dad", "ru": "папа", "verified": false},
+    {"id": "vocab.isha", "he": "אִשָּׁה", "plain": "אישה", "translit": "Isha", "en": "woman", "ru": "женщина", "related": [{"he": "נָשִׁים", "translit": "Nashim", "en": "women", "ru": "женщины"}], "verified": false},
+    {"id": "vocab.limon", "he": "לִימוֹן", "translit": "Limon", "en": "lemon", "ru": "лимон", "related": [{"he": "לִימוֹנִים", "translit": "Limonim", "en": "lemons", "ru": "лимоны"}], "verified": false},
+    {"id": "vocab.khala", "he": "חַלָּה", "translit": "Khala", "en": "challah", "ru": "хала", "related": [{"he": "חַלּוֹת", "translit": "Khalot", "en": "challahs", "ru": "халы"}], "verified": false}
+  ]
 }

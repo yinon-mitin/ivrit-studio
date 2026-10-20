@@ -72,3 +72,13 @@ test('there is no page bar on the contents', async ({ page }) => {
   await open(page, '#/');
   await expect(bar(page).locator('*')).toHaveCount(0);
 });
+
+test('opening a section link shows its whole title below the header and the bar', async ({ page }) => {
+  const section = part.sections.at(-1);
+  await open(page, `#/${part.id}/${section.id}`);
+  const [titleTop, barBottom] = await page.evaluate((id) => [
+    document.querySelector(`#${id} .section-title`).getBoundingClientRect().top,
+    document.getElementById('page-bar').getBoundingClientRect().bottom,
+  ], section.id);
+  expect(titleTop).toBeGreaterThanOrEqual(barBottom);
+});

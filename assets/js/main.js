@@ -120,6 +120,8 @@ async function render(navigated = false) {
     search.setStatus('');
     content.replaceChildren(screen);
     if (navigated) {
+      // The bar was just filled or emptied: anchors must clear its new height before scrolling.
+      syncStickyHeights();
       // The group, else the section, else the top of the page.
       const target = (route.group && document.getElementById(groupAnchor(route.section, route.group)))
         || (route.section && document.getElementById(route.section));
@@ -185,11 +187,12 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 window.addEventListener('resize', measureAnchors);
 // The sticky header and bar change height (search row, wrapping); anchors clear them via these.
-const stickyHeights = new ResizeObserver(() => {
+function syncStickyHeights() {
   const root = document.documentElement;
   root.style.setProperty('--header-h', `${header.offsetHeight}px`);
   root.style.setProperty('--bar-h', `${pageBar.offsetHeight}px`);
-});
+}
+const stickyHeights = new ResizeObserver(syncStickyHeights);
 stickyHeights.observe(header);
 stickyHeights.observe(pageBar);
 

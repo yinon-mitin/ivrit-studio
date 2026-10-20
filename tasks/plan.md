@@ -67,7 +67,7 @@ SPEC.md + CONSTRAINTS.md (new contract, exception E1)
 
 ### Phase 2: Structure and design
 - [x] Task 5: Thematic parts: index.json, validator, router, contents page
-- [ ] Task 6: Variant A design tokens and the new shell (header, part navigation)
+- [x] Task 6: Variant A design tokens and the new shell (header, part navigation)
 - [ ] Task 7: Settings: one EN/RU switch, nikud, theme
 - [ ] Task 8: Reading views: letters, print over cursive, nikud and geresh tables
 - [ ] Task 9: Dictionary views: phrases, words, countries, gender & number

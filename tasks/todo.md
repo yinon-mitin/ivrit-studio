@@ -104,13 +104,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Rebuild `app.css` around tokens: `--paper`, `--ink`, `--ink-soft`, `--rule`, `--accent`, spacing and type scales, light + dark (system and `data-theme`). Hairline rules instead of bordered cards. Latin headings in the system serif stack. Hebrew sizes bigger. Shell: sticky slim header with wordmark, part navigation (links on laptop, horizontal scroll chips on phone, `aria-current`), and a controls slot. The contents page gets the typographic treatment: part titles as large serif headings, sections as a ruled list with their cursive icon.
 
 **Acceptance criteria:**
-- [ ] All colors come from tokens. Contrast ≥ 4.5:1 for text, ≥ 3:1 for rules/controls, recorded in a comment beside the tokens.
-- [ ] Header stays ≤ 56 px tall on phone. Part navigation reachable without opening a menu.
-- [ ] axe 0 serious/critical in both themes on contents and every part
+- [x] All colors come from tokens. Contrast ≥ 4.5:1 for text, ≥ 3:1 for rules/controls, recorded in a comment beside the tokens.
+- [x] Header stays ≤ 56 px tall on phone. Part navigation reachable without opening a menu. (Changed: brand, four parts and the controls do not fit one 390 px row, so the phone header has two sticky rows, ≤ 96 px; laptop one row ≤ 64 px. SPEC updated.)
+- [x] axe 0 serious/critical in both themes on contents and every part
 
 **Verification:**
-- [ ] `npm run check:task` green
-- [ ] Screenshots (phone/laptop × light/dark) of contents and one part attached to the task notes
+- [x] `npm run check:task` green
+- [x] Screenshots (phone/laptop × light/dark) of contents and one part attached to the task notes
 
 **Dependencies:** Task 5
 **Files:** `assets/css/app.css`, `index.html`, `assets/js/ui/contents.js`, `assets/js/ui/nav.js` (new), `assets/js/main.js`

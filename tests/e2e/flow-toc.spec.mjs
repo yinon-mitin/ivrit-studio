@@ -19,7 +19,8 @@ test.describe('at 1440 px', () => {
     await page.locator(`#${part.sections[middle].id}`).evaluate((node) => node.scrollIntoView());
     await expect.poll(() => states(page)).toEqual(part.sections.map((_, i) => (i < middle ? 'past' : i === middle ? 'current' : 'upcoming')));
     await expect(items(page).nth(middle)).toHaveAttribute('aria-current', 'location');
-    // No two titles overlap; past above current above coming.
+    // No two titles overlap; past above current above coming. Measured once they have finished flowing.
+    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished)));
     const boxes = await items(page).evaluateAll((nodes) => nodes.map((n) => n.getBoundingClientRect()).map((r) => [r.top, r.bottom]));
     for (let i = 1; i < boxes.length; i += 1) expect(boxes[i][0]).toBeGreaterThanOrEqual(boxes[i - 1][1] - 0.5);
   });

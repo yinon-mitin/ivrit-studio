@@ -14,11 +14,12 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Description:** The owner's "she writes, they read, he reads". A section of ~12 common verbs, each with `forms` (ms/fs/mp/fp), so the page shows the four-cell table under the verb; plus the personal pronouns the other sections lack and a few whole sentences.
 **Groups:** `pronouns` (I m./f., you m./f., he, she, they m./f.; `we`, `you pl.`, `they m.` already exist in `gender-number`, so only the missing ones plus a note pointing there), `present` (write, read, eat, go, say/tell, want, love/like, know, understand, sit, sleep, drink; `lomed`, `gar`, `oved`, `medaber` stay in `gender-number` and are linked by a note), `sentences` (she writes, they read (m.) / (f.), he reads, I eat (m./f.), we go).
 **Acceptance criteria:**
-- [ ] Each verb in `present` has all four `forms`; the `forms` table renders (existing list-features spec) and `related` does not repeat the forms.
-- [ ] `sentences` shows pronoun + verb in the right gender and number for the three examples the owner named.
-- [ ] A note on one verb says that in the present tense Hebrew has no "I/you/he" in the verb itself: the pronoun is needed.
+- [x] Each verb in `present` has all four `forms`; the `forms` table renders (existing list-features spec) and `related` does not repeat the forms.
+- [x] `sentences` shows pronoun + verb in the right gender and number for the three examples the owner named.
+- [x] A note on one verb says that in the present tense Hebrew has no "I/you/he" in the verb itself: the pronoun is needed.
 **Verification:** [ ] `check:task` green [ ] screenshot of the page on phone: the forms table does not overflow at 360 px.
 **Dependencies:** None. **Files:** `data/sections/verbs.json`, `data/index.json`. **Scope:** Medium (content-heavy, no code).
+**Outcome:** 27 entries (7 pronouns, 12 verbs with forms, 8 sentences), title shortened to "Verbs" so the page bar does not truncate it. Check green except the floor step (exception E2); all entries `verified: false`.
 
 ### Task 22: Possession and "the" (`possession`)
 **Description:** "Whose is it?" `של`; `של אני → שלי`; `הספר` = "the book".

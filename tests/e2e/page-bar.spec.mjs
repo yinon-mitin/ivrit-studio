@@ -4,9 +4,9 @@
 import { test, expect } from '@playwright/test';
 import { open, readParts, expectNoSeriousAxe, expectNoHorizontalOverflow } from './helpers.mjs';
 
-// A part with several sections, one of them with titled groups (Vocabulary: words, countries).
-const part = readParts().find((p) => p.sections.length > 1 && p.sections.some((s) => (s.groups ?? []).length > 1));
-const grouped = part.sections.find((s) => (s.groups ?? []).length > 1);
+// A part with several sections, one of them with at least three titled groups (Vocabulary: words, countries).
+const part = readParts().find((p) => p.sections.length > 1 && p.sections.some((s) => (s.groups ?? []).length > 2));
+const grouped = part.sections.find((s) => (s.groups ?? []).length > 2);
 const group = grouped.groups[2];
 const bar = (page) => page.locator('#page-bar');
 const ready = (page) => page.locator('#app[data-ready="true"]').waitFor();

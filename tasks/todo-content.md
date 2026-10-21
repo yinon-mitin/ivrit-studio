@@ -147,5 +147,5 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Acceptance criteria:**
 - [x] SPEC: the structure/capability lines name the new parts and sections; README lists them if it lists sections. No other doc change.
 - [x] `npm run check:full` green; fresh-context reviewer pass on all new `data/` for translit rules, nikud and gender marks reported to the owner (not a substitute for `verified`).
-- [ ] After the owner's go, push; CI green; the live `data/index.json` lists the new part and sections.
+- [x] After the owner's go, push; CI green; the live `data/index.json` lists the new part and sections.
 **Dependencies:** all above. **Scope:** Small.

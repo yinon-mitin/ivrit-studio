@@ -104,7 +104,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [ ] Owner skims Around us and Family
 
 ### Phase 11: Release
-- [ ] Task 35: README/SPEC lines, full check, push, live check
+- [x] Task 35: README/SPEC lines, full check, push, live check
 
 ## Risks and Mitigations
 | Risk | Impact | Mitigation |

@@ -1,6 +1,6 @@
 # Ivrit Studio
 
-A Hebrew cheatsheet for Alef-level ulpan students, set like a small reference book: print and cursive letters, nikud, geresh, phrases, words, countries and languages, gender and number. Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
+A Hebrew cheatsheet for Alef-level ulpan students, set like a small reference book: print and cursive letters, nikud, geresh, phrases (small talk, the market, a courier, neighbours), words (family, numbers, time, colours, countries), things around us (objects, animals, the home and the safe room, the kitchen, fruit and vegetables) and grammar (gender and number, present-tense verbs, possession, prepositions, infinitives). Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
 
 - What to build: [`SPEC.md`](SPEC.md)
 - Quality bar: [`CONSTRAINTS.md`](CONSTRAINTS.md)
@@ -22,7 +22,7 @@ node scripts/make-icons.mjs   # redraw the app icons (letter א in Heebo); the P
 
 ## Using the site
 
-- **Contents** (`#/`) lists the four parts (Reading, Phrases, Vocabulary, Grammar) and their sections. Each part is one scrolling page. The header always shows the parts.
+- **Contents** (`#/`) lists the five parts (Reading, Phrases, Vocabulary, Around us, Grammar) and their sections. Each part is one scrolling page. The header always shows the parts.
 - **Search** (the magnifier on a phone, the field on a laptop, or press `/`) finds an entry by Hebrew with or without nikud, by reading, or by its English or Russian meaning. Press Escape to clear it.
 - **Nikud** in the header turns the vowel points off, to test your reading. The alphabet keeps its dagesh and shin/sin dots.
 - **EN / RU** switches the interface and the translations. English is the default.

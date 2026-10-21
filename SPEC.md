@@ -5,7 +5,7 @@
 ## Objective
 Статический сайт-шпаргалка по ивриту для учеников ульпана уровня Алеф (автор + одногруппники) с современным типографским дизайном («типографский справочник»: тёплая бумага, крупный иврит, тонкие линейки вместо карточек). Цель автора: **читать печатный и прописной иврит с огласовками без запинок**, держа под рукой аккуратную справку.
 
-Материал разбит на **части** (Чтение, Фразы, Лексика, Грамматика). Часть — одна прокручиваемая страница; на ней разделы идут заголовками, группы раздела — подзаголовками.
+Материал разбит на **части** (Чтение, Фразы, Лексика, Вокруг нас, Грамматика). Часть — одна прокручиваемая страница; на ней разделы идут заголовками, группы раздела — подзаголовками.
 
 Сквозные функции: светлая/тёмная тема (по системе + переключатель), огласовки вкл/выкл, один переключатель языка **EN/RU** (английский по умолчанию; меняет и интерфейс, и показанный перевод), поиск по всем разделам, режим «скрыть перевод» для самопроверки, версия для печати (A4).
 
@@ -86,7 +86,7 @@ assets/
   fonts/                   → heebo.woff2, gveret-levin.woff2, OFL-*.txt
 data/
   index.json               → части и порядок разделов в них
-  sections/<id>.json       → alphabet, nikud, countries, geresh, vocab, greetings, gender-number
+  sections/<id>.json       → alphabet, nikud, geresh · greetings, acquaintance, market, courier, neighbours · vocab, family, numbers, time, colors, countries · things, animals, home, kitchen, produce · gender-number, verbs, possession, places, infinitives
 scripts/validate.mjs, scripts/subset-fonts.sh, scripts/make-icons.mjs, scripts/floor-guard.mjs, scripts/diff-coverage.mjs
 tests/unit/*.test.mjs      → node:test для core/ + data.test.mjs (валидатор по data/)
 tests/e2e/*.spec.mjs       → Playwright (переполнение по ширине, axe, вес, внешние запросы, сценарии)
@@ -140,7 +140,8 @@ SPEC.md  CONSTRAINTS.md  CLAUDE.md  README.md  LICENSE  package.json  playwright
     { "id": "reading", "title": { "en": "Reading", "ru": "Чтение" }, "sections": ["alphabet", "nikud", "geresh"] },
     { "id": "phrases", "title": { "en": "Phrases", "ru": "Фразы" }, "sections": ["greetings"] },
     { "id": "words", "title": { "en": "Vocabulary", "ru": "Лексика" }, "sections": ["vocab", "countries"] },
-    { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["gender-number"] }
+    { "id": "around", "title": { "en": "Around us", "ru": "Вокруг нас" }, "sections": ["things", "animals"] },
+    { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["gender-number", "verbs"] }
   ]
 }
 ```

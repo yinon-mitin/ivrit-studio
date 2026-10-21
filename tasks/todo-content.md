@@ -122,6 +122,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 
 ### Task 32: Kitchen (`kitchen`)
 **Groups:** `dishes` (plate, cup, glass, bowl, pot, pan), `cutlery` (knife, fork, spoon, teaspoon), `appliances` (fridge, freezer, oven, stove, microwave, kettle), `other` (sink, tap, cutting board, tablecloth). ~25 entries. **Acceptance criteria:** [ ] Nothing repeats `home`. **Verification:** [ ] `check:task` green. **Dependencies:** T29. **Files:** `data/sections/kitchen.json`, `data/index.json`. **Scope:** Small–Medium.
+**Outcome:** 31 entries in 4 groups; nothing repeats the home section (table and chair live there).
+
 
 ### Task 33: Fruit and vegetables (`produce`)
 **Groups:** `fruit`, `vegetables` (~40 entries, emoji where a clear one exists). **Acceptance criteria:** [ ] `limon` (already in `vocab`) is not duplicated, only referenced by note. [ ] Where a plural is the usual form in a shop (`עגבניות`), the entry's `he` is the singular and the plural is `related`. **Verification:** [ ] `check:task` green; **duration noted**. **Dependencies:** T29. **Files:** `data/sections/produce.json`, `data/index.json`. **Scope:** Medium.

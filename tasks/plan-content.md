@@ -95,7 +95,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [x] Task 29: New part "Around us" with Objects (`things`)
 - [x] Task 30: Animals (`animals`)
 - [x] Task 31: The home: rooms, things, MAMAD (`home`)
-- [ ] Task 32: Kitchen (`kitchen`)
+- [x] Task 32: Kitchen (`kitchen`)
 - [ ] Task 33: Fruit and vegetables (`produce`)
 - [ ] Task 34: Partners and relatives in Family (`family`, extended)
 

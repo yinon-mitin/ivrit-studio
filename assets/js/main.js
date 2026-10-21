@@ -108,6 +108,8 @@ function updateSettings(change) {
  */
 async function render(navigated = false) {
   const run = ++renders;
+  /** Where a navigation scrolled to, to scroll there again once the ruler and titles have taken their room. */
+  let landed = null;
   app.dataset.ready = 'false';
   controls.replaceChildren(renderSettings(settings, updateSettings));
   brandMark.textContent = displayHe({ he: BRAND_HE }, settings.nikud);
@@ -140,8 +142,10 @@ async function render(navigated = false) {
       // The group, else the section, else the top of the page.
       const target = (route.group && document.getElementById(groupAnchor(route.section, route.group)))
         || (route.section && document.getElementById(route.section));
-      if (target) target.scrollIntoView();
-      else window.scrollTo(0, 0);
+      if (target) {
+        target.scrollIntoView();
+        landed = target;
+      } else window.scrollTo(0, 0);
     }
   } catch (error) {
     const message = el('p', '', t('loadError', settings.lang, { detail: error.message }));
@@ -151,6 +155,9 @@ async function render(navigated = false) {
     // A newer render that started meanwhile marks the page ready itself.
     if (run === renders) {
       measureAnchors();
+      // The ruler and the flowing titles narrow the content and make the page taller; the place that was
+      // scrolled to has moved with it.
+      if (landed) landed.scrollIntoView();
       app.dataset.ready = 'true';
       if ('nikudChanged' in document.documentElement.dataset) {
         clearTimeout(nikudFade);

@@ -87,6 +87,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Groups:** `greet` (neighbour m./f. use `family.shakhen`, the greeting for the stairwell), `asks` (noise, parking, rubbish, a package left with you, can I borrow, building committee), `thanks` (thanks, sorry, no problem).
 **Acceptance criteria:** [ ] Polite requests use the form a neighbour actually says (`אפשר …?`, `סליחה, …`). [ ] Does not duplicate T27.
 **Verification:** [ ] `check:task` green; **duration noted**. **Dependencies:** None. **Files:** `data/sections/neighbours.json`, `data/index.json`. **Scope:** Small–Medium.
+**Outcome:** 21 entries in 3 groups. Fixed a real bug found by the group-link e2e: on a long laptop page the target group moved off screen after the ruler took its room; render() now scrolls to it again.
+
 
 ### Checkpoint I: Phrases
 - [ ] `check:task` green and its duration noted (≤ 90 s, else stop and ask)

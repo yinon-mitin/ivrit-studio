@@ -1,0 +1,35 @@
+{
+  "id": "neighbours",
+  "title": {"en": "With neighbours", "ru": "С соседями"},
+  "icon": "שָׁכֵן",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "greet", "title": {"en": "Greetings", "ru": "Приветствия"}},
+    {"id": "asks", "title": {"en": "Asking", "ru": "Просьбы"}},
+    {"id": "thanks", "title": {"en": "Thanks and sorry", "ru": "Спасибо и извините"}}
+  ],
+  "items": [
+    {"id": "neighbours.boker-tov", "he": "בֹּקֶר טוֹב", "plain": "בוקר טוב", "translit": "Boker tov", "en": "Good morning.", "ru": "Доброе утро.", "group": "greet", "verified": false},
+    {"id": "neighbours.erev-tov", "he": "עֶרֶב טוֹב", "translit": "Erev tov", "en": "Good evening.", "ru": "Добрый вечер.", "group": "greet", "verified": false},
+    {"id": "neighbours.laila-tov", "he": "לַיְלָה טוֹב", "plain": "לילה טוב", "translit": "Laila tov", "en": "Good night.", "ru": "Спокойной ночи.", "group": "greet", "verified": false},
+    {"id": "neighbours.shabbat-shalom", "he": "שַׁבָּת שָׁלוֹם", "translit": "Shabbat shalom", "en": "Have a peaceful Shabbat.", "ru": "Мирной субботы.", "group": "greet", "verified": false},
+    {"id": "neighbours.shkhena", "he": "שְׁכֵנָה", "translit": "Shkhena", "en": "neighbour (f.)", "ru": "соседка", "group": "greet", "note": {"en": "The man: shakhen (see Family & people).", "ru": "Сосед: shakhen (см. «Семья и люди»)."}, "verified": false},
+    {"id": "neighbours.kheder-madregot", "he": "חֶדֶר מַדְרֵגוֹת", "translit": "Kheder madregot", "en": "stairwell", "ru": "лестничная клетка", "group": "greet", "verified": false},
+    {"id": "neighbours.ani-mi-dira", "he": "אֲנִי מִדִּירָה שָׁלוֹשׁ", "translit": "Ani mi-dira shalosh", "en": "I'm from apartment three.", "ru": "Я из третьей квартиры.", "group": "greet", "verified": false},
+    {"id": "neighbours.efshar-lish-ol", "he": "אֶפְשָׁר לִשְׁאֹל מַשֶּׁהוּ?", "translit": "Efshar lish'ol mashehu?", "en": "Can I ask something?", "ru": "Можно кое-что спросить?", "group": "asks", "verified": false},
+    {"id": "neighbours.yesh-harbe-raash", "he": "יֵשׁ הַרְבֵּה רַעַשׁ", "plain": "יש הרבה רעש", "translit": "Yesh harbe ra'ash", "en": "There is a lot of noise.", "ru": "Очень шумно.", "group": "asks", "verified": false},
+    {"id": "neighbours.pakhot-raash", "he": "אֶפְשָׁר בְּבַקָּשָׁה פָּחוֹת רַעַשׁ?", "plain": "אפשר בבקשה פחות רעש?", "translit": "Efshar bevakasha pakhot ra'ash?", "en": "Could you make less noise, please?", "ru": "Можно потише, пожалуйста?", "group": "asks", "verified": false},
+    {"id": "neighbours.khanaya-sheli", "he": "זֹאת הַחַנְיָה שֶׁלִּי", "plain": "זאת החניה שלי", "translit": "Zot ha-khanaya sheli", "en": "This is my parking space.", "ru": "Это моё парковочное место.", "group": "asks", "verified": false},
+    {"id": "neighbours.pakh-ashpa", "he": "פַּח אַשְׁפָּה", "translit": "Pakh ashpa", "en": "rubbish bin", "ru": "мусорный бак", "group": "asks", "verified": false},
+    {"id": "neighbours.ha-maalit-lo-ovedet", "he": "הַמַּעֲלִית לֹא עוֹבֶדֶת", "plain": "המעלית לא עובדת", "translit": "Ha-ma'alit lo ovedet", "en": "The lift isn't working.", "ru": "Лифт не работает.", "group": "asks", "verified": false},
+    {"id": "neighbours.yesh-khavila", "he": "יֵשׁ חֲבִילָה בִּשְׁבִילִי?", "plain": "יש חבילה בשבילי?", "translit": "Yesh khavila bishvili?", "en": "Is there a package for me?", "ru": "Есть посылка для меня?", "group": "asks", "verified": false},
+    {"id": "neighbours.hash-ir-etzlekha", "he": "אֶפְשָׁר לְהַשְׁאִיר אֶצְלְךָ חֲבִילָה?", "plain": "אפשר להשאיר אצלך חבילה?", "translit": "Efshar lehash'ir etzlekha khavila?", "en": "Can I leave a package with you? (to m.)", "ru": "Можно оставить у тебя посылку? (мужчине)", "group": "asks", "verified": false},
+    {"id": "neighbours.hash-ir-etzlekh", "he": "אֶפְשָׁר לְהַשְׁאִיר אֶצְלֵךְ חֲבִילָה?", "plain": "אפשר להשאיר אצלך חבילה?", "translit": "Efshar lehash'ir etzlekh khavila?", "en": "Can I leave a package with you? (to f.)", "ru": "Можно оставить у тебя посылку? (женщине)", "group": "asks", "verified": false},
+    {"id": "neighbours.va-ad-ha-bayit", "he": "וַעַד הַבַּיִת", "plain": "ועד הבית", "translit": "Va'ad ha-bayit", "en": "building committee", "ru": "домовой комитет", "group": "asks", "verified": false},
+    {"id": "neighbours.slikha", "he": "סְלִיחָה", "plain": "סליחה", "translit": "Slikha", "en": "sorry, excuse me", "ru": "извините, простите", "group": "thanks", "verified": false},
+    {"id": "neighbours.toda", "he": "תּוֹדָה", "translit": "Toda", "en": "thanks", "ru": "спасибо", "group": "thanks", "verified": false},
+    {"id": "neighbours.bevakasha", "he": "בְּבַקָּשָׁה", "plain": "בבקשה", "translit": "Bevakasha", "en": "please, you're welcome", "ru": "пожалуйста", "group": "thanks", "verified": false},
+    {"id": "neighbours.ein-beaya", "he": "אֵין בְּעָיָה", "plain": "אין בעיה", "translit": "Ein be'aya", "en": "No problem.", "ru": "Нет проблем.", "group": "thanks", "verified": false}
+  ]
+}

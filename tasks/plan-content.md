@@ -85,7 +85,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [x] Task 25: Getting acquainted (`acquaintance`)
 - [x] Task 26: At the market (`market`)
 - [x] Task 27: With a courier (`courier`)
-- [ ] Task 28: With neighbours (`neighbours`)
+- [x] Task 28: With neighbours (`neighbours`)
 
 ### Checkpoint I: Phrases
 - [ ] `npm run check:task` green and its duration noted (≤ 90 s)

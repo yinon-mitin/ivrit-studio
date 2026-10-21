@@ -93,7 +93,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 
 ### Phase 10: Around us
 - [x] Task 29: New part "Around us" with Objects (`things`)
-- [ ] Task 30: Animals (`animals`)
+- [x] Task 30: Animals (`animals`)
 - [ ] Task 31: The home: rooms, things, MAMAD (`home`)
 - [ ] Task 32: Kitchen (`kitchen`)
 - [ ] Task 33: Fruit and vegetables (`produce`)

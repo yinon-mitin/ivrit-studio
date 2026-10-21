@@ -109,6 +109,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 ### Task 30: Animals (`animals`)
 **Groups:** `pets`, `farm`, `wild`, `birds-insects`, with emoji; ~30 entries; masculine/feminine pairs (`כלב/כלבה`, `חתול/חתולה`) go in `forms` (ms/fs) where the language really has both.
 **Acceptance criteria:** [ ] Pairs show `forms` ms/fs; no `forms` for animals that have only one form. **Verification:** [ ] `check:task` green. **Dependencies:** T29. **Files:** `data/sections/animals.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 33 entries, emoji on all but two, ms/fs forms only where Hebrew has both (dog, cat, horse, rooster/hen, lion/lioness). Mouse appears in Objects (computer) and Animals, each with a note pointing to the other.
+
 
 ### Task 31: The home: rooms, things, MAMAD (`home`)
 **Description:** Rooms (kitchen, bedroom, shower room, toilet, living room, balcony, corridor, entrance), household things (bed, sofa, wardrobe, mirror, window, door, lamp), and the safe room with its kinds.

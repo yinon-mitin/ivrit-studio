@@ -34,7 +34,7 @@
     {"id": "things.metaen", "he": "מְטַעֵן", "translit": "Metaen", "en": "charger", "ru": "зарядка", "group": "tech", "verified": false},
     {"id": "things.oznayot", "he": "אוֹזְנִיּוֹת", "translit": "Oznayot", "en": "headphones", "ru": "наушники", "group": "tech", "emoji": "🎧", "verified": false},
     {"id": "things.mikledet", "he": "מִקְלֶדֶת", "translit": "Mikledet", "en": "keyboard", "ru": "клавиатура", "group": "tech", "emoji": "⌨️", "verified": false},
-    {"id": "things.akhbar", "he": "עַכְבָּר", "translit": "Akhbar", "en": "mouse (computer, and the animal)", "ru": "мышь (компьютерная и зверёк)", "group": "tech", "emoji": "🖱️", "verified": false},
+    {"id": "things.akhbar", "he": "עַכְבָּר", "translit": "Akhbar", "en": "mouse (computer)", "ru": "мышь (компьютерная)", "group": "tech", "emoji": "🖱️", "note": {"en": "The animal is the same word (see Animals).", "ru": "Зверёк — то же слово (см. «Животные»)."}, "verified": false},
     {"id": "things.masakh", "he": "מָסָךְ", "translit": "Masakh", "en": "screen", "ru": "экран", "group": "tech", "verified": false},
     {"id": "things.matzlema", "he": "מַצְלֵמָה", "translit": "Matzlema", "en": "camera", "ru": "камера, фотоаппарат", "group": "tech", "emoji": "📷", "verified": false}
   ]

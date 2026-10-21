@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { scrollPercent, scrollForPercent, currentAnchor, readingLine, readingAnchor, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
+import { scrollPercent, scrollForPercent, currentAnchor, readingLine, readingAnchor, showBackToTop, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
 
 describe('scrollPercent', () => {
   it('is 0 at the top and 100 at the bottom', () => {
@@ -104,5 +104,22 @@ describe('readingAnchor', () => {
 
   it('is null without anchors', () => {
     assert.equal(readingAnchor([], { scrollY: 0, offset: 120, viewportHeight: 900, scrollHeight: 3400, centred: true }), null);
+  });
+});
+
+describe('showBackToTop', () => {
+  it('is off at the top and within the first screen', () => {
+    assert.equal(showBackToTop(0, 700), false);
+    assert.equal(showBackToTop(700, 700), false);
+  });
+
+  it('is on once the page has scrolled more than one screen', () => {
+    assert.equal(showBackToTop(701, 700), true);
+    assert.equal(showBackToTop(5000, 700), true);
+  });
+
+  it('is off without a usable viewport height', () => {
+    assert.equal(showBackToTop(500, 0), false);
+    assert.equal(showBackToTop(500, Number.NaN), false);
   });
 });

@@ -379,8 +379,34 @@ a { color: var(--accent); }
 .install-action:hover { background: var(--accent); filter: brightness(1.1); }
 :root[data-install] .content { padding-bottom: 150px; }
 
+/* Back to top: a quiet round button in the bottom corner, once the page has scrolled a screen. On a
+   laptop with the ruler it moves to the left corner, clear of the ruler and the flowing titles; on a
+   phone it rises above the install banner when that is on screen. */
+.to-top {
+  position: fixed;
+  inset-inline-end: var(--gutter);
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.to-top[hidden] { display: none; }
+.to-top:hover { color: var(--ink); background: var(--sheet); }
+:root[data-ruler] .to-top { inset-inline-end: auto; inset-inline-start: var(--gutter); }
+:root[data-install] .to-top { bottom: calc(var(--install-clearance, 140px) + env(safe-area-inset-bottom)); }
+
 .contents-source {
   display: flex;
+  align-items: center;
   align-items: center;
   gap: 6px;
   width: fit-content;
@@ -710,7 +736,7 @@ a { color: var(--accent); }
   transform-origin: right top;
 }
 
-.flow-toc-item[data-state='past'] { opacity: 0.7; }
+.flow-toc-item[data-state='past'] { opacity: 0.9; }
 
 .flow-toc-item[data-state='current'] {
   max-width: 6.5rem;
@@ -1206,6 +1232,7 @@ a { color: var(--accent); }
   .results-where,
   .contents-source,
   .install,
+  .to-top,
   .control { display: none !important; }
 
   .content {

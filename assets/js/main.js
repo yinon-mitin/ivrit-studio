@@ -9,6 +9,7 @@ import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
 import { scrollPercent, readingAnchor } from './core/scroll.js';
+import { mountBackToTop } from './ui/back-to-top.js';
 import { mountRuler } from './ui/ruler.js';
 import { mountFlowToc } from './ui/flow-toc.js';
 import { mountInstall } from './ui/install.js';
@@ -50,6 +51,7 @@ const search = mountSearch(document.querySelector('.app-header'), (value) => {
 });
 
 const install = mountInstall(document.body);
+const backToTop = mountBackToTop(document.body, document.querySelector('.brand'));
 
 /** @param {{ sections: string[] }} part */
 const loadPart = async (part) => ({ ...part, sections: await Promise.all(part.sections.map(loadSection)) });
@@ -115,6 +117,7 @@ async function render(navigated = false) {
     nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.lang));
     search.setLang(settings.lang);
     install.setLang(settings.lang);
+    backToTop.setLang(settings.lang);
     ruler.setLang(settings.lang);
     // Part screens put their page bar back; every other screen has none.
     pageBar.replaceChildren();
@@ -200,6 +203,7 @@ function updatePosition() {
     scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred,
   });
   updatePageBar(pageBar, place, percent);
+  backToTop.update(window.scrollY, window.innerHeight);
   ruler.update(percent, place?.section ?? '');
   const sections = anchors.filter((anchor) => anchor.group === null);
   const current = Math.max(0, sections.findIndex((anchor) => anchor.section === place?.section));

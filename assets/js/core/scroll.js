@@ -69,6 +69,14 @@ export function readingAnchor(anchors, { scrollY, offset, viewportHeight, scroll
   return currentAnchor(anchors, scrollY, readingLine(viewportHeight, offset, centred));
 }
 
+/**
+ * Whether the "back to top" button shows: once the page has scrolled more than one screen.
+ * @param {number} scrollY
+ * @param {number} viewportHeight
+ * @returns {boolean}
+ */
+export const showBackToTop = (scrollY, viewportHeight) => viewportHeight > 0 && scrollY > viewportHeight;
+
 /** CSS pixels in a CSS millimetre: 96 px per inch, 25.4 mm per inch. */
 export const PX_PER_MM = 96 / 25.4;
 

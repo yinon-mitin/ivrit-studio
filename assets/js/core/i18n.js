@@ -36,6 +36,7 @@ export const STRINGS = {
   installAction: { en: 'Install', ru: 'Установить' },
   installLater: { en: 'Not now', ru: 'Не сейчас' },
   installGotIt: { en: 'Got it', ru: 'Понятно' },
+  backToTop: { en: 'Back to top', ru: 'Наверх' },
   sourceOnGithub: { en: 'Source on GitHub', ru: 'Исходный код на GitHub' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
 };

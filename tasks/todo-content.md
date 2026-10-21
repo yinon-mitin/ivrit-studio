@@ -46,9 +46,11 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Description:** The logic of the infinitive on a few simple examples, not a full binyan table.
 **Groups:** `pattern` (`ל` + root: לכתוב, לקרוא, לדבר, ללמוד, לעבוד, לגור; `note` states the one rule), `irregular` (לאכול, ללכת, לבוא, לדעת, לתת — the ones that break the pattern), `frames` (אני רוצה לאכול, אני אוהב לקרוא, אני צריך ללכת, אפשר לשבת?, אני יכול לעזור).
 **Acceptance criteria:**
-- [ ] The pattern group lets the learner see `ל` + the same letters the present tense shows (links to T21 by `note`).
-- [ ] Each of the four helper verbs (want, love/like, need, can) has one frame; the infinitive stays unchanged in all of them.
+- [x] The pattern group lets the learner see `ל` + the same letters the present tense shows (links to T21 by `note`).
+- [x] Each of the four helper verbs (want, love/like, need, can) has one frame; the infinitive stays unchanged in all of them.
 **Verification:** [ ] `check:task` green. **Dependencies:** T21 (verbs to refer to). **Files:** `data/sections/infinitives.json`, `data/index.json`. **Scope:** Small–Medium.
+**Outcome:** 17 entries: 6 pattern verbs, 6 irregular, 5 frames with want/love/need/can.
+
 
 ### Checkpoint H: Grammar
 - [ ] `npm run check:task` green; the Grammar part (5 sections now) on a phone and a laptop (screenshots), flowing titles still fit

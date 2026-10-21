@@ -75,7 +75,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [x] Task 21: Verb forms in the present tense (`verbs`)
 - [x] Task 22: Possession and "the" (`possession`)
 - [x] Task 23: Where from, where to, on, over, under (`places`)
-- [ ] Task 24: Infinitives (`infinitives`)
+- [x] Task 24: Infinitives (`infinitives`)
 
 ### Checkpoint H: Grammar
 - [ ] `npm run check:task` green; Grammar part on phone and laptop (screenshots)

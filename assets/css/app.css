@@ -835,7 +835,8 @@ a { color: var(--accent); }
 
 .reveal[aria-expanded='true'] { cursor: auto; }
 
-.entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note) {
+.entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note),
+.phrase[data-hidden]:not([data-revealed]) :is(.phrase-translit, .entry-related-gloss, .entry-note) {
   filter: blur(5px);
   user-select: none;
 }
@@ -1142,6 +1143,87 @@ a { color: var(--accent); }
   font-size: 0.82rem;
 }
 
+/* phrases: one card per sentence on hairline rules, 1 column on a phone, 2 from a tablet up (sentences are
+   long). The meaning leads, left; under it one row per form: its m./f. tag at the start, the Hebrew at
+   the right with its reading right under it. Every card has the same shape, so the eye finds the
+   Hebrew and its meaning in the same places. */
+.phrase-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 48px;
+}
+
+@media (min-width: 40rem) {
+  .phrase-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.phrase {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.phrase-lead {
+  margin: 0 0 2px;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.phrase-lead .reveal { text-align: start; }
+
+.phrase-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.phrase-tag {
+  flex: none;
+  min-width: 1.9rem;
+  padding: 0 6px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  cursor: default;
+}
+
+.phrase-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.35;
+}
+
+.phrase-he {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.phrase-translit {
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  text-align: end;
+}
+
+.phrase > :is(.entry-related, .entry-forms) { align-self: flex-end; }
+
 /* table: Hebrew | sound | name, right to left, under a small-caps header row; full width up to a
    comfortable reading width (48rem), aligned with the headings. Rows that sound alike share one sound
    cell; a heavier rule starts each sound group. */
@@ -1252,17 +1334,24 @@ a { color: var(--accent); }
   }
 
   .reveal[aria-expanded='false'],
-  .entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note) {
+  .entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note),
+  .phrase[data-hidden]:not([data-revealed]) :is(.phrase-translit, .entry-related-gloss, .entry-note) {
     filter: none;
     background: none;
   }
 
-  .entry-list {
+  .entry-list,
+  .phrase-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 24pt;
   }
 
+  .phrase { padding: 3pt 0 4pt; }
+
+  .phrase-he { font-size: 15pt; }
+
   .entry,
+  .phrase,
   .letter-cell,
   .letter-column,
   .entry-table tr { break-inside: avoid; }

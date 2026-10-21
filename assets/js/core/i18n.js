@@ -14,6 +14,8 @@ export const STRINGS = {
   formPlural: { en: 'Plural', ru: 'Мн. ч.' },
   formMasculine: { en: 'Masc.', ru: 'М. р.' },
   formFeminine: { en: 'Fem.', ru: 'Ж. р.' },
+  tagMasculine: { en: 'm.', ru: 'м.' },
+  tagFeminine: { en: 'f.', ru: 'ж.' },
   search: { en: 'Search', ru: 'Поиск' },
   hide: { en: 'Hide translations', ru: 'Скрыть перевод' },
   reveal: { en: 'Show translation', ru: 'Показать перевод' },

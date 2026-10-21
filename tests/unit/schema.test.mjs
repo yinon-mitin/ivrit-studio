@@ -173,3 +173,37 @@ describe('validateAll', () => {
     assert.ok(hasError(report, /sections\/countries\.json: id is "lands"/));
   });
 });
+
+describe('phrases view and variants', () => {
+  const pair = (extra = {}) => entry('gar', {
+    he: 'אֲנִי גָּר', translit: 'Ani gar', group: 'say',
+    variants: [{ gender: 'm', he: 'אֲנִי גָּר', translit: 'Ani gar' }, { gender: 'f', he: 'אֲנִי גָּרָה', translit: 'Ani gara' }],
+    ...extra,
+  });
+  const phrases = (items, extra = {}) => section({ view: 'phrases', groups: [{ id: 'say', title: { en: 'Say', ru: 'Сказать' } }], items, ...extra });
+
+  it('knows the phrases view, for a section and for a group', () => {
+    assert.deepEqual(validateSection(phrases([pair()])).errors, []);
+    const grouped = section({ groups: [{ id: 'say', title: { en: 'Say', ru: 'Сказать' }, view: 'phrases' }], items: [pair()] });
+    assert.deepEqual(validateSection(grouped).errors, []);
+  });
+
+  it('rejects variants outside the phrases view, where they would not be shown', () => {
+    const report = validateSection(section({ groups: [{ id: 'say', title: { en: 'Say', ru: 'Сказать' } }], items: [pair()] }));
+    assert.ok(hasError(report, /countries\.gar: variants need the phrases view/));
+  });
+
+  it('rejects variants that are not a list of m/f forms with Hebrew and a reading', () => {
+    assert.ok(hasError(validateSection(phrases([pair({ variants: 'x' })])), /countries\.gar: variants must be a list/));
+    assert.ok(hasError(validateSection(phrases([pair({ variants: [] })])), /countries\.gar: variants must be a list/));
+    const bad = (variant) => validateSection(phrases([pair({ variants: [{ gender: 'm', he: 'אֲנִי גָּר', translit: 'Ani gar' }, variant] })]));
+    assert.ok(hasError(bad({ gender: 'x', he: 'אֲנִי גָּרָה', translit: 'Ani gara' }), /countries\.gar: variant gender must be m or f/));
+    assert.ok(hasError(bad({ gender: 'f', he: 'Ani', translit: 'Ani gara' }), /countries\.gar: variant he has no Hebrew letter/));
+    assert.ok(hasError(bad({ gender: 'f', he: 'אֲנִי גָּרָה', translit: '' }), /countries\.gar: variant needs translit/));
+  });
+
+  it('requires the entry itself to be the first variant, so search and the contents see the same text', () => {
+    const report = validateSection(phrases([pair({ he: 'אֲנִי גָּרָה' })]));
+    assert.ok(hasError(report, /countries\.gar: he and translit must be those of the first variant/));
+  });
+});

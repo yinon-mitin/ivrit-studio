@@ -4,6 +4,7 @@ import { sectionGroups, groupAnchor } from '../core/content.js';
 import { localized } from '../core/i18n.js';
 import { el } from '../views/dom.js';
 import { renderList } from '../views/list.js';
+import { renderPhrases } from '../views/phrases.js';
 import { renderTable } from '../views/table.js';
 import { renderLetterGrid } from '../views/letter-grid.js';
 import { renderLetterRows } from '../views/letter-rows.js';
@@ -13,6 +14,7 @@ const VIEWS = {
   'letter-grid': renderLetterGrid,
   'letter-rows': renderLetterRows,
   list: renderList,
+  phrases: renderPhrases,
   table: renderTable,
 };
 

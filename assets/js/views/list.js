@@ -18,7 +18,7 @@ const HEBREW_RUN = /([\u0590-\u05FF][\u0590-\u05FF'"׳״־-]*)/;
  * @param {'en' | 'ru'} lang
  * @returns {HTMLElement}
  */
-function renderNote(text, lang) {
+export function renderNote(text, lang) {
   const note = el('p', 'entry-note');
   note.lang = lang;
   note.dir = 'ltr';
@@ -33,7 +33,7 @@ function renderNote(text, lang) {
  * @param {{ nikud: boolean, lang: 'en' | 'ru' }} options
  * @returns {HTMLElement}
  */
-function renderForms(forms, { nikud, lang }) {
+export function renderForms(forms, { nikud, lang }) {
   const table = el('table', 'entry-forms');
   table.dir = 'rtl';
   const head = el('tr', '');
@@ -65,6 +65,33 @@ function renderForms(forms, { nikud, lang }) {
   if (columns.length > 1) table.append(thead);
   table.append(body);
   return table;
+}
+
+/**
+ * The related words of an entry with their meanings, or null when it has none. Words with forms show
+ * them as a table, so related words that are just those forms are left out.
+ * @param {{ forms?: Record<string, string>, related?: Array<{ he: string, plain?: string, en?: string, ru?: string }> }} item
+ * @param {boolean} nikud
+ * @param {'en' | 'ru'} lang
+ * @returns {HTMLElement | null}
+ */
+export function renderRelated(item, nikud, lang) {
+  const formWords = new Set(Object.values(item.forms ?? {}));
+  const related = (item.related ?? []).filter((other) => !formWords.has(other.he));
+  if (related.length === 0) return null;
+  const words = el('ul', 'entry-related');
+  for (const word of related) {
+    const line = el('li', '');
+    line.append(hebrew('span', 'entry-related-he', displayHe(word, nikud)));
+    if (word[lang]) {
+      const sense = el('span', 'entry-related-gloss', word[lang]);
+      sense.lang = lang;
+      sense.dir = 'ltr';
+      line.append(sense);
+    }
+    words.append(line);
+  }
+  return words;
 }
 
 /**
@@ -111,24 +138,8 @@ export function renderList(items, options) {
     head.append(word, gloss);
     entry.append(head);
 
-    // Words with forms show them as a table; related words that are just those forms are left out.
-    const formWords = new Set(Object.values(item.forms ?? {}));
-    const related = (item.related ?? []).filter((other) => !formWords.has(other.he));
-    if (related.length > 0) {
-      const words = el('ul', 'entry-related');
-      for (const word of related) {
-        const line = el('li', '');
-        line.append(hebrew('span', 'entry-related-he', displayHe(word, nikud)));
-        if (word[lang]) {
-          const sense = el('span', 'entry-related-gloss', word[lang]);
-          sense.lang = lang;
-          sense.dir = 'ltr';
-          line.append(sense);
-        }
-        words.append(line);
-      }
-      entry.append(words);
-    }
+    const related = renderRelated(item, nikud, lang);
+    if (related) entry.append(related);
     if (item.forms) entry.append(renderForms(item.forms, options));
     if (item.note) entry.append(renderNote(item.note[lang], lang));
     list.append(entry);

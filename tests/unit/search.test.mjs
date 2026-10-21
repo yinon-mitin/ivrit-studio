@@ -130,3 +130,16 @@ describe('acronyms with gershayim', () => {
     assert.equal(matchesEntry(mamad, searchKey('ממ״ד')), true);
   });
 });
+
+describe('variants', () => {
+  const gar = {
+    id: 'acquaintance.gar', he: 'אֲנִי גָּר', translit: 'Ani gar', en: 'I live here', ru: 'Я живу здесь',
+    variants: [{ gender: 'm', he: 'אֲנִי גָּר', translit: 'Ani gar' }, { gender: 'f', he: 'אֲנִי גָּרָה', translit: 'Ani gara' }],
+  };
+
+  it('finds an entry by the Hebrew or the reading of any variant', () => {
+    assert.equal(matchesEntry(gar, searchKey('גרה')), true);
+    assert.equal(matchesEntry(gar, searchKey('ani gara')), true);
+    assert.equal(matchesEntry(gar, searchKey('ani goor')), false);
+  });
+});

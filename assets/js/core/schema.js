@@ -1,7 +1,7 @@
 // Data contract validator (SPEC.md, Data Contract). Pure: takes parsed JSON, returns messages.
 import { isHebrew } from './hebrew.js';
 
-export const VIEWS = ['letter-grid', 'letter-rows', 'list', 'table'];
+export const VIEWS = ['letter-grid', 'letter-rows', 'list', 'phrases', 'table'];
 
 const REQUIRED = ['id', 'he', 'translit', 'en', 'ru'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -29,6 +29,32 @@ function validateEntry(item, sectionId) {
   }
   if (isText(item.he) && !isHebrew(item.he)) errors.push(`${at}: he has no Hebrew letter`);
   if (item.swatch !== undefined && !SWATCH.test(item.swatch)) errors.push(`${at}: swatch must be #rgb or #rrggbb`);
+  return errors;
+}
+
+/**
+ * The variants of a phrase (its masculine and feminine forms): a list of m/f forms with Hebrew and a
+ * reading, the first of which is the entry itself.
+ * @param {any} item
+ * @returns {string[]}
+ */
+function validateVariants(item) {
+  const at = item.id;
+  if (!Array.isArray(item.variants) || item.variants.length === 0) return [`${at}: variants must be a list with at least one form`];
+  const errors = [];
+  for (const variant of item.variants) {
+    if (!isObject(variant)) {
+      errors.push(`${at}: variant must be an object`);
+      continue;
+    }
+    if (variant.gender !== 'm' && variant.gender !== 'f') errors.push(`${at}: variant gender must be m or f`);
+    if (!isText(variant.he) || !isHebrew(variant.he)) errors.push(`${at}: variant he has no Hebrew letter`);
+    if (!isText(variant.translit)) errors.push(`${at}: variant needs translit`);
+  }
+  const [first] = item.variants;
+  if (isObject(first) && (first.he !== item.he || first.translit !== item.translit)) {
+    errors.push(`${at}: he and translit must be those of the first variant`);
+  }
   return errors;
 }
 
@@ -61,6 +87,11 @@ export function validateSection(section) {
     ids.add(item.id);
     if (item.group === undefined && groups.length > 0) errors.push(`${item.id}: needs a group, section ${section.id} has groups`);
     if (item.group !== undefined && !groupIds.has(item.group)) errors.push(`${item.id}: unknown group "${item.group}"`);
+    if (item.variants !== undefined) {
+      const view = groups.find((group) => group.id === item.group)?.view ?? section.view;
+      if (view !== 'phrases') errors.push(`${item.id}: variants need the phrases view`);
+      errors.push(...validateVariants(item));
+    }
   }
 
   const items = section.items.filter(isObject);

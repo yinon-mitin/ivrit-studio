@@ -26,12 +26,14 @@ export function searchKey(text) {
 }
 
 /**
- * @param {{ he: string, plain?: string, translit: string, en: string, ru: string, related?: Array<{ he: string }> }} entry
+ * @param {{ he: string, plain?: string, translit: string, en: string, ru: string, related?: Array<{ he: string }>,
+ *   variants?: Array<{ he: string, translit: string }> }} entry
  * @param {string} query already a search key
  * @returns {boolean}
  */
 export function matchesEntry(entry, query) {
-  const fields = [entry.he, entry.plain, entry.translit, entry.en, entry.ru, ...(entry.related ?? []).map((word) => word.he)];
+  const fields = [entry.he, entry.plain, entry.translit, entry.en, entry.ru, ...(entry.related ?? []).map((word) => word.he),
+    ...(entry.variants ?? []).flatMap((variant) => [variant.he, variant.plain, variant.translit])];
   return fields.some((field) => field !== undefined && searchKey(field).includes(query));
 }
 

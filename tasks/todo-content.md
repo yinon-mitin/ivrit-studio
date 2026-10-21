@@ -134,6 +134,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Description:** Husband (exists), wife, partner m./f., boyfriend/girlfriend, fiancé(e), ex, in-laws, cousin, niece, nephew, aunt, step-/half- kin as short as useful. Friend (exists as `family.khaver`) gets a `note`: the same word means "boyfriend" and `חברה` "girlfriend".
 **Acceptance criteria:** [ ] Two new groups (`partners`, `relatives`) are added to `family.json`; existing ids unchanged. [ ] `family.khaver` and `family.baal` keep their ids. [ ] The page-bar / contents groups lists are updated by the data alone.
 **Verification:** [ ] `check:task` green. **Dependencies:** None. **Files:** `data/sections/family.json`. **Scope:** Small–Medium.
+**Outcome:** Family 17 → 35 entries: groups partners (9) and relatives (9); khaver gets a note (friend / boyfriend); existing ids unchanged. neighbours.shkhena removed as a duplicate of the forms of family.shakhen.
+
 
 ### Checkpoint J: Everything
 - [ ] `npm run check:full` green; `check:task` duration; first load ≤ 200 KB; the `around` part JSON size reported

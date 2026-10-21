@@ -14,7 +14,6 @@
     {"id": "neighbours.erev-tov", "he": "עֶרֶב טוֹב", "translit": "Erev tov", "en": "Good evening.", "ru": "Добрый вечер.", "group": "greet", "verified": false},
     {"id": "neighbours.laila-tov", "he": "לַיְלָה טוֹב", "translit": "Laila tov", "en": "Good night.", "ru": "Спокойной ночи.", "group": "greet", "verified": false},
     {"id": "neighbours.shabbat-shalom", "he": "שַׁבָּת שָׁלוֹם", "translit": "Shabbat shalom", "en": "Have a peaceful Shabbat.", "ru": "Мирной субботы.", "group": "greet", "verified": false},
-    {"id": "neighbours.shkhena", "he": "שְׁכֵנָה", "translit": "Shkhena", "en": "neighbour (f.)", "ru": "соседка", "group": "greet", "note": {"en": "The man: shakhen (see Family & people).", "ru": "Сосед: shakhen (см. «Семья и люди»)."}, "verified": false},
     {"id": "neighbours.kheder-madregot", "he": "חֶדֶר מַדְרֵגוֹת", "translit": "Kheder madregot", "en": "stairwell", "ru": "лестничная клетка", "group": "greet", "verified": false},
     {"id": "neighbours.ani-mi-dira", "he": "אֲנִי מִדִּירָה שָׁלוֹשׁ", "translit": "Ani mi-dira shalosh", "en": "I'm from apartment three.", "ru": "Я из третьей квартиры.", "group": "greet", "verified": false},
     {"id": "neighbours.efshar-lish-ol", "he": "אֶפְשָׁר לִשְׁאֹל מַשֶּׁהוּ?", "translit": "Efshar lish'ol mashehu?", "en": "Can I ask something?", "ru": "Можно кое-что спросить?", "group": "asks", "verified": false},

@@ -97,7 +97,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [x] Task 31: The home: rooms, things, MAMAD (`home`)
 - [x] Task 32: Kitchen (`kitchen`)
 - [x] Task 33: Fruit and vegetables (`produce`)
-- [ ] Task 34: Partners and relatives in Family (`family`, extended)
+- [x] Task 34: Partners and relatives in Family (`family`, extended)
 
 ### Checkpoint J: Everything
 - [ ] `npm run check:full` green; `check:task` duration; first-load weight; part JSON size

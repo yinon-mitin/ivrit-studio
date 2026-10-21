@@ -6,7 +6,9 @@
   "nikudToggle": true,
   "groups": [
     {"id": "family", "title": {"en": "Family", "ru": "Семья"}},
-    {"id": "people", "title": {"en": "People", "ru": "Люди"}}
+    {"id": "people", "title": {"en": "People", "ru": "Люди"}},
+    {"id": "partners", "title": {"en": "Partners", "ru": "Пары"}},
+    {"id": "relatives", "title": {"en": "Relatives", "ru": "Родственники"}}
   ],
   "items": [
     {"id": "family.family", "he": "מִשְׁפָּחָה", "translit": "Mishpakha", "en": "family", "ru": "семья", "group": "family", "related": [{"he": "מִשְׁפָּחוֹת", "translit": "Mishpakhot", "en": "families", "ru": "семьи"}], "verified": false},
@@ -22,9 +24,27 @@
     {"id": "family.tinok", "he": "תִּינוֹק", "translit": "Tinok", "en": "baby", "ru": "младенец", "group": "family", "related": [{"he": "תִּינוֹקֶת", "translit": "Tinoket", "en": "baby girl", "ru": "малышка"}], "verified": false},
     {"id": "family.ish", "he": "אִישׁ", "translit": "Ish", "en": "man", "ru": "мужчина", "group": "people", "related": [{"he": "אֲנָשִׁים", "translit": "Anashim", "en": "people", "ru": "люди"}], "verified": false},
     {"id": "family.yeled", "he": "יֶלֶד", "translit": "Yeled", "en": "child, boy", "ru": "ребёнок, мальчик", "group": "people", "forms": {"ms": "יֶלֶד", "fs": "יַלְדָּה", "mp": "יְלָדִים", "fp": "יְלָדוֹת"}, "verified": false},
-    {"id": "family.khaver", "he": "חָבֵר", "translit": "Khaver", "en": "friend", "ru": "друг", "group": "people", "forms": {"ms": "חָבֵר", "fs": "חֲבֵרָה", "mp": "חֲבֵרִים", "fp": "חֲבֵרוֹת"}, "verified": false},
+    {"id": "family.khaver", "he": "חָבֵר", "translit": "Khaver", "en": "friend", "ru": "друг", "group": "people", "forms": {"ms": "חָבֵר", "fs": "חֲבֵרָה", "mp": "חֲבֵרִים", "fp": "חֲבֵרוֹת"}, "note": {"en": "Khaver / khavera also mean boyfriend / girlfriend: khaver sheli, \"my friend, my boyfriend\". Context tells which.", "ru": "Khaver / khavera значат ещё «парень» / «девушка»: khaver sheli — «мой друг, мой парень». Смысл ясен из контекста."}, "verified": false},
     {"id": "family.shakhen", "he": "שָׁכֵן", "translit": "Shakhen", "en": "neighbour", "ru": "сосед", "group": "people", "forms": {"ms": "שָׁכֵן", "fs": "שְׁכֵנָה", "mp": "שְׁכֵנִים", "fp": "שְׁכֵנוֹת"}, "verified": false},
     {"id": "family.more", "he": "מוֹרֶה", "translit": "More", "en": "teacher", "ru": "учитель", "group": "people", "forms": {"ms": "מוֹרֶה", "fs": "מוֹרָה", "mp": "מוֹרִים", "fp": "מוֹרוֹת"}, "verified": false},
-    {"id": "family.ben-adam", "he": "בֶּן אָדָם", "translit": "Ben adam", "en": "person, human being", "ru": "человек", "group": "people", "verified": false}
+    {"id": "family.ben-adam", "he": "בֶּן אָדָם", "translit": "Ben adam", "en": "person, human being", "ru": "человек", "group": "people", "verified": false},
+    {"id": "family.baali", "he": "בַּעֲלִי", "translit": "Ba'ali", "en": "my husband", "ru": "мой муж", "group": "partners", "verified": false},
+    {"id": "family.ishti", "he": "אִשְׁתִּי", "translit": "Ishti", "en": "my wife", "ru": "моя жена", "group": "partners", "verified": false},
+    {"id": "family.ben-zug", "he": "בֶּן זוּג", "translit": "Ben zug", "en": "partner (m.)", "ru": "партнёр (м.)", "group": "partners", "note": {"en": "The word for a life partner, married or not.", "ru": "Слово для спутника жизни, в браке или нет."}, "forms": {"ms": "בֶּן זוּג", "fs": "בַּת זוּג"}, "related": [{"he": "בַּת זוּג", "translit": "Bat zug", "en": "partner (f.)", "ru": "партнёрша (ж.)"}], "verified": false},
+    {"id": "family.khaver-sheli", "he": "חָבֵר שֶׁלִּי", "translit": "Khaver sheli", "en": "my boyfriend, my friend (m.)", "ru": "мой парень, мой друг", "group": "partners", "verified": false},
+    {"id": "family.khavera-sheli", "he": "חֲבֵרָה שֶׁלִּי", "translit": "Khavera sheli", "en": "my girlfriend, my friend (f.)", "ru": "моя девушка, моя подруга", "group": "partners", "verified": false},
+    {"id": "family.arus", "he": "אָרוּס", "translit": "Arus", "en": "fiancé", "ru": "жених (помолвленный)", "group": "partners", "forms": {"ms": "אָרוּס", "fs": "אֲרוּסָה"}, "related": [{"he": "אֲרוּסָה", "translit": "Arusa", "en": "fiancée", "ru": "невеста (помолвленная)"}], "verified": false},
+    {"id": "family.nasui", "he": "נָשׂוּי", "translit": "Nasui", "en": "married (m.)", "ru": "женат", "group": "partners", "forms": {"ms": "נָשׂוּי", "fs": "נְשׂוּאָה"}, "related": [{"he": "נְשׂוּאָה", "translit": "Nesu'a", "en": "married (f.)", "ru": "замужем"}], "verified": false},
+    {"id": "family.garush", "he": "גָּרוּשׁ", "translit": "Garush", "en": "divorced (m.)", "ru": "разведён", "group": "partners", "forms": {"ms": "גָּרוּשׁ", "fs": "גְּרוּשָׁה"}, "related": [{"he": "גְּרוּשָׁה", "translit": "Grusha", "en": "divorced (f.)", "ru": "разведена"}], "verified": false},
+    {"id": "family.eks", "he": "אֶקְס", "translit": "Eks", "en": "ex (former partner)", "ru": "бывший, бывшая", "group": "partners", "verified": false},
+    {"id": "family.ben-dod", "he": "בֶּן דּוֹד", "translit": "Ben dod", "en": "cousin (m.)", "ru": "двоюродный брат", "group": "relatives", "forms": {"ms": "בֶּן דּוֹד", "fs": "בַּת דּוֹד"}, "related": [{"he": "בַּת דּוֹד", "translit": "Bat dod", "en": "cousin (f.)", "ru": "двоюродная сестра"}], "verified": false},
+    {"id": "family.akhyan", "he": "אַחְיָן", "plain": "אחיין", "translit": "Akhyan", "en": "nephew", "ru": "племянник", "group": "relatives", "verified": false},
+    {"id": "family.akhyanit", "he": "אַחְיָנִית", "plain": "אחיינית", "translit": "Akhyanit", "en": "niece", "ru": "племянница", "group": "relatives", "verified": false},
+    {"id": "family.khami", "he": "חָמִי", "translit": "Khami", "en": "father-in-law", "ru": "свёкор, тесть", "group": "relatives", "verified": false},
+    {"id": "family.khamot", "he": "חֲמוֹת", "translit": "Khamot", "en": "mother-in-law", "ru": "свекровь, тёща", "group": "relatives", "verified": false},
+    {"id": "family.khatan", "he": "חָתָן", "translit": "Khatan", "en": "son-in-law, groom", "ru": "зять, жених", "group": "relatives", "verified": false},
+    {"id": "family.kala", "he": "כַּלָּה", "translit": "Kala", "en": "daughter-in-law, bride", "ru": "невестка, невеста", "group": "relatives", "verified": false},
+    {"id": "family.gis", "he": "גִּיס", "translit": "Gis", "en": "brother-in-law", "ru": "шурин, деверь, свояк", "group": "relatives", "forms": {"ms": "גִּיס", "fs": "גִּיסָה"}, "related": [{"he": "גִּיסָה", "translit": "Gisa", "en": "sister-in-law", "ru": "золовка, невестка, свояченица"}], "verified": false},
+    {"id": "family.karov-mishpakha", "he": "קָרוֹב מִשְׁפָּחָה", "translit": "Karov mishpakha", "en": "relative (m.)", "ru": "родственник", "group": "relatives", "related": [{"he": "קְרוֹבַת מִשְׁפָּחָה", "translit": "Krovat mishpakha", "en": "relative (f.)", "ru": "родственница"}], "verified": false}
   ]
 }

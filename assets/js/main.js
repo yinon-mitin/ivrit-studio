@@ -8,7 +8,7 @@ import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
-import { scrollPercent, currentAnchor } from './core/scroll.js';
+import { scrollPercent, readingAnchor } from './core/scroll.js';
 import { mountRuler } from './ui/ruler.js';
 import { mountFlowToc } from './ui/flow-toc.js';
 import { searchParts } from './core/search.js';
@@ -156,6 +156,9 @@ async function render(navigated = false) {
 /** Sections and groups of the page on screen, with their titles and their tops (document coordinates). */
 let anchors = [];
 
+/** Whether the flowing titles are on screen: then the section being read is the one at the middle of the screen. */
+let centred = false;
+
 /** Where anchors land when scrolled to, and the line that counts as being read (8 px below). */
 const landing = () => header.offsetHeight + pageBar.offsetHeight + 8;
 
@@ -173,7 +176,8 @@ function measureAnchors() {
   // and has a mark at each section.
   const partScreen = content.querySelector('[data-screen="part"]');
   ruler.setActive(wide.matches && partScreen !== null && root.scrollHeight > window.innerHeight);
-  flowToc.setActive(wider.matches && partScreen !== null && partScreen.querySelectorAll('.section').length > 1);
+  centred = wider.matches && partScreen !== null && partScreen.querySelectorAll('.section').length > 1;
+  flowToc.setActive(centred);
   const start = content.getBoundingClientRect().top + window.scrollY;
   ruler.setTape(root.scrollHeight - start, anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
     title: anchor.section,
@@ -186,8 +190,11 @@ function measureAnchors() {
 function updatePosition() {
   const root = document.documentElement;
   const percent = scrollPercent(window.scrollY, root.scrollHeight, window.innerHeight);
-  // 8 px below where anchors land (their scroll-margin), so a section scrolled to counts as being read.
-  const place = currentAnchor(anchors, window.scrollY, landing() + 8);
+  // Without the titles: the line 8 px below where anchors land (their scroll-margin), so a section
+  // scrolled to counts as being read. With them: the middle of the screen.
+  const place = readingAnchor(anchors, {
+    scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred,
+  });
   updatePageBar(pageBar, place, percent);
   ruler.update(percent, place?.section ?? '');
   const sections = anchors.filter((anchor) => anchor.group === null);

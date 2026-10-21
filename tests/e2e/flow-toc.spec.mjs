@@ -25,6 +25,32 @@ test.describe('at 1440 px', () => {
     for (let i = 1; i < boxes.length; i += 1) expect(boxes[i][0]).toBeGreaterThanOrEqual(boxes[i - 1][1] - 0.5);
   });
 
+  // Puts the top of section `index` at `fraction` of the viewport height from the top of the screen.
+  const placeSection = async (page, index, fraction) => {
+    const height = page.viewportSize().height;
+    await page.locator(`#${part.sections[index].id}`).evaluate((node, offset) => {
+      window.scrollTo(0, node.getBoundingClientRect().top + window.scrollY - offset);
+    }, height * fraction);
+  };
+  const currentTitle = (page) => items(page).evaluateAll((nodes) => nodes.findIndex((n) => n.dataset.state === 'current'));
+
+  test('a section becomes current when its top reaches the middle of the screen, in the bar too', async ({ page }) => {
+    await open(page, `#/${part.id}`);
+    await placeSection(page, 1, 0.6);
+    await expect.poll(() => currentTitle(page)).toBe(0);
+    await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections[0].title.en);
+    await placeSection(page, 1, 0.4);
+    await expect.poll(() => currentTitle(page)).toBe(1);
+    await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections[1].title.en);
+  });
+
+  test('at the end of the page the last title is current, even when its section is short', async ({ page }) => {
+    await open(page, `#/${part.id}`);
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(() => currentTitle(page)).toBe(part.sections.length - 1);
+    await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections.at(-1).title.en);
+  });
+
   test('a title is a link that scrolls to its section', async ({ page }) => {
     await open(page, `#/${part.id}`);
     const last = part.sections.at(-1);
@@ -64,4 +90,17 @@ test('hidden below 72rem, on the contents and in print', async ({ page, isMobile
   await expect(page.locator('#flow-toc')).toBeVisible();
   await page.emulateMedia({ media: 'print' });
   await expect(page.locator('#flow-toc')).toBeHidden();
+});
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 360, height: 640 } });
+
+  test('a section still becomes current at the line under the bar, not at the middle', async ({ page }) => {
+    await open(page, `#/${part.id}`);
+    // The top of section 1 is 40% down the screen: past the middle, still below the bar.
+    await page.locator(`#${part.sections[1].id}`).evaluate((node) => {
+      window.scrollTo(0, node.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.4);
+    });
+    await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections[0].title.en);
+  });
 });

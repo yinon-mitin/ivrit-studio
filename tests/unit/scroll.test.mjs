@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { scrollPercent, scrollForPercent, currentAnchor, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
+import { scrollPercent, scrollForPercent, currentAnchor, readingLine, readingAnchor, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
 
 describe('scrollPercent', () => {
   it('is 0 at the top and 100 at the bottom', () => {
@@ -63,5 +63,46 @@ describe('toMillimetres', () => {
     assert.equal(toMillimetres(0), 0);
     assert.equal(Math.round(toMillimetres(96)), 25);
     assert.equal(Math.round(toMillimetres(378)), 100);
+  });
+});
+
+describe('readingLine', () => {
+  it('is half the viewport when centred, else the offset under the sticky header', () => {
+    assert.equal(readingLine(900, 120, true), 450);
+    assert.equal(readingLine(900, 120, false), 120);
+  });
+});
+
+describe('readingAnchor', () => {
+  const anchors = [{ id: 'a', top: 300 }, { id: 'b', top: 1500 }, { id: 'c', top: 3000 }];
+  // A 900 px viewport on a 3400 px page: the most it scrolls is 2500.
+  const at = (scrollY, centred) => readingAnchor(anchors, { scrollY, offset: 120, viewportHeight: 900, scrollHeight: 3400, centred }).id;
+
+  it('without centring it is the anchor at the line under the header, as currentAnchor says', () => {
+    assert.equal(at(1380, false), 'b');
+    assert.equal(at(1379, false), 'a');
+  });
+
+  it('centred, an anchor counts once its top reaches the middle of the viewport', () => {
+    assert.equal(at(1049, true), 'a');
+    assert.equal(at(1050, true), 'b');
+    assert.equal(at(2000, true), 'b');
+  });
+
+  it('centred, the last anchor counts at the end of the page even if its top never reaches the middle', () => {
+    // c is at 3000; the page ends at scrollY 2500, where the middle line is 2950, above c. The end
+    // counts within 2 px, since scroll positions are fractional.
+    assert.equal(at(2497, true), 'b');
+    assert.equal(at(2498, true), 'c');
+    assert.equal(at(2500, true), 'c');
+  });
+
+  it('does not apply the end rule to a page that does not scroll, or when not centred', () => {
+    assert.equal(readingAnchor(anchors, { scrollY: 0, offset: 120, viewportHeight: 900, scrollHeight: 900, centred: true }).id, 'a');
+    assert.equal(at(2500, false), 'b');
+  });
+
+  it('is null without anchors', () => {
+    assert.equal(readingAnchor([], { scrollY: 0, offset: 120, viewportHeight: 900, scrollHeight: 3400, centred: true }), null);
   });
 });

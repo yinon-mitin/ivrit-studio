@@ -52,7 +52,7 @@ T14, T15 and T16 have no dependency on each other and can be done in any order o
 ## Task List
 
 ### Phase 6: Quick fixes (independent, small)
-- [ ] Task 14: Titles switch at the centre of the screen (laptop)
+- [x] Task 14: Titles switch at the centre of the screen (laptop)
 - [ ] Task 15: Quiet GitHub link at the bottom of the contents page
 
 ### Checkpoint E: quick fixes

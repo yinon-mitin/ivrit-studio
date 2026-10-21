@@ -45,6 +45,30 @@ export function currentAnchor(anchors, scrollY, offset) {
   return current;
 }
 
+/**
+ * The line that counts as being read, in viewport coordinates: the middle of the viewport when
+ * centred (the flowing titles on a laptop), else the line just under the sticky header.
+ * @param {number} viewportHeight
+ * @param {number} offset the line under the sticky header
+ * @param {boolean} centred
+ * @returns {number}
+ */
+export const readingLine = (viewportHeight, offset, centred) => (centred ? viewportHeight / 2 : offset);
+
+/**
+ * The anchor being read, by `readingLine`. Centred, the last anchor also counts once the page is
+ * scrolled to its end (a short last section would never reach the middle), within 2 px.
+ * @template {{ top: number }} A
+ * @param {A[]} anchors in page order, `top` in document coordinates
+ * @param {{ scrollY: number, offset: number, viewportHeight: number, scrollHeight: number, centred: boolean }} view
+ * @returns {A | null}
+ */
+export function readingAnchor(anchors, { scrollY, offset, viewportHeight, scrollHeight, centred }) {
+  const scrolls = scrollHeight > viewportHeight;
+  if (centred && scrolls && scrollY + viewportHeight >= scrollHeight - 2) return anchors.at(-1) ?? null;
+  return currentAnchor(anchors, scrollY, readingLine(viewportHeight, offset, centred));
+}
+
 /** CSS pixels in a CSS millimetre: 96 px per inch, 25.4 mm per inch. */
 export const PX_PER_MM = 96 / 25.4;
 

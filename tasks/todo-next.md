@@ -12,16 +12,16 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** On a laptop the flowing section titles make a section "current" when its top passes the line just under the sticky bar (`landing() + 8`). Move that switch to the vertical centre of the viewport. A pure `readingLine(viewportHeight, stickyHeight, centred)` in `core/scroll.js` returns the line; `main.js` `updatePosition` uses it when the flowing titles are active (≥ 72rem, part page with 2+ sections) and keeps today's line on phones and narrow windows. The page-bar label and the ruler label use the same line so the three never disagree. At the very end of the page the last section counts as being read, so a short last section still lights up.
 
 **Acceptance criteria:**
-- [ ] Unit (`scroll.test.mjs`): `readingLine` returns half the viewport when centred and the old line otherwise; the end-of-page rule makes the last anchor current at 100% and does not change earlier positions; existing `currentAnchor` tests untouched
-- [ ] e2e (1440×900): with a section's top at 60% of the viewport height the previous section is `current`; at 40% the section is `current`; scrolled to the bottom the last title is `current`; the page-bar label and the ruler label name the same section as the current title
-- [ ] e2e at 360×640 (phone): behaviour unchanged (a section becomes current at the old line)
-- [ ] Clicking a title still scrolls its section under the bar and that title becomes `current` (including the last, short section)
+- [x] Unit (`scroll.test.mjs`): `readingLine` returns half the viewport when centred and the old line otherwise; the end-of-page rule makes the last anchor current at 100% and does not change earlier positions; existing `currentAnchor` tests untouched
+- [x] e2e (1440×900): with a section's top at 60% of the viewport height the previous section is `current`; at 40% the section is `current`; scrolled to the bottom the last title is `current`; the page-bar label and the ruler label name the same section as the current title
+- [x] e2e at 360×640 (phone): behaviour unchanged (a section becomes current at the old line)
+- [x] Clicking a title still scrolls its section under the bar and that title becomes `current` (including the last, short section)
 
 **Verification:**
-- [ ] `node --test tests/unit/scroll.test.mjs`
-- [ ] `npx playwright test tests/e2e/flow-toc.spec.mjs` run 5 times, before and after the change, to see the existing intermittent failure is not made worse
-- [ ] `npm run check:task`
-- [ ] Manual: `npm run serve`, scroll a long part on a laptop and watch the switch happen mid-screen (screenshots at 1280 and 1440)
+- [x] `node --test tests/unit/scroll.test.mjs`
+- [x] `npx playwright test tests/e2e/flow-toc.spec.mjs` run 5 times, before and after the change, to see the existing intermittent failure is not made worse
+- [x] `npm run check:task`
+- [x] Manual: `npm run serve`, scroll a long part on a laptop and watch the switch happen mid-screen (screenshots at 1280 and 1440)
 
 **Dependencies:** None
 **Files:** `assets/js/core/scroll.js`, `tests/unit/scroll.test.mjs`, `assets/js/main.js`, `tests/e2e/flow-toc.spec.mjs`, `SPEC.md` (Layout: where the switch happens)

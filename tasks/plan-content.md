@@ -82,7 +82,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 - [ ] Owner skims the four sections, checks nikud with Dicta if wanted, says which patterns to change before more content follows
 
 ### Phase 9: Phrases
-- [ ] Task 25: Getting acquainted (`acquaintance`)
+- [x] Task 25: Getting acquainted (`acquaintance`)
 - [ ] Task 26: At the market (`market`)
 - [ ] Task 27: With a courier (`courier`)
 - [ ] Task 28: With neighbours (`neighbours`)

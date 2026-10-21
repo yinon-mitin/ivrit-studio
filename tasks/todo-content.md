@@ -63,6 +63,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Groups:** `ask` (questions, m. and f. where they differ), `answer` (ready answers: I live in …, I work as …, I study …, I have been here for … months).
 **Acceptance criteria:** [ ] Each question has an answer line in `answer`. [ ] No question repeats a `greetings` entry.
 **Verification:** [ ] `check:task` green. **Dependencies:** None. **Files:** `data/sections/acquaintance.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 28 entries: 13 questions (m./f. where they differ), 15 answers.
+
 
 ### Task 26: At the market (`market`)
 **Description:** Buying, asking the price and haggling a little.

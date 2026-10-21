@@ -1,0 +1,41 @@
+{
+  "id": "acquaintance",
+  "title": {"en": "Getting to know someone", "ru": "Знакомство"},
+  "icon": "נָעִים",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "ask", "title": {"en": "Asking", "ru": "Вопросы"}},
+    {"id": "answer", "title": {"en": "Answering", "ru": "Ответы"}}
+  ],
+  "items": [
+    {"id": "acquaintance.kama-zman-m", "he": "כַּמָּה זְמַן אַתָּה בָּאָרֶץ?", "translit": "Kama zman ata ba'aretz?", "en": "How long have you been in Israel? (m.)", "ru": "Как давно ты в стране? (м.)", "group": "ask", "note": {"en": "Ba-aretz, \"in the country\", means in Israel.", "ru": "Ba-aretz, «в стране», значит «в Израиле»."}, "verified": false},
+    {"id": "acquaintance.kama-zman-f", "he": "כַּמָּה זְמַן אַתְּ בָּאָרֶץ?", "translit": "Kama zman at ba'aretz?", "en": "How long have you been in Israel? (f.)", "ru": "Как давно ты в стране? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ma-ata-oseh", "he": "מָה אַתָּה עוֹשֶׂה?", "translit": "Ma ata oseh?", "en": "What do you do? (m.)", "ru": "Чем ты занимаешься? (м.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ma-at-osa", "he": "מָה אַתְּ עוֹשָׂה?", "translit": "Ma at osa?", "en": "What do you do? (f.)", "ru": "Чем ты занимаешься? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.bema-ata-oved", "he": "בְּמָה אַתָּה עוֹבֵד?", "translit": "Bema ata oved?", "en": "What do you work as? (m.)", "ru": "Кем ты работаешь? (м.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.bema-at-ovedet", "he": "בְּמָה אַתְּ עוֹבֶדֶת?", "translit": "Bema at ovedet?", "en": "What do you work as? (f.)", "ru": "Кем ты работаешь? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.eifo-ata-oved", "he": "אֵיפֹה אַתָּה עוֹבֵד?", "translit": "Eifo ata oved?", "en": "Where do you work? (m.)", "ru": "Где ты работаешь? (м.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.eifo-at-ovedet", "he": "אֵיפֹה אַתְּ עוֹבֶדֶת?", "translit": "Eifo at ovedet?", "en": "Where do you work? (f.)", "ru": "Где ты работаешь? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ma-ata-ohev", "he": "מָה אַתָּה אוֹהֵב לַעֲשׂוֹת?", "plain": "מה אתה אוהב לעשות?", "translit": "Ma ata ohev la'asot?", "en": "What do you like to do? (m.)", "ru": "Чем ты увлекаешься? (м.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ma-at-ohevet", "he": "מָה אַתְּ אוֹהֶבֶת לַעֲשׂוֹת?", "plain": "מה את אוהבת לעשות?", "translit": "Ma at ohevet la'asot?", "en": "What do you like to do? (f.)", "ru": "Чем ты увлекаешься? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ata-medaber-ivrit", "he": "אַתָּה מְדַבֵּר עִבְרִית?", "translit": "Ata medaber ivrit?", "en": "Do you speak Hebrew? (m.)", "ru": "Ты говоришь на иврите? (м.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.at-medaberet-ivrit", "he": "אַתְּ מְדַבֶּרֶת עִבְרִית?", "translit": "At medaberet ivrit?", "en": "Do you speak Hebrew? (f.)", "ru": "Ты говоришь на иврите? (ж.)", "group": "ask", "verified": false},
+    {"id": "acquaintance.ma-shlom-mishpakha", "he": "מַה שְׁלוֹם הַמִּשְׁפָּחָה?", "translit": "Ma shlom ha-mishpakha?", "en": "How is the family?", "ru": "Как семья?", "group": "ask", "verified": false},
+    {"id": "acquaintance.shmi", "he": "שְׁמִי דָּנָה", "translit": "Shmi Dana", "en": "My name is Dana.", "ru": "Меня зовут Дана.", "group": "answer", "verified": false},
+    {"id": "acquaintance.korim-li", "he": "קוֹרְאִים לִי דָּנָה", "translit": "Korim li Dana", "en": "They call me Dana.", "ru": "Меня зовут Дана (дословно: «зовут меня Дана»).", "group": "answer", "verified": false},
+    {"id": "acquaintance.naim-lehakir", "he": "נָעִים לְהַכִּיר", "plain": "נעים להכיר", "translit": "Na'im lehakir", "en": "Nice to meet you.", "ru": "Приятно познакомиться.", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-gar-m", "he": "אֲנִי גָּר בְּתֵל אָבִיב", "translit": "Ani gar be-Tel Aviv", "en": "I live in Tel Aviv. (m.)", "ru": "Я живу в Тель-Авиве. (м.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-gara-f", "he": "אֲנִי גָּרָה בְּתֵל אָבִיב", "translit": "Ani gara be-Tel Aviv", "en": "I live in Tel Aviv. (f.)", "ru": "Я живу в Тель-Авиве. (ж.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-more-m", "he": "אֲנִי מוֹרֶה", "translit": "Ani more", "en": "I am a teacher. (m.)", "ru": "Я учитель. (м.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-mora-f", "he": "אֲנִי מוֹרָה", "translit": "Ani mora", "en": "I am a teacher. (f.)", "ru": "Я учительница. (ж.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-oved-bekhevra", "he": "אֲנִי עוֹבֵד בְּחֶבְרָה", "translit": "Ani oved be-khevra", "en": "I work at a company. (m.)", "ru": "Я работаю в компании. (м.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-ovedet-bekhevra", "he": "אֲנִי עוֹבֶדֶת בְּחֶבְרָה", "translit": "Ani ovedet be-khevra", "en": "I work at a company. (f.)", "ru": "Я работаю в компании. (ж.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-kan-shana", "he": "אֲנִי כָּאן כְּבָר שָׁנָה", "translit": "Ani kan kvar shana", "en": "I have been here for a year already.", "ru": "Я здесь уже год.", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-kan-shlosha-khodashim", "he": "אֲנִי כָּאן שְׁלוֹשָׁה חֳדָשִׁים", "plain": "אני כאן שלושה חודשים", "translit": "Ani kan shlosha khodashim", "en": "I have been here for three months.", "ru": "Я здесь три месяца.", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-medaber-ktzat", "he": "אֲנִי מְדַבֵּר קְצָת עִבְרִית", "translit": "Ani medaber ktzat ivrit", "en": "I speak a little Hebrew. (m.)", "ru": "Я немного говорю на иврите. (м.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-ohev-letayel", "he": "אֲנִי אוֹהֵב לְטַיֵּל", "plain": "אני אוהב לטייל", "translit": "Ani ohev letayel", "en": "I like to hike and travel. (m.)", "ru": "Я люблю путешествовать и гулять. (м.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ani-ohevet-letayel", "he": "אֲנִי אוֹהֶבֶת לְטַיֵּל", "plain": "אני אוהבת לטייל", "translit": "Ani ohevet letayel", "en": "I like to hike and travel. (f.)", "ru": "Я люблю путешествовать и гулять. (ж.)", "group": "answer", "verified": false},
+    {"id": "acquaintance.ha-mishpakha-beseder", "he": "הַמִּשְׁפָּחָה בְּסֵדֶר", "translit": "Ha-mishpakha beseder", "en": "The family is fine.", "ru": "Семья в порядке.", "group": "answer", "verified": false}
+  ]
+}

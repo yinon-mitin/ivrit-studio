@@ -75,14 +75,14 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** A small banner at the bottom of the screen on touch phones. On Android/Chrome it listens for `beforeinstallprompt`, keeps the event, and the "Install" button calls `prompt()`; on iOS (no such event) it shows "Tap Share, then Add to Home Screen" with a share glyph drawn in SVG. Pure `core/install.js` decides what to show from (standalone, touch, iOS, can prompt, visit count, first-seen time, dismissed-at, now): shown on the second visit or after 30 s, never in standalone, never within 30 days of a dismissal, never after `appinstalled`. State is stored through `storage.js` and parsed field by field like `settings.js`. Strings in EN and RU. Hidden in print. The banner never covers the sticky header or page bar.
 
 **Acceptance criteria:**
-- [ ] Unit (`install.test.mjs`): every branch of `installOffer` (standalone, desktop, first visit, second visit, 30 s, snoozed, expired snooze, installed, iOS vs can-prompt); broken or missing stored state falls back to "not seen yet"
-- [ ] e2e (chromium-phone): a synthetic `beforeinstallprompt` event (with a stubbed `prompt()` and `userChoice`) shows the banner after the second visit; "Install" calls `prompt()`; "Not now" hides it and a reload within 30 days does not show it
-- [ ] e2e (webkit-iphone): the iOS hint appears under the same timing rules; no button that calls a missing API
-- [ ] The banner is absent on the laptop projects and in `display-mode: standalone`
-- [ ] No horizontal overflow at 360×640 and 390×664 with the banner open; axe clean in both themes and both languages; it does not overlap the sticky bar or the Hide toggle
+- [x] Unit (`install.test.mjs`): every branch of `installOffer` (standalone, desktop, first visit, second visit, 30 s, snoozed, expired snooze, installed, iOS vs can-prompt); broken or missing stored state falls back to "not seen yet"
+- [x] e2e (chromium-phone): a synthetic `beforeinstallprompt` event (with a stubbed `prompt()` and `userChoice`) shows the banner after the second visit; "Install" calls `prompt()`; "Not now" hides it and a reload within 30 days does not show it
+- [x] e2e (webkit-iphone): the iOS hint appears under the same timing rules; no button that calls a missing API
+- [x] The banner is absent on the laptop projects and in `display-mode: standalone`
+- [x] No horizontal overflow at 360×640 and 390×664 with the banner open; axe clean in both themes and both languages; it does not overlap the sticky bar or the Hide toggle
 
 **Verification:**
-- [ ] `npm test`, then `npm run check:task`, then `npm run e2e:webkit`
+- [x] `npm test`, then `npm run check:task`, then `npm run e2e:webkit`
 - [ ] Manual (Checkpoint F): a real Android phone installs from the banner; a real iPhone follows the hint
 
 **Dependencies:** Task 16

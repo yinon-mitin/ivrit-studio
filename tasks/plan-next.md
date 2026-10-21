@@ -60,7 +60,7 @@ T14, T15 and T16 have no dependency on each other and can be done in any order o
 
 ### Phase 7: Install as an app
 - [x] Task 16: The site is installable (manifest, icons, theme colour)
-- [ ] Task 17: Install prompt on phones (Android button, iOS hint)
+- [x] Task 17: Install prompt on phones (Android button, iOS hint)
 
 ### Checkpoint F: install
 - [ ] `npm run check:full` green; the first-load weight is still under 200 KB; **owner opens the site on a real Android and a real iPhone** and installs it (this cannot be proven in CI)

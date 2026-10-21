@@ -30,6 +30,12 @@ export const STRINGS = {
   themeDark: { en: 'Dark', ru: 'Тёмная' },
   language: { en: 'Language of the site and translations', ru: 'Язык сайта и переводов' },
   nikud: { en: 'Nikud', ru: 'Огласовки' },
+  installLabel: { en: 'Install the app', ru: 'Установка приложения' },
+  installText: { en: 'Install Ivrit Studio on your phone for quick access.', ru: 'Установите Ivrit Studio на телефон для быстрого доступа.' },
+  installIos: { en: 'To install: tap Share, then “Add to Home Screen”.', ru: 'Чтобы установить: нажмите «Поделиться», затем «На экран “Домой”».' },
+  installAction: { en: 'Install', ru: 'Установить' },
+  installLater: { en: 'Not now', ru: 'Не сейчас' },
+  installGotIt: { en: 'Got it', ru: 'Понятно' },
   sourceOnGithub: { en: 'Source on GitHub', ru: 'Исходный код на GitHub' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
 };

@@ -346,6 +346,37 @@ a { color: var(--accent); }
   .contents-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* Install offer: a banner at the bottom of the screen, on touch phones (SPEC Install). The content
+   gets room under it so its last lines can be read. */
+.install {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+  background: var(--sheet);
+  border-top: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.install[hidden] { display: none; }
+.install-share { flex: none; color: var(--accent); }
+.install-text { flex: 1 1 14rem; margin: 0; font-size: 0.9375rem; }
+.install-actions { display: flex; gap: 8px; margin-inline-start: auto; }
+
+.install-action {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.install-action:hover { background: var(--accent); filter: brightness(1.1); }
+:root[data-install] .content { padding-bottom: 150px; }
+
 .contents-source {
   display: flex;
   align-items: center;
@@ -1151,6 +1182,7 @@ a { color: var(--accent); }
   .flow-toc,
   .results-where,
   .contents-source,
+  .install,
   .control { display: none !important; }
 
   .content {

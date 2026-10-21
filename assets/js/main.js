@@ -11,6 +11,7 @@ import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js'
 import { scrollPercent, readingAnchor } from './core/scroll.js';
 import { mountRuler } from './ui/ruler.js';
 import { mountFlowToc } from './ui/flow-toc.js';
+import { mountInstall } from './ui/install.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
@@ -47,6 +48,8 @@ const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);
 });
+
+const install = mountInstall(document.body);
 
 /** @param {{ sections: string[] }} part */
 const loadPart = async (part) => ({ ...part, sections: await Promise.all(part.sections.map(loadSection)) });
@@ -111,6 +114,7 @@ async function render(navigated = false) {
     const route = resolveRoute(location.hash, index);
     nav.replaceChildren(renderPartNav(index.parts, route.name === 'part' ? route.part : null, settings.lang));
     search.setLang(settings.lang);
+    install.setLang(settings.lang);
     ruler.setLang(settings.lang);
     // Part screens put their page bar back; every other screen has none.
     pageBar.replaceChildren();

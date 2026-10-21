@@ -79,6 +79,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Groups:** `arriving` (I'm at the door, I'm downstairs, order for …, which floor, which apartment), `building` (floor, building, entrance, lift/stairs, intercom code, go up, go down), `door` (open, closed, ring, knock, leave at the door), `finish` (thank you, sign here, have a good day).
 **Acceptance criteria:** [ ] Floor/building/door/open-closed/code/up-down/order from the owner's list are all present. [ ] Each instruction exists for a man and a woman where the Hebrew differs.
 **Verification:** [ ] `check:task` green. **Dependencies:** None. **Files:** `data/sections/courier.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 40 entries; open/closed with forms; each instruction in m. and f. where it differs. Page-bar fixture made robust against short groups.
+
 
 ### Task 28: With neighbours (`neighbours`)
 **Description:** Short exchanges with the people next door.

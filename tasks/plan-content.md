@@ -84,7 +84,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 ### Phase 9: Phrases
 - [x] Task 25: Getting acquainted (`acquaintance`)
 - [x] Task 26: At the market (`market`)
-- [ ] Task 27: With a courier (`courier`)
+- [x] Task 27: With a courier (`courier`)
 - [ ] Task 28: With neighbours (`neighbours`)
 
 ### Checkpoint I: Phrases

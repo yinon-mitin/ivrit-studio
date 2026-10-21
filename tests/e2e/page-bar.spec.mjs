@@ -4,12 +4,15 @@
 import { test, expect } from '@playwright/test';
 import { open, readParts, expectNoSeriousAxe, expectNoHorizontalOverflow } from './helpers.mjs';
 
-// A part with several sections, one of them with at least three titled groups and not the last section
-// (the end of the page cannot scroll a group to the top, and there the last group counts as read).
-const hasGroups = (s) => (s.groups ?? []).length > 2;
-const part = readParts().find((p) => p.sections.length > 1 && p.sections.slice(0, -1).some(hasGroups));
-const grouped = part.sections.slice(0, -1).find(hasGroups);
-const group = grouped.groups[2];
+// A group long enough to fill the middle of the screen (the reading line on a laptop), in a section that is
+// not the last of a part with several sections (the end of the page cannot scroll a group to the top, and
+// there the last group counts as read). Today: the longest such group, in Vocabulary (countries).
+const candidates = readParts().filter((p) => p.sections.length > 1).flatMap((p) => p.sections.slice(0, -1).flatMap((section) => (
+  (section.groups ?? []).length > 2
+    ? section.groups.map((g) => ({ part: p, grouped: section, group: g, size: section.items.filter((item) => item.group === g.id).length }))
+    : []
+)));
+const { part, grouped, group } = candidates.reduce((best, c) => (c.size > best.size ? c : best));
 const bar = (page) => page.locator('#page-bar');
 const ready = (page) => page.locator('#app[data-ready="true"]').waitFor();
 

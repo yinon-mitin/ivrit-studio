@@ -26,6 +26,6 @@
     {"id": "infinitives.ohev-likro", "he": "אֲנִי אוֹהֵב לִקְרֹא", "plain": "אני אוהב לקרוא", "translit": "Ani ohev likro", "en": "I like to read. (m.)", "ru": "Я люблю читать. (м.)", "group": "frames", "verified": false},
     {"id": "infinitives.tzarikh-lalekhet", "he": "אֲנִי צָרִיךְ לָלֶכֶת", "translit": "Ani tzarikh lalekhet", "en": "I need to go. (m.)", "ru": "Мне нужно идти. (м.)", "group": "frames", "verified": false},
     {"id": "infinitives.yakhol-la-azor", "he": "אֲנִי יָכוֹל לַעֲזֹר", "plain": "אני יכול לעזור", "translit": "Ani yakhol la'azor", "en": "I can help. (m.)", "ru": "Я могу помочь. (м.)", "group": "frames", "verified": false},
-    {"id": "infinitives.efshar-lashevet", "he": "אֶפְשָׁר לָשֶׁבֶת?", "plain": "אפשר לשבת?", "translit": "Efshar lashevet?", "en": "May I sit?", "ru": "Можно сесть?", "group": "frames", "verified": false}
+    {"id": "infinitives.efshar-lashevet", "he": "אֶפְשָׁר לָשֶׁבֶת?", "translit": "Efshar lashevet?", "en": "May I sit?", "ru": "Можно сесть?", "group": "frames", "verified": false}
   ]
 }

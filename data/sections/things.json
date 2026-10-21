@@ -1,0 +1,41 @@
+{
+  "id": "things",
+  "title": {"en": "Objects", "ru": "Предметы"},
+  "icon": "חֵפֶץ",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "study", "title": {"en": "Study and writing", "ru": "Учёба и письмо"}},
+    {"id": "carry", "title": {"en": "To carry", "ru": "Что носим с собой"}},
+    {"id": "tech", "title": {"en": "Tech", "ru": "Техника"}}
+  ],
+  "items": [
+    {"id": "things.sefer", "he": "סֵפֶר", "translit": "Sefer", "en": "book", "ru": "книга", "group": "study", "emoji": "📖", "note": {"en": "With the article: ha-sefer (see Possession).", "ru": "С артиклем: ha-sefer (см. «Принадлежность»)."}, "verified": false},
+    {"id": "things.makhberet", "he": "מַחְבֶּרֶת", "translit": "Makhberet", "en": "notebook", "ru": "тетрадь", "group": "study", "emoji": "📓", "verified": false},
+    {"id": "things.et", "he": "עֵט", "translit": "Et", "en": "pen", "ru": "ручка", "group": "study", "emoji": "🖊️", "verified": false},
+    {"id": "things.iparon", "he": "עִפָּרוֹן", "plain": "עיפרון", "translit": "Iparon", "en": "pencil", "ru": "карандаш", "group": "study", "emoji": "✏️", "verified": false},
+    {"id": "things.mokhek", "he": "מוֹחֵק", "translit": "Mokhek", "en": "eraser", "ru": "ластик", "group": "study", "verified": false},
+    {"id": "things.neyar", "he": "נְיָר", "plain": "נייר", "translit": "Neyar", "en": "paper", "ru": "бумага", "group": "study", "verified": false},
+    {"id": "things.daf", "he": "דַּף", "translit": "Daf", "en": "sheet, page", "ru": "лист, страница", "group": "study", "emoji": "📄", "verified": false},
+    {"id": "things.mikhtav", "he": "מִכְתָּב", "translit": "Mikhtav", "en": "letter (mail)", "ru": "письмо", "group": "study", "emoji": "✉️", "note": {"en": "Not the letter of the alphabet: that is ot (see Alphabet).", "ru": "Не буква алфавита: та — ot (см. «Алфавит»)."}, "verified": false},
+    {"id": "things.maatafa", "he": "מַעֲטָפָה", "translit": "Ma'atafa", "en": "envelope", "ru": "конверт", "group": "study", "verified": false},
+    {"id": "things.misparayim", "he": "מִסְפָּרַיִם", "plain": "מספריים", "translit": "Misparayim", "en": "scissors", "ru": "ножницы", "group": "study", "emoji": "✂️", "verified": false},
+    {"id": "things.klamar", "he": "קַלְמָר", "translit": "Klamar", "en": "pencil case", "ru": "пенал", "group": "study", "verified": false},
+    {"id": "things.tik", "he": "תִּיק", "translit": "Tik", "en": "bag", "ru": "сумка, рюкзак", "group": "carry", "emoji": "👜", "verified": false},
+    {"id": "things.arnak", "he": "אַרְנָק", "translit": "Arnak", "en": "wallet", "ru": "кошелёк", "group": "carry", "verified": false},
+    {"id": "things.mafteakh", "he": "מַפְתֵּחַ", "translit": "Mafteakh", "en": "key", "ru": "ключ", "group": "carry", "emoji": "🔑", "verified": false},
+    {"id": "things.mishkafayim", "he": "מִשְׁקָפַיִם", "plain": "משקפיים", "translit": "Mishkafayim", "en": "glasses", "ru": "очки", "group": "carry", "emoji": "👓", "verified": false},
+    {"id": "things.mitriya", "he": "מִטְרִיָּה", "plain": "מטרייה", "translit": "Mitriya", "en": "umbrella", "ru": "зонт", "group": "carry", "emoji": "☂️", "verified": false},
+    {"id": "things.shaon", "he": "שָׁעוֹן", "translit": "Sha'on", "en": "watch, clock", "ru": "часы", "group": "carry", "emoji": "⌚", "verified": false},
+    {"id": "things.bakbuk", "he": "בַּקְבּוּק", "translit": "Bakbuk", "en": "bottle", "ru": "бутылка", "group": "carry", "verified": false},
+    {"id": "things.makhshev", "he": "מַחְשֵׁב", "translit": "Makhshev", "en": "computer", "ru": "компьютер", "group": "tech", "emoji": "🖥️", "verified": false},
+    {"id": "things.makhshev-nayad", "he": "מַחְשֵׁב נַיָּד", "plain": "מחשב נייד", "translit": "Makhshev nayad", "en": "laptop", "ru": "ноутбук", "group": "tech", "emoji": "💻", "verified": false},
+    {"id": "things.telefon", "he": "טֶלֶפוֹן", "translit": "Telefon", "en": "phone", "ru": "телефон", "group": "tech", "emoji": "📱", "verified": false},
+    {"id": "things.metaen", "he": "מְטַעֵן", "translit": "Metaen", "en": "charger", "ru": "зарядка", "group": "tech", "verified": false},
+    {"id": "things.oznayot", "he": "אוֹזְנִיּוֹת", "translit": "Oznayot", "en": "headphones", "ru": "наушники", "group": "tech", "emoji": "🎧", "verified": false},
+    {"id": "things.mikledet", "he": "מִקְלֶדֶת", "translit": "Mikledet", "en": "keyboard", "ru": "клавиатура", "group": "tech", "emoji": "⌨️", "verified": false},
+    {"id": "things.akhbar", "he": "עַכְבָּר", "translit": "Akhbar", "en": "mouse (computer, and the animal)", "ru": "мышь (компьютерная и зверёк)", "group": "tech", "emoji": "🖱️", "verified": false},
+    {"id": "things.masakh", "he": "מָסָךְ", "translit": "Masakh", "en": "screen", "ru": "экран", "group": "tech", "verified": false},
+    {"id": "things.matzlema", "he": "מַצְלֵמָה", "translit": "Matzlema", "en": "camera", "ru": "камера, фотоаппарат", "group": "tech", "emoji": "📷", "verified": false}
+  ]
+}

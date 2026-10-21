@@ -99,10 +99,12 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 ### Task 29: The new part "Around us" with Objects (`things`)
 **Description:** Creates part `around` (`Around us` / `Вокруг нас`) in `data/index.json` and its first section: computer, notebook, letter (`מכתב`, with a note: not `אות`, a letter of the alphabet), book, pen, pencil, paper, bag, key, phone, charger, table, chair and similar, ~30 entries in groups (`study`, `carry`, `tech`).
 **Acceptance criteria:**
-- [ ] The part shows in the header nav on a phone (the scrolling row still has no horizontal page scroll) and on a laptop; the contents page lists it; `#/around` works.
-- [ ] Old URLs of other parts keep working.
-- [ ] Emoji only where unambiguous.
+- [x] The part shows in the header nav on a phone (the scrolling row still has no horizontal page scroll) and on a laptop; the contents page lists it; `#/around` works.
+- [x] Old URLs of other parts keep working.
+- [x] Emoji only where unambiguous.
 **Verification:** [ ] `check:task` green [ ] phone nav screenshot at 360 px. **Dependencies:** None. **Files:** `data/sections/things.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** New part around (Around us / Вокруг нас) between Vocabulary and Grammar; things: 27 entries in 3 groups with emoji where clear; table and chair go to home (T31).
+
 
 ### Task 30: Animals (`animals`)
 **Groups:** `pets`, `farm`, `wild`, `birds-insects`, with emoji; ~30 entries; masculine/feminine pairs (`כלב/כלבה`, `חתול/חתולה`) go in `forms` (ms/fs) where the language really has both.

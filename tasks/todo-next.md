@@ -108,7 +108,7 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 - [ ] A deliberately broken `data/` response online does not replace the cached copy
 
 **Verification:**
-- [ ] `npm run check:full`
+- [x] `npm run check:full`
 - [ ] Manual: airplane mode on a phone after one visit; then a deploy and a visit to see the update
 
 **Dependencies:** Tasks 16 and 17; owner "go"
@@ -123,12 +123,12 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Measure before changing anything, and write the numbers to `tasks/notes/perf-baseline.md`: request waterfall depth and time to first content on `#/` and `#/reading` with a throttled profile (Playwright CDP network and CPU throttling), LCP and CLS via `PerformanceObserver`, the cost of toggling Nikud on the longest part (INP-style: input to next paint), and scroll handler cost on a long part. Run the `agent-skills:webperf` auditor against the same numbers and record its findings. No production code changes and no new dependencies.
 
 **Acceptance criteria:**
-- [ ] `tasks/notes/perf-baseline.md` has the numbers above for phone and laptop profiles, how they were taken (so they can be repeated), and a ranked list of what is worth fixing
-- [ ] Each proposed optimization names the number it should move and by roughly how much
+- [x] `tasks/notes/perf-baseline.md` has the numbers above for phone and laptop profiles, how they were taken (so they can be repeated), and a ranked list of what is worth fixing
+- [x] Each proposed optimization names the number it should move and by roughly how much
 
 **Verification:**
-- [ ] The measurement script (kept under `scripts/` or described precisely in the note) can be rerun and gives numbers within noise
-- [ ] Owner reads the note and picks what goes into Task 20
+- [x] The measurement script (kept under `scripts/` or described precisely in the note) can be rerun and gives numbers within noise
+- [x] Owner reads the note and picks what goes into Task 20
 
 **Dependencies:** None (best run after Task 17, so the numbers include the new files)
 **Files:** `tasks/notes/perf-baseline.md` (new), optionally `scripts/measure-perf.mjs` (new)
@@ -138,13 +138,13 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Only what Task 19 shows is worth it. Likely candidates: `modulepreload` hints for the static import graph plus a `preload` of `data/index.json` (a unit test keeps the hint list equal to the real imports, since there is no build step), and `content-visibility: auto` with `contain-intrinsic-size` on sections of long parts. Each change is its own commit with before/after numbers from Task 19's script.
 
 **Acceptance criteria:**
-- [ ] Every change improves the number it was proposed for, in the same script and profile; anything that does not is reverted, not kept "just in case"
-- [ ] Page weight, overflow, axe and external-request checks are unchanged or better; the reader is still kept in place after a settings change on a long page
-- [ ] If preload hints are added, the unit test fails when a module is added or removed without updating them
+- [x] Every change improves the number it was proposed for, in the same script and profile; anything that does not is reverted, not kept "just in case"
+- [x] Page weight, overflow, axe and external-request checks are unchanged or better; the reader is still kept in place after a settings change on a long page
+- [x] If preload hints are added, the unit test fails when a module is added or removed without updating them
 
 **Verification:**
-- [ ] `npm run check:full`
-- [ ] The perf script shows before/after in the commit message or in `tasks/notes/perf-baseline.md`
+- [x] `npm run check:full`
+- [x] The perf script shows before/after in the commit message or in `tasks/notes/perf-baseline.md`
 
 **Dependencies:** Task 19
 **Files:** `index.html`, `assets/css/app.css`, `tests/unit/` (hint list test), `tasks/notes/perf-baseline.md`

@@ -64,6 +64,7 @@ git push origin main   # деплой (GitHub Pages публикует main / ro
 ```
 index.html                 → единственная страница; <meta name="robots" content="noindex">
 manifest.webmanifest       → установка как приложения (имя, цвета, иконки)
+                           (в `index.html` — `modulepreload` на все модули `main.js`: сборки нет, список ведётся вручную, `tests/unit/preload.test.mjs` сверяет его с графом импортов)
 .nojekyll
 assets/
   css/app.css              → токены дизайна (:root, dark), раскладка, виды, печать

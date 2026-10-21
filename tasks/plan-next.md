@@ -70,8 +70,8 @@ T14, T15 and T16 have no dependency on each other and can be done in any order o
 - [ ] Task 18: Service worker: works offline and loads fast on repeat visits
 
 ### Phase 9: Performance
-- [ ] Task 19: Baseline: measure first load, long-page scroll and a settings toggle
-- [ ] Task 20: Optimizations the baseline justifies
+- [x] Task 19: Baseline: measure first load, long-page scroll and a settings toggle
+- [x] Task 20: Optimizations the baseline justifies
 
 ### Checkpoint G: complete
 - [ ] `npm run check:full` green; CI green on the push; the live site serves the new files

@@ -54,3 +54,11 @@ test('a part with several sections lists them under its title', async ({ page })
   await toc.last().click();
   await expect(page.locator(`#${part.sections.at(-1).id} .section-title`)).toBeInViewport();
 });
+
+test('links to the former EU I and EU II groups still open the Countries section', async ({ page }) => {
+  for (const group of ['eu-1', 'eu-2']) {
+    await open(page, `#/words/countries/${group}`);
+    await expect(page.locator('#content [data-screen="part"]')).toHaveAttribute('data-part', 'words');
+    await expect(page.locator('#countries .section-title')).toBeInViewport();
+  }
+});

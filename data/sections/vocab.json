@@ -21,7 +21,6 @@
     {"id": "vocab.ani-or", "he": "אֲנִי אוֹר", "translit": "Ani Or", "en": "I'm Or", "ru": "Я Ор", "verified": false},
     {"id": "vocab.student", "he": "סְטוּדֶנְט", "translit": "Student", "en": "student", "ru": "студент", "verified": false},
     {"id": "vocab.university", "he": "אוּנִיבֶרְסִיטָה", "translit": "Universita", "en": "university", "ru": "университет", "verified": false},
-    {"id": "vocab.hebrew-university", "he": "הָאוּנִיבֶרְסִיטָה הָעִבְרִית בִּירוּשָׁלַיִם", "translit": "Ha-universita ha-ivrit bi-Yerushalayim", "en": "The Hebrew University of Jerusalem", "ru": "Еврейский университет в Иерусалиме", "verified": false},
     {"id": "vocab.matematika", "he": "מַתֵּמָטִיקָה", "translit": "Matematika", "en": "mathematics", "ru": "математика", "verified": false},
     {"id": "vocab.im", "he": "עִם", "translit": "Im", "en": "with", "ru": "с", "verified": false},
     {"id": "vocab.al", "he": "עַל", "translit": "Al", "en": "about", "ru": "о", "verified": false},

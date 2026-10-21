@@ -32,13 +32,13 @@ Plan: `tasks/plan-design.md`. Separate from `tasks/todo.md`, `tasks/todo-next.md
 ### Task 38: Data: remove the Hebrew University entry; merge EU I and EU II
 **Description:** Delete `vocab.hebrew-university`. In `countries.json` replace the groups `eu-1` and `eu-2` by one group `eu` ("EU" / «ЕС»); the 27 entries keep their ids and order, only `group` changes.
 **Acceptance criteria:**
-- [ ] `vocab.json` has 22 entries; `vocab.university` is still there; nothing in the repo refers to the removed id.
-- [ ] `countries.json` has five groups (`eu`, `europe-other`, `asia`, `americas`, `mideast-africa-oceania`); `eu` holds 27 entries.
-- [ ] `#/words/countries/eu-1` and `#/words/countries/eu-2` show the Countries section (the page is scrolled to it, not to the top).
-- [ ] The page-bar group list and the contents page show the new group without code changes.
+- [x] `vocab.json` has 22 entries; `vocab.university` is still there; nothing in the repo refers to the removed id.
+- [x] `countries.json` has five groups (`eu`, `europe-other`, `asia`, `americas`, `mideast-africa-oceania`); `eu` holds 27 entries.
+- [x] `#/words/countries/eu-1` and `#/words/countries/eu-2` show the Countries section (the page is scrolled to it, not to the top).
+- [x] The page-bar group list and the contents page show the new group without code changes.
 **Verification:**
-- [ ] A test for the old links first (it passes already if the fallback holds; it documents the promise).
-- [ ] `node scripts/validate.mjs`, `npm run check:task` green.
+- [x] A test for the old links first (it passes already if the fallback holds; it documents the promise).
+- [x] `node scripts/validate.mjs`, `npm run check:task` green.
 **Dependencies:** None. **Files:** `data/sections/vocab.json`, `data/sections/countries.json`, `tests/e2e/navigation.spec.mjs`. **Scope:** Small.
 
 ### Task 39: Quiet "back to top" button

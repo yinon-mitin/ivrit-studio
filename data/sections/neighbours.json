@@ -2,7 +2,7 @@
   "id": "neighbours",
   "title": {"en": "With neighbours", "ru": "С соседями"},
   "icon": "שָׁכֵן",
-  "view": "list",
+  "view": "phrases",
   "nikudToggle": true,
   "groups": [
     {"id": "greet", "title": {"en": "Greetings", "ru": "Приветствия"}},

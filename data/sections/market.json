@@ -2,7 +2,7 @@
   "id": "market",
   "title": {"en": "At the market", "ru": "На рынке"},
   "icon": "שׁוּק",
-  "view": "list",
+  "view": "phrases",
   "nikudToggle": true,
   "groups": [
     {"id": "ask", "title": {"en": "Asking", "ru": "Спросить"}},

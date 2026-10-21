@@ -60,9 +60,9 @@ These rows have their tool wired but nothing to run yet. The task that creates t
 
 | ID | Rule | Path | Reason | Owner | Expires |
 |----|------|------|--------|-------|---------|
-| E2 | Floor: no assertion removed | `tests/e2e/cheatsheet.spec.mjs` (letter grid test, 2 assertions) | The owner asked on 2026-10-21 for a compact phone alphabet: 9 letters per row instead of 5–6 (Task 37, `tasks/todo-design.md`). The assertions changed from `5–6` to `9` on phones; the guard reads any edited assertion as a removed one. | @yinon-mitin (approved in conversation, 2026-10-21) | 2026-11-20, or when Task 37 is pushed |
 
 New rows need the owner's approval in the conversation and an expiry ≤ 90 days.
 
 Closed:
 - E1 (2026-10-20 to 2026-10-20): tests and the "One screen" rule removed with Blitz, progress, Anki and weeks in the pivot to a cheatsheet (`tasks/plan.md` Tasks 1–9). Closed when that work was pushed (`64e6680`); owner @yinon-mitin.
+- E2 (2026-10-21 to 2026-10-21): two letter-grid assertions in `tests/e2e/cheatsheet.spec.mjs` changed from 5–6 to 9 letters per row on phones (Task 37, compact alphabet). Closed when that work was pushed (`a6ee91f`); owner @yinon-mitin.

@@ -3,7 +3,7 @@
     { "id": "reading", "title": { "en": "Reading", "ru": "Чтение" }, "sections": ["alphabet", "nikud", "geresh"] },
     { "id": "phrases", "title": { "en": "Phrases", "ru": "Фразы" }, "sections": ["greetings", "acquaintance", "market", "courier", "neighbours"] },
     { "id": "words", "title": { "en": "Vocabulary", "ru": "Лексика" }, "sections": ["vocab", "family", "numbers", "time", "colors", "countries"] },
-    { "id": "around", "title": { "en": "Around us", "ru": "Вокруг нас" }, "sections": ["things", "animals"] },
+    { "id": "around", "title": { "en": "Around us", "ru": "Вокруг нас" }, "sections": ["things", "animals", "home"] },
     { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["gender-number", "verbs", "possession", "places", "infinitives"] }
   ]
 }

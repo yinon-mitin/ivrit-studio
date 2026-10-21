@@ -120,3 +120,13 @@ describe('searchParts', () => {
     assert.equal(JSON.stringify(parts), before);
   });
 });
+
+describe('acronyms with gershayim', () => {
+  const mamad = { id: 'home.mamad', he: 'מָמָ״ד', translit: 'Mamad', en: 'safe room', ru: 'мамад' };
+
+  it('are found without the quote mark, and with a typed ASCII one', () => {
+    assert.equal(matchesEntry(mamad, searchKey('ממד')), true);
+    assert.equal(matchesEntry(mamad, searchKey('ממ"ד')), true);
+    assert.equal(matchesEntry(mamad, searchKey('ממ״ד')), true);
+  });
+});

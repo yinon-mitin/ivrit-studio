@@ -117,6 +117,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Groups:** `rooms`, `things`, `shelter` (ממ"ד dwelling safe room; ממ"ק on the floor of a building; ממ"מ in an institution; מקלט a public shelter).
 **Acceptance criteria:** [ ] Each shelter kind has a `note` with what the abbreviation stands for, in both languages. [ ] The owner confirms the four meanings at Checkpoint J. [ ] Decide whether the query "ממד" (no gershayim) should match: if yes, a `core/search.js` change with a failing unit test first; if no, nothing.
 **Verification:** [ ] `check:task` green. **Dependencies:** T29. **Files:** `data/sections/home.json`, `data/index.json` (+ `search.js` and its test only if decided). **Scope:** Medium.
+**Outcome:** 37 entries in 3 groups. Safe-room kinds as agreed: mamad (apartment), mamak (floor), mamam (institution), miklat (public shelter), plus the general term, siren and red alert. Search already ignores gershayim; a unit test documents it.
+
 
 ### Task 32: Kitchen (`kitchen`)
 **Groups:** `dishes` (plate, cup, glass, bowl, pot, pan), `cutlery` (knife, fork, spoon, teaspoon), `appliances` (fridge, freezer, oven, stove, microwave, kettle), `other` (sink, tap, cutting board, tablecloth). ~25 entries. **Acceptance criteria:** [ ] Nothing repeats `home`. **Verification:** [ ] `check:task` green. **Dependencies:** T29. **Files:** `data/sections/kitchen.json`, `data/index.json`. **Scope:** Small–Medium.

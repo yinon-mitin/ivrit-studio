@@ -25,10 +25,12 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Description:** "Whose is it?" `של`; `של אני → שלי`; `הספר` = "the book".
 **Groups:** `whose` (`של מי?`, `של` + a name: `הספר של דנה`), `mine` (שלי, שלך m./f., שלו, שלה, שלנו, שלכם, שלכן, שלהם, שלהן — with one example each in `note`), `the` (the prefix `ה-`: `ספר` a book → `הספר` the book; Hebrew has no "a"; `הַ` doubles nothing in writing), `examples` (`הספר שלי`, `הכלב של דנה`, `זה שלך?`).
 **Acceptance criteria:**
-- [ ] All ten pronoun forms of `של` are present and the group answers "how do I say 'my book'".
-- [ ] `ה-` is explained in `note` in both languages in one or two lines; the example pair is book / the book.
-- [ ] No entry duplicates `gender-number` (`ze`, `zot`).
+- [x] All ten pronoun forms of `של` are present and the group answers "how do I say 'my book'".
+- [x] `ה-` is explained in `note` in both languages in one or two lines; the example pair is book / the book.
+- [x] No entry duplicates `gender-number` (`ze`, `zot`).
 **Verification:** [ ] `check:task` green. **Dependencies:** None (T21 supplies the pronoun names). **Files:** `data/sections/possession.json`, `data/index.json`. **Scope:** Small–Medium.
+**Outcome:** 23 entries: whose, my/your/his… (10 forms of shel), the (ha-), examples.
+
 
 ### Task 23: Where from, where to, on, over, under (`places`)
 **Description:** Direction and position: "откуда, куда, на чем-то, над чем-то/под чем-то".

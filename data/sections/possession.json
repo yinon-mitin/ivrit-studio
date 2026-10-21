@@ -1,0 +1,38 @@
+{
+  "id": "possession",
+  "title": {"en": "Possession & \"the\"", "ru": "Принадлежность и «the»"},
+  "icon": "שֶׁל",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "whose", "title": {"en": "Whose is it?", "ru": "Чьё это?"}},
+    {"id": "mine", "title": {"en": "Mine, yours, his…", "ru": "Мой, твой, его…"}},
+    {"id": "the", "title": {"en": "\"The\" — ha-", "ru": "«The» — ha-"}},
+    {"id": "examples", "title": {"en": "Examples", "ru": "Примеры"}}
+  ],
+  "items": [
+    {"id": "possession.shel", "he": "שֶׁל", "translit": "Shel", "en": "of, belonging to", "ru": "чей-то, принадлежащий", "group": "whose", "note": {"en": "Comes before the owner: ha-sefer shel Dana — Dana's book.", "ru": "Ставится перед владельцем: ha-sefer shel Dana — книга Даны."}, "verified": false},
+    {"id": "possession.shel-mi", "he": "שֶׁל מִי זֶה?", "translit": "Shel mi ze?", "en": "Whose is this?", "ru": "Чьё это? (чей, чья)", "group": "whose", "verified": false},
+    {"id": "possession.sefer-dana", "he": "הַסֵּפֶר שֶׁל דָּנָה", "translit": "Ha-sefer shel Dana", "en": "Dana's book", "ru": "книга Даны", "group": "whose", "verified": false},
+    {"id": "possession.kelev-yossi", "he": "הַכֶּלֶב שֶׁל יוֹסִי", "translit": "Ha-kelev shel Yossi", "en": "Yossi's dog", "ru": "собака Йоси", "group": "whose", "verified": false},
+    {"id": "possession.sheli", "he": "שֶׁלִּי", "translit": "Sheli", "en": "my, mine", "ru": "мой, моя, моё, мои", "group": "mine", "note": {"en": "shel + ani (of + I) = sheli. The same for a man and a woman.", "ru": "shel + ani («от» + «я») = sheli. Одинаково для мужчины и женщины."}, "verified": false},
+    {"id": "possession.shelkha", "he": "שֶׁלְּךָ", "translit": "Shelkha", "en": "your, yours (m.)", "ru": "твой, твоя, твоё (м.)", "group": "mine", "verified": false},
+    {"id": "possession.shelakh", "he": "שֶׁלָּךְ", "translit": "Shelakh", "en": "your, yours (f.)", "ru": "твой, твоя, твоё (ж.)", "group": "mine", "verified": false},
+    {"id": "possession.shelo", "he": "שֶׁלּוֹ", "translit": "Shelo", "en": "his", "ru": "его", "group": "mine", "verified": false},
+    {"id": "possession.shela", "he": "שֶׁלָּהּ", "translit": "Shela", "en": "her, hers", "ru": "её", "group": "mine", "verified": false},
+    {"id": "possession.shelanu", "he": "שֶׁלָּנוּ", "translit": "Shelanu", "en": "our, ours", "ru": "наш", "group": "mine", "verified": false},
+    {"id": "possession.shelakhem", "he": "שֶׁלָּכֶם", "translit": "Shelakhem", "en": "your, yours (m. pl.)", "ru": "ваш (м.)", "group": "mine", "verified": false},
+    {"id": "possession.shelakhen", "he": "שֶׁלָּכֶן", "translit": "Shelakhen", "en": "your, yours (f. pl.)", "ru": "ваш (ж.)", "group": "mine", "verified": false},
+    {"id": "possession.shelahem", "he": "שֶׁלָּהֶם", "translit": "Shelahem", "en": "their, theirs (m.)", "ru": "их (м.)", "group": "mine", "verified": false},
+    {"id": "possession.shelahen", "he": "שֶׁלָּהֶן", "translit": "Shelahen", "en": "their, theirs (f.)", "ru": "их (ж.)", "group": "mine", "verified": false},
+    {"id": "possession.ha-sefer", "he": "הַסֵּפֶר", "translit": "Ha-sefer", "en": "the book", "ru": "книга (определённая)", "group": "the", "note": {"en": "Ha- is glued to the word: sefer is \"a book\", ha-sefer is \"the book\". There is no \"a\" in Hebrew, and ha- is the same for every gender and number.", "ru": "Ha- приклеивается к слову: sefer — «книга», ha-sefer — «та самая книга». Неопределённого артикля нет, а ha- одинаково для любого рода и числа."}, "verified": false},
+    {"id": "possession.ha-bayit", "he": "הַבַּיִת", "translit": "Ha-bayit", "en": "the house", "ru": "дом (определённый)", "group": "the", "verified": false},
+    {"id": "possession.sefer-sheli", "he": "הַסֵּפֶר שֶׁלִּי", "translit": "Ha-sefer sheli", "en": "my book", "ru": "моя книга", "group": "the", "note": {"en": "Literally \"the book of me\": the owner word comes after the noun.", "ru": "Буквально «книга моя»: слово владельца стоит после существительного."}, "verified": false},
+    {"id": "possession.kelev-shela", "he": "הַכֶּלֶב שֶׁלָּהּ", "translit": "Ha-kelev shela", "en": "her dog", "ru": "её собака", "group": "the", "verified": false},
+    {"id": "possession.makhshev-shelkha", "he": "הַמַּחְשֵׁב שֶׁלְּךָ", "translit": "Ha-makhshev shelkha", "en": "your computer (m.)", "ru": "твой компьютер (м.)", "group": "the", "verified": false},
+    {"id": "possession.ze-sheli", "he": "זֶה שֶׁלִּי", "translit": "Ze sheli", "en": "This is mine.", "ru": "Это моё.", "group": "examples", "verified": false},
+    {"id": "possession.ze-shelkha", "he": "זֶה שֶׁלְּךָ?", "translit": "Ze shelkha?", "en": "Is this yours? (m.)", "ru": "Это твоё? (м.)", "group": "examples", "verified": false},
+    {"id": "possession.ze-shelakh", "he": "זֶה שֶׁלָּךְ?", "translit": "Ze shelakh?", "en": "Is this yours? (f.)", "ru": "Это твоё? (ж.)", "group": "examples", "verified": false},
+    {"id": "possession.ha-bayit-shelanu", "he": "הַבַּיִת שֶׁלָּנוּ", "translit": "Ha-bayit shelanu", "en": "Our house", "ru": "Наш дом", "group": "examples", "verified": false}
+  ]
+}

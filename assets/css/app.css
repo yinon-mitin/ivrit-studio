@@ -256,10 +256,12 @@ a { color: var(--accent); }
   font-size: 1.1em;
   font-weight: 600;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
-/* A narrow phone keeps the cursive mark; the name stays for screen readers. */
-@media (max-width: 26rem) {
+/* A phone keeps the cursive mark; the name stays for screen readers. Up to 32rem the name does not fit
+   next to the controls in Russian without pushing the page sideways; it never wraps (nowrap above). */
+@media (max-width: 32rem) {
   .brand-name {
     position: absolute;
     width: 1px;

@@ -7,12 +7,12 @@ Plan: `tasks/plan-design.md`. Separate from `tasks/todo.md`, `tasks/todo-next.md
 ### Task 36: The site name never wraps; header ≤ 132 px at every phone width
 **Description:** From 417 px the name "Ivrit Studio" shows and wraps to two lines, so header + page bar is 138 px (SPEC: ≤ 132 px on a phone). Keep it on one line, and hide it earlier if it cannot fit with the controls.
 **Acceptance criteria:**
-- [ ] At 360, 390, 412 and 430 px wide, in English and Russian, `.brand-name` is one line (height equals its line height) or hidden, and header + page bar ≤ 132 px.
-- [ ] No horizontal overflow at any of those widths; search, settings and the four controls still fit on the first row.
-- [ ] SPEC's header sentence names the rule (the name never wraps).
+- [x] At 360, 390, 412 and 430 px wide, in English and Russian, `.brand-name` is one line (height equals its line height) or hidden, and header + page bar ≤ 132 px.
+- [x] No horizontal overflow at any of those widths; search, settings and the four controls still fit on the first row.
+- [x] SPEC's header sentence names the rule (the name never wraps).
 **Verification:**
-- [ ] Failing test first: a new spec (or a block in `shell.spec.mjs`) that sets `page.setViewportSize` to 412 and 430 and fails on today's code (it measures 138 px at 430).
-- [ ] `npm run check:task` green; screenshot at 430×800.
+- [x] Failing test first: a new spec (or a block in `shell.spec.mjs`) that sets `page.setViewportSize` to 412 and 430 and fails on today's code (it measures 138 px at 430).
+- [x] `npm run check:task` green (268 e2e). Outcome: the name hides up to 32rem (512 px), because in Russian it does not fit next to the controls at 417–480 px; new spec `header-widths.spec.mjs` at 9 widths.
 **Dependencies:** None. **Files:** `assets/css/app.css`, `tests/e2e/shell.spec.mjs`, `SPEC.md`. **Scope:** Small.
 
 ### Task 37: Compact alphabet: Letters and Finals on one phone screen

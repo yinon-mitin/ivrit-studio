@@ -49,7 +49,7 @@ Nothing depends on anything else. Order by size and risk: T36 (a bug, small) →
 ## Task List
 
 ### Phase 12: Design fixes
-- [ ] Task 36: The site name never wraps; header ≤ 132 px at every phone width
+- [x] Task 36: The site name never wraps; header ≤ 132 px at every phone width
 - [ ] Task 37: Compact alphabet: Letters and Finals on one phone screen
 - [ ] Task 38: Data: remove the Hebrew University entry; merge EU I and EU II
 - [ ] Task 39: Quiet "back to top" button

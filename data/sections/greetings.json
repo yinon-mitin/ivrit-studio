@@ -9,6 +9,7 @@
     {"id": "question-words", "title": {"en": "Questions", "ru": "Вопросы"}}
   ],
   "items": [
+    {"id": "greetings.shalom", "he": "שָׁלוֹם", "translit": "Shalom", "en": "hello, hi, hey, bye", "ru": "привет, здравствуйте, пока", "group": "small-talk", "verified": false},
     {"id": "greetings.ma-nishma", "he": "מַה נִּשְׁמָע?", "translit": "Ma nishma?", "en": "How's it going?", "ru": "Как дела?", "group": "small-talk", "verified": false},
     {"id": "greetings.ma-shlomkha", "he": "מַה שְּׁלוֹמְךָ?", "translit": "Ma shlomkha?", "en": "How are you? (m.)", "ru": "Как ты? (м.)", "group": "small-talk", "verified": false},
     {"id": "greetings.ma-shlomekh", "he": "מַה שְּׁלוֹמֵךְ?", "translit": "Ma shlomekh?", "en": "How are you? (f.)", "ru": "Как ты? (ж.)", "group": "small-talk", "verified": false},

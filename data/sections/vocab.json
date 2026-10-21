@@ -17,6 +17,16 @@
     {"id": "vocab.aba", "he": "אַבָּא", "translit": "Aba", "en": "dad", "ru": "папа", "verified": false},
     {"id": "vocab.isha", "he": "אִשָּׁה", "plain": "אישה", "translit": "Isha", "en": "woman", "ru": "женщина", "related": [{"he": "נָשִׁים", "translit": "Nashim", "en": "women", "ru": "женщины"}], "verified": false},
     {"id": "vocab.limon", "he": "לִימוֹן", "translit": "Limon", "en": "lemon", "ru": "лимон", "related": [{"he": "לִימוֹנִים", "translit": "Limonim", "en": "lemons", "ru": "лимоны"}], "verified": false},
-    {"id": "vocab.khala", "he": "חַלָּה", "translit": "Khala", "en": "challah", "ru": "хала", "related": [{"he": "חַלּוֹת", "translit": "Khalot", "en": "challahs", "ru": "халы"}], "verified": false}
+    {"id": "vocab.khala", "he": "חַלָּה", "translit": "Khala", "en": "challah", "ru": "хала", "related": [{"he": "חַלּוֹת", "translit": "Khalot", "en": "challahs", "ru": "халы"}], "verified": false},
+    {"id": "vocab.ani-or", "he": "אֲנִי אוֹר", "translit": "Ani Or", "en": "I'm Or", "ru": "Я Ор", "verified": false},
+    {"id": "vocab.student", "he": "סְטוּדֶנְט", "translit": "Student", "en": "student", "ru": "студент", "verified": false},
+    {"id": "vocab.university", "he": "אוּנִיבֶרְסִיטָה", "translit": "Universita", "en": "university", "ru": "университет", "verified": false},
+    {"id": "vocab.hebrew-university", "he": "הָאוּנִיבֶרְסִיטָה הָעִבְרִית בִּירוּשָׁלַיִם", "translit": "Ha-universita ha-ivrit bi-Yerushalayim", "en": "The Hebrew University of Jerusalem", "ru": "Еврейский университет в Иерусалиме", "verified": false},
+    {"id": "vocab.matematika", "he": "מַתֵּמָטִיקָה", "translit": "Matematika", "en": "mathematics", "ru": "математика", "verified": false},
+    {"id": "vocab.im", "he": "עִם", "translit": "Im", "en": "with", "ru": "с", "verified": false},
+    {"id": "vocab.al", "he": "עַל", "translit": "Al", "en": "about", "ru": "о", "verified": false},
+    {"id": "vocab.profesor", "he": "הַפְּרוֹפֶסוֹר", "translit": "Ha-profesor", "en": "the professor", "ru": "профессор", "verified": false},
+    {"id": "vocab.studentim", "he": "הַסְטוּדֶנְטִים", "translit": "Ha-studentim", "en": "the students", "ru": "студенты", "verified": false},
+    {"id": "vocab.misparim", "he": "הַמִּסְפָּרִים", "translit": "Ha-misparim", "en": "the numbers", "ru": "числа", "verified": false}
   ]
 }

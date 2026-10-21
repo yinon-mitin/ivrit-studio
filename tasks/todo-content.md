@@ -127,6 +127,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 
 ### Task 33: Fruit and vegetables (`produce`)
 **Groups:** `fruit`, `vegetables` (~40 entries, emoji where a clear one exists). **Acceptance criteria:** [ ] `limon` (already in `vocab`) is not duplicated, only referenced by note. [ ] Where a plural is the usual form in a shop (`עגבניות`), the entry's `he` is the singular and the plural is `related`. **Verification:** [ ] `check:task` green; **duration noted**. **Dependencies:** T29. **Files:** `data/sections/produce.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 34 entries (18 fruit, 16 vegetables) with emoji where clear and plural forms as related; limon stays in Words, referenced by a note.
+
 
 ### Task 34: Partners and relatives in Family (`family`, extended)
 **Description:** Husband (exists), wife, partner m./f., boyfriend/girlfriend, fiancé(e), ex, in-laws, cousin, niece, nephew, aunt, step-/half- kin as short as useful. Friend (exists as `family.khaver`) gets a `note`: the same word means "boyfriend" and `חברה` "girlfriend".

@@ -36,9 +36,11 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Description:** Direction and position: "откуда, куда, на чем-то, над чем-то/под чем-то".
 **Groups:** `questions` (מאיפה, לאן; `איפה` already exists as `greetings.eifo`, linked by note), `prefixes` (מ- from, ל- to, ב- in/at, with one example each: `מירושלים`, `לתל אביב`, `בבית`), `position` (על on, מעל above, מתחת under, ליד next to, בין between, לפני before/in front of, אחרי after, מאחורי behind, מול opposite, בתוך inside), `sentences` (`הספר על השולחן`, `החתול מתחת לכיסא`, `אני גר ליד הים`).
 **Acceptance criteria:**
-- [ ] Every preposition has at least one use example; the three prefixes show how the vowel changes in the name (`מִ`/`לְ`/`בְּ`).
-- [ ] `על`, `מעל`, `מתחת` are shown side by side in one group, in an order the learner reads as a picture (on, above, under).
+- [x] Every preposition has at least one use example; the three prefixes show how the vowel changes in the name (`מִ`/`לְ`/`בְּ`).
+- [x] `על`, `מעל`, `מתחת` are shown side by side in one group, in an order the learner reads as a picture (on, above, under).
 **Verification:** [ ] `check:task` green. **Dependencies:** None. **Files:** `data/sections/places.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 27 entries: where from/to, prefixes mi/le/be (+ the: me-ha, la, ba), 10 position words, 6 sentences. Hebrew-only spelling check printed and read.
+
 
 ### Task 24: Infinitives (`infinitives`)
 **Description:** The logic of the infinitive on a few simple examples, not a full binyan table.

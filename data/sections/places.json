@@ -1,0 +1,42 @@
+{
+  "id": "places",
+  "title": {"en": "Where from, where to, on, under", "ru": "Откуда, куда, на, над, под"},
+  "icon": "עַל",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "questions", "title": {"en": "Where from, where to", "ru": "Откуда, куда"}},
+    {"id": "prefixes", "title": {"en": "Prefixes: from, to, in", "ru": "Приставки: из, в, на"}},
+    {"id": "position", "title": {"en": "On, over, under…", "ru": "На, над, под…"}},
+    {"id": "sentences", "title": {"en": "Sentences", "ru": "Предложения"}}
+  ],
+  "items": [
+    {"id": "places.me-eifo", "he": "מֵאֵיפֹה", "translit": "Me'eifo", "en": "from where", "ru": "откуда", "group": "questions", "note": {"en": "Where: eifo (see Questions & small talk). Where from: me'eifo. Where to: le'an.", "ru": "«Где» — eifo (раздел «Вопросы и общение»). «Откуда» — me'eifo. «Куда» — le'an."}, "verified": false},
+    {"id": "places.le-an", "he": "לְאָן", "translit": "Le'an", "en": "where to", "ru": "куда", "group": "questions", "verified": false},
+    {"id": "places.mi", "he": "מִ־", "translit": "Mi-", "en": "from", "ru": "из, от, с", "group": "prefixes", "note": {"en": "Glued to the place: mi-Yerushalayim. Before the article it is me-ha-: me-ha-bayit.", "ru": "Приклеивается к месту: mi-Yerushalayim. Перед артиклем — me-ha-: me-ha-bayit."}, "verified": false},
+    {"id": "places.le", "he": "לְ־", "translit": "Le-", "en": "to", "ru": "в, к, на (куда)", "group": "prefixes", "verified": false},
+    {"id": "places.be", "he": "בְּ־", "translit": "Be-", "en": "in, at", "ru": "в, на (где)", "group": "prefixes", "verified": false},
+    {"id": "places.mi-yerushalayim", "he": "מִירוּשָׁלַיִם", "translit": "Mi-Yerushalayim", "en": "from Jerusalem", "ru": "из Иерусалима", "group": "prefixes", "verified": false},
+    {"id": "places.le-tel-aviv", "he": "לְתֵל אָבִיב", "translit": "Le-Tel Aviv", "en": "to Tel Aviv", "ru": "в Тель-Авив", "group": "prefixes", "verified": false},
+    {"id": "places.be-kheifa", "he": "בְּחֵיפָה", "translit": "Be-Kheifa", "en": "in Haifa", "ru": "в Хайфе", "group": "prefixes", "verified": false},
+    {"id": "places.me-ha-bayit", "he": "מֵהַבַּיִת", "translit": "Me-ha-bayit", "en": "from the house", "ru": "из дома", "group": "prefixes", "verified": false},
+    {"id": "places.la-bayit", "he": "לַבַּיִת", "translit": "La-bayit", "en": "to the house", "ru": "в дом, к дому", "group": "prefixes", "note": {"en": "le + ha = la: \"to the\".", "ru": "le + ha = la: «в/к» + артикль."}, "verified": false},
+    {"id": "places.ba-bayit", "he": "בַּבַּיִת", "translit": "Ba-bayit", "en": "in the house, at home", "ru": "в доме, дома", "group": "prefixes", "note": {"en": "be + ha = ba: \"in the\".", "ru": "be + ha = ba: «в» + артикль."}, "verified": false},
+    {"id": "places.al", "he": "עַל", "translit": "Al", "en": "on, onto", "ru": "на", "group": "position", "note": {"en": "Also \"about\" (see Words).", "ru": "Также «о» (см. «Лексика»)."}, "verified": false},
+    {"id": "places.me-al", "he": "מֵעַל", "translit": "Me'al", "en": "above, over", "ru": "над", "group": "position", "verified": false},
+    {"id": "places.mi-takhat", "he": "מִתַּחַת", "translit": "Mitakhat", "en": "under, below", "ru": "под", "group": "position", "verified": false},
+    {"id": "places.le-yad", "he": "לְיַד", "translit": "Leyad", "en": "next to, by", "ru": "рядом с, у", "group": "position", "verified": false},
+    {"id": "places.bein", "he": "בֵּין", "translit": "Bein", "en": "between", "ru": "между", "group": "position", "verified": false},
+    {"id": "places.lifnei", "he": "לִפְנֵי", "translit": "Lifnei", "en": "in front of, before", "ru": "перед, до", "group": "position", "verified": false},
+    {"id": "places.akharei", "he": "אַחֲרֵי", "translit": "Akharei", "en": "after", "ru": "после", "group": "position", "verified": false},
+    {"id": "places.me-akhorei", "he": "מֵאֲחוֹרֵי", "translit": "Me'akhorei", "en": "behind", "ru": "позади, за", "group": "position", "verified": false},
+    {"id": "places.mul", "he": "מוּל", "translit": "Mul", "en": "opposite, facing", "ru": "напротив", "group": "position", "verified": false},
+    {"id": "places.be-tokh", "he": "בְּתוֹךְ", "translit": "Betokh", "en": "inside", "ru": "внутри, в", "group": "position", "verified": false},
+    {"id": "places.sefer-al-shulkhan", "he": "הַסֵּפֶר עַל הַשֻּׁלְחָן", "plain": "הספר על השולחן", "translit": "Ha-sefer al ha-shulkhan", "en": "The book is on the table.", "ru": "Книга на столе.", "group": "sentences", "verified": false},
+    {"id": "places.khatul-mitakhat", "he": "הַחָתוּל מִתַּחַת לַכִּסֵּא", "plain": "החתול מתחת לכיסא", "translit": "Ha-khatul mitakhat la-kise", "en": "The cat is under the chair.", "ru": "Кошка под стулом.", "group": "sentences", "verified": false},
+    {"id": "places.menora-me-al", "he": "הַמְּנוֹרָה מֵעַל הַשֻּׁלְחָן", "plain": "המנורה מעל השולחן", "translit": "Ha-menora me'al ha-shulkhan", "en": "The lamp is above the table.", "ru": "Лампа над столом.", "group": "sentences", "verified": false},
+    {"id": "places.ani-gar-leyad", "he": "אֲנִי גָּר לְיַד הַיָּם", "translit": "Ani gar leyad ha-yam", "en": "I live by the sea. (m.)", "ru": "Я живу у моря. (м.)", "group": "sentences", "verified": false},
+    {"id": "places.ani-mi-yerushalayim", "he": "אֲנִי מִירוּשָׁלַיִם", "translit": "Ani mi-Yerushalayim", "en": "I am from Jerusalem.", "ru": "Я из Иерусалима.", "group": "sentences", "verified": false},
+    {"id": "places.ani-nose-a", "he": "אֲנִי נוֹסֵעַ לְתֵל אָבִיב", "translit": "Ani nose'a le-Tel Aviv", "en": "I am going to Tel Aviv. (m.)", "ru": "Я еду в Тель-Авив. (м.)", "group": "sentences", "verified": false}
+  ]
+}

@@ -74,7 +74,7 @@ No code dependency exists between content tasks. The order is by risk: new patte
 ### Phase 8: Grammar
 - [x] Task 21: Verb forms in the present tense (`verbs`)
 - [x] Task 22: Possession and "the" (`possession`)
-- [ ] Task 23: Where from, where to, on, over, under (`places`)
+- [x] Task 23: Where from, where to, on, over, under (`places`)
 - [ ] Task 24: Infinitives (`infinitives`)
 
 ### Checkpoint H: Grammar

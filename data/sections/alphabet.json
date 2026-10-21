@@ -6,8 +6,7 @@
   "nikudToggle": false,
   "groups": [
     { "id": "letters", "title": { "en": "Letters", "ru": "Буквы" } },
-    { "id": "variants", "title": { "en": "Finals & variants", "ru": "Софит и варианты" } },
-    { "id": "rows", "title": { "en": "Print over cursive", "ru": "Печатные над прописными" }, "view": "letter-rows" }
+    { "id": "variants", "title": { "en": "Finals & variants", "ru": "Софит и варианты" } }
   ],
   "items": [
     { "id": "alphabet.alef", "he": "א", "translit": "’", "en": "Alef", "ru": "Алеф", "group": "letters", "verified": false },

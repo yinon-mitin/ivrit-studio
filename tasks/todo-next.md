@@ -57,18 +57,18 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** Add `manifest.webmanifest` (name "Ivrit Studio", short name, `start_url` and `scope` `./` so it works under `/ivrit-studio/`, `display: standalone`, paper-coloured background and theme, icons 192, 512 and a maskable 512). A dev script `scripts/make-icons.mjs` renders the letter א from the site's own Heebo font on the paper colour in the accent blue into `assets/icons/*.png` (plus 180 px for `apple-touch-icon`) with Playwright, and the PNGs are committed. `index.html` links the manifest and the apple-touch icon, sets `theme-color` for light and dark, and replaces `href="data:,"` with an inline SVG favicon so the page still makes no extra request. SPEC gets the `install` module in the capability map and a line in Success Criteria 8.
 
 **Acceptance criteria:**
-- [ ] e2e (chromium): `Page.getAppManifest` returns the manifest with no errors and `Page.getInstallabilityErrors` is empty. If an error names the service worker, stop and move Task 18 before Task 17
-- [ ] The manifest and every icon are same-origin; the external-requests test still passes; first load stays ≤ 200 KB (measured, reported in the task notes)
-- [ ] Each PNG is ≤ 20 KB; the maskable icon keeps the letter inside the safe zone (visual check of the 4 files)
-- [ ] The tab icon and the home-screen icon show the letter א; no icon request is made on page load by the browser (Chrome fetches the manifest only)
+- [x] e2e (chromium): `Page.getAppManifest` returns the manifest with no errors and `Page.getInstallabilityErrors` is empty. If an error names the service worker, stop and move Task 18 before Task 17
+- [x] The manifest and every icon are same-origin; the external-requests test still passes; first load stays ≤ 200 KB (measured, reported in the task notes)
+- [x] Each PNG is ≤ 20 KB; the maskable icon keeps the letter inside the safe zone (visual check of the 4 files)
+- [x] The tab icon and the home-screen icon show the letter א; no icon request is made on page load by the browser (Chrome fetches the manifest only)
 
 **Verification:**
-- [ ] `node scripts/make-icons.mjs` is reproducible (running it twice leaves `git status` clean)
-- [ ] `npm run check:task`
-- [ ] Manual: Chrome DevTools → Application → Manifest shows the icons and "installable"
+- [x] `node scripts/make-icons.mjs` is reproducible (running it twice leaves `git status` clean)
+- [x] `npm run check:task`
+- [x] Manual: Chrome DevTools → Application → Manifest shows the icons and "installable"
 
 **Dependencies:** None
-**Files:** `manifest.webmanifest` (new), `assets/icons/*.png` (new), `scripts/make-icons.mjs` (new), `index.html`, `tests/e2e/shell.spec.mjs` (or `install.spec.mjs`), `SPEC.md`, `README.md`
+**Files:** `manifest.webmanifest` (new), `assets/icons/*.png` (new), `scripts/make-icons.mjs` (new), `index.html`, `tests/e2e/installable.spec.mjs` (Chromium only), `tests/unit/manifest.test.mjs`, `SPEC.md`, `README.md`
 **Scope:** M
 
 ### Task 17: Install prompt on phones (Android button, iOS hint)

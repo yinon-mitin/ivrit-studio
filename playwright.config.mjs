@@ -16,6 +16,6 @@ export default defineConfig({
   projects: [
     { name: 'chromium-phone', use: { browserName: 'chromium', viewport: { width: 360, height: 640 }, hasTouch: true } },
     { name: 'chromium-laptop', use: { browserName: 'chromium', viewport: { width: 1280, height: 720 } } },
-    { name: 'webkit-iphone', use: { browserName: 'webkit', viewport: { width: 390, height: 664 }, hasTouch: true } },
+    { name: 'webkit-iphone', testIgnore: /installable\.spec/, use: { browserName: 'webkit', viewport: { width: 390, height: 664 }, hasTouch: true } },
   ],
 });

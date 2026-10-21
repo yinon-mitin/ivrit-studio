@@ -30,6 +30,7 @@
 | `cheatsheet` | Рендер разделов: 4 вида `view` | content-schema, app-shell, settings |
 | `search` | Нормализация и поиск по записям, вид результатов | content-schema, cheatsheet |
 | `print` | Стили печати | cheatsheet |
+| `install` | `manifest.webmanifest`, иконки, предложение установить сайт как приложение на телефоне | app-shell, settings |
 | `content` | Данные разделов | content-schema |
 
 ## Tech Stack
@@ -62,6 +63,7 @@ git push origin main   # деплой (GitHub Pages публикует main / ro
 ## Project Structure
 ```
 index.html                 → единственная страница; <meta name="robots" content="noindex">
+manifest.webmanifest       → установка как приложения (имя, цвета, иконки)
 .nojekyll
 assets/
   css/app.css              → токены дизайна (:root, dark), раскладка, виды, печать
@@ -78,11 +80,12 @@ assets/
       schema.js            → validateSection/validateAll (общий для сайта и scripts/)
       settings.js          → значения по умолчанию и разбор сохранённых настроек
       search.js            → нормализация и поиск
+  icons/                   → PNG-иконки приложения (буква א), рисует scripts/make-icons.mjs
   fonts/                   → heebo.woff2, gveret-levin.woff2, OFL-*.txt
 data/
   index.json               → части и порядок разделов в них
   sections/<id>.json       → alphabet, nikud, countries, geresh, vocab, greetings, gender-number
-scripts/validate.mjs, scripts/subset-fonts.sh, scripts/floor-guard.mjs, scripts/diff-coverage.mjs
+scripts/validate.mjs, scripts/subset-fonts.sh, scripts/make-icons.mjs, scripts/floor-guard.mjs, scripts/diff-coverage.mjs
 tests/unit/*.test.mjs      → node:test для core/ + data.test.mjs (валидатор по data/)
 tests/e2e/*.spec.mjs       → Playwright (переполнение по ширине, axe, вес, внешние запросы, сценарии)
 .github/workflows/check.yml
@@ -227,7 +230,7 @@ export function itemsOfGroup(section, group) {
 5. Поиск находит запись по ивриту с огласовками и без, по транслиту и по переводу.
 6. Печать части в A4 читается без обрезания.
 7. Первая загрузка ≤ 200 КБ, ноль внешних запросов, каждый шрифт ≤ 60 КБ.
-8. Сайт опубликован на `https://<user>.github.io/ivrit-studio/` и открывается в iOS Safari и Chrome на Android.
+8. Сайт опубликован на `https://<user>.github.io/ivrit-studio/` и открывается в iOS Safari и Chrome на Android; его можно установить как приложение (манифест без ошибок установимости, иконка с буквой א).
 9. Новая запись или раздел: правка только `data/`, `node scripts/validate.mjs` проходит без правок кода.
 
 ## Open Questions

@@ -17,6 +17,7 @@ npm test             # unit tests
 npm run check:fast   # after edits
 npm run check:task   # before every commit
 npm run check:full   # before push (adds webkit, Semgrep, osv-scanner)
+node scripts/make-icons.mjs   # redraw the app icons (letter א in Heebo); the PNGs are committed
 ```
 
 ## Using the site

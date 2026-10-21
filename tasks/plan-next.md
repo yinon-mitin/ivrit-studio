@@ -59,7 +59,7 @@ T14, T15 and T16 have no dependency on each other and can be done in any order o
 - [ ] `npm run check:task` green; laptop screenshots at 1280 and 1440 with a title mid-switch; footer on phone and laptop in both themes
 
 ### Phase 7: Install as an app
-- [ ] Task 16: The site is installable (manifest, icons, theme colour)
+- [x] Task 16: The site is installable (manifest, icons, theme colour)
 - [ ] Task 17: Install prompt on phones (Android button, iOS hint)
 
 ### Checkpoint F: install

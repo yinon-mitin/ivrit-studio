@@ -71,6 +71,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 **Groups:** `ask` (how much is it, how much a kilo, what's this, can I taste, is it fresh), `buy` (give me, I'll take, a kilo/half a kilo, a bag, that's all), `pay` (cash/card, change, receipt), `haggle` (too expensive, discount, last price).
 **Acceptance criteria:** [ ] Amount words (kilo, half, a bag, a piece) are present. [ ] Numbers are not repeated (refer to `numbers` in a note).
 **Verification:** [ ] `check:task` green. **Dependencies:** None. **Files:** `data/sections/market.json`, `data/index.json`. **Scope:** Medium.
+**Outcome:** 26 entries in 4 groups; amounts (kilo, half, piece, bag) included, numbers referenced not repeated. The page-bar e2e fixture now skips the last section of a part (the end-of-page rule makes its last group current).
+
 
 ### Task 27: With a courier (`courier`)
 **Description:** What a delivery person and a resident say to each other.

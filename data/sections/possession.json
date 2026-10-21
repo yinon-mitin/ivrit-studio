@@ -11,7 +11,7 @@
     {"id": "examples", "title": {"en": "Examples", "ru": "Примеры"}}
   ],
   "items": [
-    {"id": "possession.shel", "he": "שֶׁל", "translit": "Shel", "en": "of, belonging to", "ru": "чей-то, принадлежащий", "group": "whose", "note": {"en": "Comes before the owner: ha-sefer shel Dana — Dana's book.", "ru": "Ставится перед владельцем: ha-sefer shel Dana — книга Даны."}, "verified": false},
+    {"id": "possession.shel", "he": "שֶׁל", "translit": "Shel", "en": "of, belonging to", "ru": "принадлежащий; предлог «of»", "group": "whose", "note": {"en": "Comes before the owner: ha-sefer shel Dana — Dana's book.", "ru": "Ставится перед владельцем: ha-sefer shel Dana — книга Даны."}, "verified": false},
     {"id": "possession.shel-mi", "he": "שֶׁל מִי זֶה?", "translit": "Shel mi ze?", "en": "Whose is this?", "ru": "Чьё это? (чей, чья)", "group": "whose", "verified": false},
     {"id": "possession.sefer-dana", "he": "הַסֵּפֶר שֶׁל דָּנָה", "translit": "Ha-sefer shel Dana", "en": "Dana's book", "ru": "книга Даны", "group": "whose", "verified": false},
     {"id": "possession.kelev-yossi", "he": "הַכֶּלֶב שֶׁל יוֹסִי", "translit": "Ha-kelev shel Yossi", "en": "Yossi's dog", "ru": "собака Йоси", "group": "whose", "verified": false},

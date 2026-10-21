@@ -36,6 +36,6 @@
     {"id": "verbs.ani-okhel", "he": "אֲנִי אוֹכֵל", "translit": "Ani okhel", "en": "I eat. (m.)", "ru": "Я ем. (м.)", "group": "sentences", "verified": false},
     {"id": "verbs.ani-okhelet", "he": "אֲנִי אוֹכֶלֶת", "translit": "Ani okhelet", "en": "I eat. (f.)", "ru": "Я ем. (ж.)", "group": "sentences", "verified": false},
     {"id": "verbs.anakhnu-holkhim", "he": "אֲנַחְנוּ הוֹלְכִים", "translit": "Anakhnu holkhim", "en": "We go. (m. or mixed)", "ru": "Мы идём. (м. или смешанно)", "group": "sentences", "verified": false},
-    {"id": "verbs.at-rotza", "he": "אַתְּ רוֹצָה?", "translit": "At rotza?", "en": "Do you want? (f.)", "ru": "Ты хочешь? (ж.)", "group": "sentences", "verified": false}
+    {"id": "verbs.at-rotza", "he": "אַתְּ רוֹצָה?", "translit": "At rotza?", "en": "Do you want (it)? (f.)", "ru": "Ты хочешь? (ж.)", "group": "sentences", "verified": false}
   ]
 }

@@ -21,7 +21,7 @@
     {"id": "things.maatafa", "he": "מַעֲטָפָה", "translit": "Ma'atafa", "en": "envelope", "ru": "конверт", "group": "study", "verified": false},
     {"id": "things.misparayim", "he": "מִסְפָּרַיִם", "plain": "מספריים", "translit": "Misparayim", "en": "scissors", "ru": "ножницы", "group": "study", "emoji": "✂️", "verified": false},
     {"id": "things.klamar", "he": "קַלְמָר", "translit": "Klamar", "en": "pencil case", "ru": "пенал", "group": "study", "verified": false},
-    {"id": "things.tik", "he": "תִּיק", "translit": "Tik", "en": "bag", "ru": "сумка, рюкзак", "group": "carry", "emoji": "👜", "verified": false},
+    {"id": "things.tik", "he": "תִּיק", "translit": "Tik", "en": "bag, briefcase", "ru": "сумка, портфель", "group": "carry", "emoji": "👜", "note": {"en": "A backpack is tik gav, the bag of the back.", "ru": "Рюкзак — tik gav, «сумка спины»."}, "verified": false},
     {"id": "things.arnak", "he": "אַרְנָק", "translit": "Arnak", "en": "wallet", "ru": "кошелёк", "group": "carry", "verified": false},
     {"id": "things.mafteakh", "he": "מַפְתֵּחַ", "translit": "Mafteakh", "en": "key", "ru": "ключ", "group": "carry", "emoji": "🔑", "verified": false},
     {"id": "things.mishkafayim", "he": "מִשְׁקָפַיִם", "plain": "משקפיים", "translit": "Mishkafayim", "en": "glasses", "ru": "очки", "group": "carry", "emoji": "👓", "verified": false},

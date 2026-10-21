@@ -31,7 +31,7 @@
     {"id": "home.miklat", "he": "מִקְלָט", "translit": "Miklat", "en": "shelter (public, in the building)", "ru": "бомбоубежище", "group": "shelter", "verified": false},
     {"id": "home.mirkhav-mugan", "he": "מֶרְחָב מוּגָן", "translit": "Merkhav mugan", "en": "protected space", "ru": "защищённое пространство", "group": "shelter", "note": {"en": "The general name for mamad, mamak and mamam.", "ru": "Общее название для mamad, mamak и mamam."}, "verified": false},
     {"id": "home.azaka", "he": "אַזְעָקָה", "translit": "Az'aka", "en": "siren, alarm", "ru": "сирена, тревога", "group": "shelter", "verified": false},
-    {"id": "home.tzeva-adom", "he": "צֶבַע אָדוֹם", "translit": "Tzeva adom", "en": "red alert", "ru": "«красный код» (оповещение)", "group": "shelter", "verified": false},
+    {"id": "home.tzeva-adom", "he": "צֶבַע אָדוֹם", "translit": "Tzeva adom", "en": "red alert", "ru": "«Цева адом» («красный цвет») — оповещение о ракетной тревоге", "group": "shelter", "verified": false},
     {"id": "home.mita", "he": "מִטָּה", "plain": "מיטה", "translit": "Mita", "en": "bed", "ru": "кровать", "group": "things", "emoji": "🛏️", "verified": false},
     {"id": "home.sapa", "he": "סַפָּה", "translit": "Sapa", "en": "sofa", "ru": "диван", "group": "things", "emoji": "🛋️", "verified": false},
     {"id": "home.aron", "he": "אָרוֹן", "translit": "Aron", "en": "wardrobe, cupboard", "ru": "шкаф", "group": "things", "verified": false},

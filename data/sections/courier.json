@@ -47,7 +47,7 @@
     {"id": "courier.khatom-kan", "he": "חֲתֹם כָּאן, בְּבַקָּשָׁה", "plain": "חתום כאן, בבקשה", "translit": "Khatom kan, bevakasha", "en": "Sign here, please. (to a man)", "ru": "Распишитесь здесь, пожалуйста. (мужчине)", "group": "finish", "verified": false},
     {"id": "courier.khitmi-kan", "he": "חִתְמִי כָּאן, בְּבַקָּשָׁה", "translit": "Khitmi kan, bevakasha", "en": "Sign here, please. (to a woman)", "ru": "Распишитесь здесь, пожалуйста. (женщине)", "group": "finish", "verified": false},
     {"id": "courier.toda-raba", "he": "תּוֹדָה רַבָּה", "translit": "Toda raba", "en": "Thank you very much.", "ru": "Большое спасибо.", "group": "finish", "verified": false},
-    {"id": "courier.yom-tov", "he": "יוֹם טוֹב", "translit": "Yom tov", "en": "Have a good day.", "ru": "Хорошего дня.", "group": "finish", "verified": false},
+    {"id": "courier.yom-tov", "he": "יוֹם טוֹב", "translit": "Yom tov", "en": "Have a good day.", "ru": "Хорошего дня.", "group": "finish", "note": {"en": "Yom tov also means a holiday; yom naim, a pleasant day, is another way to part.", "ru": "Yom tov значит ещё «праздник»; другой способ проститься — yom naim, «приятного дня»."}, "verified": false},
     {"id": "courier.be-teavon", "he": "בְּתֵאָבוֹן", "plain": "בתיאבון", "translit": "Be-te'avon", "en": "Enjoy your meal.", "ru": "Приятного аппетита.", "group": "finish", "verified": false}
   ]
 }

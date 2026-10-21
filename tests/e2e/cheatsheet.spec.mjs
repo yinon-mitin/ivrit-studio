@@ -106,7 +106,7 @@ for (const route of sectionRoutes()) {
 const letterRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'letter-grid' && g.items.length >= 10));
 const tableRoute = sectionRoutes().find((r) => r.groups.some((g) => g.view === 'table'));
 
-test('the letter grid shows 5–6 letters per row on a phone, 8–10 on a laptop, print glyphs at least 40 px', async ({ page }) => {
+test('the letter grid shows 9 letters per row on a phone, 8–10 on a laptop, print glyphs at least 40 px', async ({ page }) => {
   await open(page, letterRoute.hash);
   const grid = page.locator('#content [data-view="letter-grid"]').first();
   const cells = await grid.locator('[data-entry]').evaluateAll((entries) => entries.map((entry) => ({
@@ -115,8 +115,8 @@ test('the letter grid shows 5–6 letters per row on a phone, 8–10 on a laptop
   })));
   const perRow = cells.filter((cell) => cell.top === cells[0].top).length;
   const phone = page.viewportSize().width < 600;
-  expect(perRow).toBeGreaterThanOrEqual(phone ? 5 : 8);
-  expect(perRow).toBeLessThanOrEqual(phone ? 6 : 10);
+  expect(perRow).toBeGreaterThanOrEqual(phone ? 9 : 8);
+  expect(perRow).toBeLessThanOrEqual(phone ? 9 : 10);
   for (const cell of cells) expect(cell.glyph).toBeGreaterThanOrEqual(40);
 });
 

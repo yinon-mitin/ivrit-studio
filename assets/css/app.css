@@ -870,7 +870,7 @@ a { color: var(--accent); }
   color: var(--accent);
 }
 
-/* letter-grid: ruled cells of letters, right to left; 6 per row on a phone, 8 on a tablet, 10 on a
+/* letter-grid: ruled cells of letters, right to left; 9 per row on a phone, 8 on a tablet, 10 on a
    laptop. Each cell draws its own frame and overlaps its neighbours by 1 px, so the rules stay single
    and an unfilled last row stays open. */
 .letter-grid {
@@ -924,6 +924,27 @@ a { color: var(--accent); }
   .letter-cell .glyph-cursive { font-size: 2.3rem; }
 
   .letter-label { font-size: 0.82rem; }
+}
+
+/* A phone packs the grid: 9 per row (the 22 letters take 3 rows and the 9 finals exactly one), tight
+   lines and a small label, so the letters and the finals fit one screen. Print glyphs stay 40 px. */
+@media (max-width: 39.99rem) {
+  .letter-grid { --cols: 9; }
+
+  .letter-cell { padding: 2px 1px 3px; }
+
+  .letter-cell .glyph { line-height: 1; }
+
+  .letter-cell .glyph-print { font-size: 2.5rem; }
+
+  .letter-cell .glyph-cursive { font-size: 1.5rem; }
+
+  .letter-label { font-size: 0.62rem; line-height: 1.1; }
+
+  /* The titles around the grids take less room too. */
+  .section:has(.letter-grid) .section-title { padding-top: 8px; margin-bottom: 0; }
+
+  .group:has(.letter-grid) .group-title { margin: 14px 0 6px; padding-bottom: 3px; }
 }
 
 /* letter-rows: print over cursive, flowing right to left like a line of writing, on a ruled line. */

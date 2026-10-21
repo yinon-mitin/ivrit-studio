@@ -19,13 +19,13 @@ Plan: `tasks/plan-design.md`. Separate from `tasks/todo.md`, `tasks/todo-next.md
 **Description:** On phones the alphabet takes ~850 px (cells are 134 px high, 6 per row). Make the cells tighter and use 9 columns on phones so the 22 letters take 3 rows and the 9 finals exactly 1.
 **Steps:** (1) a CSS spike with screenshots at 360 and 390, English and Russian, to confirm legibility; (2) the e2e; (3) the real CSS.
 **Acceptance criteria:**
-- [ ] With the Alphabet section scrolled to the top of the reading area, the end of the Finals & variants grid is inside the viewport at 360×640 and 390×664 (en and ru).
-- [ ] The print glyph stays ≥ 40 px (the SPEC rule is checked by the existing quality spec); names and sounds are not clipped; no horizontal overflow.
-- [ ] Tablet (8 columns) and laptop (10 columns) layouts are unchanged; print layout unchanged.
-- [ ] SPEC says how many columns a phone shows.
+- [x] With the Alphabet section scrolled to the top of the reading area, the end of the Finals & variants grid is inside the viewport at 360×640 and 390×664 (en and ru).
+- [x] The print glyph stays ≥ 40 px (the SPEC rule is checked by the existing quality spec); names and sounds are not clipped; no horizontal overflow.
+- [x] Tablet (8 columns) and laptop (10 columns) layouts are unchanged; print layout unchanged.
+- [x] SPEC says how many columns a phone shows.
 **Verification:**
-- [ ] The new e2e fails on today's CSS and passes after.
-- [ ] `npm run check:task` green; `npm run e2e:webkit` green (iPhone project); screenshots in both languages and both themes.
+- [x] The new e2e fails on today's CSS and passes after.
+- [x] checks green except the floor step (exception E2, owner-approved); webkit green; screenshots green (iPhone project); screenshots in both languages and both themes.
 - [ ] If it cannot fit at 360×640 without breaking the 40 px rule or clipping, stop and show the owner the 390×664 result and the alternatives.
 **Dependencies:** None. **Files:** `assets/css/app.css`, new `tests/e2e/alphabet-fit.spec.mjs`, `SPEC.md`. **Scope:** Small–Medium.
 

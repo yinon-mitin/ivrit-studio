@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalize, matchesEntry, searchParts } from '../../assets/js/core/search.js';
+import { normalize, searchKey, matchesEntry, searchParts } from '../../assets/js/core/search.js';
 
 const france = {
   id: 'countries.france', he: 'צָרְפַת', translit: 'Tsarfat', en: 'France', ru: 'Франция', group: 'eu-1',
@@ -36,6 +36,16 @@ describe('normalize', () => {
   });
 });
 
+describe('searchKey', () => {
+  it('is the normalized text without sentence punctuation', () => {
+    assert.equal(searchKey('Hey!'), 'hey');
+    assert.equal(searchKey('Me’eifo  ata?'), 'meeifo ata');
+    assert.equal(searchKey('both … and'), 'both and');
+    assert.equal(searchKey('Ma, nishma?!'), 'ma nishma');
+    assert.equal(searchKey('!?'), '');
+  });
+});
+
 describe('matchesEntry', () => {
   it('finds Hebrew with or without nikud', () => {
     assert.equal(matchesEntry(shalom, normalize('שלום')), true);
@@ -57,6 +67,16 @@ describe('matchesEntry', () => {
     assert.equal(matchesEntry(jeans, normalize("ג'ינס")), true);
   });
 
+  it('ignores sentence punctuation in the query and in the entry', () => {
+    const hello = { id: 'greetings.shalom', he: 'שָׁלוֹם', translit: 'Shalom', en: 'hello, hi, hey, bye', ru: 'привет, пока' };
+    const howIsIt = { id: 'greetings.ma-nishma', he: 'מַה נִּשְׁמָע?', translit: 'Ma nishma?', en: "How's it going?", ru: 'Как дела?' };
+    assert.equal(matchesEntry(hello, searchKey('Hey!')), true);
+    assert.equal(matchesEntry(hello, searchKey('Привет!')), true);
+    assert.equal(matchesEntry(howIsIt, searchKey('Ma nishma?')), true);
+    assert.equal(matchesEntry(howIsIt, searchKey('Ma nishma')), true);
+    assert.equal(matchesEntry(howIsIt, searchKey('дела?')), true);
+  });
+
   it('does not match what is not there', () => {
     assert.equal(matchesEntry(france, normalize('spain')), false);
   });
@@ -74,6 +94,11 @@ describe('searchParts', () => {
       ['reading', [['alphabet', ['alphabet.shin']]]],
       ['words', [['vocab', ['vocab.akhshav', 'greetings.shalom']]]],
     ]);
+  });
+
+  it('finds an entry for a query with punctuation', () => {
+    const [words] = searchParts(parts, 'Привет!');
+    assert.deepEqual(words.sections[0].items.map((i) => i.id), ['greetings.shalom']);
   });
 
   it('keeps only the groups with matches, and drops letter-rows groups, which would repeat the letters', () => {

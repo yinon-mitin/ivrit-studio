@@ -53,7 +53,7 @@ T14, T15 and T16 have no dependency on each other and can be done in any order o
 
 ### Phase 6: Quick fixes (independent, small)
 - [x] Task 14: Titles switch at the centre of the screen (laptop)
-- [ ] Task 15: Quiet GitHub link at the bottom of the contents page
+- [x] Task 15: Quiet GitHub link at the bottom of the contents page
 
 ### Checkpoint E: quick fixes
 - [ ] `npm run check:task` green; laptop screenshots at 1280 and 1440 with a title mid-switch; footer on phone and laptop in both themes

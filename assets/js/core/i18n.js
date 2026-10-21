@@ -30,6 +30,7 @@ export const STRINGS = {
   themeDark: { en: 'Dark', ru: 'Тёмная' },
   language: { en: 'Language of the site and translations', ru: 'Язык сайта и переводов' },
   nikud: { en: 'Nikud', ru: 'Огласовки' },
+  sourceOnGithub: { en: 'Source on GitHub', ru: 'Исходный код на GitHub' },
   loadError: { en: 'Could not load: {detail}', ru: 'Не удалось загрузить: {detail}' },
 };
 

@@ -346,6 +346,19 @@ a { color: var(--accent); }
   .contents-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+.contents-source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 56px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+
+.contents-source:hover { color: var(--accent); text-decoration: underline; }
+
 .contents-part-title {
   margin: 0 0 4px;
   padding-bottom: 8px;
@@ -1137,6 +1150,7 @@ a { color: var(--accent); }
   .ruler,
   .flow-toc,
   .results-where,
+  .contents-source,
   .control { display: none !important; }
 
   .content {

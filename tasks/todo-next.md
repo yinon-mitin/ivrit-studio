@@ -31,15 +31,15 @@ Every task's Definition of Done: `npm run check:fast` after edits, `npm run chec
 **Description:** A small footer at the end of the contents page (`#/`) only, not on part pages (owner, 2026-10-21), in muted colour: the GitHub mark and "Source on GitHub" / «Исходный код на GitHub», linking to `https://github.com/yinon-mitin/ivrit-studio` with `target="_blank" rel="noopener noreferrer"`. It is not in the header, so it never competes with search or the toggles. Hidden in print. The mark is an SVG built with DOM calls (no HTML sinks). On laptops it sits inside the content column, clear of the ruler and the flowing titles.
 
 **Acceptance criteria:**
-- [ ] The link is present on `#/` and absent on part pages and search results, with an accessible name in EN and RU that follows the language switch
-- [ ] The link target and `rel` are as above; the page makes no request to github.com (a link is not a request)
-- [ ] No horizontal overflow at 360×640, 390×664 and 1280×720; axe clean in both themes on the contents page (contrast uses `--muted`); not visible in print
-- [ ] On a laptop it does not run under the ruler or the flowing titles
+- [x] The link is present on `#/` and absent on part pages and search results, with an accessible name in EN and RU that follows the language switch
+- [x] The link target and `rel` are as above; the page makes no request to github.com (a link is not a request)
+- [x] No horizontal overflow at 360×640, 390×664 and 1280×720; axe clean in both themes on the contents page (contrast uses `--muted`); not visible in print
+- [x] On a laptop it does not run under the ruler or the flowing titles
 
 **Verification:**
-- [ ] `npm test` (i18n test covers the new strings in both languages)
-- [ ] `npm run check:task` (quality.spec.mjs covers overflow and axe on every route)
-- [ ] Manual: footer on a phone and a laptop, light and dark
+- [x] `npm test` (i18n test covers the new strings in both languages)
+- [x] `npm run check:task` (quality.spec.mjs covers overflow and axe on every route)
+- [x] Manual: footer on a phone and a laptop, light and dark
 
 **Dependencies:** None
 **Files:** `assets/js/core/i18n.js`, `assets/js/ui/footer.js` (new), `assets/js/main.js`, `assets/css/app.css`, `tests/e2e/shell.spec.mjs`, `README.md`

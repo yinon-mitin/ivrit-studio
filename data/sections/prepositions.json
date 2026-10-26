@@ -1,0 +1,25 @@
+{
+  "id": "prepositions",
+  "title": {"en": "Prepositions", "ru": "Предлоги"},
+  "icon": "עִם",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "basic", "title": {"en": "From, in, next to", "ru": "Из, в, рядом"}},
+    {"id": "with-about", "title": {"en": "With, on / about, of", "ru": "С, на / о, принадлежности"}},
+    {"id": "examples", "title": {"en": "Examples", "ru": "Примеры"}}
+  ],
+  "items": [
+    {"id": "prepositions.mi", "he": "מִ־", "translit": "Mi-", "en": "from", "ru": "из, от, с", "group": "basic", "note": {"en": "Two pronunciations: mi- before most letters (mi-Tzarfat), me- before the article ha- and before א ע ר (me-ha-bayit, me-Angliya).", "ru": "Два произношения: mi- перед большинством букв (mi-Tzarfat), me- перед артиклем ha- и перед א ע ר (me-ha-bayit, me-Angliya)."}, "verified": false},
+    {"id": "prepositions.be", "he": "בְּ־", "translit": "Be-", "en": "in, at", "ru": "в, на (где)", "group": "basic", "note": {"en": "Glued to the next word: be-Yisrael.", "ru": "Приклеивается к следующему слову: be-Yisrael."}, "verified": false},
+    {"id": "prepositions.leyad", "he": "לְיַד", "translit": "Leyad", "en": "next to, by", "ru": "рядом с, у", "group": "basic", "verified": false},
+    {"id": "prepositions.im", "he": "עִם", "translit": "Im", "en": "with", "ru": "с (вместе с)", "group": "with-about", "verified": false},
+    {"id": "prepositions.al", "he": "עַל", "translit": "Al", "en": "about; on", "ru": "о, про; на", "group": "with-about", "note": {"en": "al is both \"about\" (read about) and \"on\" (on the table).", "ru": "al — и «о, про» (читать о), и «на» (на столе)."}, "verified": false},
+    {"id": "prepositions.shel", "he": "שֶׁל", "translit": "Shel", "en": "of", "ru": "принадлежность: «чей»", "group": "with-about", "note": {"en": "More in \"Possession & the\".", "ru": "Подробнее в разделе «Принадлежность и the»."}, "verified": false},
+    {"id": "prepositions.ani-me-angliya", "he": "אֲנִי מֵאַנְגְּלִיָּה", "translit": "Ani me-Angliya", "en": "I am from England.", "ru": "Я из Англии.", "group": "examples", "verified": false},
+    {"id": "prepositions.gar-be-yisrael", "he": "אֲנִי גָּר בְּיִשְׂרָאֵל", "translit": "Ani gar be-Yisrael", "en": "I live in Israel.", "ru": "Я живу в Израиле.", "group": "examples", "verified": false},
+    {"id": "prepositions.shuk-leyad-bayit", "he": "הַשּׁוּק לְיַד הַבַּיִת", "translit": "Ha-shuk leyad ha-bayit", "en": "The market is next to the house.", "ru": "Рынок рядом с домом.", "group": "examples", "verified": false},
+    {"id": "prepositions.gar-im-shutaf", "he": "אֲנִי גָּר עִם שֻׁתָּף", "translit": "Ani gar im shutaf", "en": "I live with a roommate.", "ru": "Я живу с соседом по квартире.", "group": "examples", "verified": false},
+    {"id": "prepositions.kore-al-yisrael", "he": "אֲנִי קוֹרֵא עַל יִשְׂרָאֵל", "translit": "Ani kore al Yisrael", "en": "I am reading about Israel.", "ru": "Я читаю об Израиле.", "group": "examples", "verified": false}
+  ]
+}

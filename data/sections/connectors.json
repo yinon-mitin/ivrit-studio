@@ -1,0 +1,24 @@
+{
+  "id": "connectors",
+  "title": {"en": "Common everyday words", "ru": "Частые слова"},
+  "icon": "אֲבָל",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "linking", "title": {"en": "But, maybe, of course", "ru": "Но, может быть, конечно"}},
+    {"id": "amount", "title": {"en": "A little, a lot, everything, everyone", "ru": "Немного, много, всё, все"}},
+    {"id": "together", "title": {"en": "Alone and together", "ru": "Один и вместе"}}
+  ],
+  "items": [
+    {"id": "connectors.aval", "he": "אֲבָל", "translit": "Aval", "en": "but", "ru": "но, однако", "group": "linking", "verified": false},
+    {"id": "connectors.barur", "he": "בָּרוּר", "translit": "Barur", "en": "clearly, of course", "ru": "ясно, конечно", "group": "linking", "verified": false},
+    {"id": "connectors.ulai", "he": "אוּלַי", "translit": "Ulai", "en": "maybe, perhaps", "ru": "может быть, возможно", "group": "linking", "verified": false},
+    {"id": "connectors.ktzat", "he": "קְצָת", "translit": "Ktzat", "en": "a little, a bit", "ru": "немного, чуть-чуть", "group": "amount", "verified": false},
+    {"id": "connectors.harbe", "he": "הַרְבֵּה", "translit": "Harbe", "en": "a lot, many", "ru": "много", "group": "amount", "verified": false},
+    {"id": "connectors.hakol", "he": "הַכֹּל", "plain": "הכול", "translit": "Hakol", "en": "everything", "ru": "всё", "group": "amount", "verified": false},
+    {"id": "connectors.kulam", "he": "כֻּלָּם", "translit": "Kulam", "en": "everyone, all of them", "ru": "все (о людях)", "group": "amount", "verified": false},
+    {"id": "connectors.mikol-haolam", "he": "מִכָּל הָעוֹלָם", "translit": "Mikol ha'olam", "en": "from all over the world", "ru": "со всего мира", "group": "amount", "verified": false},
+    {"id": "connectors.levad", "he": "לְבַד", "translit": "Levad", "en": "alone, by oneself", "ru": "один, в одиночку", "group": "together", "verified": false},
+    {"id": "connectors.beyakhad", "he": "בְּיַחַד", "translit": "Beyakhad", "en": "together", "ru": "вместе", "group": "together", "verified": false}
+  ]
+}

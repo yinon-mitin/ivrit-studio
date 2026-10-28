@@ -1,0 +1,13 @@
+{
+  "id": "airport",
+  "title": {"en": "Airport", "ru": "Аэропорт"},
+  "icon": "נַתְבַּ״ג",
+  "view": "phrases",
+  "nikudToggle": true,
+  "items": [
+    {"id": "airport.natbag", "he": "נַתְבַּ״ג", "translit": "Natbag", "en": "Ben Gurion Airport", "ru": "аэропорт Бен-Гурион", "emoji": "✈️", "note": {"en": "Short for Nemal Te'ufa Ben-Gurion, said as one word: Nat-bag.", "ru": "Сокращение от Nemal Te'ufa Ben-Gurion, читается как одно слово: Нат-баг."}, "verified": false},
+    {"id": "airport.nemal-teufa", "he": "נְמַל תְּעוּפָה", "translit": "Nemal te'ufa", "en": "airport", "ru": "аэропорт", "verified": false},
+    {"id": "airport.ani-nose-a-le-natbag", "he": "אֲנִי נוֹסֵעַ לְנַתְבַּ״ג", "translit": "Ani nose'a le-Natbag", "en": "I'm going to the airport.", "ru": "Я еду в аэропорт.", "variants": [{"gender": "m", "he": "אֲנִי נוֹסֵעַ לְנַתְבַּ״ג", "translit": "Ani nose'a le-Natbag"}, {"gender": "f", "he": "אֲנִי נוֹסַעַת לְנַתְבַּ״ג", "translit": "Ani nosa'at le-Natbag"}], "verified": false},
+    {"id": "airport.eikh-magiim", "he": "אֵיךְ מַגִּיעִים לְנַתְבַּ״ג?", "translit": "Eikh magi'im le-Natbag?", "en": "How do you get to the airport?", "ru": "Как добраться до аэропорта?", "verified": false}
+  ]
+}

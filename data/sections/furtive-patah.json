@@ -1,0 +1,21 @@
+{
+  "id": "furtive-patah",
+  "title": {"en": "Final -akh (furtive patah)", "ru": "Конечное -ах (патах гануву)"},
+  "icon": "חַ",
+  "view": "list",
+  "nikudToggle": false,
+  "groups": [
+    {"id": "rule", "title": {"en": "The rule", "ru": "Правило"}, "view": "table"},
+    {"id": "words", "title": {"en": "Words with -akh", "ru": "Слова на -ах"}}
+  ],
+  "items": [
+    {"id": "furtive-patah.kh", "he": "וּחַ", "translit": "-uakh", "en": "Final kh with patah: the a comes first, then kh", "ru": "Конечная «х» с патахом: сначала «а», потом «х»", "group": "rule", "note": {"en": "After a long vowel (u, o, e, i) a patah under the last letter is “furtive”: it is said before the letter, not after it. Luakh is lu-akh, not lu-kha.", "ru": "После долгого гласного (u, o, e, i) патах под последней буквой «краденый»: его произносят перед буквой, а не после. Luakh читается lu-akh, а не lu-kha."}, "verified": false},
+    {"id": "furtive-patah.ayin", "he": "עַ", "translit": "-a", "en": "Final ayin with patah: the same, the ayin itself is silent", "ru": "Конечная аин с патахом: то же самое, сама аин не звучит", "group": "rule", "note": {"en": "Shome'a is shome-a: read the patah, skip the ayin.", "ru": "Shome'a читается shome-a: патах читаем, аин пропускаем."}, "verified": false},
+    {"id": "furtive-patah.luakh", "he": "לוּחַ שָׁנָה", "translit": "Luakh shana", "en": "calendar", "ru": "календарь", "group": "words", "emoji": "📅", "related": [{"he": "לוּחַ", "translit": "Luakh", "en": "board, table, schedule", "ru": "доска, таблица, расписание"}], "verified": false},
+    {"id": "furtive-patah.ruakh", "he": "רוּחַ", "translit": "Ruakh", "en": "wind; spirit", "ru": "ветер; дух", "group": "words", "emoji": "🌬️", "verified": false},
+    {"id": "furtive-patah.maftekha", "he": "מַפְתֵּחַ", "translit": "Mafte'akh", "en": "key", "ru": "ключ", "group": "words", "emoji": "🔑", "verified": false},
+    {"id": "furtive-patah.tapuakh", "he": "תַּפּוּחַ", "translit": "Tapuakh", "en": "apple", "ru": "яблоко", "group": "words", "emoji": "🍎", "note": {"en": "Patuakh, “open”, follows the same rule (see With a courier).", "ru": "Patuakh, «открыт», читается по тому же правилу (см. «С курьером»)."}, "verified": false},
+    {"id": "furtive-patah.shome-a", "he": "שׁוֹמֵעַ", "translit": "Shome'a", "en": "hears, listens (m.)", "ru": "слышит, слушает (м.)", "group": "words", "verified": false},
+    {"id": "furtive-patah.yode-a", "he": "יוֹדֵעַ", "translit": "Yode'a", "en": "knows (m.)", "ru": "знает (м.)", "group": "words", "verified": false}
+  ]
+}

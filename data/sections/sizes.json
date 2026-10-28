@@ -1,0 +1,42 @@
+{
+  "id": "sizes",
+  "title": {"en": "Sizes", "ru": "Размеры"},
+  "icon": "גֹּדֶל",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "size", "title": {"en": "Size and fit", "ru": "Размер и впору"}},
+    {"id": "dimensions", "title": {"en": "Big, small, long, short…", "ru": "Большой, маленький, длинный, короткий…"}},
+    {"id": "measure", "title": {"en": "Measuring", "ru": "Измерение"}},
+    {"id": "sentences", "title": {"en": "Sentences", "ru": "Предложения"}}
+  ],
+  "items": [
+    {"id": "sizes.godel", "he": "גֹּדֶל", "plain": "גודל", "translit": "Godel", "en": "size (how big a thing is)", "ru": "размер (насколько велика вещь)", "group": "size", "note": {"en": "For clothes and shoes say mida.", "ru": "Для одежды и обуви говорят mida."}, "verified": false},
+    {"id": "sizes.mida", "he": "מִדָּה", "plain": "מידה", "translit": "Mida", "en": "size (clothes, shoes)", "ru": "размер (одежды, обуви)", "group": "size", "verified": false},
+    {"id": "sizes.eizo-mida", "he": "אֵיזוֹ מִדָּה?", "plain": "איזו מידה?", "translit": "Eizo mida?", "en": "Which size?", "ru": "Какой размер?", "group": "size", "verified": false},
+    {"id": "sizes.beinoni", "he": "בֵּינוֹנִי", "translit": "Beinoni", "en": "medium", "ru": "средний", "group": "size", "forms": {"ms": "בֵּינוֹנִי", "fs": "בֵּינוֹנִית"}, "verified": false},
+    {"id": "sizes.gadol-miday", "he": "גָּדוֹל מִדַּי", "translit": "Gadol miday", "en": "too big (m.)", "ru": "слишком большой (м.)", "group": "size", "related": [{"he": "גְּדוֹלָה מִדַּי", "translit": "Gdola miday", "en": "too big (f.)", "ru": "слишком большая (ж.)"}], "verified": false},
+    {"id": "sizes.katan-miday", "he": "קָטָן מִדַּי", "translit": "Katan miday", "en": "too small (m.)", "ru": "слишком маленький (м.)", "group": "size", "related": [{"he": "קְטַנָּה מִדַּי", "translit": "Ktana miday", "en": "too small (f.)", "ru": "слишком маленькая (ж.)"}], "verified": false},
+    {"id": "sizes.gadol", "he": "גָּדוֹל", "translit": "Gadol", "en": "big", "ru": "большой", "group": "dimensions", "forms": {"ms": "גָּדוֹל", "fs": "גְּדוֹלָה", "mp": "גְּדוֹלִים", "fp": "גְּדוֹלוֹת"}, "verified": false},
+    {"id": "sizes.katan", "he": "קָטָן", "translit": "Katan", "en": "small", "ru": "маленький", "group": "dimensions", "forms": {"ms": "קָטָן", "fs": "קְטַנָּה", "mp": "קְטַנִּים", "fp": "קְטַנּוֹת"}, "verified": false},
+    {"id": "sizes.arokh", "he": "אָרוֹךְ", "translit": "Arokh", "en": "long", "ru": "длинный", "group": "dimensions", "forms": {"ms": "אָרוֹךְ", "fs": "אֲרֻכָּה", "mp": "אֲרֻכִּים", "fp": "אֲרֻכּוֹת"}, "verified": false},
+    {"id": "sizes.katzar", "he": "קָצָר", "translit": "Katzar", "en": "short (not long)", "ru": "короткий", "group": "dimensions", "forms": {"ms": "קָצָר", "fs": "קְצָרָה", "mp": "קְצָרִים", "fp": "קְצָרוֹת"}, "verified": false},
+    {"id": "sizes.rakhav", "he": "רָחָב", "translit": "Rakhav", "en": "wide", "ru": "широкий", "group": "dimensions", "forms": {"ms": "רָחָב", "fs": "רְחָבָה", "mp": "רְחָבִים", "fp": "רְחָבוֹת"}, "verified": false},
+    {"id": "sizes.tzar", "he": "צַר", "translit": "Tzar", "en": "narrow, tight", "ru": "узкий, тесный", "group": "dimensions", "forms": {"ms": "צַר", "fs": "צָרָה", "mp": "צָרִים", "fp": "צָרוֹת"}, "verified": false},
+    {"id": "sizes.gavoha", "he": "גָּבוֹהַּ", "translit": "Gavo'a", "en": "tall, high", "ru": "высокий", "group": "dimensions", "forms": {"ms": "גָּבוֹהַּ", "fs": "גְּבוֹהָה", "mp": "גְּבוֹהִים", "fp": "גְּבוֹהוֹת"}, "note": {"en": "Ends in a furtive patah: the a is said before the final he (see Final -akh).", "ru": "Кончается на патах гануву: «а» произносится перед конечной «хей» (см. «Конечное -ах»)."}, "verified": false},
+    {"id": "sizes.namukh", "he": "נָמוּךְ", "translit": "Namukh", "en": "low; short (a person)", "ru": "низкий; невысокий (о человеке)", "group": "dimensions", "forms": {"ms": "נָמוּךְ", "fs": "נְמוּכָה", "mp": "נְמוּכִים", "fp": "נְמוּכוֹת"}, "verified": false},
+    {"id": "sizes.kaved", "he": "כָּבֵד", "translit": "Kaved", "en": "heavy", "ru": "тяжёлый", "group": "dimensions", "forms": {"ms": "כָּבֵד", "fs": "כְּבֵדָה", "mp": "כְּבֵדִים", "fp": "כְּבֵדוֹת"}, "verified": false},
+    {"id": "sizes.kal", "he": "קַל", "translit": "Kal", "en": "light (not heavy); easy", "ru": "лёгкий", "group": "dimensions", "forms": {"ms": "קַל", "fs": "קַלָּה", "mp": "קַלִּים", "fp": "קַלּוֹת"}, "verified": false},
+    {"id": "sizes.orekh", "he": "אֹרֶךְ", "plain": "אורך", "translit": "Orekh", "en": "length", "ru": "длина", "group": "measure", "emoji": "📏", "verified": false},
+    {"id": "sizes.rokhav", "he": "רֹחַב", "plain": "רוחב", "translit": "Rokhav", "en": "width", "ru": "ширина", "group": "measure", "verified": false},
+    {"id": "sizes.gova", "he": "גֹּבַהּ", "plain": "גובה", "translit": "Gova", "en": "height", "ru": "высота, рост", "group": "measure", "verified": false},
+    {"id": "sizes.mishkal", "he": "מִשְׁקָל", "translit": "Mishkal", "en": "weight", "ru": "вес", "group": "measure", "verified": false},
+    {"id": "sizes.santimeter", "he": "סֶנְטִימֶטֶר", "translit": "Sentimeter", "en": "centimetre", "ru": "сантиметр", "group": "measure", "verified": false},
+    {"id": "sizes.meter", "he": "מֶטֶר", "translit": "Meter", "en": "metre", "ru": "метр", "group": "measure", "verified": false},
+    {"id": "sizes.kilo", "he": "קִילוֹ", "translit": "Kilo", "en": "kilo, kilogram", "ru": "кило, килограмм", "group": "measure", "verified": false},
+    {"id": "sizes.ha-khavila-kveda", "he": "הַחֲבִילָה כְּבֵדָה", "translit": "Ha-khavila kveda", "en": "The parcel is heavy.", "ru": "Посылка тяжёлая.", "group": "sentences", "verified": false},
+    {"id": "sizes.ha-shulkhan-arokh", "he": "הַשֻּׁלְחָן אָרוֹךְ", "plain": "השולחן ארוך", "translit": "Ha-shulkhan arokh", "en": "The table is long.", "ru": "Стол длинный.", "group": "sentences", "verified": false},
+    {"id": "sizes.ha-khultza-ktana", "he": "הַחֻלְצָה קְטַנָּה מִדַּי", "plain": "החולצה קטנה מדי", "translit": "Ha-khultza ktana miday", "en": "The shirt is too small.", "ru": "Рубашка слишком мала.", "group": "sentences", "verified": false},
+    {"id": "sizes.yesh-mida-gdola-yoter", "he": "יֵשׁ מִדָּה גְּדוֹלָה יוֹתֵר?", "plain": "יש מידה גדולה יותר?", "translit": "Yesh mida gdola yoter?", "en": "Do you have a bigger size?", "ru": "Есть размер побольше?", "group": "sentences", "verified": false}
+  ]
+}

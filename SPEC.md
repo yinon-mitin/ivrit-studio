@@ -86,7 +86,7 @@ assets/
   fonts/                   → heebo.woff2, gveret-levin.woff2, OFL-*.txt
 data/
   index.json               → части и порядок разделов в них
-  sections/<id>.json       → alphabet, nikud, furtive-patah, geresh · greetings, acquaintance, market, courier, neighbours, cafe, airport · vocab, connectors, family, numbers, time, colors, sizes, directions, abbreviations, faiths, countries · things, animals, home, kitchen, produce · gender-number, adjectives, verbs, possession, places, prepositions, infinitives
+  sections/<id>.json       → alphabet, nikud, furtive-patah, geresh · greetings, acquaintance, market, courier, neighbours, cafe, airport · vocab, connectors, family, numbers, time, colors, sizes, directions, abbreviations, faiths, countries · things, animals, home, kitchen, produce · pronouns, gender-number, adjectives, verbs, possession, places, prepositions, infinitives
 scripts/validate.mjs, scripts/subset-fonts.sh, scripts/make-icons.mjs, scripts/floor-guard.mjs, scripts/diff-coverage.mjs
 tests/unit/*.test.mjs      → node:test для core/ + data.test.mjs (валидатор по data/)
 tests/e2e/*.spec.mjs       → Playwright (переполнение по ширине, axe, вес, внешние запросы, сценарии)

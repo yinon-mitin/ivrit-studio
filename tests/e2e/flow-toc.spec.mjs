@@ -2,7 +2,7 @@
 // titles beside the ruler — passed ones at the top, the current one large, coming ones at the bottom —
 // and they flow as the page scrolls. Each title is a link to its section.
 import { test, expect } from '@playwright/test';
-import { open, readParts, expectNoSeriousAxe } from './helpers.mjs';
+import { open, readParts, expectNoSeriousAxe, animationsSettled } from './helpers.mjs';
 
 const part = readParts().find((p) => p.sections.length >= 3);
 const items = (page) => page.locator('#flow-toc .flow-toc-item');
@@ -20,7 +20,7 @@ test.describe('at 1440 px', () => {
     await expect.poll(() => states(page)).toEqual(part.sections.map((_, i) => (i < middle ? 'past' : i === middle ? 'current' : 'upcoming')));
     await expect(items(page).nth(middle)).toHaveAttribute('aria-current', 'location');
     // No two titles overlap; past above current above coming. Measured once they have finished flowing.
-    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished)));
+    await animationsSettled(page);
     const boxes = await items(page).evaluateAll((nodes) => nodes.map((n) => n.getBoundingClientRect()).map((r) => [r.top, r.bottom]));
     for (let i = 1; i < boxes.length; i += 1) expect(boxes[i][0]).toBeGreaterThanOrEqual(boxes[i - 1][1] - 0.5);
   });
@@ -70,7 +70,7 @@ test.describe('at 1440 px', () => {
     });
     expect(contentRight).toBeLessThanOrEqual(titlesLeft);
     // Measure contrast once the titles have finished flowing.
-    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished)));
+    await animationsSettled(page);
     for (const colorScheme of ['light', 'dark']) {
       await page.emulateMedia({ colorScheme });
       await expectNoSeriousAxe(page);

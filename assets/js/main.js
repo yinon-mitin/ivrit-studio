@@ -39,6 +39,7 @@ const ruler = mountRuler(document.getElementById('app'), {
   scrollY: () => window.scrollY,
   scrollTo: (y) => window.scrollTo(0, y),
   screen: () => window.innerHeight - header.offsetHeight - pageBar.offsetHeight - 40,
+  range: () => document.documentElement.scrollHeight - window.innerHeight,
 });
 /** The ruler is a laptop feature (it is hidden below this width by CSS as well). */
 const wide = window.matchMedia('(min-width: 64rem)');

@@ -595,7 +595,7 @@ a { color: var(--accent); }
 
 /* Scroll ruler (laptop, long part pages): fixed at the right edge under the header and the page bar.
    The tape is marked in CSS millimetres (1 mm, 5 mm, 10 mm numbered) and moves 1:1 with the page
-   (--scroll); a fixed marker at the reading line (--offset) shows the reading in mm. */
+   (scroll-linked, see .ruler-tape); a fixed marker at the reading line (--offset) shows the reading in mm. */
 .ruler {
   position: fixed;
   top: calc(var(--header-h) + var(--bar-h));
@@ -610,6 +610,8 @@ a { color: var(--accent); }
   user-select: none;
   background: color-mix(in srgb, var(--paper) 85%, transparent);
   border-inline-start: 1px solid var(--rule);
+  /* What changes inside (the tape, the reading) never forces the page to lay out or restyle. */
+  contain: layout paint style;
 }
 
 .ruler:active { cursor: grabbing; }
@@ -630,11 +632,27 @@ a { color: var(--accent); }
   inset-inline: 0;
   top: 0;
   height: var(--length, 100%);
-  transform: translateY(calc(-1 * var(--scroll, 0px)));
+  /* Moved by ruler.js (translate3d) where scroll-driven animations are missing. */
+  will-change: transform;
   background:
     linear-gradient(to bottom, var(--ink) 1px, transparent 1px) right top / 20px 10mm repeat-y,
     linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 12px 5mm repeat-y,
     linear-gradient(to bottom, var(--rule-strong) 1px, transparent 1px) right top / 6px 1mm repeat-y;
+}
+
+/* Where the browser can link an animation to the page's scroll, the tape travels on the compositor,
+   in the very frame the page does, instead of trailing the scroll event. 0 at the top of the page,
+   the whole scroll range (--range, set by ruler.js) at the bottom: 1:1 with the page. */
+@supports (animation-timeline: scroll()) {
+  .ruler-tape {
+    animation: ruler-travel linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes ruler-travel {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, calc(-1 * var(--range, 0px)), 0); }
 }
 
 .ruler-number {

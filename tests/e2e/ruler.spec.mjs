@@ -56,6 +56,24 @@ test.describe('on a laptop', () => {
     expect(Math.abs((before - after) - 378)).toBeLessThanOrEqual(1);
   });
 
+  test('the tape keeps 1:1 with the page all the way down, also after the page changes height', async ({ page }) => {
+    if (phone(page)) return;
+    await open(page, `#/${part.id}`);
+    const offset = () => page.evaluate(() => {
+      const first = document.querySelector('.ruler-number').getBoundingClientRect().top;
+      return [first - document.getElementById('ruler').getBoundingClientRect().top, window.scrollY];
+    });
+    for (const y of [0, 1234, 100000]) {
+      await page.evaluate((to) => window.scrollTo(0, to), y);
+      await expect.poll(async () => { const [tape, scroll] = await offset(); return Math.abs(tape + scroll); }).toBeLessThanOrEqual(1);
+    }
+    // The page grows (fonts, images): the tape's travel follows the new scroll range.
+    await page.evaluate(() => { document.getElementById('content').style.paddingBottom = '2000px'; });
+    await page.evaluate(() => window.scrollTo(0, 1));
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(async () => { const [tape, scroll] = await offset(); return Math.abs(tape + scroll); }).toBeLessThanOrEqual(1);
+  });
+
   test('a click brings that point to the reading line; dragging moves the page with the tape', async ({ page }) => {
     if (phone(page)) return;
     await open(page, `#/${part.id}`);

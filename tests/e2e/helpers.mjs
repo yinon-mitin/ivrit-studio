@@ -124,3 +124,14 @@ export const SETTINGS_KEY = 'ivrit-studio:settings';
 export async function seedSettings(page, settings) {
   await page.addInitScript(([key, value]) => window.localStorage.setItem(key, value), [SETTINGS_KEY, JSON.stringify(settings)]);
 }
+
+/**
+ * Waits until the timed animations on the page (fades, the flowing titles) have finished. Animations
+ * linked to scrolling (the ruler's tape) never finish, so they are not waited for.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function animationsSettled(page) {
+  await page.evaluate(() => Promise.all(
+    document.getAnimations().filter((animation) => animation.timeline === document.timeline).map((animation) => animation.finished),
+  ));
+}

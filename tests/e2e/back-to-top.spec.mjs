@@ -2,7 +2,7 @@
 // it returns to the top and hands the focus to the site name. It stays clear of the ruler and the
 // flowing titles on a laptop and of the install banner on a phone, and is not printed.
 import { test, expect } from '@playwright/test';
-import { open, readParts, seedSettings, expectNoHorizontalOverflow, expectNoSeriousAxe } from './helpers.mjs';
+import { open, readParts, seedSettings, expectNoHorizontalOverflow, expectNoSeriousAxe, animationsSettled } from './helpers.mjs';
 
 const part = readParts().find((p) => p.sections.length >= 3);
 const button = (page) => page.locator('button.to-top');
@@ -60,7 +60,7 @@ test('is quiet: at least 40 px, no horizontal overflow, axe clean in both themes
     await scrollTo(page, 1.5);
     await expect(button(page)).toBeVisible();
     // The flowing titles fade while the page scrolls; axe reads colours once they have settled.
-    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished)));
+    await animationsSettled(page);
     const { width, height } = await boxOf(button(page)).then((b) => ({ width: b.right - b.left, height: b.bottom - b.top }));
     expect(Math.min(width, height)).toBeGreaterThanOrEqual(40);
     await expectNoHorizontalOverflow(page);

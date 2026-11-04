@@ -1,0 +1,18 @@
+{
+  "id": "abbreviations",
+  "title": {"en": "Abbreviations", "ru": "Аббревиатуры"},
+  "icon": "ת״א",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "rule", "title": {"en": "The rule", "ru": "Правило"}},
+    {"id": "words", "title": {"en": "Abbreviations", "ru": "Аббревиатуры"}}
+  ],
+  "items": [
+    {"id": "abbreviations.rashei-tevot", "he": "רָאשֵׁי תֵּבוֹת", "translit": "Rashei tevot", "en": "abbreviation (first letters of words)", "ru": "аббревиатура (первые буквы слов)", "group": "rule", "note": {"en": "Take the first letter of each word and write the mark ״ before the last letter. Some are read as a word (Tzahal), some letter by letter. More abbreviations: Natbag in Airport, mamad and mamak in Home.", "ru": "Берут первую букву каждого слова и ставят знак ״ перед последней буквой. Одни читаются как слово (Tzahal), другие по буквам. Ещё аббревиатуры: Natbag в «Аэропорту», mamad и mamak в «Доме»."}, "verified": false},
+    {"id": "abbreviations.gershayim", "he": "גֵּרְשַׁיִם", "plain": "גרשיים", "translit": "Gershayim", "en": "the double mark before the last letter", "ru": "двойной знак перед последней буквой", "group": "rule", "note": {"en": "Not read aloud. It tells you that the letters are an abbreviation.", "ru": "Вслух не читается. Показывает, что буквы — аббревиатура."}, "verified": false},
+    {"id": "abbreviations.te-a", "he": "ת״א", "translit": "Tel Aviv", "en": "Tel Aviv", "ru": "Тель-Авив", "group": "words", "note": {"en": "Short for תֵּל אָבִיב (Tel Aviv): the first letters of the two words.", "ru": "Сокращение от תֵּל אָבִיב (Tel Aviv): первые буквы двух слов."}, "verified": false},
+    {"id": "abbreviations.tzahal", "he": "צַהַ״ל", "translit": "Tzahal", "en": "the Israeli army (IDF)", "ru": "армия обороны Израиля (ЦАХАЛ)", "group": "words", "note": {"en": "Short for צְבָא הֲגָנָה לְיִשְׂרָאֵל (Tzva Hagana le-Yisrael): tz + h + l, said as one word with a’s between the letters.", "ru": "Сокращение от צְבָא הֲגָנָה לְיִשְׂרָאֵל (Tzva Hagana le-Yisrael): tz + h + l, читается как слово, между буквами добавлено «а»."}, "verified": false},
+    {"id": "abbreviations.sofash", "he": "סוֹפַ״שׁ", "translit": "Sofash", "en": "weekend", "ru": "выходные", "group": "words", "note": {"en": "Short for סוֹף שָׁבוּעַ (sof shavua), “the end of the week”. Said as one word: sofash.", "ru": "Сокращение от סוֹף שָׁבוּעַ (sof shavua), «конец недели». Читается как одно слово: sofash."}, "verified": false}
+  ]
+}

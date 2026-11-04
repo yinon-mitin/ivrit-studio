@@ -16,6 +16,7 @@
     {"id": "furtive-patah.maftekha", "he": "מַפְתֵּחַ", "translit": "Mafte'akh", "en": "key", "ru": "ключ", "group": "words", "emoji": "🔑", "verified": false},
     {"id": "furtive-patah.tapuakh", "he": "תַּפּוּחַ", "translit": "Tapuakh", "en": "apple", "ru": "яблоко", "group": "words", "emoji": "🍎", "note": {"en": "Patuakh, “open”, follows the same rule (see With a courier).", "ru": "Patuakh, «открыт», читается по тому же правилу (см. «С курьером»)."}, "verified": false},
     {"id": "furtive-patah.shome-a", "he": "שׁוֹמֵעַ", "translit": "Shome'a", "en": "hears, listens (m.)", "ru": "слышит, слушает (м.)", "group": "words", "verified": false},
-    {"id": "furtive-patah.yode-a", "he": "יוֹדֵעַ", "translit": "Yode'a", "en": "knows (m.)", "ru": "знает (м.)", "group": "words", "verified": false}
+    {"id": "furtive-patah.yode-a", "he": "יוֹדֵעַ", "translit": "Yode'a", "en": "knows (m.)", "ru": "знает (м.)", "group": "words", "verified": false},
+    {"id": "furtive-patah.same-akh", "he": "שָׂמֵחַ", "translit": "Same'akh", "en": "happy (m.)", "ru": "радостный, довольный (м.)", "group": "words", "note": {"en": "Read same-akh, not same-kha: the patah comes first (see the rule above).", "ru": "Читается same-akh, а не same-kha: сначала патах (см. правило выше)."}, "verified": false}
   ]
 }

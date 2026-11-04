@@ -13,7 +13,7 @@
   "items": [
     {"id": "places.me-eifo", "he": "מֵאֵיפֹה", "translit": "Me'eifo", "en": "from where", "ru": "откуда", "group": "questions", "note": {"en": "Where: eifo (see Questions & small talk). Where from: me'eifo. Where to: le'an.", "ru": "«Где» — eifo (раздел «Вопросы и общение»). «Откуда» — me'eifo. «Куда» — le'an."}, "verified": false},
     {"id": "places.le-an", "he": "לְאָן", "translit": "Le'an", "en": "where to", "ru": "куда", "group": "questions", "verified": false},
-    {"id": "places.mi", "he": "מִ־", "translit": "Mi-", "en": "from", "ru": "из, от, с", "group": "prefixes", "note": {"en": "Glued to the place: mi-Yerushalayim. Before the article it is me-ha-: me-ha-bayit.", "ru": "Приклеивается к месту: mi-Yerushalayim. Перед артиклем — me-ha-: me-ha-bayit."}, "verified": false},
+    {"id": "places.mi", "he": "מִ־", "translit": "Mi-", "en": "from", "ru": "из, от, с", "group": "prefixes", "note": {"en": "Glued to the place: mi-Yerushalayim. Two pronunciations: mi- before most letters (mi-Tzarfat), me- before the article ha- and before א ע ר (me-ha-bayit, me-Angliya).", "ru": "Приклеивается к месту: mi-Yerushalayim. Два произношения: mi- перед большинством букв (mi-Tzarfat), me- перед артиклем ha- и перед א ע ר (me-ha-bayit, me-Angliya)."}, "verified": false},
     {"id": "places.le", "he": "לְ־", "translit": "Le-", "en": "to", "ru": "в, к, на (куда)", "group": "prefixes", "verified": false},
     {"id": "places.be", "he": "בְּ־", "translit": "Be-", "en": "in, at", "ru": "в, на (где)", "group": "prefixes", "verified": false},
     {"id": "places.mi-yerushalayim", "he": "מִירוּשָׁלַיִם", "translit": "Mi-Yerushalayim", "en": "from Jerusalem", "ru": "из Иерусалима", "group": "prefixes", "verified": false},
@@ -22,7 +22,7 @@
     {"id": "places.me-ha-bayit", "he": "מֵהַבַּיִת", "translit": "Me-ha-bayit", "en": "from the house", "ru": "из дома", "group": "prefixes", "verified": false},
     {"id": "places.la-bayit", "he": "לַבַּיִת", "translit": "La-bayit", "en": "to the house", "ru": "в дом, к дому", "group": "prefixes", "note": {"en": "le + ha = la: \"to the\".", "ru": "le + ha = la: «в/к» + артикль."}, "verified": false},
     {"id": "places.ba-bayit", "he": "בַּבַּיִת", "translit": "Ba-bayit", "en": "in the house, at home", "ru": "в доме, дома", "group": "prefixes", "note": {"en": "be + ha = ba: \"in the\".", "ru": "be + ha = ba: «в» + артикль."}, "verified": false},
-    {"id": "places.al", "he": "עַל", "translit": "Al", "en": "on, onto", "ru": "на", "group": "position", "note": {"en": "Also \"about\" (see Words).", "ru": "Также «о» (см. «Лексика»)."}, "verified": false},
+    {"id": "places.al", "he": "עַל", "translit": "Al", "en": "on, onto", "ru": "на", "group": "position", "note": {"en": "Also \"about\" (see Prepositions).", "ru": "Также «о» (см. «Предлоги»)."}, "verified": false},
     {"id": "places.me-al", "he": "מֵעַל", "translit": "Me'al", "en": "above, over", "ru": "над", "group": "position", "verified": false},
     {"id": "places.mi-takhat", "he": "מִתַּחַת", "translit": "Mitakhat", "en": "under, below", "ru": "под", "group": "position", "verified": false},
     {"id": "places.le-yad", "he": "לְיַד", "translit": "Leyad", "en": "next to, by", "ru": "рядом с, у", "group": "position", "verified": false},

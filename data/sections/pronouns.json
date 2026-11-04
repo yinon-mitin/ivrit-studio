@@ -1,0 +1,27 @@
+{
+  "id": "pronouns",
+  "title": {"en": "Pronouns", "ru": "Местоимения"},
+  "icon": "אֲנִי",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "singular", "title": {"en": "I, you, he, she", "ru": "Я, ты, он, она"}},
+    {"id": "plural", "title": {"en": "We, you, they", "ru": "Мы, вы, они"}},
+    {"id": "this", "title": {"en": "This, these", "ru": "Это, эти"}}
+  ],
+  "items": [
+    {"id": "pronouns.ani", "he": "אֲנִי", "translit": "Ani", "en": "I (m. / f.)", "ru": "я (м. / ж.)", "group": "singular", "note": {"en": "The same word for a man and a woman: the verb after it shows who is speaking — I eat (m.) / I eat (f.).", "ru": "Одно слово для мужчины и женщины: род виден по глаголу — я ем (м.) / я ем (ж.)."}, "verified": false},
+    {"id": "pronouns.ata", "he": "אַתָּה", "translit": "Ata", "en": "you (m.)", "ru": "ты (м.)", "group": "singular", "verified": false},
+    {"id": "pronouns.at", "he": "אַתְּ", "translit": "At", "en": "you (f.)", "ru": "ты (ж.)", "group": "singular", "verified": false},
+    {"id": "pronouns.hu", "he": "הוּא", "translit": "Hu", "en": "he", "ru": "он", "group": "singular", "verified": false},
+    {"id": "pronouns.hi", "he": "הִיא", "translit": "Hi", "en": "she", "ru": "она", "group": "singular", "verified": false},
+    {"id": "pronouns.anakhnu", "he": "אֲנַחְנוּ", "translit": "Anakhnu", "en": "we", "ru": "мы", "group": "plural", "verified": false, "note": {"en": "The same word for men, women and mixed groups.", "ru": "Одно слово для мужчин, женщин и смешанной группы."}},
+    {"id": "pronouns.atem", "he": "אַתֶּם", "translit": "Atem", "en": "you (m. pl.)", "ru": "вы (м.)", "group": "plural", "verified": false, "note": {"en": "A mixed group is also atem; the f. forms (aten, hen) are for women only.", "ru": "Смешанную группу тоже называют atem; ж. формы (aten, hen) — только для женщин."}},
+    {"id": "pronouns.aten", "he": "אַתֶּן", "translit": "Aten", "en": "you (f. pl.)", "ru": "вы (ж.)", "group": "plural", "verified": false},
+    {"id": "pronouns.hem", "he": "הֵם", "translit": "Hem", "en": "they (m.)", "ru": "они (м.)", "group": "plural", "verified": false, "note": {"en": "A mixed group is also hem.", "ru": "Смешанную группу тоже называют hem."}},
+    {"id": "pronouns.hen", "he": "הֵן", "translit": "Hen", "en": "they (f.)", "ru": "они (ж.)", "group": "plural", "verified": false},
+    {"id": "pronouns.ze", "he": "זֶה", "translit": "Ze", "en": "this (m.)", "ru": "это (м.)", "group": "this", "verified": false},
+    {"id": "pronouns.zot", "he": "זֹאת", "translit": "Zot", "en": "this (f.)", "ru": "это (ж.)", "group": "this", "verified": false},
+    {"id": "pronouns.ele", "he": "אֵלֶּה", "translit": "Ele", "en": "these", "ru": "эти", "group": "this", "verified": false}
+  ]
+}

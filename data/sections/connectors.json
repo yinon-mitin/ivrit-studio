@@ -6,6 +6,7 @@
   "nikudToggle": true,
   "groups": [
     {"id": "linking", "title": {"en": "But, maybe, of course", "ru": "Но, может быть, конечно"}},
+    {"id": "pointing", "title": {"en": "Here it is, now, only", "ru": "Вот, сейчас, только"}},
     {"id": "amount", "title": {"en": "A little, a lot, everything, everyone", "ru": "Немного, много, всё, все"}},
     {"id": "together", "title": {"en": "Alone and together", "ru": "Один и вместе"}},
     {"id": "reactions", "title": {"en": "Sure, so, nothing, great", "ru": "Конечно, итак, ничего, здорово"}}
@@ -14,6 +15,11 @@
     {"id": "connectors.aval", "he": "אֲבָל", "translit": "Aval", "en": "but", "ru": "но, однако", "group": "linking", "verified": false},
     {"id": "connectors.barur", "he": "בָּרוּר", "translit": "Barur", "en": "clearly, of course", "ru": "ясно, конечно", "group": "linking", "verified": false},
     {"id": "connectors.ulai", "he": "אוּלַי", "translit": "Ulai", "en": "maybe, perhaps", "ru": "может быть, возможно", "group": "linking", "verified": false},
+    {"id": "connectors.o", "he": "אוֹ", "translit": "O", "en": "or", "ru": "или", "group": "linking", "verified": false},
+    {"id": "connectors.gam-ve-gam", "he": "גַּם וְגַם", "translit": "Gam ve-gam", "en": "both … and", "ru": "и … и", "group": "linking", "verified": false},
+    {"id": "connectors.hine", "he": "הִנֵּה", "translit": "Hine", "en": "here it is", "ru": "вот", "group": "pointing", "verified": false},
+    {"id": "connectors.akhshav", "he": "עַכְשָׁו", "plain": "עכשיו", "translit": "Akhshav", "en": "now", "ru": "сейчас", "group": "pointing", "verified": false},
+    {"id": "connectors.rak", "he": "רַק", "translit": "Rak", "en": "only", "ru": "только", "group": "pointing", "verified": false},
     {"id": "connectors.ktzat", "he": "קְצָת", "translit": "Ktzat", "en": "a little, a bit", "ru": "немного, чуть-чуть", "group": "amount", "verified": false},
     {"id": "connectors.harbe", "he": "הַרְבֵּה", "translit": "Harbe", "en": "a lot, many", "ru": "много", "group": "amount", "verified": false},
     {"id": "connectors.hakol", "he": "הַכֹּל", "plain": "הכול", "translit": "Hakol", "en": "everything", "ru": "всё", "group": "amount", "verified": false},

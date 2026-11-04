@@ -1,6 +1,6 @@
 # Ivrit Studio
 
-A Hebrew cheatsheet for Alef-level ulpan students, set like a small reference book: print and cursive letters, nikud, geresh, phrases (small talk, the market, a courier, neighbours), words (family, numbers, time, colours, countries), things around us (objects, animals, the home and the safe room, the kitchen, fruit and vegetables) and grammar (gender and number, present-tense verbs, possession, prepositions, infinitives). Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
+A Hebrew cheatsheet for Alef-level ulpan students, set like a small reference book: print and cursive letters, nikud, geresh, phrases (small talk, the market, a courier, neighbours, the café, the airport), words (family, numbers, time, colours, sizes, directions, abbreviations, countries), things around us (objects, animals, the home and the safe room, the kitchen, fruit and vegetables) and grammar (gender and number, adjectives, present-tense verbs, possession, prepositions, infinitives). Static site with no build step and no runtime dependencies, hosted on GitHub Pages.
 
 - What to build: [`SPEC.md`](SPEC.md)
 - Quality bar: [`CONSTRAINTS.md`](CONSTRAINTS.md)

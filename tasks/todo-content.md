@@ -149,3 +149,10 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 - [x] `npm run check:full` green; fresh-context reviewer pass on all new `data/` for translit rules, nikud and gender marks reported to the owner (not a substitute for `verified`).
 - [x] After the owner's go, push; CI green; the live `data/index.json` lists the new part and sections.
 **Dependencies:** all above. **Scope:** Small.
+
+## Phase 12: Class summaries (week of Oct 26, Monday 2.11.26)
+
+### Task 36: Topics from the teacher's two summaries
+**Description:** Data only, six commits, all entries `verified: false`. New sections: `adjectives` (Grammar), `cafe` (Phrases), `abbreviations` and `faiths` (Vocabulary). Extended: `verbs` (`ose`, group `like-gar`: shar, ba, kam, nakh, sam, ratz), `infinitives` (group `like-lagur`, lirtzot, la'asot), `prepositions` (`bli`, ba + mi-/le-), `greetings` (welcome, what's new), `connectors` (group `reactions`), `furtive-patah` (same'akh), `home` (garden, plurals), `directions` (plural of street).
+**Not added:** the opposites handout and the café handout (no word lists in the summaries; café terms are from general knowledge, flagged in `cafe.tafrit`), song titles, textbook pages and exercises.
+**Verification:** [x] `check:task` green per commit (the `install.spec` "first visit … after 30 s" test is flaky on this machine, unrelated to data; it passes on rerun).

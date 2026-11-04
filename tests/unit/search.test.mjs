@@ -36,6 +36,16 @@ describe('normalize', () => {
   });
 });
 
+describe('ё', () => {
+  it('is the same as е in the text and in the query', () => {
+    assert.equal(normalize('Всё, ЁЛКА'), 'все, елка');
+    const everything = { id: 'connectors.hakol', he: 'הַכֹּל', plain: 'הכול', translit: 'Hakol', en: 'everything', ru: 'всё' };
+    for (const query of ['всё', 'все', 'Всё', 'ВСЕ']) assert.ok(matchesEntry(everything, searchKey(query)), query);
+    const typedWithE = { ...everything, ru: 'все' };
+    assert.ok(matchesEntry(typedWithE, searchKey('всё')));
+  });
+});
+
 describe('searchKey', () => {
   it('is the normalized text without sentence punctuation', () => {
     assert.equal(searchKey('Hey!'), 'hey');

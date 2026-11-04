@@ -7,13 +7,16 @@ const MARKS = /[׳״'’"]/g;
 // Sentence punctuation, which a search ignores: "Hey!" finds "hey", and "Ma nishma?" finds "Ma nishma".
 const PUNCTUATION = /[!?.,:;…]/g;
 
+// Russian is often typed without the dots: "ёлка" and "елка" are the same word to a search.
+const YO = /ё/g;
+
 /**
- * Text as search compares it: no nikud, no geresh or apostrophes, lowercase, single spaces.
+ * Text as search compares it: no nikud, no geresh or apostrophes, lowercase, ё as е, single spaces.
  * @param {string} text
  * @returns {string}
  */
 export function normalize(text) {
-  return stripNikud(text).replace(MARKS, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  return stripNikud(text).replace(MARKS, '').toLowerCase().replace(YO, 'е').replace(/\s+/g, ' ').trim();
 }
 
 /**

@@ -39,7 +39,7 @@
     {"id": "directions.kan", "he": "כָּאן", "translit": "Kan", "en": "here", "ru": "здесь", "group": "near", "verified": false},
     {"id": "directions.po", "he": "פֹּה", "plain": "פה", "translit": "Po", "en": "here", "ru": "здесь, тут", "group": "near", "note": {"en": "Kan and po both mean “here”; po is the more casual one.", "ru": "Kan и po оба значат «здесь»; po — более разговорное."}, "verified": false},
     {"id": "directions.sham", "he": "שָׁם", "translit": "Sham", "en": "there", "ru": "там", "group": "near", "verified": false},
-    {"id": "directions.rekhov", "he": "רְחוֹב", "translit": "Rekhov", "en": "street", "ru": "улица", "group": "streets", "verified": false},
+    {"id": "directions.rekhov", "he": "רְחוֹב", "translit": "Rekhov", "en": "street", "ru": "улица", "group": "streets", "related": [{"he": "רְחוֹבוֹת", "translit": "Rekhovot", "en": "streets", "ru": "улицы"}], "verified": false},
     {"id": "directions.pina", "he": "פִּינָה", "translit": "Pina", "en": "corner", "ru": "угол", "group": "streets", "verified": false},
     {"id": "directions.tzomet", "he": "צֹמֶת", "plain": "צומת", "translit": "Tzomet", "en": "junction, crossroads", "ru": "перекрёсток", "group": "streets", "verified": false},
     {"id": "directions.ramzor", "he": "רַמְזוֹר", "translit": "Ramzor", "en": "traffic light", "ru": "светофор", "group": "streets", "emoji": "🚦", "verified": false},

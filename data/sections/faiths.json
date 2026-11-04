@@ -1,0 +1,22 @@
+{
+  "id": "faiths",
+  "title": {"en": "Peoples & places", "ru": "Народы и места"},
+  "icon": "עַם",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "people", "title": {"en": "Peoples and faiths", "ru": "Народы и религии"}},
+    {"id": "story", "title": {"en": "Words from the Bethlehem text", "ru": "Слова из текста о Вифлееме"}},
+    {"id": "places", "title": {"en": "Places", "ru": "Места"}}
+  ],
+  "items": [
+    {"id": "faiths.yehudim", "he": "יְהוּדִים", "translit": "Yehudim", "en": "Jews", "ru": "евреи", "group": "people", "related": [{"he": "יְהוּדִי", "translit": "Yehudi", "en": "Jew (m.)", "ru": "еврей"}, {"he": "יְהוּדִיָּה", "translit": "Yehudiya", "en": "Jew (f.)", "ru": "еврейка"}], "verified": false},
+    {"id": "faiths.notzrim", "he": "נוֹצְרִים", "translit": "Notzrim", "en": "Christians", "ru": "христиане", "group": "people", "related": [{"he": "נוֹצְרִי", "translit": "Notzri", "en": "Christian (m.)", "ru": "христианин"}, {"he": "נוֹצְרִיָּה", "translit": "Notzriya", "en": "Christian (f.)", "ru": "христианка"}], "verified": false},
+    {"id": "faiths.muslemim", "he": "מוּסְלְמִים", "translit": "Muslemim", "en": "Muslims", "ru": "мусульмане", "group": "people", "related": [{"he": "מוּסְלְמִי", "translit": "Muslemi", "en": "Muslim (m.)", "ru": "мусульманин"}, {"he": "מוּסְלְמִיָּה", "translit": "Muslemiya", "en": "Muslim (f.)", "ru": "мусульманка"}], "verified": false},
+    {"id": "faiths.yeshu", "he": "יֵשׁוּ", "translit": "Yeshu", "en": "Jesus", "ru": "Иисус", "group": "story", "related": [{"he": "יֵשׁוּעַ", "translit": "Yeshua", "en": "Jesus (the longer name)", "ru": "Иисус (более длинное имя)"}], "note": {"en": "Both names are used: Yeshu and Yeshua.", "ru": "Используются оба имени: Yeshu и Yeshua."}, "verified": false},
+    {"id": "faiths.nolad", "he": "נוֹלַד", "translit": "Nolad", "en": "was born (m.)", "ru": "родился", "group": "story", "related": [{"he": "נוֹלְדָה", "translit": "Nolda", "en": "was born (f.)", "ru": "родилась"}], "verified": false},
+    {"id": "faiths.kever", "he": "קֶבֶר", "translit": "Kever", "en": "grave, tomb", "ru": "могила, гробница", "group": "story", "verified": false},
+    {"id": "faiths.beit-lekhem", "he": "בֵּית לֶחֶם", "translit": "Beit Lekhem", "en": "Bethlehem", "ru": "Вифлеем", "group": "places", "note": {"en": "Literally “house of bread”: bayit + lekhem.", "ru": "Буквально «дом хлеба»: bayit + lekhem."}, "verified": false},
+    {"id": "faiths.kfar", "he": "כְּפָר", "translit": "Kfar", "en": "village", "ru": "деревня, село", "group": "places", "verified": false}
+  ]
+}

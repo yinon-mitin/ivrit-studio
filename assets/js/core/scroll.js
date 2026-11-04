@@ -45,28 +45,33 @@ export function currentAnchor(anchors, scrollY, offset) {
   return current;
 }
 
+/** How far down the viewport the page shows the reading line while the flowing titles are on (0 top, 1 bottom). */
+export const READING_RATIO = 0.7;
+
 /**
- * The line that counts as being read, in viewport coordinates: the middle of the viewport when
- * centred (the flowing titles on a laptop), else the line just under the sticky header.
+ * The line that counts as being read, in viewport coordinates: `ratio` of the way down the viewport
+ * when centred (the flowing titles on a laptop; the middle unless the caller says otherwise), else the
+ * line just under the sticky header.
  * @param {number} viewportHeight
  * @param {number} offset the line under the sticky header
  * @param {boolean} centred
+ * @param {number} [ratio] how far down the viewport the centred line is, 0.5 by default
  * @returns {number}
  */
-export const readingLine = (viewportHeight, offset, centred) => (centred ? viewportHeight / 2 : offset);
+export const readingLine = (viewportHeight, offset, centred, ratio = 0.5) => (centred ? viewportHeight * ratio : offset);
 
 /**
  * The anchor being read, by `readingLine`. Centred, the last anchor also counts once the page is
- * scrolled to its end (a short last section would never reach the middle), within 2 px.
+ * scrolled to its end (a short last section would never reach the reading line), within 2 px.
  * @template {{ top: number }} A
  * @param {A[]} anchors in page order, `top` in document coordinates
- * @param {{ scrollY: number, offset: number, viewportHeight: number, scrollHeight: number, centred: boolean }} view
+ * @param {{ scrollY: number, offset: number, viewportHeight: number, scrollHeight: number, centred: boolean, ratio?: number }} view
  * @returns {A | null}
  */
-export function readingAnchor(anchors, { scrollY, offset, viewportHeight, scrollHeight, centred }) {
+export function readingAnchor(anchors, { scrollY, offset, viewportHeight, scrollHeight, centred, ratio }) {
   const scrolls = scrollHeight > viewportHeight;
   if (centred && scrolls && scrollY + viewportHeight >= scrollHeight - 2) return anchors.at(-1) ?? null;
-  return currentAnchor(anchors, scrollY, readingLine(viewportHeight, offset, centred));
+  return currentAnchor(anchors, scrollY, readingLine(viewportHeight, offset, centred, ratio));
 }
 
 /**

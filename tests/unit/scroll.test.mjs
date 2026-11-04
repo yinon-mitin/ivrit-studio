@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { scrollPercent, scrollForPercent, currentAnchor, readingLine, readingAnchor, showBackToTop, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
+import { scrollPercent, scrollForPercent, currentAnchor, readingLine, readingAnchor, READING_RATIO, showBackToTop, toMillimetres, PX_PER_MM } from '../../assets/js/core/scroll.js';
 
 describe('scrollPercent', () => {
   it('is 0 at the top and 100 at the bottom', () => {
@@ -73,6 +73,15 @@ describe('readingLine', () => {
   });
 });
 
+describe('readingLine with a ratio', () => {
+  it('is that share of the viewport when centred, and ignores it otherwise', () => {
+    assert.equal(READING_RATIO, 0.7);
+    assert.equal(readingLine(900, 120, true, READING_RATIO), 630);
+    assert.equal(readingLine(900, 120, true, 0.25), 225);
+    assert.equal(readingLine(900, 120, false, READING_RATIO), 120);
+  });
+});
+
 describe('readingAnchor', () => {
   const anchors = [{ id: 'a', top: 300 }, { id: 'b', top: 1500 }, { id: 'c', top: 3000 }];
   // A 900 px viewport on a 3400 px page: the most it scrolls is 2500.
@@ -100,6 +109,16 @@ describe('readingAnchor', () => {
   it('does not apply the end rule to a page that does not scroll, or when not centred', () => {
     assert.equal(readingAnchor(anchors, { scrollY: 0, offset: 120, viewportHeight: 900, scrollHeight: 900, centred: true }).id, 'a');
     assert.equal(at(2500, false), 'b');
+  });
+
+  it('centred with a ratio, an anchor counts once its top reaches that line', () => {
+    const lower = (scrollY) => readingAnchor(anchors, { scrollY, offset: 120, viewportHeight: 900, scrollHeight: 3400, centred: true, ratio: READING_RATIO }).id;
+    assert.equal(lower(869), 'a');
+    assert.equal(lower(870), 'b');
+    // c is at 3000: the line (scrollY + 630) passes it at 2370, and it stays current to the end of the page at 2500.
+    assert.equal(lower(2500), 'c');
+    assert.equal(lower(2369), 'b');
+    assert.equal(lower(2370), 'c');
   });
 
   it('is null without anchors', () => {

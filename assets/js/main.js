@@ -8,7 +8,7 @@ import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
-import { scrollPercent, readingAnchor } from './core/scroll.js';
+import { scrollPercent, readingAnchor, READING_RATIO } from './core/scroll.js';
 import { mountBackToTop } from './ui/back-to-top.js';
 import { mountRuler } from './ui/ruler.js';
 import { mountFlowToc } from './ui/flow-toc.js';
@@ -171,7 +171,7 @@ async function render(navigated = false) {
 /** Sections and groups of the page on screen, with their titles and their tops (document coordinates). */
 let anchors = [];
 
-/** Whether the flowing titles are on screen: then the section being read is the one at the middle of the screen. */
+/** Whether the flowing titles are on screen: then the section being read is the one at the reading line, READING_RATIO of the way down the screen. */
 let centred = false;
 
 /** Where anchors land when scrolled to, and the line that counts as being read (8 px below). */
@@ -206,9 +206,9 @@ function updatePosition() {
   const root = document.documentElement;
   const percent = scrollPercent(window.scrollY, root.scrollHeight, window.innerHeight);
   // Without the titles: the line 8 px below where anchors land (their scroll-margin), so a section
-  // scrolled to counts as being read. With them: the middle of the screen.
+  // scrolled to counts as being read. With them: READING_RATIO of the way down the screen.
   const place = readingAnchor(anchors, {
-    scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred,
+    scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred, ratio: READING_RATIO,
   });
   updatePageBar(pageBar, place, percent);
   backToTop.update(window.scrollY, window.innerHeight);

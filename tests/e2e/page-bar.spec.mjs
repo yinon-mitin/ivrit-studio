@@ -4,7 +4,7 @@
 import { test, expect } from '@playwright/test';
 import { open, readParts, expectNoSeriousAxe, expectNoHorizontalOverflow } from './helpers.mjs';
 
-// A group long enough to fill the middle of the screen (the reading line on a laptop), in a section that is
+// A group long enough to fill 70% of the screen (down to the reading line on a laptop), in a section that is
 // not the last of a part with several sections (the end of the page cannot scroll a group to the top, and
 // there the last group counts as read). Today: the longest such group, in Vocabulary (countries).
 const candidates = readParts().filter((p) => p.sections.length > 1).flatMap((p) => p.sections.slice(0, -1).flatMap((section) => (

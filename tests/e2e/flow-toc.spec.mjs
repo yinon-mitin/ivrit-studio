@@ -34,12 +34,12 @@ test.describe('at 1440 px', () => {
   };
   const currentTitle = (page) => items(page).evaluateAll((nodes) => nodes.findIndex((n) => n.dataset.state === 'current'));
 
-  test('a section becomes current when its top reaches the middle of the screen, in the bar too', async ({ page }) => {
+  test('a section becomes current when its top reaches the reading line, 70% down the screen, in the bar too', async ({ page }) => {
     await open(page, `#/${part.id}`);
-    await placeSection(page, 1, 0.6);
+    await placeSection(page, 1, 0.8);
     await expect.poll(() => currentTitle(page)).toBe(0);
     await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections[0].title.en);
-    await placeSection(page, 1, 0.4);
+    await placeSection(page, 1, 0.6);
     await expect.poll(() => currentTitle(page)).toBe(1);
     await expect(page.locator('#page-bar .page-current-section')).toHaveText(part.sections[1].title.en);
   });
@@ -95,7 +95,7 @@ test('hidden below 72rem, on the contents and in print', async ({ page, isMobile
 test.describe('on a phone', () => {
   test.use({ viewport: { width: 360, height: 640 } });
 
-  test('a section still becomes current at the line under the bar, not at the middle', async ({ page }) => {
+  test('a section still becomes current at the line under the bar, not at the reading line of the titles', async ({ page }) => {
     await open(page, `#/${part.id}`);
     // The top of section 1 is 40% down the screen: past the middle, still below the bar.
     await page.locator(`#${part.sections[1].id}`).evaluate((node) => {

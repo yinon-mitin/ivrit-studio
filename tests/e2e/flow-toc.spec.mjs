@@ -92,6 +92,24 @@ test('hidden below 72rem, on the contents and in print', async ({ page, isMobile
   await expect(page.locator('#flow-toc')).toBeHidden();
 });
 
+test.describe('with the ruler but without the flowing titles (64–72 rem)', () => {
+  test.use({ viewport: { width: 1100, height: 800 } });
+
+  test('the ruler\'s title changes when a section top reaches the reading line, 70% down the screen', async ({ page }) => {
+    await open(page, `#/${part.id}`);
+    await expect(page.locator('#ruler')).toBeVisible();
+    await expect(page.locator('#flow-toc')).toBeHidden();
+    const height = page.viewportSize().height;
+    const place = (fraction) => page.locator(`#${part.sections[1].id}`).evaluate((node, offset) => {
+      window.scrollTo(0, node.getBoundingClientRect().top + window.scrollY - offset);
+    }, height * fraction);
+    await place(0.8);
+    await expect(page.locator('#ruler .ruler-title')).toHaveText(part.sections[0].title.en);
+    await place(0.6);
+    await expect(page.locator('#ruler .ruler-title')).toHaveText(part.sections[1].title.en);
+  });
+});
+
 test.describe('on a phone', () => {
   test.use({ viewport: { width: 360, height: 640 } });
 

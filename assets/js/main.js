@@ -171,8 +171,10 @@ async function render(navigated = false) {
 /** Sections and groups of the page on screen, with their titles and their tops (document coordinates). */
 let anchors = [];
 
-/** Whether the flowing titles are on screen: then the section being read is the one at the reading line, READING_RATIO of the way down the screen. */
+/** Whether the flowing titles are on screen. */
 let centred = false;
+/** Whether the ruler or the flowing titles are on screen: then the section being read is the one at the reading line, READING_RATIO of the way down the screen. */
+let lowered = false;
 
 /** Where anchors land when scrolled to, and the line that counts as being read (8 px below). */
 const landing = () => header.offsetHeight + pageBar.offsetHeight + 8;
@@ -190,8 +192,10 @@ function measureAnchors() {
   // The ruler: laptops, part pages taller than the screen. Its tape starts at the top of the content
   // and has a mark at each section.
   const partScreen = content.querySelector('[data-screen="part"]');
-  ruler.setActive(wide.matches && partScreen !== null && root.scrollHeight > window.innerHeight);
+  const rulerOn = wide.matches && partScreen !== null && root.scrollHeight > window.innerHeight;
+  ruler.setActive(rulerOn);
   centred = wider.matches && partScreen !== null && partScreen.querySelectorAll('.section').length > 1;
+  lowered = rulerOn || centred;
   flowToc.setActive(centred);
   const start = content.getBoundingClientRect().top + window.scrollY;
   ruler.setTape(root.scrollHeight - start, anchors.filter((anchor) => anchor.group === null).map((anchor) => ({
@@ -206,9 +210,9 @@ function updatePosition() {
   const root = document.documentElement;
   const percent = scrollPercent(window.scrollY, root.scrollHeight, window.innerHeight);
   // Without the titles: the line 8 px below where anchors land (their scroll-margin), so a section
-  // scrolled to counts as being read. With them: READING_RATIO of the way down the screen.
+  // scrolled to counts as being read. With the ruler or the titles: READING_RATIO of the way down the screen.
   const place = readingAnchor(anchors, {
-    scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred, ratio: READING_RATIO,
+    scrollY: window.scrollY, offset: landing() + 8, viewportHeight: window.innerHeight, scrollHeight: root.scrollHeight, centred: lowered, ratio: READING_RATIO,
   });
   updatePageBar(pageBar, place, percent);
   backToTop.update(window.scrollY, window.innerHeight);

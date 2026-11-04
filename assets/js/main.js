@@ -6,6 +6,7 @@ import { t, localized } from './core/i18n.js';
 import { renderContents } from './ui/contents.js';
 import { renderSection } from './ui/section.js';
 import { renderPartNav, renderPartToc } from './ui/nav.js';
+import { mountHeaderFit } from './ui/header-fit.js';
 import { mountSearch, renderResults } from './ui/search.js';
 import { renderPageBar, updatePageBar, bindJumpDismiss } from './ui/page-bar.js';
 import { scrollPercent, readingAnchor, READING_RATIO } from './core/scroll.js';
@@ -46,6 +47,7 @@ const wide = window.matchMedia('(min-width: 64rem)');
 const flowToc = mountFlowToc(document.getElementById('app'));
 /** The flowing section titles need room beside the ruler. */
 const wider = window.matchMedia('(min-width: 72rem)');
+mountHeaderFit(header, wide);
 const search = mountSearch(document.querySelector('.app-header'), (value) => {
   query = value;
   render(true);

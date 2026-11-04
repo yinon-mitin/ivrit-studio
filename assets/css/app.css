@@ -187,10 +187,11 @@ a { color: var(--accent); }
 @media (min-width: 64rem) {
   .search-toggle { display: none; }
 
+  /* Up to 15rem, less on a narrower window so the parts keep their room. */
   .header-search,
   .app-header[data-search='open'] .header-search {
     display: block;
-    width: 15rem;
+    width: clamp(9rem, 18vw, 15rem);
     padding: 0;
   }
 }
@@ -205,8 +206,12 @@ a { color: var(--accent); }
   scrollbar-width: none;
 }
 
+/* On a laptop the parts sit in the middle of their space. Auto margins on the ends rather than
+   `justify-content: center`: centred overflow is cut off on both sides, and the left end could not be scrolled to. */
 @media (min-width: 64rem) {
-  .part-nav-list { justify-content: center; }
+  .part-nav-list > li:first-child { margin-inline-start: auto; }
+
+  .part-nav-list > li:last-child { margin-inline-end: auto; }
 }
 
 .part-nav-link {
@@ -256,6 +261,16 @@ a { color: var(--accent); }
   font-size: 1.1em;
   font-weight: 600;
   letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Short of room at any width (ui/header-fit.js): the same, only the mark stays. */
+.app-header[data-compact] .brand-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 

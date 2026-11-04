@@ -1,0 +1,279 @@
+{
+  "id": "construct",
+  "title": {
+    "en": "Smikhut: two nouns",
+    "ru": "Смихут: два существительных"
+  },
+  "icon": "סְמִיכוּת",
+  "view": "list",
+  "nikudToggle": true,
+  "groups": [
+    {
+      "id": "a",
+      "title": {
+        "en": "Feminine -a becomes -at",
+        "ru": "Женский род: -a → -at"
+      }
+    },
+    {
+      "id": "im",
+      "title": {
+        "en": "Plural -im becomes -ey",
+        "ru": "Множественное: -im → -ey"
+      }
+    },
+    {
+      "id": "same",
+      "title": {
+        "en": "No change",
+        "ru": "Без изменений"
+      }
+    },
+    {
+      "id": "shel",
+      "title": {
+        "en": "With shel instead",
+        "ru": "Через shel"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "construct.kitat-ivrit",
+      "he": "כִּתַּת עִבְרִית",
+      "translit": "Kitat ivrit",
+      "en": "a Hebrew class",
+      "ru": "класс иврита, курс иврита",
+      "group": "a",
+      "related": [
+        {
+          "he": "כִּתָּה",
+          "translit": "Kita",
+          "en": "a class",
+          "ru": "класс"
+        }
+      ],
+      "note": {
+        "en": "Two nouns in a row, the second telling what kind or whose the first is (smikhut). If the first noun is feminine and ends in -a (ה), the ה becomes ת (tav) and the vowel sign before it turns from qamats (ָ) into patach (ַ): kita → kitat. Only the first noun changes. Not for a noun and an adjective: kita gdola, a big class.",
+        "ru": "Два существительных подряд: второе говорит, какое или чьё первое (смихут). Если первое существительное женского рода и оканчивается на -a (ה), то ה становится ת (тав, не тет), а огласовка перед ней меняется с камацу (ָ) на патах (ַ): kita → kitat. Меняется только первое слово. Не для существительного с прилагательным: kita gdola, большой класс."
+      },
+      "verified": false
+    },
+    {
+      "id": "construct.mitat-ha-yeled",
+      "he": "מִטַּת הַיֶּלֶד",
+      "translit": "Mitat ha-yeled",
+      "en": "the child's bed",
+      "ru": "кровать ребёнка",
+      "group": "a",
+      "related": [
+        {
+          "he": "מִטָּה",
+          "translit": "Mita",
+          "en": "a bed",
+          "ru": "кровать"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.dirat-shutafim",
+      "he": "דִּירַת שׁוּתָפִים",
+      "translit": "Dirat shutafim",
+      "en": "a shared flat",
+      "ru": "квартира с соседями (съёмная на нескольких)",
+      "group": "a",
+      "related": [
+        {
+          "he": "דִּירָה",
+          "translit": "Dira",
+          "en": "a flat, an apartment",
+          "ru": "квартира"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.ginat-ha-bayit",
+      "he": "גִּנַּת הַבַּיִת",
+      "translit": "Ginat ha-bayit",
+      "en": "the garden of the house",
+      "ru": "сад дома",
+      "group": "a",
+      "related": [
+        {
+          "he": "גִּנָּה",
+          "translit": "Gina",
+          "en": "a garden",
+          "ru": "сад"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.morat-ha-kita",
+      "he": "מוֹרַת הַכִּתָּה",
+      "translit": "Morat ha-kita",
+      "en": "the class teacher (f.)",
+      "ru": "классная руководительница, учительница класса",
+      "group": "a",
+      "related": [
+        {
+          "he": "מוֹרָה",
+          "translit": "Mora",
+          "en": "a teacher (f.)",
+          "ru": "учительница"
+        }
+      ],
+      "note": {
+        "en": "Only the first noun changes. The last one stays as it is: kita keeps its ה. Ha- goes before the last noun only and makes the whole phrase definite: morat ha-kita is “the class teacher”; the first noun never gets ha-.",
+        "ru": "Меняется только первое слово. Последнее остаётся как есть: у kita ה сохраняется. Ha- ставится только перед последним словом и делает определённым всё сочетание: morat ha-kita — «классная руководительница»; перед первым словом ha- не бывает."
+      },
+      "verified": false
+    },
+    {
+      "id": "construct.yaldey-ha-shkhenim",
+      "he": "יַלְדֵי הַשְּׁכֵנִים",
+      "translit": "Yaldey ha-shkhenim",
+      "en": "the neighbours' children",
+      "ru": "дети соседей",
+      "group": "im",
+      "related": [
+        {
+          "he": "יְלָדִים",
+          "translit": "Yeladim",
+          "en": "children",
+          "ru": "дети"
+        }
+      ],
+      "note": {
+        "en": "A plural noun ending in -im (ים) loses the ם and keeps the י: yeladim → yaldey, said -ey, with a tsere (ֵ) before the י. The vowels inside the word may shorten as well. The rule follows the ending, whatever the gender. Only the first noun changes: the second stays plural, shkhenim.",
+        "ru": "Существительное во множественном числе на -im (ים) теряет ם, остаётся י: yeladim → yaldey, читается -ey, перед י стоит цере (ֵ). Гласные внутри слова могут сократиться. Правило зависит от окончания, а не от рода. Меняется только первое слово: второе остаётся во множественном числе, shkhenim."
+      },
+      "verified": false
+    },
+    {
+      "id": "construct.khavrey-ha-kita",
+      "he": "חַבְרֵי הַכִּתָּה",
+      "translit": "Khavrey ha-kita",
+      "en": "the members of the class, classmates",
+      "ru": "члены класса, одноклассники",
+      "group": "im",
+      "related": [
+        {
+          "he": "חֲבֵרִים",
+          "translit": "Khaverim",
+          "en": "friends",
+          "ru": "друзья"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.sifrey-yeladim",
+      "he": "סִפְרֵי יְלָדִים",
+      "translit": "Sifrey yeladim",
+      "en": "children's books",
+      "ru": "детские книги",
+      "group": "im",
+      "related": [
+        {
+          "he": "סְפָרִים",
+          "translit": "Sfarim",
+          "en": "books",
+          "ru": "книги"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.yemey-ha-shavua",
+      "he": "יְמֵי הַשָּׁבוּעַ",
+      "translit": "Yemey ha-shavua",
+      "en": "the days of the week",
+      "ru": "дни недели",
+      "group": "im",
+      "related": [
+        {
+          "he": "יָמִים",
+          "translit": "Yamim",
+          "en": "days",
+          "ru": "дни"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.khanut-sfarim",
+      "he": "חֲנוּת סְפָרִים",
+      "translit": "Khanut sfarim",
+      "en": "a bookshop",
+      "ru": "книжный магазин",
+      "group": "same",
+      "related": [
+        {
+          "he": "חֲנוּת",
+          "translit": "Khanut",
+          "en": "a shop",
+          "ru": "магазин"
+        }
+      ],
+      "note": {
+        "en": "A noun that already ends in ת does not change: khanut stays khanut. The same goes for a feminine plural in -ot and for a noun with no -a or -im ending.",
+        "ru": "Существительное, которое уже оканчивается на ת, не меняется: khanut остаётся khanut. Так же ведут себя женское множественное на -ot и слова без окончания -a или -im."
+      },
+      "verified": false
+    },
+    {
+      "id": "construct.morot-ha-ivrit",
+      "he": "מוֹרוֹת הָעִבְרִית",
+      "translit": "Morot ha-ivrit",
+      "en": "the Hebrew teachers (f. pl.)",
+      "ru": "учительницы иврита",
+      "group": "same",
+      "related": [
+        {
+          "he": "מוֹרוֹת",
+          "translit": "Morot",
+          "en": "teachers (f. pl.)",
+          "ru": "учительницы"
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "construct.beit-ha-sefer",
+      "he": "בֵּית הַסֵּפֶר",
+      "translit": "Beit ha-sefer",
+      "en": "the school",
+      "ru": "школа",
+      "group": "same",
+      "related": [
+        {
+          "he": "בַּיִת",
+          "translit": "Bayit",
+          "en": "a house",
+          "ru": "дом"
+        }
+      ],
+      "note": {
+        "en": "The ending does not change, but a few common words change inside: bayit becomes beit (beit sefer, beit kafe), layla becomes leil (leil Shabbat).",
+        "ru": "Окончание не меняется, но несколько частых слов меняются внутри: bayit становится beit (beit sefer, beit kafe), layla — leil (leil Shabbat)."
+      },
+      "verified": false
+    },
+    {
+      "id": "construct.ha-mora-shel-ha-kita",
+      "he": "הַמּוֹרָה שֶׁל הַכִּתָּה",
+      "translit": "Ha-mora shel ha-kita",
+      "en": "the teacher of the class",
+      "ru": "учительница класса",
+      "group": "shel",
+      "note": {
+        "en": "The same meaning as morat ha-kita, with shel and no changes. In everyday speech shel is more common; smikhut stays in set phrases and compounds: beit sefer, kitat ivrit, yemey ha-shavua.",
+        "ru": "То же значение, что у morat ha-kita, но с shel и без изменений. В разговорной речи shel встречается чаще; смихут остаётся в устойчивых выражениях и сложных словах: beit sefer, kitat ivrit, yemey ha-shavua."
+      },
+      "verified": false
+    }
+  ]
+}

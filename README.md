@@ -36,7 +36,7 @@ Five parts, each one scrolling page, with the sections as headings and their gro
 | **Phrases** | Small talk, getting to know someone, the market, a courier, neighbours, the café, the airport. Masculine and feminine forms share one card |
 | **Vocabulary** | Everyday words, family, numbers, days and time, colours, sizes, directions, abbreviations, peoples and places, countries and languages |
 | **Around us** | Objects, animals, the home and the safe room, the kitchen, fruit and vegetables |
-| **Grammar** | Pronouns, gender and number, adjectives, present-tense verbs, possession, where from and where to, prepositions, infinitives |
+| **Grammar** | Pronouns, gender and number, adjectives, present-tense verbs, possession, smikhut (two nouns in a row), where from and where to, prepositions, infinitives |
 
 All entries are unverified until the author checks them (see [Checking nikud](#checking-nikud)).
 

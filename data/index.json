@@ -4,6 +4,6 @@
     { "id": "phrases", "title": { "en": "Phrases", "ru": "Фразы" }, "sections": ["greetings", "acquaintance", "market", "courier", "neighbours", "cafe", "airport"] },
     { "id": "words", "title": { "en": "Vocabulary", "ru": "Лексика" }, "sections": ["vocab", "connectors", "family", "numbers", "time", "colors", "sizes", "directions", "abbreviations", "faiths", "countries"] },
     { "id": "around", "title": { "en": "Around us", "ru": "Вокруг нас" }, "sections": ["things", "animals", "home", "kitchen", "produce"] },
-    { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["pronouns", "gender-number", "adjectives", "verbs", "possession", "places", "prepositions", "infinitives"] }
+    { "id": "grammar", "title": { "en": "Grammar", "ru": "Грамматика" }, "sections": ["pronouns", "gender-number", "adjectives", "verbs", "possession", "construct", "places", "prepositions", "infinitives"] }
   ]
 }

@@ -160,3 +160,8 @@ Plan: `tasks/plan-content.md`. Separate from `tasks/todo.md` and `tasks/todo-nex
 ### Task 37: One place for each topic
 **Description:** Audit of where entries live. All personal and demonstrative pronouns are in the new `pronouns` section (they were split between `verbs` and `gender-number`). `medaber`, `lomed`, `oved` and `gar` moved from Gender & number to Verbs (`gar` leads the "like gar" group). From `vocab`: `o`, `gam ve-gam`, `hine`, `akhshav`, `rak` to Common everyday words; `ben`, `bat`, `aba`, `isha` to Family; `limon` to Fruit; `ani Or` to Getting to know someone; `with` and `about` dropped as repeats of Prepositions. In Prepositions the repeats of Where from… and Possession (`mi`, `be`, `leyad`, `shel`) are gone, and the section keeps with / without / about. Moved entries have new ids (`<new section>.<slug>`).
 **Left as is (judgement calls):** `vocab` still holds country, language, challah and the study words from the first lessons; `neighbours` Greetings holds "stairwell" and "I'm from apartment three"; `animals` Pets holds "mouse, rat"; `family.baal` and `partners` both have "husband".
+
+### Task 38: Smikhut (two nouns in a row)
+**Description:** Data only, new Grammar section `construct` after `possession`, 13 entries, all `verified: false`. Rules: a feminine noun in -a (ה) changes to -at (ת, tav) when another noun follows (kita → kitat ivrit); a plural in -im (ים) changes to -ey (י) (yeladim → yaldey ha-shkhenim). Only the first noun changes; ha- goes before the last noun only. Groups: the -a rule, the -im rule, no change (khanut, -ot, beit/leil), shel instead.
+**Corrected from the request:** the ה becomes ת (tav), not ט (tet).
+**Verification:** [x] `check:task` green.

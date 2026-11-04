@@ -1105,6 +1105,9 @@ a { color: var(--accent); }
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
+  /* Always at the left edge: beside the Hebrew, or on a line of its own when they do not fit together
+     (a lone item on a wrapped line would otherwise start at the right, under the Hebrew). */
+  margin-right: auto;
   line-height: 1.35;
 }
 

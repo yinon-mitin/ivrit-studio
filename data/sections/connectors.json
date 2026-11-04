@@ -8,6 +8,8 @@
     {"id": "linking", "title": {"en": "But, maybe, of course", "ru": "Но, может быть, конечно"}},
     {"id": "pointing", "title": {"en": "Here it is, now, only", "ru": "Вот, сейчас, только"}},
     {"id": "amount", "title": {"en": "A little, a lot, everything, everyone", "ru": "Немного, много, всё, все"}},
+    {"id": "frequency", "title": {"en": "Always, sometimes, never", "ru": "Всегда, иногда, никогда"}},
+    {"id": "price", "title": {"en": "Free, expensive, cheap", "ru": "Бесплатно, дорого, дёшево"}},
     {"id": "together", "title": {"en": "Alone and together", "ru": "Один и вместе"}},
     {"id": "reactions", "title": {"en": "Sure, so, nothing, great", "ru": "Конечно, итак, ничего, здорово"}}
   ],
@@ -25,6 +27,14 @@
     {"id": "connectors.hakol", "he": "הַכֹּל", "plain": "הכול", "translit": "Hakol", "en": "everything", "ru": "всё", "group": "amount", "verified": false},
     {"id": "connectors.kulam", "he": "כֻּלָּם", "translit": "Kulam", "en": "everyone, all of them", "ru": "все (о людях)", "group": "amount", "verified": false},
     {"id": "connectors.mikol-haolam", "he": "מִכָּל הָעוֹלָם", "translit": "Mikol ha'olam", "en": "from all over the world", "ru": "со всего мира", "group": "amount", "verified": false},
+    {"id": "connectors.tamid", "he": "תָּמִיד", "translit": "Tamid", "en": "always", "ru": "всегда", "group": "frequency", "verified": false},
+    {"id": "connectors.harbe-peamim", "he": "הַרְבֵּה פְּעָמִים", "translit": "Harbe pe'amim", "en": "often (literally: many times)", "ru": "часто (букв.: много раз)", "group": "frequency", "verified": false},
+    {"id": "connectors.bederekh-klal", "he": "בְּדֶרֶךְ כְּלָל", "translit": "Bederekh klal", "en": "usually, as a rule", "ru": "обычно, как правило", "group": "frequency", "verified": false},
+    {"id": "connectors.lifamim", "he": "לִפְעָמִים", "translit": "Lifamim", "en": "sometimes", "ru": "иногда", "group": "frequency", "verified": false},
+    {"id": "connectors.af-paam", "he": "אַף פַּעַם", "translit": "Af pa'am", "en": "never (with lo)", "ru": "никогда (с lo)", "group": "frequency", "note": {"en": "Hebrew keeps the negative: ani af pa'am lo ... = \"I never ...\".", "ru": "В иврите отрицание сохраняется: ani af pa'am lo ... = «я никогда не ...»."}, "verified": false},
+    {"id": "connectors.bekhinam", "he": "בְּחִנָּם", "translit": "Bekhinam", "en": "free, for free", "ru": "бесплатно", "group": "price", "verified": false},
+    {"id": "connectors.yakar", "he": "יָקָר", "translit": "Yakar", "en": "expensive", "ru": "дорого, дорогой", "group": "price", "forms": {"ms": "יָקָר", "fs": "יְקָרָה", "mp": "יְקָרִים", "fp": "יְקָרוֹת"}, "verified": false},
+    {"id": "connectors.zol", "he": "זוֹל", "translit": "Zol", "en": "cheap", "ru": "дёшево, дешёвый", "group": "price", "forms": {"ms": "זוֹל", "fs": "זוֹלָה", "mp": "זוֹלִים", "fp": "זוֹלוֹת"}, "verified": false},
     {"id": "connectors.levad", "he": "לְבַד", "translit": "Levad", "en": "alone, by oneself", "ru": "один, в одиночку", "group": "together", "verified": false},
     {"id": "connectors.beyakhad", "he": "בְּיַחַד", "translit": "Beyakhad", "en": "together", "ru": "вместе", "group": "together", "verified": false},
     {"id": "connectors.betakh", "he": "בְּטַח", "translit": "Betakh", "en": "sure, of course", "ru": "конечно, наверняка", "group": "reactions", "verified": false},
@@ -32,6 +42,7 @@
     {"id": "connectors.az", "he": "אָז", "translit": "Az", "en": "so, then", "ru": "итак, тогда", "group": "reactions", "verified": false},
     {"id": "connectors.klum", "he": "כְּלוּם", "translit": "Klum", "en": "nothing", "ru": "ничего", "group": "reactions", "verified": false},
     {"id": "connectors.lemashal", "he": "לְמָשָׁל", "translit": "Lemashal", "en": "for example", "ru": "например", "group": "reactions", "verified": false},
+    {"id": "connectors.ve-khen-hala", "he": "וְכֵן הָלְאָה", "translit": "Ve-khen hal'a", "en": "and so on", "ru": "и так далее", "group": "reactions", "note": {"en": "Written in short as וכו׳ (etc.).", "ru": "Коротко пишется וכו׳ (и т. д.)."}, "verified": false},
     {"id": "connectors.yofi", "he": "יוֹפִי", "translit": "Yofi", "en": "great, nice (literally: beauty)", "ru": "здорово, отлично (букв.: красота)", "group": "reactions", "verified": false},
     {"id": "connectors.kol-hakavod", "he": "כָּל הַכָּבוֹד", "translit": "Kol hakavod", "en": "well done, hats off (literally: all the honour)", "ru": "молодец, браво (букв.: вся честь)", "group": "reactions", "verified": false}
   ]

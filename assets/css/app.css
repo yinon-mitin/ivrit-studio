@@ -845,6 +845,43 @@ a { color: var(--accent); }
   text-transform: uppercase;
 }
 
+/* Listen button beside the Hebrew of a word or phrase. Shown only while the browser has a Hebrew voice
+   (main.js sets html[data-speech]); a 32 px target, quiet until hovered, accent while speaking. */
+.speak {
+  display: none;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+:root[data-speech] .speak { display: inline-flex; }
+
+.speak svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.speak:hover,
+.speak[data-speaking] {
+  background: var(--mark);
+  color: var(--accent);
+}
+
 /* Hidden translations: a button over blurred text until it is pressed. Print shows everything. */
 .reveal {
   margin: 0;
@@ -1244,6 +1281,13 @@ a { color: var(--accent); }
   line-height: 1.35;
 }
 
+.phrase-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+}
+
 .phrase-he {
   font-size: 1.6rem;
   line-height: 1.5;
@@ -1368,6 +1412,8 @@ a { color: var(--accent); }
     margin: 10pt 0 4pt;
     break-after: avoid;
   }
+
+  .speak { display: none !important; }
 
   .reveal[aria-expanded='false'],
   .entry[data-hidden]:not([data-revealed]) :is(.entry-related-gloss, .entry-note),

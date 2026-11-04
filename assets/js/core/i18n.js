@@ -18,6 +18,7 @@ export const STRINGS = {
   tagFeminine: { en: 'f.', ru: 'ж.' },
   search: { en: 'Search', ru: 'Поиск' },
   hide: { en: 'Hide translations', ru: 'Скрыть перевод' },
+  speak: { en: 'Listen: {word}', ru: 'Прослушать: {word}' },
   reveal: { en: 'Show translation', ru: 'Показать перевод' },
   pagePosition: { en: 'Page position', ru: 'Положение на странице' },
   sections: { en: 'Sections', ru: 'Разделы' },

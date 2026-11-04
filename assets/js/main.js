@@ -17,6 +17,7 @@ import { mountInstall } from './ui/install.js';
 import { searchParts } from './core/search.js';
 import { loadSettings, saveSettings, applySettings, renderSettings, renderHideToggle } from './ui/settings.js';
 import { el } from './views/dom.js';
+import { initSpeech } from './views/speak.js';
 
 const APP_NAME = 'Ivrit Studio';
 const app = document.getElementById('app');
@@ -244,6 +245,7 @@ const stickyHeights = new ResizeObserver(syncStickyHeights);
 stickyHeights.observe(header);
 stickyHeights.observe(pageBar);
 
+initSpeech();
 applySettings(settings);
 bindJumpDismiss(pageBar);
 window.addEventListener('hashchange', () => {

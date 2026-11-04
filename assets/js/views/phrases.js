@@ -6,6 +6,7 @@ import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
 import { renderForms, renderNote, renderRelated } from './list.js';
 import { revealButton } from './reveal.js';
+import { speakButton } from './speak.js';
 
 const TAGS = { m: ['tagMasculine', 'formMasculine'], f: ['tagFeminine', 'formFeminine'] };
 
@@ -24,7 +25,9 @@ function renderRow(form, { nikud, lang }) {
     row.append(tag);
   }
   const text = el('div', 'phrase-text');
-  text.append(hebrew('span', 'phrase-he', displayHe(form, nikud)), el('span', 'phrase-translit', form.translit));
+  const line = el('div', 'phrase-line');
+  line.append(speakButton(form, lang), hebrew('span', 'phrase-he', displayHe(form, nikud)));
+  text.append(line, el('span', 'phrase-translit', form.translit));
   row.append(text);
   return row;
 }

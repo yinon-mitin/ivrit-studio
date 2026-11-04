@@ -6,6 +6,7 @@ import { displayHe } from '../core/hebrew.js';
 import { t } from '../core/i18n.js';
 import { el, hebrew } from './dom.js';
 import { revealButton } from './reveal.js';
+import { speakButton } from './speak.js';
 
 const FORM_ROWS = [['formMasculine', 'ms', 'mp'], ['formFeminine', 'fs', 'fp']];
 const FORM_COLUMNS = [['formSingular', 1, ['ms', 'fs']], ['formPlural', 2, ['mp', 'fp']]];
@@ -124,7 +125,7 @@ export function renderList(items, options) {
       emoji.setAttribute('aria-hidden', 'true');
       word.append(emoji);
     }
-    word.append(hebrew('span', 'entry-he', displayHe(item, nikud)));
+    word.append(hebrew('span', 'entry-he', displayHe(item, nikud)), speakButton(item, lang));
     const gloss = el('span', 'entry-gloss');
     gloss.dir = 'ltr';
     const meaning = el('span', 'entry-meaning', item[lang]);

@@ -1,0 +1,32 @@
+{
+  "id": "cafe",
+  "title": {"en": "At the café", "ru": "В кафе"},
+  "icon": "קָפֶה",
+  "view": "phrases",
+  "nikudToggle": true,
+  "groups": [
+    {"id": "menu", "title": {"en": "On the menu", "ru": "В меню"}},
+    {"id": "order", "title": {"en": "Ordering", "ru": "Заказ"}},
+    {"id": "pay", "title": {"en": "The bill", "ru": "Счёт"}}
+  ],
+  "items": [
+    {"id": "cafe.tafrit", "he": "תַּפְרִיט", "translit": "Tafrit", "en": "menu", "ru": "меню", "group": "menu", "note": {"en": "The words in this section come from general knowledge, not from the class handout. Check them against the handout.", "ru": "Слова этого раздела взяты из общих знаний, а не из раздаточного материала с урока. Сверьте их с материалом."}, "verified": false},
+    {"id": "cafe.meltzar", "he": "מֶלְצָר", "translit": "Meltzar", "en": "waiter / waitress", "ru": "официант / официантка", "group": "menu", "variants": [{"gender": "m", "he": "מֶלְצָר", "translit": "Meltzar"}, {"gender": "f", "he": "מֶלְצָרִית", "translit": "Meltzarit"}], "verified": false},
+    {"id": "cafe.kafe", "he": "קָפֶה", "translit": "Kafe", "en": "coffee", "ru": "кофе", "group": "menu", "emoji": "☕", "verified": false},
+    {"id": "cafe.kafe-hafukh", "he": "קָפֶה הָפוּךְ", "translit": "Kafe hafukh", "en": "milky coffee, latte", "ru": "кофе с молоком (латте)", "group": "menu", "note": {"en": "Literally “upside-down coffee”: the usual milky coffee in Israeli cafés.", "ru": "Буквально «перевёрнутый кофе»: обычный кофе с молоком в израильских кафе."}, "verified": false},
+    {"id": "cafe.te", "he": "תֵּה", "translit": "Te", "en": "tea", "ru": "чай", "group": "menu", "emoji": "🍵", "verified": false},
+    {"id": "cafe.mayim", "he": "מַיִם", "translit": "Mayim", "en": "water", "ru": "вода", "group": "menu", "emoji": "💧", "note": {"en": "Always plural in form, so the adjective is plural too: mayim kerim, “cold water”.", "ru": "Всегда во множественном числе, поэтому и прилагательное во множественном: mayim kerim, «холодная вода»."}, "verified": false},
+    {"id": "cafe.mitz", "he": "מִיץ", "translit": "Mitz", "en": "juice", "ru": "сок", "group": "menu", "verified": false},
+    {"id": "cafe.khalav", "he": "חָלָב", "translit": "Khalav", "en": "milk", "ru": "молоко", "group": "menu", "emoji": "🥛", "verified": false},
+    {"id": "cafe.sukar", "he": "סוּכָּר", "translit": "Sukar", "en": "sugar", "ru": "сахар", "group": "menu", "verified": false},
+    {"id": "cafe.uga", "he": "עוּגָה", "translit": "Uga", "en": "cake", "ru": "торт, пирог", "group": "menu", "emoji": "🍰", "verified": false},
+    {"id": "cafe.salat", "he": "סָלָט", "translit": "Salat", "en": "salad", "ru": "салат", "group": "menu", "emoji": "🥗", "verified": false},
+    {"id": "cafe.efshar-tafrit", "he": "אֶפְשָׁר תַּפְרִיט?", "translit": "Efshar tafrit?", "en": "May I have the menu?", "ru": "Можно меню?", "group": "order", "verified": false},
+    {"id": "cafe.ani-rotze-kafe", "he": "אֲנִי רוֹצֶה קָפֶה", "translit": "Ani rotze kafe", "en": "I'd like a coffee.", "ru": "Я хочу кофе.", "group": "order", "variants": [{"gender": "m", "he": "אֲנִי רוֹצֶה קָפֶה", "translit": "Ani rotze kafe"}, {"gender": "f", "he": "אֲנִי רוֹצָה קָפֶה", "translit": "Ani rotza kafe"}], "verified": false},
+    {"id": "cafe.ani-shote-te", "he": "אֲנִי שׁוֹתֶה תֵּה", "translit": "Ani shote te", "en": "I'm drinking tea.", "ru": "Я пью чай.", "group": "order", "variants": [{"gender": "m", "he": "אֲנִי שׁוֹתֶה תֵּה", "translit": "Ani shote te"}, {"gender": "f", "he": "אֲנִי שׁוֹתָה תֵּה", "translit": "Ani shota te"}], "verified": false},
+    {"id": "cafe.ma-ata-shote", "he": "מָה אַתָּה שׁוֹתֶה?", "translit": "Ma ata shote?", "en": "What are you drinking?", "ru": "Что ты пьёшь?", "group": "order", "variants": [{"gender": "m", "he": "מָה אַתָּה שׁוֹתֶה?", "translit": "Ma ata shote?"}, {"gender": "f", "he": "מָה אַתְּ שׁוֹתָה?", "translit": "Ma at shota?"}], "verified": false},
+    {"id": "cafe.kafe-im-khalav", "he": "קָפֶה עִם חָלָב", "translit": "Kafe im khalav", "en": "coffee with milk", "ru": "кофе с молоком", "group": "order", "verified": false},
+    {"id": "cafe.kafe-bli-sukar", "he": "קָפֶה בְּלִי סוּכָּר", "translit": "Kafe bli sukar", "en": "coffee without sugar", "ru": "кофе без сахара", "group": "order", "verified": false},
+    {"id": "cafe.kheshbon", "he": "הַחֶשְׁבּוֹן, בְּבַקָּשָׁה", "translit": "Ha-kheshbon, bevakasha", "en": "The bill, please.", "ru": "Счёт, пожалуйста.", "group": "pay", "verified": false}
+  ]
+}
